@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #f3f3f3;
+}
+
+.md-editor-toolbar-item svg.md-editor-icon {
+  width: 23px;
+  height: 23px;
+}

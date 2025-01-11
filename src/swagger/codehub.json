@@ -1,0 +1,4705 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "CodeHub API",
+    "description": "CodeHub 后端服务 API 文档",
+    "version": "1.0.0"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/academic_navigator/create": {
+      "post": {
+        "summary": "新增学术导航",
+        "operationId": "AddAcademicNavigator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AddAcademicNavigatorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 添加学术导航请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddAcademicNavigatorReq"
+            }
+          }
+        ],
+        "tags": [
+          "academic_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/academic_navigator/delete/{id}": {
+      "delete": {
+        "summary": "删除学术导航",
+        "operationId": "DeleteAcademicNavigator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteAcademicNavigatorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 删除学术导航请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteAcademicNavigatorReq"
+            }
+          }
+        ],
+        "tags": [
+          "academic_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/academic_navigator/dislike/{id}": {
+      "delete": {
+        "summary": "取消点赞学术导航",
+        "operationId": "CancelLikeAcademicNavigator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CancelLikeAcademicNavigatorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 取消点赞请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CancelLikeAcademicNavigatorReq"
+            }
+          }
+        ],
+        "tags": [
+          "academic_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/academic_navigator/get": {
+      "get": {
+        "summary": "获取学术导航",
+        "operationId": "GetAcademicNavigator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetAcademicNavigatorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": " 用户 ID",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "education",
+            "description": " 学历",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "description": " 内容",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "major",
+            "description": " 专业",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "school",
+            "description": " 学校",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "work_exp",
+            "description": " 工作经验",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页大小",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "academic_public"
+        ]
+      }
+    },
+    "/api/academic_navigator/like/{id}": {
+      "post": {
+        "summary": "点赞学术导航",
+        "operationId": "PostAcademicNavigatorLike",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/PostAcademicNavigatorLikeResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 点赞请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostAcademicNavigatorLikeReq"
+            }
+          }
+        ],
+        "tags": [
+          "academic_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/articles/create": {
+      "post": {
+        "summary": "创建文章",
+        "operationId": "CreateArticle",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateArticleResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateArticleReq"
+            }
+          }
+        ],
+        "tags": [
+          "articles_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/articles/update_like_count": {
+      "post": {
+        "summary": "更新文章点赞数",
+        "operationId": "UpdateLikeCount",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateLikeCountResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateLikeCountReq"
+            }
+          }
+        ],
+        "tags": [
+          "articles_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/articles/{id}": {
+      "get": {
+        "summary": "获取文章",
+        "operationId": "GetArticle",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetArticleResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "articles_public"
+        ]
+      },
+      "delete": {
+        "summary": "删除文章",
+        "operationId": "DeleteArticle",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteArticleResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteArticleReq"
+            }
+          }
+        ],
+        "tags": [
+          "articles_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "更新文章",
+        "operationId": "UpdateArticle",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateArticleResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateArticleReq"
+            }
+          }
+        ],
+        "tags": [
+          "articles_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/coderhub/health": {
+      "get": {
+        "summary": "健康检查",
+        "operationId": "AcademicHealth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/HealthResp"
+            }
+          }
+        },
+        "tags": [
+          "coderhub"
+        ]
+      }
+    },
+    "/api/comments/article/{entity_id}": {
+      "get": {
+        "summary": "获取评论列表",
+        "operationId": "GetComments",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetCommentsResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "entity_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "comments_auth"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/comments/create": {
+      "post": {
+        "summary": "创建评论",
+        "operationId": "CreateComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateCommentResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 创建评论请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateCommentReq"
+            }
+          }
+        ],
+        "tags": [
+          "comments_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/comments/replies/{comment_id}": {
+      "get": {
+        "summary": "获取某条评论的子评论列表",
+        "operationId": "GetCommentReplies",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetCommentRepliesResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "comment_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "comments_auth"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/comments/update_like_count": {
+      "post": {
+        "summary": "更新评论点赞数",
+        "operationId": "UpdateCommentLikeCount",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateCommentLikeCountResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 更新评论点赞数请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateCommentLikeCountReq"
+            }
+          }
+        ],
+        "tags": [
+          "comments_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/comments/{comment_id}": {
+      "get": {
+        "summary": "获取单个评论",
+        "operationId": "GetComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetCommentResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "comment_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "comments_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "删除评论",
+        "operationId": "DeleteComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteCommentResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "comment_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 删除评论请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteCommentReq"
+            }
+          }
+        ],
+        "tags": [
+          "comments_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/favorites/add": {
+      "post": {
+        "summary": "添加收藏内容",
+        "operationId": "AddFavoriteContent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateFavorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 创建收藏实体",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateFavorReq"
+            }
+          }
+        ],
+        "tags": [
+          "favorites_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/favorites/content/{id}": {
+      "delete": {
+        "summary": "删除收藏夹内容",
+        "operationId": "DeleteFavoriteContent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteFavorResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "  删除收藏实体",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteFavorReq"
+            }
+          }
+        ],
+        "tags": [
+          "favorites_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/favorites/content_list": {
+      "get": {
+        "summary": "获取收藏内容列表",
+        "operationId": "ListFavoriteContent",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetFavorListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "description": " 用户 ID",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "entity_type",
+            "description": " 实体类型",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "article",
+              "question"
+            ]
+          },
+          {
+            "name": "favor_fold_id",
+            "description": " 收藏夹 ID",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "favorites_public"
+        ]
+      }
+    },
+    "/api/favorites/create": {
+      "post": {
+        "summary": "创建收藏夹",
+        "operationId": "CreateFavorite",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateFavorFoldResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 创建收藏夹",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateFavorFoldReq"
+            }
+          }
+        ],
+        "tags": [
+          "favorites_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/favorites/list": {
+      "get": {
+        "summary": "获取收藏夹列表",
+        "operationId": "ListFavorite",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetFavorFoldListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": " 用户 ID",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "request_user_id",
+            "description": " 请求用户 ID",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": "requestUserId 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "favorites_public"
+        ]
+      }
+    },
+    "/api/favorites/{id}": {
+      "delete": {
+        "summary": "删除收藏夹",
+        "operationId": "DeleteFavorite",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteFavorFoldResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 删除收藏夹",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteFavorFoldReq"
+            }
+          }
+        ],
+        "tags": [
+          "favorites_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "更新收藏夹",
+        "operationId": "UpdateFavorite",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateFavorFoldResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 更新收藏夹",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateFavorFoldReq"
+            }
+          }
+        ],
+        "tags": [
+          "favorites_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/follow/fans": {
+      "get": {
+        "summary": "获取粉丝列表",
+        "operationId": "GetFansList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetFansListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": " 用户ID",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "follow_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/follow/follow": {
+      "post": {
+        "summary": "关注用户",
+        "operationId": "FollowUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/FollowUserResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 关注用户请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FollowUserReq"
+            }
+          }
+        ],
+        "tags": [
+          "follow_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/follow/list": {
+      "get": {
+        "summary": "获取关注列表",
+        "operationId": "GetFollowList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetFollowListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": " 用户ID",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "follow_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/follow/unfollow": {
+      "post": {
+        "summary": "取消关注",
+        "operationId": "UnfollowUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UnfollowUserResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 取消关注请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UnfollowUserReq"
+            }
+          }
+        ],
+        "tags": [
+          "follow_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/image/delete": {
+      "post": {
+        "summary": "删除图片",
+        "operationId": "Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 删除图片请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "image_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/image/get/{image_id}": {
+      "get": {
+        "summary": "获取图片信息",
+        "operationId": "Get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "image_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "image_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/image/list": {
+      "get": {
+        "summary": "获取用户图片列表",
+        "operationId": "ListByUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListByUserResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": " 用户ID",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "image_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/image/upload": {
+      "post": {
+        "summary": "上传图片",
+        "operationId": "Upload",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UploadResponse"
+            }
+          }
+        },
+        "tags": [
+          "image_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/questions/bank/create": {
+      "post": {
+        "summary": "创建题库",
+        "operationId": "CreateQuestionBank",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateQuestionBankResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 创建题库请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateQuestionBankReq"
+            }
+          }
+        ],
+        "tags": [
+          "questions_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/questions/bank/{id}": {
+      "delete": {
+        "summary": "删除题库",
+        "operationId": "DeleteQuestionBank",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteQuestionBankResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 删除题库",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteQuestionBankReq"
+            }
+          }
+        ],
+        "tags": [
+          "questions_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/questions/bank_list": {
+      "get": {
+        "summary": "获取题库列表",
+        "operationId": "ListQuestionBanks",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetQuestionBankListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "questions_public"
+        ]
+      }
+    },
+    "/api/questions/question/create": {
+      "post": {
+        "summary": "创建题目",
+        "operationId": "CreateQuestion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateQuestionResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 创建题目",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateQuestionReq"
+            }
+          }
+        ],
+        "tags": [
+          "questions_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/questions/question/{id}": {
+      "get": {
+        "summary": "获取题目详情",
+        "operationId": "GetQuestionBank",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetQuestionBankResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "questions_public"
+        ]
+      },
+      "delete": {
+        "summary": "删除题目",
+        "operationId": "DeleteQuestion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteQuestionResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 删除题目",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteQuestionReq"
+            }
+          }
+        ],
+        "tags": [
+          "questions_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/questions/question_list": {
+      "get": {
+        "summary": "获取题目列表",
+        "operationId": "ListQuestions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetQuestionListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "bankId",
+            "description": " 题库 ID",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "questions_public"
+        ]
+      }
+    },
+    "/api/user/change_password": {
+      "post": {
+        "summary": "修改密码",
+        "operationId": "ChangePassword",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdatePasswordResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 修改密码请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdatePasswordReq"
+            }
+          }
+        ],
+        "tags": [
+          "user_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/user/delete/{id}": {
+      "delete": {
+        "summary": "删除用户",
+        "operationId": "DeleteUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteUserResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 删除用户请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteUserReq"
+            }
+          }
+        ],
+        "tags": [
+          "user_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/user/info/{id}": {
+      "get": {
+        "summary": "获取用户信息",
+        "operationId": "GetUserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetUserInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "user_public"
+        ]
+      }
+    },
+    "/api/user/list": {
+      "get": {
+        "summary": "获取用户列表",
+        "operationId": "GetUserList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetUserListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "user_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/user/login": {
+      "post": {
+        "summary": "用户登录",
+        "operationId": "Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 用户登录请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "tags": [
+          "user_public"
+        ]
+      }
+    },
+    "/api/user/register": {
+      "post": {
+        "summary": "用户注册",
+        "operationId": "Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RegisterResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 用户注册请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterReq"
+            }
+          }
+        ],
+        "tags": [
+          "user_public"
+        ]
+      }
+    },
+    "/api/user/reset-password-by-link": {
+      "post": {
+        "summary": "通过链接重置密码",
+        "operationId": "ResetPasswordByLink",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ResetPasswordByLinkResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 通过链接重置密码",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResetPasswordByLinkReq"
+            }
+          }
+        ],
+        "tags": [
+          "user_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/user/send-reset-password-link": {
+      "post": {
+        "summary": "发送重置密码链接",
+        "operationId": "SendResetPasswordLink",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SendResetPasswordLinkResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 发送重置密码链接请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendResetPasswordLinkReq"
+            }
+          }
+        ],
+        "tags": [
+          "user_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/user/update/{id}": {
+      "put": {
+        "summary": "更新用户信息",
+        "operationId": "UpdateUserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateUserInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 更新用户信息请求",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserInfoReq"
+            }
+          }
+        ],
+        "tags": [
+          "user_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/user/update_avatar": {
+      "put": {
+        "summary": "更新用户头像",
+        "operationId": "UpdateUserAvatar",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateUserAvatarResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 更新用户头像",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserAvatarReq"
+            }
+          }
+        ],
+        "tags": [
+          "user_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AcademicList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 总数"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AcademicNavigator"
+          },
+          "description": " 学术导航列表"
+        }
+      },
+      "title": "AcademicList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "AcademicNavigator": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 学术导航 ID"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 用户 ID"
+        },
+        "education": {
+          "type": "string",
+          "description": " 学历"
+        },
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        },
+        "major": {
+          "type": "string",
+          "description": " 专业"
+        },
+        "school": {
+          "type": "string",
+          "description": " 学校"
+        },
+        "work_exp": {
+          "type": "string",
+          "description": " 工作经验"
+        },
+        "like_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 点赞数"
+        }
+      },
+      "title": "AcademicNavigator",
+      "required": [
+        "id",
+        "user_id",
+        "education",
+        "content",
+        "major",
+        "school",
+        "work_exp",
+        "like_count"
+      ]
+    },
+    "AddAcademicNavigatorReq": {
+      "type": "object",
+      "properties": {
+        "education": {
+          "type": "string",
+          "description": " 学历"
+        },
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        },
+        "major": {
+          "type": "string",
+          "description": " 专业"
+        },
+        "school": {
+          "type": "string",
+          "description": " 学校"
+        },
+        "work_exp": {
+          "type": "string",
+          "description": " 工作经验"
+        }
+      },
+      "title": "AddAcademicNavigatorReq",
+      "required": [
+        "education",
+        "content",
+        "major",
+        "school",
+        "work_exp"
+      ]
+    },
+    "AddAcademicNavigatorResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否添加成功"
+        }
+      },
+      "title": "AddAcademicNavigatorResp",
+      "required": [
+        "data"
+      ]
+    },
+    "Article": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 主键 ID"
+        },
+        "type": {
+          "type": "string",
+          "description": " 内容类型：长文或短文"
+        },
+        "title": {
+          "type": "string",
+          "description": " 标题"
+        },
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        },
+        "summary": {
+          "type": "string",
+          "description": " 摘要"
+        },
+        "imageUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": " 图片 URL 列表"
+        },
+        "coverImage": {
+          "type": "string",
+          "description": " 封面图片 URL"
+        },
+        "authorId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 作者 ID"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": " 标签列表"
+        },
+        "viewCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 阅读次数"
+        },
+        "likeCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 点赞次数"
+        },
+        "commentCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 评论数"
+        },
+        "status": {
+          "type": "string",
+          "description": " 文章状态"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 创建时间"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 更新时间"
+        }
+      },
+      "title": "Article",
+      "required": [
+        "id",
+        "type",
+        "title",
+        "content",
+        "summary",
+        "imageUrls",
+        "coverImage",
+        "authorId",
+        "tags",
+        "viewCount",
+        "likeCount",
+        "commentCount",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CancelLikeAcademicNavigatorReq": {
+      "type": "object",
+      "title": "CancelLikeAcademicNavigatorReq"
+    },
+    "CancelLikeAcademicNavigatorResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否取消点赞成功"
+        }
+      },
+      "title": "CancelLikeAcademicNavigatorResp",
+      "required": [
+        "data"
+      ]
+    },
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 评论ID"
+        },
+        "entity_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 文章ID"
+        },
+        "content": {
+          "type": "string",
+          "description": " 评论内容"
+        },
+        "root_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 根评论ID"
+        },
+        "parent_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 父评论ID"
+        },
+        "user_info": {
+          "$ref": "#/definitions/UserInfo",
+          "description": " 评论者信息"
+        },
+        "created_at": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 创建时间"
+        },
+        "updated_at": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 更新时间"
+        },
+        "replies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          },
+          "description": " 子评论列表"
+        },
+        "reply_to_user_info": {
+          "$ref": "#/definitions/UserInfo",
+          "description": " 被回复者信息"
+        },
+        "replies_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 子评论数量"
+        },
+        "like_count": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 点赞数"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageInfo"
+          },
+          "description": " 评论图片列表"
+        }
+      },
+      "title": "Comment",
+      "required": [
+        "id",
+        "entity_id",
+        "content",
+        "root_id",
+        "parent_id",
+        "user_info",
+        "created_at",
+        "updated_at",
+        "replies",
+        "reply_to_user_info",
+        "replies_count",
+        "like_count",
+        "images"
+      ]
+    },
+    "CreateArticleReq": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "article",
+            "micro_post"
+          ],
+          "description": " 内容类型"
+        },
+        "title": {
+          "type": "string",
+          "description": " 标题"
+        },
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        },
+        "summary": {
+          "type": "string",
+          "description": " 摘要"
+        },
+        "imageIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": " 图片 URL 列表"
+        },
+        "coverImageID": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 封面图片 URL"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": " 标签列表"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "published"
+          ],
+          "description": " 文章状态"
+        }
+      },
+      "title": "CreateArticleReq",
+      "required": [
+        "type",
+        "title",
+        "content",
+        "summary",
+        "imageIds",
+        "coverImageID",
+        "tags",
+        "status"
+      ]
+    },
+    "CreateArticleResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 文章详情"
+        }
+      },
+      "title": "CreateArticleResp",
+      "required": [
+        "data"
+      ]
+    },
+    "CreateCommentReq": {
+      "type": "object",
+      "properties": {
+        "entity_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 文章ID"
+        },
+        "content": {
+          "type": "string",
+          "description": " 评论内容"
+        },
+        "root_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 根评论ID"
+        },
+        "parent_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 父评论ID（可选）"
+        },
+        "reply_to_uid": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 回复的目标评论ID（可选）"
+        },
+        "image_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": " 图片ID列表"
+        }
+      },
+      "title": "CreateCommentReq",
+      "required": [
+        "entity_id",
+        "content",
+        "root_id",
+        "parent_id",
+        "reply_to_uid",
+        "image_ids"
+      ]
+    },
+    "CreateCommentResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/Comment",
+          "description": " 创建的评论"
+        }
+      },
+      "title": "CreateCommentResp",
+      "required": [
+        "data"
+      ]
+    },
+    "CreateFavorFoldReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": " 收藏夹名称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 描述"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否公开"
+        }
+      },
+      "title": "CreateFavorFoldReq",
+      "required": [
+        "name",
+        "description",
+        "isPublic"
+      ]
+    },
+    "CreateFavorFoldResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 收藏夹详情"
+        }
+      },
+      "title": "CreateFavorFoldResp",
+      "required": [
+        "data"
+      ]
+    },
+    "CreateFavorReq": {
+      "type": "object",
+      "properties": {
+        "foldId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 收藏夹 ID"
+        },
+        "entityId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 实体 ID"
+        },
+        "entity_type": {
+          "type": "string",
+          "enum": [
+            "article",
+            "question"
+          ],
+          "description": " 实体类型"
+        }
+      },
+      "title": "CreateFavorReq",
+      "required": [
+        "foldId",
+        "entityId",
+        "entity_type"
+      ]
+    },
+    "CreateFavorResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 收藏夹详情"
+        }
+      },
+      "title": "CreateFavorResp",
+      "required": [
+        "data"
+      ]
+    },
+    "CreateQuestionBankReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": [
+            "default",
+            "easy",
+            "medium",
+            "hard"
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coverImage": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 封面图片 URL"
+        }
+      },
+      "title": "CreateQuestionBankReq",
+      "required": [
+        "name",
+        "description",
+        "difficulty",
+        "tags",
+        "coverImage"
+      ]
+    },
+    "CreateQuestionBankResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 题库详情"
+        }
+      },
+      "title": "CreateQuestionBankResp",
+      "required": [
+        "data"
+      ]
+    },
+    "CreateQuestionReq": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "bankId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": [
+            "default",
+            "easy",
+            "medium",
+            "hard"
+          ]
+        }
+      },
+      "title": "CreateQuestionReq",
+      "required": [
+        "title",
+        "bankId",
+        "content",
+        "difficulty"
+      ]
+    },
+    "CreateQuestionResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 题目详情"
+        }
+      },
+      "title": "CreateQuestionResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteAcademicNavigatorReq": {
+      "type": "object",
+      "title": "DeleteAcademicNavigatorReq"
+    },
+    "DeleteAcademicNavigatorResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否删除成功"
+        }
+      },
+      "title": "DeleteAcademicNavigatorResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteArticleReq": {
+      "type": "object",
+      "title": "DeleteArticleReq"
+    },
+    "DeleteArticleResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否删除成功"
+        }
+      },
+      "title": "DeleteArticleResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteCommentReq": {
+      "type": "object",
+      "title": "DeleteCommentReq"
+    },
+    "DeleteCommentResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 删除是否成功"
+        }
+      },
+      "title": "DeleteCommentResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteFavorFoldReq": {
+      "type": "object",
+      "title": "DeleteFavorFoldReq"
+    },
+    "DeleteFavorFoldResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteFavorFoldResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteFavorReq": {
+      "type": "object",
+      "properties": {
+        "favor_fold_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "entity_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "entity_type": {
+          "type": "string",
+          "enum": [
+            "article",
+            "question"
+          ]
+        }
+      },
+      "title": "DeleteFavorReq",
+      "required": [
+        "favor_fold_id",
+        "entity_id",
+        "entity_type"
+      ]
+    },
+    "DeleteFavorResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteFavorResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteQuestionBankReq": {
+      "type": "object",
+      "title": "DeleteQuestionBankReq"
+    },
+    "DeleteQuestionBankResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否删除成功"
+        }
+      },
+      "title": "DeleteQuestionBankResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteQuestionReq": {
+      "type": "object",
+      "title": "DeleteQuestionReq"
+    },
+    "DeleteQuestionResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否删除成功"
+        }
+      },
+      "title": "DeleteQuestionResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteRequest": {
+      "type": "object",
+      "properties": {
+        "image_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 图片ID"
+        }
+      },
+      "title": "DeleteRequest",
+      "required": [
+        "image_id"
+      ]
+    },
+    "DeleteResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "success": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 删除是否成功"
+        }
+      },
+      "title": "DeleteResponse",
+      "required": [
+        "success"
+      ]
+    },
+    "DeleteUserReq": {
+      "type": "object",
+      "title": "DeleteUserReq"
+    },
+    "DeleteUserResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否删除成功"
+        }
+      },
+      "title": "DeleteUserResp",
+      "required": [
+        "data"
+      ]
+    },
+    "EntityPreviewValue": {
+      "type": "object",
+      "properties": {
+        "entity_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "entity_type": {
+          "type": "string"
+        },
+        "cover_image": {
+          "type": "string"
+        },
+        "user_info": {
+          "$ref": "#/definitions/UserInfo"
+        }
+      },
+      "title": "EntityPreviewValue",
+      "required": [
+        "entity_id",
+        "title",
+        "content",
+        "entity_type",
+        "cover_image",
+        "user_info"
+      ]
+    },
+    "Favor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "create_user": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "favor_fold_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "entity_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "entity_value": {
+          "$ref": "#/definitions/EntityPreviewValue"
+        },
+        "entity_type": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Favor",
+      "required": [
+        "id",
+        "create_user",
+        "favor_fold_id",
+        "entity_id",
+        "entity_value",
+        "entity_type",
+        "createdAt"
+      ]
+    },
+    "FavorFold": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "is_public": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "create_user": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "FavorFold",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "is_public",
+        "create_user",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "FavorFoldList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FavorFold"
+          }
+        }
+      },
+      "title": "FavorFoldList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "FavorList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Favor"
+          }
+        }
+      },
+      "title": "FavorList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "FollowList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 总数"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserInfo"
+          },
+          "description": " 关注列表"
+        }
+      },
+      "title": "FollowList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "FollowUserReq": {
+      "type": "object",
+      "properties": {
+        "follow_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 被关注用户ID"
+        }
+      },
+      "title": "FollowUserReq",
+      "required": [
+        "follow_id"
+      ]
+    },
+    "FollowUserResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否关注成功"
+        }
+      },
+      "title": "FollowUserResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetAcademicNavigatorReq": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 用户 ID"
+        },
+        "education": {
+          "type": "string",
+          "description": " 学历"
+        },
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        },
+        "major": {
+          "type": "string",
+          "description": " 专业"
+        },
+        "school": {
+          "type": "string",
+          "description": " 学校"
+        },
+        "work_exp": {
+          "type": "string",
+          "description": " 工作经验"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 每页大小"
+        }
+      },
+      "title": "GetAcademicNavigatorReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetAcademicNavigatorResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/AcademicList",
+          "description": " 学术导航列表"
+        }
+      },
+      "title": "GetAcademicNavigatorResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetArticleReq": {
+      "type": "object",
+      "title": "GetArticleReq"
+    },
+    "GetArticleResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/Article",
+          "description": " 文章详情"
+        }
+      },
+      "title": "GetArticleResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetCommentRepliesReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetCommentRepliesReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetCommentRepliesResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/List",
+          "description": " 子评论列表"
+        }
+      },
+      "title": "GetCommentRepliesResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetCommentReq": {
+      "type": "object",
+      "title": "GetCommentReq"
+    },
+    "GetCommentResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/Comment",
+          "description": " 评论详情"
+        }
+      },
+      "title": "GetCommentResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetCommentsReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetCommentsReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetCommentsResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/List",
+          "description": " 评论列表"
+        }
+      },
+      "title": "GetCommentsResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetFansListReq": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 用户ID"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetFansListReq",
+      "required": [
+        "user_id",
+        "page",
+        "page_size"
+      ]
+    },
+    "GetFansListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/FollowList",
+          "description": " 粉丝列表"
+        }
+      },
+      "title": "GetFansListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetFavorFoldListReq": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 用户 ID"
+        },
+        "request_user_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 请求用户 ID"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": "requestUserId 每页数量"
+        }
+      },
+      "title": "GetFavorFoldListReq",
+      "required": [
+        "user_id",
+        "page",
+        "page_size"
+      ]
+    },
+    "GetFavorFoldListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/FavorFoldList"
+        }
+      },
+      "title": "GetFavorFoldListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetFavorListReq": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 用户 ID"
+        },
+        "entity_type": {
+          "type": "string",
+          "enum": [
+            "article",
+            "question"
+          ],
+          "description": " 实体类型"
+        },
+        "favor_fold_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 收藏夹 ID"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetFavorListReq",
+      "required": [
+        "userId",
+        "entity_type",
+        "favor_fold_id",
+        "page",
+        "page_size"
+      ]
+    },
+    "GetFavorListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/FavorList"
+        }
+      },
+      "title": "GetFavorListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetFollowListReq": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 用户ID"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetFollowListReq",
+      "required": [
+        "user_id",
+        "page",
+        "page_size"
+      ]
+    },
+    "GetFollowListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/FollowList",
+          "description": " 关注列表"
+        }
+      },
+      "title": "GetFollowListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetQuestionBankListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "GetQuestionBankListReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetQuestionBankListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/QuestionBankList",
+          "description": " 题库列表"
+        }
+      },
+      "title": "GetQuestionBankListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetQuestionBankReq": {
+      "type": "object",
+      "title": "GetQuestionBankReq"
+    },
+    "GetQuestionBankResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/Question",
+          "description": " 题库详情"
+        }
+      },
+      "title": "GetQuestionBankResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetQuestionListReq": {
+      "type": "object",
+      "properties": {
+        "bankId": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 题库 ID"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetQuestionListReq",
+      "required": [
+        "bankId",
+        "page",
+        "page_size"
+      ]
+    },
+    "GetQuestionListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/QuestionList",
+          "description": " 题目列表"
+        }
+      },
+      "title": "GetQuestionListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetRequest": {
+      "type": "object",
+      "title": "GetRequest"
+    },
+    "GetResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/ImageInfo",
+          "description": " 图片详情"
+        }
+      },
+      "title": "GetResponse",
+      "required": [
+        "data"
+      ]
+    },
+    "GetUserInfoReq": {
+      "type": "object",
+      "title": "GetUserInfoReq"
+    },
+    "GetUserInfoResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/UserInfo",
+          "description": " 用户信息"
+        }
+      },
+      "title": "GetUserInfoResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetUserListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetUserListReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetUserListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/UserList",
+          "description": " 用户列表"
+        }
+      },
+      "title": "GetUserListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "HealthResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否健康"
+        }
+      },
+      "title": "HealthResp",
+      "required": [
+        "data"
+      ]
+    },
+    "ImageInfo": {
+      "type": "object",
+      "properties": {
+        "image_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 图片ID"
+        },
+        "bucket_name": {
+          "type": "string",
+          "description": " MinIO bucket名称"
+        },
+        "object_name": {
+          "type": "string",
+          "description": " MinIO中的对象名称"
+        },
+        "url": {
+          "type": "string",
+          "description": " 完整的访问URL"
+        },
+        "thumbnail_url": {
+          "type": "string",
+          "description": " 缩略图URL"
+        },
+        "content_type": {
+          "type": "string",
+          "description": " 文件MIME类型"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 文件大小(bytes)"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 图片宽度(px)"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 图片高度(px)"
+        },
+        "upload_ip": {
+          "type": "string",
+          "description": " 上传者IP"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 上传者ID"
+        },
+        "created_at": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 创建时间"
+        }
+      },
+      "title": "ImageInfo",
+      "required": [
+        "image_id",
+        "bucket_name",
+        "object_name",
+        "url",
+        "thumbnail_url",
+        "content_type",
+        "size",
+        "width",
+        "height",
+        "upload_ip",
+        "user_id",
+        "created_at"
+      ]
+    },
+    "ImageInfoList": {
+      "type": "object",
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ImageInfo"
+          },
+          "description": " 图片列表"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 总数量"
+        }
+      },
+      "title": "ImageInfoList",
+      "required": [
+        "images",
+        "total"
+      ]
+    },
+    "List": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Comment"
+          },
+          "description": " 评论列表"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 总评论数"
+        }
+      },
+      "title": "List",
+      "required": [
+        "list",
+        "total"
+      ]
+    },
+    "ListByUserRequest": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 用户ID"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "ListByUserRequest",
+      "required": [
+        "user_id",
+        "page",
+        "page_size"
+      ]
+    },
+    "ListByUserResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/ImageInfoList",
+          "description": " 图片列表"
+        }
+      },
+      "title": "ListByUserResponse",
+      "required": [
+        "data"
+      ]
+    },
+    "LoginReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": " 用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": " 密码"
+        }
+      },
+      "title": "LoginReq",
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "LoginResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "string",
+          "description": " JWT token"
+        }
+      },
+      "title": "LoginResp",
+      "required": [
+        "data"
+      ]
+    },
+    "PageRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "PageRequest",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "PageResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 总数"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 当前页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "PageResponse",
+      "required": [
+        "total",
+        "page",
+        "page_size"
+      ]
+    },
+    "PostAcademicNavigatorLikeReq": {
+      "type": "object",
+      "title": "PostAcademicNavigatorLikeReq"
+    },
+    "PostAcademicNavigatorLikeResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否点赞成功"
+        }
+      },
+      "title": "PostAcademicNavigatorLikeResp",
+      "required": [
+        "data"
+      ]
+    },
+    "Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "bankId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "difficult": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Question",
+      "required": [
+        "id",
+        "title",
+        "bankId",
+        "content",
+        "difficult",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "QuestionBank": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coverImage": {
+          "$ref": "#/definitions/ImageInfo"
+        },
+        "createUser": {
+          "$ref": "#/definitions/UserInfo"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "QuestionBank",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "difficulty",
+        "tags",
+        "coverImage",
+        "createUser",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "QuestionBankList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QuestionBank"
+          }
+        }
+      },
+      "title": "QuestionBankList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "QuestionList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QuestionMenus"
+          }
+        }
+      },
+      "title": "QuestionList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "QuestionMenus": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "title": "QuestionMenus",
+      "required": [
+        "id",
+        "title"
+      ]
+    },
+    "RegisterReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": " 用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": " 密码"
+        }
+      },
+      "title": "RegisterReq",
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "RegisterResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否注册成功"
+        }
+      },
+      "title": "RegisterResp",
+      "required": [
+        "data"
+      ]
+    },
+    "ResetPasswordByLinkReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "confirmPassword": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "ResetPasswordByLinkReq",
+      "required": [
+        "email",
+        "password",
+        "confirmPassword",
+        "token"
+      ]
+    },
+    "ResetPasswordByLinkResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否重置成功"
+        }
+      },
+      "title": "ResetPasswordByLinkResp",
+      "required": [
+        "data"
+      ]
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        }
+      },
+      "title": "Response",
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "SendResetPasswordLinkReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": " 邮箱"
+        }
+      },
+      "title": "SendResetPasswordLinkReq",
+      "required": [
+        "email"
+      ]
+    },
+    "SendResetPasswordLinkResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否发送成功"
+        }
+      },
+      "title": "SendResetPasswordLinkResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UnfollowUserReq": {
+      "type": "object",
+      "properties": {
+        "follow_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 被关注用户ID"
+        }
+      },
+      "title": "UnfollowUserReq",
+      "required": [
+        "follow_id"
+      ]
+    },
+    "UnfollowUserResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否取消成功"
+        }
+      },
+      "title": "UnfollowUserResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdateArticleReq": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": " 标题"
+        },
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        },
+        "summary": {
+          "type": "string",
+          "description": " 摘要"
+        },
+        "imageIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": " 图片 URL 列表"
+        },
+        "coverImageID": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 封面图片 URL"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": " 标签列表"
+        },
+        "status": {
+          "type": "string",
+          "description": " 文章状态"
+        }
+      },
+      "title": "UpdateArticleReq"
+    },
+    "UpdateArticleResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否更新成功"
+        }
+      },
+      "title": "UpdateArticleResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdateCommentLikeCountReq": {
+      "type": "object",
+      "properties": {
+        "comment_id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 评论ID"
+        }
+      },
+      "title": "UpdateCommentLikeCountReq",
+      "required": [
+        "comment_id"
+      ]
+    },
+    "UpdateCommentLikeCountResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 更新是否成功"
+        }
+      },
+      "title": "UpdateCommentLikeCountResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdateFavorFoldReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": " 收藏夹名称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 描述"
+        },
+        "isPublic": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否公开"
+        }
+      },
+      "title": "UpdateFavorFoldReq"
+    },
+    "UpdateFavorFoldResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 收藏夹详情"
+        }
+      },
+      "title": "UpdateFavorFoldResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdateLikeCountReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 文章 ID"
+        }
+      },
+      "title": "UpdateLikeCountReq",
+      "required": [
+        "id"
+      ]
+    },
+    "UpdateLikeCountResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否更新成功"
+        }
+      },
+      "title": "UpdateLikeCountResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdatePasswordReq": {
+      "type": "object",
+      "properties": {
+        "old_password": {
+          "type": "string",
+          "description": " 旧密码"
+        },
+        "new_password": {
+          "type": "string",
+          "description": " 新密码"
+        }
+      },
+      "title": "UpdatePasswordReq",
+      "required": [
+        "old_password",
+        "new_password"
+      ]
+    },
+    "UpdatePasswordResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否修改成功"
+        }
+      },
+      "title": "UpdatePasswordResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdateUserAvatarReq": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 头像"
+        }
+      },
+      "title": "UpdateUserAvatarReq",
+      "required": [
+        "avatar"
+      ]
+    },
+    "UpdateUserAvatarResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否更新成功"
+        }
+      },
+      "title": "UpdateUserAvatarResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdateUserInfoReq": {
+      "type": "object",
+      "properties": {
+        "nickname": {
+          "type": "string",
+          "description": " 昵称"
+        },
+        "email": {
+          "type": "string",
+          "description": " 邮箱"
+        },
+        "phone": {
+          "type": "string",
+          "description": " 手机号"
+        },
+        "gender": {
+          "type": "integer",
+          "format": "int32",
+          "enum": [
+            "0",
+            "1"
+          ],
+          "description": " 性别 0:未知 1:男 2:女"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 年龄",
+          "maximum": 120
+        }
+      },
+      "title": "UpdateUserInfoReq"
+    },
+    "UpdateUserInfoResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否更新成功"
+        }
+      },
+      "title": "UpdateUserInfoResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UploadResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/ImageInfo",
+          "description": " 上传的图片信息"
+        }
+      },
+      "title": "UploadResponse",
+      "required": [
+        "data"
+      ]
+    },
+    "UserInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 用户ID"
+        },
+        "username": {
+          "type": "string",
+          "description": " 用户名"
+        },
+        "nickname": {
+          "type": "string",
+          "description": " 昵称"
+        },
+        "email": {
+          "type": "string",
+          "description": " 邮箱"
+        },
+        "phone": {
+          "type": "string",
+          "description": " 手机号"
+        },
+        "avatar": {
+          "type": "string",
+          "description": " 头像"
+        },
+        "gender": {
+          "type": "integer",
+          "format": "int32",
+          "enum": [
+            "0",
+            "1"
+          ],
+          "description": " 性别 0:未知 1:男 2:女"
+        },
+        "age": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 年龄",
+          "maximum": 120
+        },
+        "status": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 状态 true:正常 false:禁用"
+        },
+        "is_admin": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 角色 0:普通用户 1:管理员"
+        },
+        "create_at": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 创建时间"
+        },
+        "update_at": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 更新时间"
+        }
+      },
+      "title": "UserInfo",
+      "required": [
+        "id",
+        "username",
+        "nickname",
+        "email",
+        "phone",
+        "avatar",
+        "gender",
+        "age",
+        "status",
+        "is_admin",
+        "create_at",
+        "update_at"
+      ]
+    },
+    "UserList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 总数"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserInfo"
+          },
+          "description": " 用户列表"
+        }
+      },
+      "title": "UserList",
+      "required": [
+        "total",
+        "list"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
