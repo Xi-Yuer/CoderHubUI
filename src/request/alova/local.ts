@@ -1,22 +1,26 @@
-import {createAlova} from "alova";
+import { createAlova } from "alova";
 import adapterFetch from "alova/fetch";
 import ReactHook from "alova/react";
 import "@/alova";
 
-import {cookies} from "next/headers";
-import {responded} from "@/request/alova/responded";
+import { cookies } from "next/headers";
+import { responded } from "@/request/alova/responded";
+import { createApis } from "@/alova/createApis";
+import { $$userConfigMap } from "@/alova";
 
 // 创建服务端网络请求实例
-export const alovaLocalInstance = createAlova({
+export const alovaLocalInstance = createApis(
+  createAlova({
     baseURL: process.env.NEXT_PUBLIC_LOCAL_BASE_URL,
     requestAdapter: adapterFetch(),
     timeout: 10000,
     statesHook: ReactHook,
     async beforeRequest(method) {
-        // 从请求的 Cookie 中获取 token
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
-        method.config.headers.token = `Authorization", "Bearer ${token}`;
+      const cookieStore = await cookies();
+      const token = cookieStore.get("token")?.value;
+      method.config.headers.Authorization = `Bearer ${token}`;
     },
     responded: responded,
-});
+  }),
+  $$userConfigMap
+);

@@ -1,16 +1,19 @@
-import {Method} from "alova";
+import { Method } from "alova";
 
 export const responded = {
-    // 请求成功的拦截器
-    onSuccess: async (response: Response, method: Method) => {
-        return await response.json();
-    },
-    // 请求失败的拦截器
-    onError: (error: Error, method: Method) => {
-        console.log(error);
-    },
-    // 请求完成的拦截器,不论是成功、失败
-    onComplete: () => {
-        // 例如关闭请求 loading 状态
-    },
+  onSuccess: async (response: Response, method: Method) => {
+    if (response.status >= 400) {
+      throw new Error(response.statusText);
+    }
+    const json = await response.json();
+    if (json.code !== 200) {
+      throw new Error(json.message);
+    }
+
+    return json;
+  },
+  onError: (error: Error, method: Method) => {
+    console.log(error);
+  },
+  onComplete: () => {},
 };

@@ -3,7 +3,7 @@ import { Button, Modal, Checkbox, Form, Input } from "antd";
 import React, { useState } from "react";
 import "@ant-design/v5-patch-for-react-19";
 import type { FormProps } from "antd";
-import { ClientLogin } from "@/request/apis/client";
+import { ClientLogin } from "@/request/apis";
 
 type FieldType = {
   username: string;
@@ -15,7 +15,9 @@ export function AppLogin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    ClientLogin(values).then();
+    ClientLogin(values).then((res) => {
+      console.log(res.data);
+    });
   };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
