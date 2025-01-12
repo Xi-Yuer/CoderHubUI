@@ -1,12 +1,10 @@
 import React from "react";
-import {AppLogin} from "../components";
-import {ServerHealth} from "@/request/apis/server";
+import { AppLogin } from "../components";
 
 export default function Page() {
-    ServerHealth()
-    return (
-        <div>
-            <AppLogin/>
-        </div>
-    );
+  return (
+    <div>
+      <AppLogin />
+    </div>
+  );
 }
