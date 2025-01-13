@@ -1,10 +1,16 @@
-import { alovaClientInstance } from "../alova/client";
-import { LoginReq, UpdatePasswordReq } from "@/alova/globals";
+import { LoginReq, RegisterReq, UpdatePasswordReq } from "@/alova/globals";
 import { alovaServerInstance } from "../alova/server";
 
 // 登录
 export function ClientLogin(params: LoginReq) {
   return alovaServerInstance.user_public.Login({
+    data: params,
+  });
+}
+
+// 注册
+export function ClientRegister(params: RegisterReq) {
+  return alovaServerInstance.user_public.Register({
     data: params,
   });
 }

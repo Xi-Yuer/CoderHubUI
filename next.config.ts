@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

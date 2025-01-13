@@ -1,5 +1,6 @@
+import { Card } from "antd";
 import React from "react";
 
 export default function Page() {
-  return <div>QuestionBanks</div>;
+  return <Card>QuestionBanks</Card>;
 }
