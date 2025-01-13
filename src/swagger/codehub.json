@@ -1578,6 +1578,28 @@
         ]
       }
     },
+    "/api/user/info_by_token": {
+      "get": {
+        "summary": "根据用户的token获取用户信息",
+        "operationId": "GetUserInfoByToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetUserInfoResp"
+            }
+          }
+        },
+        "tags": [
+          "user_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/user/list": {
       "get": {
         "summary": "获取用户列表",

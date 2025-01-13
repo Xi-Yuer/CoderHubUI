@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { AppLogin } from "../appLogin";
 
 export function AppHeader() {
   const pathname = usePathname();
@@ -60,11 +61,7 @@ export function AppHeader() {
             <BellOutlined className="cursor-pointer" />
           </Popover>
           <div>
-            <Avatar
-              size={30}
-              icon={<UserOutlined />}
-              className="cursor-pointer"
-            />
+            <AppLogin />
           </div>
         </div>
       </div>

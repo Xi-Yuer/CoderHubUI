@@ -58,6 +58,7 @@ export default {
   'user_auth.ChangePassword': ['POST', '/api/user/change_password'],
   'user_auth.DeleteUser': ['DELETE', '/api/user/delete/{id}'],
   'user_public.GetUserInfo': ['GET', '/api/user/info/{id}'],
+  'user_auth.GetUserInfoByToken': ['GET', '/api/user/info_by_token'],
   'user_public.GetUserList': ['GET', '/api/user/list'],
   'user_public.Login': ['POST', '/api/user/login'],
   'user_public.Register': ['POST', '/api/user/register'],

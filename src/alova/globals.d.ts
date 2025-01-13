@@ -4941,6 +4941,68 @@ declare global {
       /**
        * ---
        *
+       * [GET] 根据用户的token获取用户信息
+       *
+       * **path:** /api/user/info_by_token
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] UserInfo
+       *   // [required]
+       *   data: {
+       *     // 用户ID
+       *     // [required]
+       *     id: number
+       *     // 用户名
+       *     // [required]
+       *     username: string
+       *     // 昵称
+       *     // [required]
+       *     nickname: string
+       *     // 邮箱
+       *     // [required]
+       *     email: string
+       *     // 手机号
+       *     // [required]
+       *     phone: string
+       *     // 头像
+       *     // [required]
+       *     avatar: string
+       *     // 性别 0:未知 1:男 2:女
+       *     // [required]
+       *     gender: '0' | '1'
+       *     // 年龄
+       *     // [required]
+       *     age: number
+       *     // 状态 true:正常 false:禁用
+       *     // [required]
+       *     status: boolean
+       *     // 角色 0:普通用户 1:管理员
+       *     // [required]
+       *     is_admin: boolean
+       *     // 创建时间
+       *     // [required]
+       *     create_at: number
+       *     // 更新时间
+       *     // [required]
+       *     update_at: number
+       *   }
+       * }
+       * ```
+       */
+      GetUserInfoByToken<Config extends Alova2MethodConfig<GetUserInfoResp>>(
+        config?: Config
+      ): Alova2Method<GetUserInfoResp, 'user_auth.GetUserInfoByToken', Config>;
+      /**
+       * ---
+       *
        * [PUT] 更新用户信息
        *
        * **path:** /api/user/update/{id}

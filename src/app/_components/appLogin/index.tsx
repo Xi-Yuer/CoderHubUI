@@ -1,9 +1,12 @@
 "use client";
-import { Button, Modal, Checkbox, Form, Input } from "antd";
+import { Button, Modal, Checkbox, Form, Input, Avatar } from "antd";
 import React, { useState } from "react";
 import "@ant-design/v5-patch-for-react-19";
 import type { FormProps } from "antd";
-import { ClientLogin } from "@/request/apis";
+import { ClientGetUserInfo, ClientLogin } from "@/request/apis";
+import { UserOutlined } from "@ant-design/icons";
+import { useAppStore } from "@/store";
+import { useStore } from "zustand";
 
 type FieldType = {
   username: string;
@@ -13,10 +16,15 @@ type FieldType = {
 
 export function AppLogin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const appStore = useStore(useAppStore, (state) => state);
+
+  ClientGetUserInfo().then((res) => {
+    console.log(res.data);
+  });
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     ClientLogin(values).then((res) => {
-      console.log(res.data);
+      appStore.setToken(res.data);
     });
   };
 
@@ -39,10 +47,19 @@ export function AppLogin() {
   };
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
-      <Modal title="Basic Modal" open={isModalOpen} footer={null}>
+      <Avatar
+        size={30}
+        icon={<UserOutlined />}
+        className="cursor-pointer"
+        onClick={showModal}
+      />
+      <Modal
+        title="Basic Modal"
+        open={isModalOpen}
+        footer={null}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <Form
           name="basic"
           labelCol={{ span: 8 }}
