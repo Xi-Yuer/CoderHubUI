@@ -1,5 +1,5 @@
 import React from "react";
-import { AppEditorPreview } from "../components";
+import { AppEditorPreview } from "../../_components";
 
 export default function Page() {
   return (

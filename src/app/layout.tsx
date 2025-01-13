@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ConfigProvider } from "antd";
-import { AppFooter, AppHeader } from "./components";
+import { AppFooter, AppHeader } from "./_components";
 
 export const metadata: Metadata = {
   title: "Coderhub-程序员的技术社区",
@@ -27,7 +27,7 @@ export default function RootLayout({
           }}
         >
           <AppHeader />
-          <div className="p-4">{children}</div>
+          <main className="p-4">{children}</main>
           <AppFooter />
         </ConfigProvider>
       </body>

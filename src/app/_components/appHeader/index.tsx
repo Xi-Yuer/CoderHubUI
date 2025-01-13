@@ -11,13 +11,13 @@ import React from "react";
 export function AppHeader() {
   const pathname = usePathname();
   return (
-    <div className="h-[60px] w-full mx-auto flex justify-between items-center px-4 bg-white shadow-sm">
+    <header className="h-[60px] w-full mx-auto flex justify-between items-center px-4 bg-white shadow-sm">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex justify-center items-center gap-10">
-          <div className="flex justify-center items-center gap-2">
+          <Link href="/" className="flex justify-center items-center gap-2">
             <Image src="/favicon.ico" alt="logo" width={30} height={30}></Image>
-            <span className="text-2xl font-bold text-gray-800 ">CoderHub</span>
-          </div>
+            <span className="text-2xl font-bold text-gray-800">CoderHub</span>
+          </Link>
           {navigatonList.map((nav) => {
             return (
               <Link
@@ -66,6 +66,6 @@ export function AppHeader() {
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
