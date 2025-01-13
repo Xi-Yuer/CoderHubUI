@@ -15,14 +15,7 @@ export function AppHeader() {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex justify-center items-center gap-10">
           <div className="flex items-center gap-2">
-            <Image
-              src="/favicon.ico"
-              alt="logo"
-              width={30}
-              height={30}
-              priority
-              blurDataURL={"/favicon.ico"}
-            ></Image>
+            <Image src="/favicon.ico" alt="logo" width={30} height={30}></Image>
             <Link href="/" className="flex justify-center items-center gap-2">
               <span className="text-2xl font-bold text-gray-800">CoderHub</span>
             </Link>
