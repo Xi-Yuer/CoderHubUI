@@ -1,12 +1,13 @@
 "use client";
 import { popoverList } from "@/constant";
 import { Card, Tabs } from "antd";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Page() {
   const params = useParams();
-  const [defaultType, setDefaultType] = useState(params.type as string);
+  const router = useRouter();
+  const [defaultType] = useState(params.type as string);
   return (
     <Card>
       <Tabs
@@ -16,7 +17,7 @@ export default function Page() {
           key: item.key,
           children: item.page,
         }))}
-        onChange={(key) => setDefaultType(key)}
+        onChange={(key) => router.push(key)}
       ></Tabs>
     </Card>
   );

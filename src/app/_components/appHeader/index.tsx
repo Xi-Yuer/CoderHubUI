@@ -14,10 +14,19 @@ export function AppHeader() {
     <header className="h-[60px] w-full mx-auto flex justify-between items-center px-4 bg-white shadow-sm">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex justify-center items-center gap-10">
-          <Link href="/" className="flex justify-center items-center gap-2">
-            <Image src="/favicon.ico" alt="logo" width={30} height={30}></Image>
-            <span className="text-2xl font-bold text-gray-800">CoderHub</span>
-          </Link>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/favicon.ico"
+              alt="logo"
+              width={30}
+              height={30}
+              priority
+              blurDataURL={"/favicon.ico"}
+            ></Image>
+            <Link href="/" className="flex justify-center items-center gap-2">
+              <span className="text-2xl font-bold text-gray-800">CoderHub</span>
+            </Link>
+          </div>
           {navigatonList.map((nav) => {
             return (
               <Link
