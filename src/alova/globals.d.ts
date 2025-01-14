@@ -305,28 +305,6 @@ export type CreateArticleReq = {
    */
   status: 'draft' | 'published';
 };
-export type UpdateLikeCountResp = {
-  /**
-   * 状态码
-   */
-  code?: number;
-  /**
-   * 提示信息
-   */
-  message?: string;
-  /**
-   * 是否更新成功
-   * [required]
-   */
-  data: boolean;
-};
-export type UpdateLikeCountReq = {
-  /**
-   * 文章 ID
-   * [required]
-   */
-  id: number;
-};
 export type Article = {
   /**
    * 主键 ID
@@ -404,6 +382,82 @@ export type Article = {
    */
   updatedAt: number;
 };
+export type UserInfo = {
+  /**
+   * 用户ID
+   * [required]
+   */
+  id: number;
+  /**
+   * 用户名
+   * [required]
+   */
+  username: string;
+  /**
+   * 昵称
+   * [required]
+   */
+  nickname: string;
+  /**
+   * 邮箱
+   * [required]
+   */
+  email: string;
+  /**
+   * 手机号
+   * [required]
+   */
+  phone: string;
+  /**
+   * 头像
+   * [required]
+   */
+  avatar: string;
+  /**
+   * 性别 0:未知 1:男 2:女
+   * [required]
+   */
+  gender: '0' | '1';
+  /**
+   * 年龄
+   * [required]
+   */
+  age: number;
+  /**
+   * 状态 true:正常 false:禁用
+   * [required]
+   */
+  status: boolean;
+  /**
+   * 角色 0:普通用户 1:管理员
+   * [required]
+   */
+  is_admin: boolean;
+  /**
+   * 创建时间
+   * [required]
+   */
+  create_at: number;
+  /**
+   * 更新时间
+   * [required]
+   */
+  update_at: number;
+};
+export type GetArticle = {
+  /**
+   * Article
+   * ---
+   * [required]
+   */
+  article: Article;
+  /**
+   * UserInfo
+   * ---
+   * [required]
+   */
+  author: UserInfo;
+};
 export type GetArticleResp = {
   /**
    * 状态码
@@ -414,11 +468,48 @@ export type GetArticleResp = {
    */
   message?: string;
   /**
-   * Article
+   * GetArticle
    * ---
    * [required]
    */
-  data: Article;
+  data: GetArticle;
+};
+export type GetArticlesResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * 文章列表
+   * [required]
+   */
+  data: GetArticle[];
+};
+export type UpdateLikeCountResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * 是否更新成功
+   * [required]
+   */
+  data: boolean;
+};
+export type UpdateLikeCountReq = {
+  /**
+   * 文章 ID
+   * [required]
+   */
+  id: number;
 };
 export type DeleteArticleResp = {
   /**
@@ -495,68 +586,6 @@ export type HealthResp = {
    * [required]
    */
   data: boolean;
-};
-export type UserInfo = {
-  /**
-   * 用户ID
-   * [required]
-   */
-  id: number;
-  /**
-   * 用户名
-   * [required]
-   */
-  username: string;
-  /**
-   * 昵称
-   * [required]
-   */
-  nickname: string;
-  /**
-   * 邮箱
-   * [required]
-   */
-  email: string;
-  /**
-   * 手机号
-   * [required]
-   */
-  phone: string;
-  /**
-   * 头像
-   * [required]
-   */
-  avatar: string;
-  /**
-   * 性别 0:未知 1:男 2:女
-   * [required]
-   */
-  gender: '0' | '1';
-  /**
-   * 年龄
-   * [required]
-   */
-  age: number;
-  /**
-   * 状态 true:正常 false:禁用
-   * [required]
-   */
-  status: boolean;
-  /**
-   * 角色 0:普通用户 1:管理员
-   * [required]
-   */
-  is_admin: boolean;
-  /**
-   * 创建时间
-   * [required]
-   */
-  create_at: number;
-  /**
-   * 更新时间
-   * [required]
-   */
-  update_at: number;
 };
 export type ImageInfo = {
   /**
@@ -2355,7 +2384,7 @@ declare global {
        *
        * [GET] 获取文章
        *
-       * **path:** /api/articles/{id}
+       * **path:** /api/articles/detail/{id}
        *
        * ---
        *
@@ -2376,54 +2405,98 @@ declare global {
        *   code?: number
        *   // 提示信息
        *   message?: string
-       *   // [title] Article
+       *   // [title] GetArticle
        *   // [required]
        *   data: {
-       *     // 主键 ID
+       *     // [title] Article
        *     // [required]
-       *     id: number
-       *     // 内容类型：长文或短文
+       *     article: {
+       *       // 主键 ID
+       *       // [required]
+       *       id: number
+       *       // 内容类型：长文或短文
+       *       // [required]
+       *       type: string
+       *       // 标题
+       *       // [required]
+       *       title: string
+       *       // 内容
+       *       // [required]
+       *       content: string
+       *       // 摘要
+       *       // [required]
+       *       summary: string
+       *       // 图片 URL 列表
+       *       // [required]
+       *       imageUrls: string[]
+       *       // 封面图片 URL
+       *       // [required]
+       *       coverImage: string
+       *       // 作者 ID
+       *       // [required]
+       *       authorId: number
+       *       // 标签列表
+       *       // [required]
+       *       tags: string[]
+       *       // 阅读次数
+       *       // [required]
+       *       viewCount: number
+       *       // 点赞次数
+       *       // [required]
+       *       likeCount: number
+       *       // 评论数
+       *       // [required]
+       *       commentCount: number
+       *       // 文章状态
+       *       // [required]
+       *       status: string
+       *       // 创建时间
+       *       // [required]
+       *       createdAt: number
+       *       // 更新时间
+       *       // [required]
+       *       updatedAt: number
+       *     }
+       *     // [title] UserInfo
        *     // [required]
-       *     type: string
-       *     // 标题
-       *     // [required]
-       *     title: string
-       *     // 内容
-       *     // [required]
-       *     content: string
-       *     // 摘要
-       *     // [required]
-       *     summary: string
-       *     // 图片 URL 列表
-       *     // [required]
-       *     imageUrls: string[]
-       *     // 封面图片 URL
-       *     // [required]
-       *     coverImage: string
-       *     // 作者 ID
-       *     // [required]
-       *     authorId: number
-       *     // 标签列表
-       *     // [required]
-       *     tags: string[]
-       *     // 阅读次数
-       *     // [required]
-       *     viewCount: number
-       *     // 点赞次数
-       *     // [required]
-       *     likeCount: number
-       *     // 评论数
-       *     // [required]
-       *     commentCount: number
-       *     // 文章状态
-       *     // [required]
-       *     status: string
-       *     // 创建时间
-       *     // [required]
-       *     createdAt: number
-       *     // 更新时间
-       *     // [required]
-       *     updatedAt: number
+       *     author: {
+       *       // 用户ID
+       *       // [required]
+       *       id: number
+       *       // 用户名
+       *       // [required]
+       *       username: string
+       *       // 昵称
+       *       // [required]
+       *       nickname: string
+       *       // 邮箱
+       *       // [required]
+       *       email: string
+       *       // 手机号
+       *       // [required]
+       *       phone: string
+       *       // 头像
+       *       // [required]
+       *       avatar: string
+       *       // 性别 0:未知 1:男 2:女
+       *       // [required]
+       *       gender: '0' | '1'
+       *       // 年龄
+       *       // [required]
+       *       age: number
+       *       // 状态 true:正常 false:禁用
+       *       // [required]
+       *       status: boolean
+       *       // 角色 0:普通用户 1:管理员
+       *       // [required]
+       *       is_admin: boolean
+       *       // 创建时间
+       *       // [required]
+       *       create_at: number
+       *       // 更新时间
+       *       // [required]
+       *       update_at: number
+       *     }
        *   }
        * }
        * ```
@@ -2440,6 +2513,158 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetArticleResp, 'articles_public.GetArticle', Config>;
+      /**
+       * ---
+       *
+       * [GET] 获取文章列表
+       *
+       * **path:** /api/articles/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // 内容类型
+       *   // [required]
+       *   type: 'article' | 'micro_post'
+       *   // 页码
+       *   // [required]
+       *   page: number
+       *   // 每页数量
+       *   // [required]
+       *   page_size: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // 文章列表
+       *   // [required]
+       *   data: Array<{
+       *     // [title] Article
+       *     // [required]
+       *     article: {
+       *       // 主键 ID
+       *       // [required]
+       *       id: number
+       *       // 内容类型：长文或短文
+       *       // [required]
+       *       type: string
+       *       // 标题
+       *       // [required]
+       *       title: string
+       *       // 内容
+       *       // [required]
+       *       content: string
+       *       // 摘要
+       *       // [required]
+       *       summary: string
+       *       // 图片 URL 列表
+       *       // [required]
+       *       imageUrls: string[]
+       *       // 封面图片 URL
+       *       // [required]
+       *       coverImage: string
+       *       // 作者 ID
+       *       // [required]
+       *       authorId: number
+       *       // 标签列表
+       *       // [required]
+       *       tags: string[]
+       *       // 阅读次数
+       *       // [required]
+       *       viewCount: number
+       *       // 点赞次数
+       *       // [required]
+       *       likeCount: number
+       *       // 评论数
+       *       // [required]
+       *       commentCount: number
+       *       // 文章状态
+       *       // [required]
+       *       status: string
+       *       // 创建时间
+       *       // [required]
+       *       createdAt: number
+       *       // 更新时间
+       *       // [required]
+       *       updatedAt: number
+       *     }
+       *     // [title] UserInfo
+       *     // [required]
+       *     author: {
+       *       // 用户ID
+       *       // [required]
+       *       id: number
+       *       // 用户名
+       *       // [required]
+       *       username: string
+       *       // 昵称
+       *       // [required]
+       *       nickname: string
+       *       // 邮箱
+       *       // [required]
+       *       email: string
+       *       // 手机号
+       *       // [required]
+       *       phone: string
+       *       // 头像
+       *       // [required]
+       *       avatar: string
+       *       // 性别 0:未知 1:男 2:女
+       *       // [required]
+       *       gender: '0' | '1'
+       *       // 年龄
+       *       // [required]
+       *       age: number
+       *       // 状态 true:正常 false:禁用
+       *       // [required]
+       *       status: boolean
+       *       // 角色 0:普通用户 1:管理员
+       *       // [required]
+       *       is_admin: boolean
+       *       // 创建时间
+       *       // [required]
+       *       create_at: number
+       *       // 更新时间
+       *       // [required]
+       *       update_at: number
+       *     }
+       *   }>
+       * }
+       * ```
+       */
+      GetArticles<
+        Config extends Alova2MethodConfig<GetArticlesResp> & {
+          params: {
+            /**
+             * 内容类型
+             * [required]
+             */
+            type: 'article' | 'micro_post';
+            /**
+             * 页码
+             * [required]
+             */
+            page: number;
+            /**
+             * 每页数量
+             * [required]
+             */
+            page_size: number;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetArticlesResp, 'articles_public.GetArticles', Config>;
     };
     coderhub: {
       /**

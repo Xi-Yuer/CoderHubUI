@@ -276,6 +276,80 @@
         ]
       }
     },
+    "/api/articles/detail/{id}": {
+      "get": {
+        "summary": "获取文章",
+        "operationId": "GetArticle",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetArticleResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "articles_public"
+        ]
+      }
+    },
+    "/api/articles/list": {
+      "get": {
+        "summary": "获取文章列表",
+        "operationId": "GetArticles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetArticlesResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "description": " 内容类型",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "article",
+              "micro_post"
+            ]
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "articles_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
     "/api/articles/update_like_count": {
       "post": {
         "summary": "更新文章点赞数",
@@ -309,29 +383,6 @@
       }
     },
     "/api/articles/{id}": {
-      "get": {
-        "summary": "获取文章",
-        "operationId": "GetArticle",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/GetArticleResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "articles_public"
-        ]
-      },
       "delete": {
         "summary": "删除文章",
         "operationId": "DeleteArticle",
@@ -3093,6 +3144,24 @@
         "data"
       ]
     },
+    "GetArticle": {
+      "type": "object",
+      "properties": {
+        "article": {
+          "$ref": "#/definitions/Article",
+          "description": " 文章详情"
+        },
+        "author": {
+          "$ref": "#/definitions/UserInfo",
+          "description": " 作者信息"
+        }
+      },
+      "title": "GetArticle",
+      "required": [
+        "article",
+        "author"
+      ]
+    },
     "GetArticleReq": {
       "type": "object",
       "title": "GetArticleReq"
@@ -3110,11 +3179,65 @@
           "description": " 提示信息"
         },
         "data": {
-          "$ref": "#/definitions/Article",
+          "$ref": "#/definitions/GetArticle",
           "description": " 文章详情"
         }
       },
       "title": "GetArticleResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetArticlesReq": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "article",
+            "micro_post"
+          ],
+          "description": " 内容类型"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetArticlesReq",
+      "required": [
+        "type",
+        "page",
+        "page_size"
+      ]
+    },
+    "GetArticlesResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GetArticle"
+          },
+          "description": " 文章列表"
+        }
+      },
+      "title": "GetArticlesResp",
       "required": [
         "data"
       ]
