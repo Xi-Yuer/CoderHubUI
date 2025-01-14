@@ -37,7 +37,6 @@ export function AppEditor() {
       
       toolbars={toolbars}
       previewTheme={previewTheme}
-      htmlPreview={true}
     />
   );
 }

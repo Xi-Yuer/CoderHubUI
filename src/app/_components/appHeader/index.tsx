@@ -1,7 +1,12 @@
 "use client";
 import { navigatonList, popoverList } from "@/constant";
-import { BellOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Input, Popover } from "antd";
+import {
+  BellOutlined,
+  EditOutlined,
+  SearchOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Avatar, Button, Input, Popover } from "antd";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,6 +46,13 @@ export function AppHeader() {
         <div className="flex justify-center items-center gap-6">
           <div>
             <Input placeholder="全站搜索" suffix={<SearchOutlined />} />
+          </div>
+          <div>
+            <Link href="/">
+              <Button type="primary" icon={<EditOutlined />} iconPosition="end">
+                创作中心
+              </Button>
+            </Link>
           </div>
           <Popover
             placement="bottom"
