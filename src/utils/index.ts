@@ -19,7 +19,7 @@ export const RenderEmotion = (emotions: Emoji[], text: string) => {
   return text.replace(emojiRegex, (match) => {
     const emoji = emotionsMap.get(match);
     return emoji
-      ? `<img src="${emoji.url}" alt="${emoji.description}" style="display: inline-block; width: 80px; height: 80px; border:none;margin: 0px 2px;" />`
+      ? `<img src="${emoji.url}" alt="${emoji.description}" style="display: inline-block; width: 80px; height: 80px; border:none;margin: 0px 4px;" />`
       : match;
   });
 };
