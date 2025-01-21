@@ -167,12 +167,12 @@ export type AcademicNavigator = {
    * 学术导航 ID
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * 用户 ID
    * [required]
    */
-  user_id: number;
+  user_id: string;
   /**
    * 学历
    * [required]
@@ -261,7 +261,7 @@ export type CreateArticleResp = {
    * 文章详情
    * [required]
    */
-  data: number;
+  data: string;
 };
 export type CreateArticleReq = {
   /**
@@ -271,9 +271,8 @@ export type CreateArticleReq = {
   type: 'article' | 'micro_post';
   /**
    * 标题
-   * [required]
    */
-  title: string;
+  title?: string;
   /**
    * 内容
    * [required]
@@ -281,24 +280,20 @@ export type CreateArticleReq = {
   content: string;
   /**
    * 摘要
-   * [required]
    */
-  summary: string;
+  summary?: string;
   /**
    * 图片 URL 列表
-   * [required]
    */
-  imageIds: number[];
+  imageIds?: string[];
   /**
    * 封面图片 URL
-   * [required]
    */
-  coverImageID: number;
+  coverImageID?: string;
   /**
    * 标签列表
-   * [required]
    */
-  tags: string[];
+  tags?: string[];
   /**
    * 文章状态
    * [required]
@@ -310,7 +305,7 @@ export type Article = {
    * 主键 ID
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * 内容类型：长文或短文
    * [required]
@@ -345,7 +340,7 @@ export type Article = {
    * 作者 ID
    * [required]
    */
-  authorId: number;
+  authorId: string;
   /**
    * 标签列表
    * [required]
@@ -387,7 +382,7 @@ export type UserInfo = {
    * 用户ID
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * 用户名
    * [required]
@@ -509,7 +504,7 @@ export type UpdateLikeCountReq = {
    * 文章 ID
    * [required]
    */
-  id: number;
+  id: string;
 };
 export type DeleteArticleResp = {
   /**
@@ -558,11 +553,11 @@ export type UpdateArticleReq = {
   /**
    * 图片 URL 列表
    */
-  imageIds?: number[];
+  imageIds?: string[];
   /**
    * 封面图片 URL
    */
-  coverImageID?: number;
+  coverImageID?: string;
   /**
    * 标签列表
    */
@@ -592,7 +587,7 @@ export type ImageInfo = {
    * 图片ID
    * [required]
    */
-  image_id: number;
+  image_id: string;
   /**
    * MinIO bucket名称
    * [required]
@@ -642,7 +637,7 @@ export type ImageInfo = {
    * 上传者ID
    * [required]
    */
-  user_id: number;
+  user_id: string;
   /**
    * 创建时间
    * [required]
@@ -654,12 +649,12 @@ export type Comment = {
    * 评论ID
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * 文章ID
    * [required]
    */
-  entity_id: number;
+  entity_id: string;
   /**
    * 评论内容
    * [required]
@@ -669,12 +664,12 @@ export type Comment = {
    * 根评论ID
    * [required]
    */
-  root_id: number;
+  root_id: string;
   /**
    * 父评论ID
    * [required]
    */
-  parent_id: number;
+  parent_id: string;
   /**
    * UserInfo
    * ---
@@ -767,7 +762,7 @@ export type CreateCommentReq = {
    * 文章ID
    * [required]
    */
-  entity_id: number;
+  entity_id: string;
   /**
    * 评论内容
    * [required]
@@ -777,22 +772,22 @@ export type CreateCommentReq = {
    * 根评论ID
    * [required]
    */
-  root_id: number;
+  root_id: string;
   /**
    * 父评论ID（可选）
    * [required]
    */
-  parent_id: number;
+  parent_id: string;
   /**
    * 回复的目标评论ID（可选）
    * [required]
    */
-  reply_to_uid: number;
+  reply_to_uid: string;
   /**
    * 图片ID列表
    * [required]
    */
-  image_ids: number[];
+  image_ids: string[];
 };
 export type GetCommentRepliesResp = {
   /**
@@ -830,7 +825,7 @@ export type UpdateCommentLikeCountReq = {
    * 评论ID
    * [required]
    */
-  comment_id: number;
+  comment_id: string;
 };
 export type GetCommentResp = {
   /**
@@ -864,6 +859,105 @@ export type DeleteCommentResp = {
   data: boolean;
 };
 export type DeleteCommentReq = object;
+export type CreateEmojiResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * 表情包详情
+   * [required]
+   */
+  data: boolean;
+};
+export type CreateEmojiReq = {
+  /**
+   * 表情包名称
+   * [required]
+   */
+  code: string;
+  /**
+   * 描述
+   * [required]
+   */
+  description: string;
+  /**
+   * 图片地址
+   * [required]
+   */
+  url: string;
+};
+export type Emoji = {
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  code: string;
+  /**
+   * [required]
+   */
+  description: string;
+  /**
+   * [required]
+   */
+  url: string;
+  /**
+   * [required]
+   */
+  createdAt: number;
+  /**
+   * [required]
+   */
+  updatedAt: number;
+};
+export type EmojiList = {
+  /**
+   * [required]
+   */
+  total: number;
+  /**
+   * [required]
+   */
+  list: Emoji[];
+};
+export type GetEmojiListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * EmojiList
+   * ---
+   * [required]
+   */
+  data: EmojiList;
+};
+export type DeleteEmojiResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type DeleteEmojiReq = object;
 export type CreateFavorResp = {
   /**
    * 状态码
@@ -884,12 +978,12 @@ export type CreateFavorReq = {
    * 收藏夹 ID
    * [required]
    */
-  foldId: number;
+  foldId: string;
   /**
    * 实体 ID
    * [required]
    */
-  entityId: number;
+  entityId: string;
   /**
    * 实体类型
    * [required]
@@ -914,11 +1008,11 @@ export type DeleteFavorReq = {
   /**
    * [required]
    */
-  favor_fold_id: number;
+  favor_fold_id: string;
   /**
    * [required]
    */
-  entity_id: number;
+  entity_id: string;
   /**
    * [required]
    */
@@ -928,7 +1022,7 @@ export type EntityPreviewValue = {
   /**
    * [required]
    */
-  entity_id: number;
+  entity_id: string;
   /**
    * [required]
    */
@@ -956,19 +1050,19 @@ export type Favor = {
   /**
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * [required]
    */
-  create_user: number;
+  create_user: string;
   /**
    * [required]
    */
-  favor_fold_id: number;
+  favor_fold_id: string;
   /**
    * [required]
    */
-  entity_id: number;
+  entity_id: string;
   /**
    * EntityPreviewValue
    * ---
@@ -1046,7 +1140,7 @@ export type FavorFold = {
   /**
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * [required]
    */
@@ -1062,7 +1156,7 @@ export type FavorFold = {
   /**
    * [required]
    */
-  create_user: number;
+  create_user: string;
   /**
    * [required]
    */
@@ -1190,7 +1284,7 @@ export type FollowUserReq = {
    * 被关注用户ID
    * [required]
    */
-  follow_id: number;
+  follow_id: string;
 };
 export type GetFollowListResp = {
   /**
@@ -1228,7 +1322,7 @@ export type UnfollowUserReq = {
    * 被关注用户ID
    * [required]
    */
-  follow_id: number;
+  follow_id: string;
 };
 export type DeleteResponse = {
   /**
@@ -1250,7 +1344,7 @@ export type DeleteRequest = {
    * 图片ID
    * [required]
    */
-  image_id: number;
+  image_id: string;
 };
 export type GetResponse = {
   /**
@@ -1348,7 +1442,7 @@ export type CreateQuestionBankReq = {
    * 封面图片 URL
    * [required]
    */
-  coverImage: number;
+  coverImage: string;
 };
 export type DeleteQuestionBankResp = {
   /**
@@ -1370,7 +1464,7 @@ export type QuestionBank = {
   /**
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * [required]
    */
@@ -1457,7 +1551,7 @@ export type CreateQuestionReq = {
   /**
    * [required]
    */
-  bankId: number;
+  bankId: string;
   /**
    * [required]
    */
@@ -1471,7 +1565,7 @@ export type Question = {
   /**
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * [required]
    */
@@ -1479,7 +1573,7 @@ export type Question = {
   /**
    * [required]
    */
-  bankId: number;
+  bankId: string;
   /**
    * [required]
    */
@@ -1533,7 +1627,7 @@ export type QuestionMenus = {
   /**
    * [required]
    */
-  id: number;
+  id: string;
   /**
    * [required]
    */
@@ -1818,7 +1912,7 @@ export type UpdateUserAvatarReq = {
    * 头像
    * [required]
    */
-  avatar: number;
+  avatar: string;
 };
 declare global {
   interface Apis {
@@ -2046,7 +2140,7 @@ declare global {
        * ```ts
        * type QueryParameters = {
        *   // 用户 ID
-       *   user_id?: number
+       *   user_id?: string
        *   // 学历
        *   education?: string
        *   // 内容
@@ -2086,10 +2180,10 @@ declare global {
        *     list: Array<{
        *       // 学术导航 ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 用户 ID
        *       // [required]
-       *       user_id: number
+       *       user_id: string
        *       // 学历
        *       // [required]
        *       education: string
@@ -2119,7 +2213,7 @@ declare global {
             /**
              * 用户 ID
              */
-            user_id?: number;
+            user_id?: string;
             /**
              * 学历
              */
@@ -2173,23 +2267,18 @@ declare global {
        *   // [required]
        *   type: 'article' | 'micro_post'
        *   // 标题
-       *   // [required]
-       *   title: string
+       *   title?: string
        *   // 内容
        *   // [required]
        *   content: string
        *   // 摘要
-       *   // [required]
-       *   summary: string
+       *   summary?: string
        *   // 图片 URL 列表
-       *   // [required]
-       *   imageIds: number[]
+       *   imageIds?: string[]
        *   // 封面图片 URL
-       *   // [required]
-       *   coverImageID: number
+       *   coverImageID?: string
        *   // 标签列表
-       *   // [required]
-       *   tags: string[]
+       *   tags?: string[]
        *   // 文章状态
        *   // [required]
        *   status: 'draft' | 'published'
@@ -2207,7 +2296,7 @@ declare global {
        *   message?: string
        *   // 文章详情
        *   // [required]
-       *   data: number
+       *   data: string
        * }
        * ```
        */
@@ -2232,7 +2321,7 @@ declare global {
        * type RequestBody = {
        *   // 文章 ID
        *   // [required]
-       *   id: number
+       *   id: string
        * }
        * ```
        *
@@ -2339,9 +2428,9 @@ declare global {
        *   // 摘要
        *   summary?: string
        *   // 图片 URL 列表
-       *   imageIds?: number[]
+       *   imageIds?: string[]
        *   // 封面图片 URL
-       *   coverImageID?: number
+       *   coverImageID?: string
        *   // 标签列表
        *   tags?: string[]
        *   // 文章状态
@@ -2413,7 +2502,7 @@ declare global {
        *     article: {
        *       // 主键 ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 内容类型：长文或短文
        *       // [required]
        *       type: string
@@ -2434,7 +2523,7 @@ declare global {
        *       coverImage: string
        *       // 作者 ID
        *       // [required]
-       *       authorId: number
+       *       authorId: string
        *       // 标签列表
        *       // [required]
        *       tags: string[]
@@ -2462,7 +2551,7 @@ declare global {
        *     author: {
        *       // 用户ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 用户名
        *       // [required]
        *       username: string
@@ -2554,7 +2643,7 @@ declare global {
        *     article: {
        *       // 主键 ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 内容类型：长文或短文
        *       // [required]
        *       type: string
@@ -2575,7 +2664,7 @@ declare global {
        *       coverImage: string
        *       // 作者 ID
        *       // [required]
-       *       authorId: number
+       *       authorId: string
        *       // 标签列表
        *       // [required]
        *       tags: string[]
@@ -2603,7 +2692,7 @@ declare global {
        *     author: {
        *       // 用户ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 用户名
        *       // [required]
        *       username: string
@@ -2742,25 +2831,25 @@ declare global {
        *     list: Array<{
        *       // 评论ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 文章ID
        *       // [required]
-       *       entity_id: number
+       *       entity_id: string
        *       // 评论内容
        *       // [required]
        *       content: string
        *       // 根评论ID
        *       // [required]
-       *       root_id: number
+       *       root_id: string
        *       // 父评论ID
        *       // [required]
-       *       parent_id: number
+       *       parent_id: string
        *       // [title] UserInfo
        *       // [required]
        *       user_info: {
        *         // 用户ID
        *         // [required]
-       *         id: number
+       *         id: string
        *         // 用户名
        *         // [required]
        *         username: string
@@ -2818,7 +2907,7 @@ declare global {
        *       images: Array<{
        *         // 图片ID
        *         // [required]
-       *         image_id: number
+       *         image_id: string
        *         // MinIO bucket名称
        *         // [required]
        *         bucket_name: string
@@ -2848,7 +2937,7 @@ declare global {
        *         upload_ip: string
        *         // 上传者ID
        *         // [required]
-       *         user_id: number
+       *         user_id: string
        *         // 创建时间
        *         // [required]
        *         created_at: number
@@ -2899,22 +2988,22 @@ declare global {
        * type RequestBody = {
        *   // 文章ID
        *   // [required]
-       *   entity_id: number
+       *   entity_id: string
        *   // 评论内容
        *   // [required]
        *   content: string
        *   // 根评论ID
        *   // [required]
-       *   root_id: number
+       *   root_id: string
        *   // 父评论ID（可选）
        *   // [required]
-       *   parent_id: number
+       *   parent_id: string
        *   // 回复的目标评论ID（可选）
        *   // [required]
-       *   reply_to_uid: number
+       *   reply_to_uid: string
        *   // 图片ID列表
        *   // [required]
-       *   image_ids: number[]
+       *   image_ids: string[]
        * }
        * ```
        *
@@ -2932,25 +3021,25 @@ declare global {
        *   data: {
        *     // 评论ID
        *     // [required]
-       *     id: number
+       *     id: string
        *     // 文章ID
        *     // [required]
-       *     entity_id: number
+       *     entity_id: string
        *     // 评论内容
        *     // [required]
        *     content: string
        *     // 根评论ID
        *     // [required]
-       *     root_id: number
+       *     root_id: string
        *     // 父评论ID
        *     // [required]
-       *     parent_id: number
+       *     parent_id: string
        *     // [title] UserInfo
        *     // [required]
        *     user_info: {
        *       // 用户ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 用户名
        *       // [required]
        *       username: string
@@ -3008,7 +3097,7 @@ declare global {
        *     images: Array<{
        *       // 图片ID
        *       // [required]
-       *       image_id: number
+       *       image_id: string
        *       // MinIO bucket名称
        *       // [required]
        *       bucket_name: string
@@ -3038,7 +3127,7 @@ declare global {
        *       upload_ip: string
        *       // 上传者ID
        *       // [required]
-       *       user_id: number
+       *       user_id: string
        *       // 创建时间
        *       // [required]
        *       created_at: number
@@ -3102,25 +3191,25 @@ declare global {
        *     list: Array<{
        *       // 评论ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 文章ID
        *       // [required]
-       *       entity_id: number
+       *       entity_id: string
        *       // 评论内容
        *       // [required]
        *       content: string
        *       // 根评论ID
        *       // [required]
-       *       root_id: number
+       *       root_id: string
        *       // 父评论ID
        *       // [required]
-       *       parent_id: number
+       *       parent_id: string
        *       // [title] UserInfo
        *       // [required]
        *       user_info: {
        *         // 用户ID
        *         // [required]
-       *         id: number
+       *         id: string
        *         // 用户名
        *         // [required]
        *         username: string
@@ -3178,7 +3267,7 @@ declare global {
        *       images: Array<{
        *         // 图片ID
        *         // [required]
-       *         image_id: number
+       *         image_id: string
        *         // MinIO bucket名称
        *         // [required]
        *         bucket_name: string
@@ -3208,7 +3297,7 @@ declare global {
        *         upload_ip: string
        *         // 上传者ID
        *         // [required]
-       *         user_id: number
+       *         user_id: string
        *         // 创建时间
        *         // [required]
        *         created_at: number
@@ -3259,7 +3348,7 @@ declare global {
        * type RequestBody = {
        *   // 评论ID
        *   // [required]
-       *   comment_id: number
+       *   comment_id: string
        * }
        * ```
        *
@@ -3316,25 +3405,25 @@ declare global {
        *   data: {
        *     // 评论ID
        *     // [required]
-       *     id: number
+       *     id: string
        *     // 文章ID
        *     // [required]
-       *     entity_id: number
+       *     entity_id: string
        *     // 评论内容
        *     // [required]
        *     content: string
        *     // 根评论ID
        *     // [required]
-       *     root_id: number
+       *     root_id: string
        *     // 父评论ID
        *     // [required]
-       *     parent_id: number
+       *     parent_id: string
        *     // [title] UserInfo
        *     // [required]
        *     user_info: {
        *       // 用户ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 用户名
        *       // [required]
        *       username: string
@@ -3392,7 +3481,7 @@ declare global {
        *     images: Array<{
        *       // 图片ID
        *       // [required]
-       *       image_id: number
+       *       image_id: string
        *       // MinIO bucket名称
        *       // [required]
        *       bucket_name: string
@@ -3422,7 +3511,7 @@ declare global {
        *       upload_ip: string
        *       // 上传者ID
        *       // [required]
-       *       user_id: number
+       *       user_id: string
        *       // 创建时间
        *       // [required]
        *       created_at: number
@@ -3496,6 +3585,179 @@ declare global {
         config: Config
       ): Alova2Method<DeleteCommentResp, 'comments_auth.DeleteComment', Config>;
     };
+    emotion_auth: {
+      /**
+       * ---
+       *
+       * [POST] 创建表情包
+       *
+       * **path:** /api/emotion/create
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // 表情包名称
+       *   // [required]
+       *   code: string
+       *   // 描述
+       *   // [required]
+       *   description: string
+       *   // 图片地址
+       *   // [required]
+       *   url: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // 表情包详情
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      CreateEmotion<
+        Config extends Alova2MethodConfig<CreateEmojiResp> & {
+          data: CreateEmojiReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<CreateEmojiResp, 'emotion_auth.CreateEmotion', Config>;
+      /**
+       * ---
+       *
+       * [DELETE] 删除表情包
+       *
+       * **path:** /api/emotion/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      DeleteEmotion<
+        Config extends Alova2MethodConfig<DeleteEmojiResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+          data: DeleteEmojiReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<DeleteEmojiResp, 'emotion_auth.DeleteEmotion', Config>;
+    };
+    emotion_public: {
+      /**
+       * ---
+       *
+       * [GET] 获取表情包列表
+       *
+       * **path:** /api/emotion/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // 页码
+       *   // [required]
+       *   page: number
+       *   // 每页数量
+       *   // [required]
+       *   page_size: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] EmojiList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     total: number
+       *     // [required]
+       *     list: Array<{
+       *       // [required]
+       *       id: string
+       *       // [required]
+       *       code: string
+       *       // [required]
+       *       description: string
+       *       // [required]
+       *       url: string
+       *       // [required]
+       *       createdAt: number
+       *       // [required]
+       *       updatedAt: number
+       *     }>
+       *   }
+       * }
+       * ```
+       */
+      ListEmotion<
+        Config extends Alova2MethodConfig<GetEmojiListResp> & {
+          params: {
+            /**
+             * 页码
+             * [required]
+             */
+            page: number;
+            /**
+             * 每页数量
+             * [required]
+             */
+            page_size: number;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetEmojiListResp, 'emotion_public.ListEmotion', Config>;
+    };
     favorites_auth: {
       /**
        * ---
@@ -3511,10 +3773,10 @@ declare global {
        * type RequestBody = {
        *   // 收藏夹 ID
        *   // [required]
-       *   foldId: number
+       *   foldId: string
        *   // 实体 ID
        *   // [required]
-       *   entityId: number
+       *   entityId: string
        *   // 实体类型
        *   // [required]
        *   entity_type: 'article' | 'question'
@@ -3566,9 +3828,9 @@ declare global {
        * ```ts
        * type RequestBody = {
        *   // [required]
-       *   favor_fold_id: number
+       *   favor_fold_id: string
        *   // [required]
-       *   entity_id: number
+       *   entity_id: string
        *   // [required]
        *   entity_type: 'article' | 'question'
        * }
@@ -3773,13 +4035,13 @@ declare global {
        * type QueryParameters = {
        *   // 用户 ID
        *   // [required]
-       *   userId: number
+       *   userId: string
        *   // 实体类型
        *   // [required]
        *   entity_type: 'article' | 'question'
        *   // 收藏夹 ID
        *   // [required]
-       *   favor_fold_id: number
+       *   favor_fold_id: string
        *   // 页码
        *   // [required]
        *   page: number
@@ -3806,18 +4068,18 @@ declare global {
        *     // [required]
        *     list: Array<{
        *       // [required]
-       *       id: number
+       *       id: string
        *       // [required]
-       *       create_user: number
+       *       create_user: string
        *       // [required]
-       *       favor_fold_id: number
+       *       favor_fold_id: string
        *       // [required]
-       *       entity_id: number
+       *       entity_id: string
        *       // [title] EntityPreviewValue
        *       // [required]
        *       entity_value: {
        *         // [required]
-       *         entity_id: number
+       *         entity_id: string
        *         // [required]
        *         title: string
        *         // [required]
@@ -3831,7 +4093,7 @@ declare global {
        *         user_info: {
        *           // 用户ID
        *           // [required]
-       *           id: number
+       *           id: string
        *           // 用户名
        *           // [required]
        *           username: string
@@ -3883,7 +4145,7 @@ declare global {
              * 用户 ID
              * [required]
              */
-            userId: number;
+            userId: string;
             /**
              * 实体类型
              * [required]
@@ -3893,7 +4155,7 @@ declare global {
              * 收藏夹 ID
              * [required]
              */
-            favor_fold_id: number;
+            favor_fold_id: string;
             /**
              * 页码
              * [required]
@@ -3923,9 +4185,9 @@ declare global {
        * type QueryParameters = {
        *   // 用户 ID
        *   // [required]
-       *   user_id: number
+       *   user_id: string
        *   // 请求用户 ID
-       *   request_user_id?: number
+       *   request_user_id?: string
        *   // 页码
        *   // [required]
        *   page: number
@@ -3952,7 +4214,7 @@ declare global {
        *     // [required]
        *     list: Array<{
        *       // [required]
-       *       id: number
+       *       id: string
        *       // [required]
        *       name: string
        *       // [required]
@@ -3960,7 +4222,7 @@ declare global {
        *       // [required]
        *       is_public: boolean
        *       // [required]
-       *       create_user: number
+       *       create_user: string
        *       // [required]
        *       createdAt: number
        *       // [required]
@@ -3977,11 +4239,11 @@ declare global {
              * 用户 ID
              * [required]
              */
-            user_id: number;
+            user_id: string;
             /**
              * 请求用户 ID
              */
-            request_user_id?: number;
+            request_user_id?: string;
             /**
              * 页码
              * [required]
@@ -4013,7 +4275,7 @@ declare global {
        * type QueryParameters = {
        *   // 用户ID
        *   // [required]
-       *   user_id: number
+       *   user_id: string
        *   // 页码
        *   // [required]
        *   page: number
@@ -4043,7 +4305,7 @@ declare global {
        *     list: Array<{
        *       // 用户ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 用户名
        *       // [required]
        *       username: string
@@ -4089,7 +4351,7 @@ declare global {
              * 用户ID
              * [required]
              */
-            user_id: number;
+            user_id: string;
             /**
              * 页码
              * [required]
@@ -4119,7 +4381,7 @@ declare global {
        * type QueryParameters = {
        *   // 用户ID
        *   // [required]
-       *   user_id: number
+       *   user_id: string
        *   // 页码
        *   // [required]
        *   page: number
@@ -4149,7 +4411,7 @@ declare global {
        *     list: Array<{
        *       // 用户ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 用户名
        *       // [required]
        *       username: string
@@ -4195,7 +4457,7 @@ declare global {
              * 用户ID
              * [required]
              */
-            user_id: number;
+            user_id: string;
             /**
              * 页码
              * [required]
@@ -4227,7 +4489,7 @@ declare global {
        * type RequestBody = {
        *   // 被关注用户ID
        *   // [required]
-       *   follow_id: number
+       *   follow_id: string
        * }
        * ```
        *
@@ -4267,7 +4529,7 @@ declare global {
        * type RequestBody = {
        *   // 被关注用户ID
        *   // [required]
-       *   follow_id: number
+       *   follow_id: string
        * }
        * ```
        *
@@ -4309,7 +4571,7 @@ declare global {
        * type RequestBody = {
        *   // 图片ID
        *   // [required]
-       *   image_id: number
+       *   image_id: string
        * }
        * ```
        *
@@ -4366,7 +4628,7 @@ declare global {
        *   data: {
        *     // 图片ID
        *     // [required]
-       *     image_id: number
+       *     image_id: string
        *     // MinIO bucket名称
        *     // [required]
        *     bucket_name: string
@@ -4396,7 +4658,7 @@ declare global {
        *     upload_ip: string
        *     // 上传者ID
        *     // [required]
-       *     user_id: number
+       *     user_id: string
        *     // 创建时间
        *     // [required]
        *     created_at: number
@@ -4430,7 +4692,7 @@ declare global {
        * type QueryParameters = {
        *   // 用户ID
        *   // [required]
-       *   user_id: number
+       *   user_id: string
        *   // 页码
        *   // [required]
        *   page: number
@@ -4457,7 +4719,7 @@ declare global {
        *     images: Array<{
        *       // 图片ID
        *       // [required]
-       *       image_id: number
+       *       image_id: string
        *       // MinIO bucket名称
        *       // [required]
        *       bucket_name: string
@@ -4487,7 +4749,7 @@ declare global {
        *       upload_ip: string
        *       // 上传者ID
        *       // [required]
-       *       user_id: number
+       *       user_id: string
        *       // 创建时间
        *       // [required]
        *       created_at: number
@@ -4506,7 +4768,7 @@ declare global {
              * 用户ID
              * [required]
              */
-            user_id: number;
+            user_id: string;
             /**
              * 页码
              * [required]
@@ -4543,7 +4805,7 @@ declare global {
        *   data: {
        *     // 图片ID
        *     // [required]
-       *     image_id: number
+       *     image_id: string
        *     // MinIO bucket名称
        *     // [required]
        *     bucket_name: string
@@ -4573,7 +4835,7 @@ declare global {
        *     upload_ip: string
        *     // 上传者ID
        *     // [required]
-       *     user_id: number
+       *     user_id: string
        *     // 创建时间
        *     // [required]
        *     created_at: number
@@ -4608,7 +4870,7 @@ declare global {
        *   tags: string[]
        *   // 封面图片 URL
        *   // [required]
-       *   coverImage: number
+       *   coverImage: string
        * }
        * ```
        *
@@ -4701,7 +4963,7 @@ declare global {
        *   // [required]
        *   title: string
        *   // [required]
-       *   bankId: number
+       *   bankId: string
        *   // [required]
        *   content: string
        *   // [required]
@@ -4821,7 +5083,7 @@ declare global {
        *     // [required]
        *     list: Array<{
        *       // [required]
-       *       id: number
+       *       id: string
        *       // [required]
        *       name: string
        *       // [required]
@@ -4835,7 +5097,7 @@ declare global {
        *       coverImage: {
        *         // 图片ID
        *         // [required]
-       *         image_id: number
+       *         image_id: string
        *         // MinIO bucket名称
        *         // [required]
        *         bucket_name: string
@@ -4865,7 +5127,7 @@ declare global {
        *         upload_ip: string
        *         // 上传者ID
        *         // [required]
-       *         user_id: number
+       *         user_id: string
        *         // 创建时间
        *         // [required]
        *         created_at: number
@@ -4875,7 +5137,7 @@ declare global {
        *       createUser: {
        *         // 用户ID
        *         // [required]
-       *         id: number
+       *         id: string
        *         // 用户名
        *         // [required]
        *         username: string
@@ -4965,11 +5227,11 @@ declare global {
        *   // [required]
        *   data: {
        *     // [required]
-       *     id: number
+       *     id: string
        *     // [required]
        *     title: string
        *     // [required]
-       *     bankId: number
+       *     bankId: string
        *     // [required]
        *     content: string
        *     // [required]
@@ -5008,7 +5270,7 @@ declare global {
        * type QueryParameters = {
        *   // 题库 ID
        *   // [required]
-       *   bankId: number
+       *   bankId: string
        *   // 页码
        *   // [required]
        *   page: number
@@ -5035,7 +5297,7 @@ declare global {
        *     // [required]
        *     list: Array<{
        *       // [required]
-       *       id: number
+       *       id: string
        *       // [required]
        *       title: string
        *     }>
@@ -5050,7 +5312,7 @@ declare global {
              * 题库 ID
              * [required]
              */
-            bankId: number;
+            bankId: string;
             /**
              * 页码
              * [required]
@@ -5184,7 +5446,7 @@ declare global {
        *   data: {
        *     // 用户ID
        *     // [required]
-       *     id: number
+       *     id: string
        *     // 用户名
        *     // [required]
        *     username: string
@@ -5302,7 +5564,7 @@ declare global {
        * type RequestBody = {
        *   // 头像
        *   // [required]
-       *   avatar: number
+       *   avatar: string
        * }
        * ```
        *
@@ -5361,7 +5623,7 @@ declare global {
        *   data: {
        *     // 用户ID
        *     // [required]
-       *     id: number
+       *     id: string
        *     // 用户名
        *     // [required]
        *     username: string
@@ -5452,7 +5714,7 @@ declare global {
        *     list: Array<{
        *       // 用户ID
        *       // [required]
-       *       id: number
+       *       id: string
        *       // 用户名
        *       // [required]
        *       username: string

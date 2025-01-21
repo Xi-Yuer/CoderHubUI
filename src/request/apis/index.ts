@@ -1,4 +1,9 @@
-import { LoginReq, RegisterReq, UpdatePasswordReq } from "@/alova/globals";
+import {
+  CreateArticleReq,
+  LoginReq,
+  RegisterReq,
+  UpdatePasswordReq,
+} from "@/alova/globals";
 import { alovaServerInstance } from "../alova/server";
 
 // 登录
@@ -25,4 +30,45 @@ export function ClientModifyPassword(params: UpdatePasswordReq) {
 // 获取用户信息
 export function ClientGetUserInfo() {
   return alovaServerInstance.user_auth.GetUserInfoByToken();
+}
+
+// 获取文章列表
+export function ClientGetArticleList(
+  type: "article" | "micro_post",
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.articles_public.GetArticles({
+    params: {
+      type,
+      page,
+      page_size,
+    },
+  });
+}
+
+// 发表文章
+export function ClientCreateArticle(params: CreateArticleReq) {
+  return alovaServerInstance.articles_auth.CreateArticle({
+    data: params,
+  });
+}
+
+// 上传图片
+export function ClientUploadImage(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+  return alovaServerInstance.image_auth.Upload({
+    data: formData,
+  } as any);
+}
+
+// 获取表情包数据
+export function ClientGetEmojiList() {
+  return alovaServerInstance.emotion_public.ListEmotion({
+    params: {
+      page: 1,
+      page_size: 100,
+    },
+  });
 }

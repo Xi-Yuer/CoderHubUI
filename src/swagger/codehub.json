@@ -145,8 +145,7 @@
             "description": " 用户 ID",
             "in": "query",
             "required": false,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "education",
@@ -704,6 +703,113 @@
         ]
       }
     },
+    "/api/emotion/create": {
+      "post": {
+        "summary": "创建表情包",
+        "operationId": "CreateEmotion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateEmojiResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 创建表情包",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateEmojiReq"
+            }
+          }
+        ],
+        "tags": [
+          "emotion_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/emotion/list": {
+      "get": {
+        "summary": "获取表情包列表",
+        "operationId": "ListEmotion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetEmojiListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "emotion_public"
+        ]
+      }
+    },
+    "/api/emotion/{id}": {
+      "delete": {
+        "summary": "删除表情包",
+        "operationId": "DeleteEmotion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteEmojiResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 删除表情包",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteEmojiReq"
+            }
+          }
+        ],
+        "tags": [
+          "emotion_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/favorites/add": {
       "post": {
         "summary": "添加收藏内容",
@@ -794,8 +900,7 @@
             "description": " 用户 ID",
             "in": "query",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "entity_type",
@@ -813,8 +918,7 @@
             "description": " 收藏夹 ID",
             "in": "query",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "page",
@@ -889,16 +993,14 @@
             "description": " 用户 ID",
             "in": "query",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "request_user_id",
             "description": " 请求用户 ID",
             "in": "query",
             "required": false,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "page",
@@ -1016,8 +1118,7 @@
             "description": " 用户ID",
             "in": "query",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "page",
@@ -1095,8 +1196,7 @@
             "description": " 用户ID",
             "in": "query",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "page",
@@ -1237,8 +1337,7 @@
             "description": " 用户ID",
             "in": "query",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "page",
@@ -1507,8 +1606,7 @@
             "description": " 题库 ID",
             "in": "query",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "page",
@@ -1907,13 +2005,11 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 学术导航 ID"
         },
         "user_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 用户 ID"
         },
         "education": {
@@ -2014,8 +2110,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 主键 ID"
         },
         "type": {
@@ -2046,8 +2141,7 @@
           "description": " 封面图片 URL"
         },
         "authorId": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 作者 ID"
         },
         "tags": {
@@ -2137,13 +2231,11 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 评论ID"
         },
         "entity_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 文章ID"
         },
         "content": {
@@ -2151,13 +2243,11 @@
           "description": " 评论内容"
         },
         "root_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 根评论ID"
         },
         "parent_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 父评论ID"
         },
         "user_info": {
@@ -2246,14 +2336,12 @@
         "imageIds": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           "description": " 图片 URL 列表"
         },
         "coverImageID": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 封面图片 URL"
         },
         "tags": {
@@ -2269,18 +2357,14 @@
             "draft",
             "published"
           ],
+          "default": "published",
           "description": " 文章状态"
         }
       },
       "title": "CreateArticleReq",
       "required": [
         "type",
-        "title",
         "content",
-        "summary",
-        "imageIds",
-        "coverImageID",
-        "tags",
         "status"
       ]
     },
@@ -2297,8 +2381,7 @@
           "description": " 提示信息"
         },
         "data": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 文章详情"
         }
       },
@@ -2311,8 +2394,7 @@
       "type": "object",
       "properties": {
         "entity_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 文章ID"
         },
         "content": {
@@ -2320,25 +2402,21 @@
           "description": " 评论内容"
         },
         "root_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 根评论ID"
         },
         "parent_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 父评论ID（可选）"
         },
         "reply_to_uid": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 回复的目标评论ID（可选）"
         },
         "image_ids": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           "description": " 图片ID列表"
         }
@@ -2371,6 +2449,52 @@
         }
       },
       "title": "CreateCommentResp",
+      "required": [
+        "data"
+      ]
+    },
+    "CreateEmojiReq": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": " 表情包名称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 描述"
+        },
+        "url": {
+          "type": "string",
+          "description": " 图片地址"
+        }
+      },
+      "title": "CreateEmojiReq",
+      "required": [
+        "code",
+        "description",
+        "url"
+      ]
+    },
+    "CreateEmojiResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 表情包详情"
+        }
+      },
+      "title": "CreateEmojiResp",
       "required": [
         "data"
       ]
@@ -2426,13 +2550,11 @@
       "type": "object",
       "properties": {
         "foldId": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 收藏夹 ID"
         },
         "entityId": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 实体 ID"
         },
         "entity_type": {
@@ -2499,8 +2621,7 @@
           }
         },
         "coverImage": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 封面图片 URL"
         }
       },
@@ -2543,8 +2664,7 @@
           "type": "string"
         },
         "bankId": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "content": {
           "type": "string"
@@ -2671,6 +2791,32 @@
         "data"
       ]
     },
+    "DeleteEmojiReq": {
+      "type": "object",
+      "title": "DeleteEmojiReq"
+    },
+    "DeleteEmojiResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteEmojiResp",
+      "required": [
+        "data"
+      ]
+    },
     "DeleteFavorFoldReq": {
       "type": "object",
       "title": "DeleteFavorFoldReq"
@@ -2701,12 +2847,10 @@
       "type": "object",
       "properties": {
         "favor_fold_id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "entity_id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "entity_type": {
           "type": "string",
@@ -2803,8 +2947,7 @@
       "type": "object",
       "properties": {
         "image_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 图片ID"
         }
       },
@@ -2863,12 +3006,65 @@
         "data"
       ]
     },
+    "Emoji": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Emoji",
+      "required": [
+        "id",
+        "code",
+        "description",
+        "url",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "EmojiList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Emoji"
+          }
+        }
+      },
+      "title": "EmojiList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
     "EntityPreviewValue": {
       "type": "object",
       "properties": {
         "entity_id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "title": {
           "type": "string"
@@ -2900,20 +3096,16 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "create_user": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "favor_fold_id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "entity_id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "entity_value": {
           "$ref": "#/definitions/EntityPreviewValue"
@@ -2941,8 +3133,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "name": {
           "type": "string"
@@ -2955,8 +3146,7 @@
           "format": "boolean"
         },
         "create_user": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "createdAt": {
           "type": "integer",
@@ -3044,8 +3234,7 @@
       "type": "object",
       "properties": {
         "follow_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 被关注用户ID"
         }
       },
@@ -3081,8 +3270,7 @@
       "type": "object",
       "properties": {
         "user_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 用户 ID"
         },
         "education": {
@@ -3352,12 +3540,52 @@
         "data"
       ]
     },
+    "GetEmojiListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetEmojiListReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetEmojiListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/EmojiList"
+        }
+      },
+      "title": "GetEmojiListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetFansListReq": {
       "type": "object",
       "properties": {
         "user_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 用户ID"
         },
         "page": {
@@ -3404,13 +3632,11 @@
       "type": "object",
       "properties": {
         "user_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 用户 ID"
         },
         "request_user_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 请求用户 ID"
         },
         "page": {
@@ -3456,8 +3682,7 @@
       "type": "object",
       "properties": {
         "userId": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 用户 ID"
         },
         "entity_type": {
@@ -3469,8 +3694,7 @@
           "description": " 实体类型"
         },
         "favor_fold_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 收藏夹 ID"
         },
         "page": {
@@ -3518,8 +3742,7 @@
       "type": "object",
       "properties": {
         "user_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 用户ID"
         },
         "page": {
@@ -3632,8 +3855,7 @@
       "type": "object",
       "properties": {
         "bankId": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 题库 ID"
         },
         "page": {
@@ -3797,8 +4019,7 @@
       "type": "object",
       "properties": {
         "image_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 图片ID"
         },
         "bucket_name": {
@@ -3841,8 +4062,7 @@
           "description": " 上传者IP"
         },
         "user_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 上传者ID"
         },
         "created_at": {
@@ -3915,8 +4135,7 @@
       "type": "object",
       "properties": {
         "user_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 用户ID"
         },
         "page": {
@@ -4076,15 +4295,13 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "title": {
           "type": "string"
         },
         "bankId": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "content": {
           "type": "string"
@@ -4116,8 +4333,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "name": {
           "type": "string"
@@ -4206,8 +4422,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "title": {
           "type": "string"
@@ -4366,8 +4581,7 @@
       "type": "object",
       "properties": {
         "follow_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 被关注用户ID"
         }
       },
@@ -4417,14 +4631,12 @@
         "imageIds": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           "description": " 图片 URL 列表"
         },
         "coverImageID": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 封面图片 URL"
         },
         "tags": {
@@ -4468,8 +4680,7 @@
       "type": "object",
       "properties": {
         "comment_id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 评论ID"
         }
       },
@@ -4547,8 +4758,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 文章 ID"
         }
       },
@@ -4625,8 +4835,7 @@
       "type": "object",
       "properties": {
         "avatar": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 头像"
         }
       },
@@ -4740,8 +4949,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
           "description": " 用户ID"
         },
         "username": {

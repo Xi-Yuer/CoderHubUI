@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import zhCN from "antd/locale/zh_CN";
 import { ConfigProvider } from "antd";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { AppFooter, AppHeader } from "./_components";
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ConfigProvider
+          locale={zhCN}
           theme={{
             token: {
               colorPrimary: "#000000",

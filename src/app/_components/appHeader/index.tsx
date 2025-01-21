@@ -6,7 +6,7 @@ import {
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Input, Popover } from "antd";
+import { Button, Input, Popover } from "antd";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
