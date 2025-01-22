@@ -2,7 +2,7 @@
 import { AppShortEditor } from "@/app/_components";
 import { Card } from "antd";
 import React, { useRef } from "react";
-import MicroPost, { RefCallBack } from "./_components/microPost";
+import MicroPostList, { RefCallBack } from "./_components/microPostList";
 
 export default function Page() {
   const MicroPostRef = useRef<RefCallBack>(null);
@@ -15,7 +15,7 @@ export default function Page() {
         <Card>
           <AppShortEditor PublicSuccess={() => MicroPostRef.current?.refreshList()} />
         </Card>
-        <MicroPost ref={MicroPostRef} />
+        <MicroPostList ref={MicroPostRef} />
       </div>
       <div className="w-[350px] gap-4 flex flex-col">
         <Card>Recommend</Card>
