@@ -1,5 +1,5 @@
 "use client";
-import { Comment, GetArticle } from "@/alova/globals";
+import { GetArticle } from "@/alova/globals";
 import {
   CommentOutlined,
   LikeOutlined,
@@ -12,13 +12,11 @@ import { ClientSendComment } from "@/request/apis";
 import { formatTime } from "@/utils";
 import AppCommentList from "../appCommentList";
 
-export default function AppShartControl({
+export default function AppShortControl({
   article,
-  comment,
   children,
 }: {
   article: GetArticle;
-  comment?: Comment;
   children: React.ReactNode;
 }) {
   const [showCommentEditor, setShowCommentEditor] = React.useState(false);

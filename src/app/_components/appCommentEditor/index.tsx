@@ -77,13 +77,16 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
             }}
             previewTheme={previewTheme}
           />
-          <div className="image_list flex gap-2 mt-2 mb-10 pt-10 mx-2">
-            {imageList.map((item, index) => {
-              return (
-                <Image key={index} src={item} width={100} height={100} alt="" />
-              );
-            })}
-          </div>
+          {imageList.map((item, index) => {
+            return (
+              <div
+                className="image_list flex gap-2 mt-2 mb-10 mx-2"
+                key={index}
+              >
+                <Image src={item} width={100} height={100} alt="" />
+              </div>
+            );
+          })}
           <div className="flex gap-6 absolute bottom-2 left-2 text-gray-500">
             <Popover
               placement="bottom"
