@@ -1,5 +1,7 @@
 import { Emoji } from "@/alova/globals";
 import { Md5 } from "ts-md5";
+import { format, formatDistance } from "date-fns";
+import { zhCN } from "date-fns/locale";
 
 export const md5 = (str: string) => {
   return Md5.hashStr(str);
@@ -22,4 +24,30 @@ export const RenderEmotion = (emotions: Emoji[], text: string) => {
       ? `<img src="${emoji.url}" alt="${emoji.description}" style="display: inline-block; width: 80px; height: 80px; border:none;margin: 0px 4px;" />`
       : match;
   });
+};
+
+export const formatTime = (time: number | string) => {
+  try {
+    let date: Date;
+    if (typeof time === "number") {
+      // 假设 time 是秒级时间戳，转换为毫秒级
+      date = new Date(time * 1000);
+    } else if (typeof time === "string") {
+      date = new Date(time);
+    } else {
+      throw new Error("Invalid time format");
+    }
+
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date");
+    }
+
+    return formatDistance(date, new Date(), {
+      addSuffix: true,
+      locale: zhCN,
+    });
+  } catch (error) {
+    console.error("Error formatting time:", error);
+    return "Invalid time";
+  }
 };

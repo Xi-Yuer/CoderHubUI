@@ -1,5 +1,6 @@
 import {
   CreateArticleReq,
+  CreateCommentReq,
   LoginReq,
   RegisterReq,
   UpdatePasswordReq,
@@ -69,6 +70,30 @@ export function ClientGetEmojiList() {
     params: {
       page: 1,
       page_size: 100,
+    },
+  });
+}
+
+// 发送评论
+export function ClientSendComment(entity: CreateCommentReq) {
+  return alovaServerInstance.comments_auth.CreateComment({
+    data: entity,
+  });
+}
+
+// 获取评论列表
+export function ClientGetComments(
+  entity_id: string,
+  page: number,
+  page_size: number = 10
+) {
+  return alovaServerInstance.comments_auth.GetComments({
+    pathParams: {
+      entity_id,
+    },
+    params: {
+      page,
+      page_size,
     },
   });
 }
