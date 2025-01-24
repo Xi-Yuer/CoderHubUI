@@ -1,11 +1,12 @@
 import { Comment } from "@/alova/globals";
 import Image from "next/image";
 import { MdPreview } from "md-editor-rt";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { formatTime } from "@/utils";
 import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import { AppCommentEditor } from "../appCommentEditor";
-import { ClientSendComment } from "@/request/apis";
+import { ClientGetReplies, ClientSendComment } from "@/request/apis";
+import { Button } from "antd";
 
 interface AppCommentItemProps {
   comment: Comment;
@@ -13,12 +14,32 @@ interface AppCommentItemProps {
 
 export default function AppCommentItem({ comment }: AppCommentItemProps) {
   const [showAppCommentEditor, setShowAppCommentEditor] = useState(false);
+  const [replies, setReplies] = useState<Comment[]>([]);
+  const [showReplies, setShowReplies] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [total, setTotal] = useState(0);
+
+  // 查看全部回复
+  const getCommentRepliesAction = () => {
+    if (!showAppCommentEditor) return;
+    ClientGetReplies(comment.id, pageNo).then((res) => {
+      setReplies(res.data.list);
+      setTotal(res.data.total);
+      if (res.data.list.length < pageSize) {
+        setShowReplies(false);
+      } else {
+        setShowReplies(true);
+      }
+    });
+  };
+  useEffect(getCommentRepliesAction, [pageNo, showAppCommentEditor]);
   return (
     <>
       <div className="flex gap-4 mt-10 w-full">
         <div>
           <Image
-            src={comment.user_info.avatar}
+            src={comment.user_info?.avatar}
             width={30}
             height={30}
             alt=""
@@ -26,7 +47,18 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
           />
         </div>
         <div className="flex flex-col w-full">
-          <div>{comment.user_info.nickname}</div>
+          <div className="flex gap-2">
+            <span>{comment.user_info?.nickname}</span>
+            {comment.reply_to_user_info && (
+              <>
+                <span>回复</span>
+                <span className="text-gray-400">
+                  {comment.reply_to_user_info?.nickname ||
+                    comment.reply_to_user_info?.username}
+                </span>
+              </>
+            )}
+          </div>
           <MdPreview
             value={comment.content}
             className=" relative -left-4"
@@ -63,9 +95,20 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
                 cancel={() => {}}
               />
               <div className="w-full">
-                {comment.replies.map((item) => (
+                {replies.map((item) => (
                   <AppCommentItem key={item.id} comment={item}></AppCommentItem>
                 ))}
+                {
+                  // 查看全部回复
+                  showReplies && (
+                    <Button
+                      className="text-gray-500 cursor-pointer w-full mt-2"
+                      type="primary"
+                    >
+                      查看全部{comment.replies_count}条回复
+                    </Button>
+                  )
+                }
               </div>
             </div>
           )}

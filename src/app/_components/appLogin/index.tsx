@@ -97,28 +97,28 @@ export function AppLogin() {
             {appStore.userInfo.email || appStore.userInfo.phone}
           </Text>
         </div>
-        <Link href="/">
+        <Link href="/" className="text-gray-950">
           <RightOutlined />
         </Link>
       </div>
       <div className="flex items-center mt-4">
         <Link
           href="/"
-          className="flex flex-col gap-2 text-sm items-center flex-1"
+          className="flex flex-col gap-2 text-sm items-center flex-1 text-gray-950"
         >
           <span className="font-bold">0</span>
           <span className="text-sm text-gray-400">关注</span>
         </Link>
         <Link
           href="/"
-          className="flex flex-col gap-2 text-sm items-center flex-1"
+          className="flex flex-col gap-2 text-sm items-center flex-1 text-gray-950"
         >
           <span className="font-bold">0</span>
           <span className="text-sm text-gray-400">点赞</span>
         </Link>
         <Link
           href="/"
-          className="flex flex-col gap-2 text-sm items-center flex-1"
+          className="flex flex-col gap-2 text-sm items-center flex-1 text-gray-950"
         >
           <span className="font-bold">0</span>
           <span className="text-sm text-gray-400">收藏</span>

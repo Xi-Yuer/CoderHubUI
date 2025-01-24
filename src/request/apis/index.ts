@@ -97,3 +97,20 @@ export function ClientGetComments(
     },
   });
 }
+
+// 获取评论回复列表
+export function ClientGetReplies(
+  comment_id: string,
+  page: number,
+  page_size: number = 10
+) {
+  return alovaServerInstance.comments_auth.GetCommentReplies({
+    pathParams: {
+      comment_id: comment_id,
+    },
+    params: {
+      page,
+      page_size,
+    },
+  });
+}
