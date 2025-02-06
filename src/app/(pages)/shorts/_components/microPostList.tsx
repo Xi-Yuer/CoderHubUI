@@ -2,7 +2,13 @@
 import { GetArticle } from "@/alova/globals";
 import AppShortPreview from "@/app/_components/appShortPreview";
 import { ClientGetArticleList } from "@/request/apis";
-import React, { Ref, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, {
+  Ref,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 export type RefCallBack = {
   refreshList: () => void;
@@ -22,7 +28,7 @@ export default function MicroPostList({ ref }: Props) {
       ([entry]) => {
         if (entry.isIntersecting) {
           // 触发加载更多
-          setPage((prev) => prev + 1)
+          setPage((prev) => prev + 1);
         }
       },
       {
@@ -42,15 +48,18 @@ export default function MicroPostList({ ref }: Props) {
     };
   }, []);
 
-  const getList = (refreshed = false) => {
-    if (!hasMore) return
-    ClientGetArticleList("micro_post", page, 10).send(refreshed).then((res) => {
-      setList([...list, ...res.data || []]);
-      if (!res.data) {
-        setHasMore(false)
-      }
-    });
-  }
+  const getList = (reFreshed = false) => {
+    if (!hasMore) return;
+    ClientGetArticleList("micro_post", page, 10)
+      .send(reFreshed)
+      .then((res) => {
+        if (!res.data) {
+          setHasMore(false);
+          return;
+        }
+        setList([...list, ...res.data]);
+      });
+  };
 
   // 导出函数，使得其他页面可以刷新列表
   const refreshList = () => {
@@ -60,12 +69,15 @@ export default function MicroPostList({ ref }: Props) {
     getList(true);
   };
 
-
-  useImperativeHandle(ref, function () {
-    return {
-      refreshList
-    }
-  }, [])
+  useImperativeHandle(
+    ref,
+    function () {
+      return {
+        refreshList,
+      };
+    },
+    []
+  );
 
   useEffect(getList, [page]);
   return (
@@ -77,7 +89,9 @@ export default function MicroPostList({ ref }: Props) {
           </div>
         );
       })}
-      <div ref={loadingRef} className="text-center mt-4 text-gray-400">{hasMore ? "Loaing" : "没有更多了"}</div>
+      <div ref={loadingRef} className="text-center mt-4 text-gray-400">
+        {hasMore ? "Loaing" : "没有更多了"}
+      </div>
     </div>
   );
 }

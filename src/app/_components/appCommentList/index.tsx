@@ -1,14 +1,20 @@
+"use client";
 import { Comment } from "@/alova/globals";
 import { ClientGetComments } from "@/request/apis";
 import { DoubleRightOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState, Ref } from "react";
 import AppCommentItem from "../appCommentItem";
+
+export type appendCommentRefCallBack = {
+  appendComment: (comment: Comment) => void;
+};
 
 interface Props {
   entityID: string;
+  ref: Ref<appendCommentRefCallBack>;
 }
-export default function AppCommentList({ entityID }: Props) {
+export default function AppCommentList({ entityID, ref }: Props) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [list, setList] = useState<Comment[]>([]);
@@ -17,13 +23,22 @@ export default function AppCommentList({ entityID }: Props) {
 
   useEffect(() => {
     ClientGetComments(entityID, page, pageSize).then((res) => {
-      setList(res.data.list);
-      setTotal(res.data.total);
+      setList(res.data.list || []);
+      setTotal(res.data.total || 0);
       if (res.data.list.length < pageSize) {
         setHasMore(false);
       }
     });
   }, [page, pageSize]);
+
+  useImperativeHandle(ref, function () {
+    return {
+      appendComment: (comment: Comment) => {
+        setList((prev) => [comment, ...prev]);
+        setTotal((prev) => prev + 1);
+      },
+    };
+  });
   return (
     <div>
       <div>

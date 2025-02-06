@@ -11,6 +11,7 @@ type AppStore = {
   clearToken: () => void;
   setUserInfo: (userInfo: UserInfo) => void;
   setEmotions: (emotions: Emoji[]) => void;
+  reset: () => void;
 };
 
 export const useAppStore = create<AppStore>()(
@@ -32,6 +33,13 @@ export const useAppStore = create<AppStore>()(
       },
       setEmotions: (emotions: Emoji[]) => {
         set(() => ({ emotions }));
+      },
+      reset: () => {
+        set(() => ({
+          token: "",
+          userInfo: {} as UserInfo,
+          emotions: [],
+        }));
       },
     }),
     {

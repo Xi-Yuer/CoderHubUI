@@ -10,7 +10,7 @@ import React from "react";
 import { AppCommentEditor } from "../appCommentEditor";
 import { ClientSendComment } from "@/request/apis";
 import { formatTime } from "@/utils";
-import AppCommentList from "../appCommentList";
+import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 
 export default function AppShortControl({
   article,
@@ -20,6 +20,7 @@ export default function AppShortControl({
   children: React.ReactNode;
 }) {
   const [showCommentEditor, setShowCommentEditor] = React.useState(false);
+  const appCommentListRef = React.useRef<appendCommentRefCallBack>(null);
   return (
     <>
       <div className="flex items-center justify-between space-x-3">
@@ -65,19 +66,26 @@ export default function AppShortControl({
           <>
             <AppCommentEditor
               publicSuccess={async (params) => {
-                ClientSendComment({
+                await ClientSendComment({
                   entity_id: article.article.id,
                   content: params.content,
                   image_ids: params.imageIds,
                   root_id: "",
                   parent_id: "",
                   reply_to_uid: "",
-                }).send();
+                })
+                  .send()
+                  .then((res) => {
+                    appCommentListRef.current?.appendComment(res.data);
+                  });
               }}
-              cancel={() => setShowCommentEditor(false)}
+              cancel={() => {}}
               entityID={article.article.id}
             />
-            <AppCommentList entityID={article.article.id} />
+            <AppCommentList
+              entityID={article.article.id}
+              ref={appCommentListRef}
+            />
           </>
         )}
       </div>

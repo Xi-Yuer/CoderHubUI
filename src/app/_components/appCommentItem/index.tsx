@@ -24,8 +24,8 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
   const getCommentRepliesAction = () => {
     if (!showAppCommentEditor) return;
     ClientGetReplies(comment.id, pageNo).then((res) => {
-      setReplies(res.data.list);
-      setTotal(res.data.total);
+      setReplies(res.data.list || []);
+      setTotal(res.data.total || 0);
       if (res.data.list.length < pageSize) {
         setShowReplies(false);
       } else {
@@ -82,6 +82,7 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
               <AppCommentEditor
                 entityID={comment.entity_id}
                 publicSuccess={(params) => {
+                  console.log(params);
                   ClientSendComment({
                     entity_id: comment.id,
                     content: params.content,
@@ -90,7 +91,12 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
                       comment?.root_id !== "0" ? comment?.root_id : comment?.id,
                     parent_id: comment?.id,
                     reply_to_uid: comment?.user_info?.id,
-                  }).send();
+                  }).then((res) => {
+                    setReplies((prev) => {
+                      return [...prev, res.data];
+                    });
+                    setTotal(total + 1);
+                  });
                 }}
                 cancel={() => {}}
               />
