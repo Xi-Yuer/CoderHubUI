@@ -5,7 +5,11 @@ import React, { useEffect, useState } from "react";
 import { formatTime } from "@/utils";
 import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
 import { AppCommentEditor } from "../appCommentEditor";
-import { ClientGetReplies, ClientSendComment } from "@/request/apis";
+import {
+  ClientGetReplies,
+  ClientLikeComment,
+  ClientSendComment,
+} from "@/request/apis";
 import { Button } from "antd";
 
 interface AppCommentItemProps {
@@ -18,14 +22,13 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
   const [showReplies, setShowReplies] = useState(false);
   const [pageNo, setPageNo] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(0);
+  const [commentFromProps, setCommentFromProps] = useState(comment);
 
   // 查看全部回复
   const getCommentRepliesAction = () => {
     if (!showAppCommentEditor) return;
-    ClientGetReplies(comment.id, pageNo).then((res) => {
+    ClientGetReplies(commentFromProps.id, pageNo).then((res) => {
       setReplies(res.data.list || []);
-      setTotal(res.data.total || 0);
       if (res.data.list.length < pageSize) {
         setShowReplies(false);
       } else {
@@ -39,7 +42,7 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
       <div className="flex gap-4 mt-10 w-full">
         <div>
           <Image
-            src={comment.user_info?.avatar}
+            src={commentFromProps.user_info?.avatar}
             width={30}
             height={30}
             alt=""
@@ -48,54 +51,75 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
         </div>
         <div className="flex flex-col w-full">
           <div className="flex gap-2">
-            <span>{comment.user_info?.nickname}</span>
-            {comment.reply_to_user_info && (
+            <span>{commentFromProps.user_info?.nickname}</span>
+            {commentFromProps.reply_to_user_info && (
               <>
                 <span>回复</span>
                 <span className="text-gray-400">
-                  {comment.reply_to_user_info?.nickname ||
-                    comment.reply_to_user_info?.username}
+                  {commentFromProps.reply_to_user_info?.nickname ||
+                    commentFromProps.reply_to_user_info?.username}
                 </span>
               </>
             )}
           </div>
           <MdPreview
-            value={comment.content}
+            value={commentFromProps.content}
             className=" relative -left-4"
           ></MdPreview>
           <div className="flex gap-6 text-gray-500">
-            <div>{formatTime(comment.created_at)}</div>
-            <div className="flex gap-1 items-center cursor-pointer">
+            <div>{formatTime(commentFromProps.created_at)}</div>
+            <div
+              className="flex gap-1 items-center cursor-pointer"
+              onClick={() => {
+                ClientLikeComment(commentFromProps.id).then(() => {
+                  setCommentFromProps((prev) => {
+                    return {
+                      ...prev,
+                      like_count: prev.like_count ? prev.like_count + 1 : 1,
+                    };
+                  });
+                });
+              }}
+            >
               <LikeOutlined />
-              {comment.like_count}
+              {commentFromProps.like_count}
             </div>
             <div
               className="flex gap-1 items-center cursor-pointer"
               onClick={() => setShowAppCommentEditor(!showAppCommentEditor)}
             >
               <CommentOutlined />
-              {comment.replies_count}
+              {commentFromProps.replies_count}
             </div>
           </div>
           {showAppCommentEditor && (
             <div className="w-full mt-4">
               <AppCommentEditor
-                entityID={comment.entity_id}
+                entityID={commentFromProps.entity_id}
                 publicSuccess={(params) => {
                   console.log(params);
                   ClientSendComment({
-                    entity_id: comment.id,
+                    entity_id: commentFromProps.id,
                     content: params.content,
                     image_ids: params.imageIds,
                     root_id:
-                      comment?.root_id !== "0" ? comment?.root_id : comment?.id,
-                    parent_id: comment?.id,
-                    reply_to_uid: comment?.user_info?.id,
+                      commentFromProps?.root_id !== "0"
+                        ? commentFromProps?.root_id
+                        : commentFromProps?.id,
+                    parent_id: commentFromProps?.id,
+                    reply_to_uid: commentFromProps?.user_info?.id,
                   }).then((res) => {
                     setReplies((prev) => {
-                      return [...prev, res.data];
+                      return [res.data, ...prev];
                     });
-                    setTotal(total + 1);
+                    setCommentFromProps((prev) => {
+                      return {
+                        ...prev,
+                        replies_count: prev.replies_count
+                          ? prev.replies_count + 1
+                          : 1,
+                      };
+                    });
                   });
                 }}
                 cancel={() => {}}
@@ -111,7 +135,7 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
                       className="text-gray-500 cursor-pointer w-full mt-2"
                       type="primary"
                     >
-                      查看全部{comment.replies_count}条回复
+                      查看全部{commentFromProps.replies_count}条回复
                     </Button>
                   )
                 }

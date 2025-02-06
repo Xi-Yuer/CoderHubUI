@@ -8,7 +8,7 @@ import {
 import { Image } from "antd";
 import React from "react";
 import { AppCommentEditor } from "../appCommentEditor";
-import { ClientSendComment } from "@/request/apis";
+import { ClientLikeEntity, ClientSendComment } from "@/request/apis";
 import { formatTime } from "@/utils";
 import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 
@@ -21,6 +21,8 @@ export default function AppShortControl({
 }) {
   const [showCommentEditor, setShowCommentEditor] = React.useState(false);
   const appCommentListRef = React.useRef<appendCommentRefCallBack>(null);
+  const [articleFromProps, setArticleFromProps] = React.useState(article);
+
   return (
     <>
       <div className="flex items-center justify-between space-x-3">
@@ -45,16 +47,31 @@ export default function AppShortControl({
       </div>
       {children}
       <div className="flex items-center gap-10 text-gray-500 text-sm mt-4 pt-4">
-        <button className="flex items-center space-x-1 hover:text-gray-950">
+        <button
+          className="flex items-center space-x-1 hover:text-gray-950"
+          onClick={() => {
+            ClientLikeEntity(articleFromProps.article.id).then(() => {
+              setArticleFromProps((prev) => ({
+                ...prev,
+                article: {
+                  ...prev.article,
+                  likeCount: prev.article.likeCount
+                    ? prev.article.likeCount + 1
+                    : 1,
+                },
+              }));
+            });
+          }}
+        >
           <LikeOutlined className="text-sm" />
-          <span>{article.article.likeCount || 0}</span>
+          <span>{articleFromProps.article.likeCount || 0}</span>
         </button>
         <button
           className="flex items-center space-x-1 hover:text-gray-950"
           onClick={() => setShowCommentEditor(!showCommentEditor)}
         >
           <CommentOutlined className="text-sm" />
-          <span>{article.article.commentCount || 0}</span>
+          <span>{articleFromProps.article.commentCount || 0}</span>
         </button>
         <button className="flex items-center space-x-1 hover:text-gray-950">
           <ShareAltOutlined className="text-sm" />
@@ -67,7 +84,7 @@ export default function AppShortControl({
             <AppCommentEditor
               publicSuccess={async (params) => {
                 await ClientSendComment({
-                  entity_id: article.article.id,
+                  entity_id: articleFromProps.article.id,
                   content: params.content,
                   image_ids: params.imageIds,
                   root_id: "",
@@ -77,13 +94,22 @@ export default function AppShortControl({
                   .send()
                   .then((res) => {
                     appCommentListRef.current?.appendComment(res.data);
+                    setArticleFromProps((prev) => ({
+                      ...prev,
+                      article: {
+                        ...prev.article,
+                        commentCount: prev.article.commentCount
+                          ? prev.article.commentCount + 1
+                          : 1,
+                      },
+                    }));
                   });
               }}
               cancel={() => {}}
-              entityID={article.article.id}
+              entityID={articleFromProps.article.id}
             />
             <AppCommentList
-              entityID={article.article.id}
+              entityID={articleFromProps.article.id}
               ref={appCommentListRef}
             />
           </>

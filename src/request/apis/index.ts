@@ -37,13 +37,15 @@ export function ClientGetUserInfo() {
 export function ClientGetArticleList(
   type: "article" | "micro_post",
   page: number,
-  page_size: number
+  page_size: number,
+  user_id?: string
 ) {
   return alovaServerInstance.articles_public.GetArticles({
     params: {
       type,
       page,
       page_size,
+      user_id,
     },
   });
 }
@@ -111,6 +113,24 @@ export function ClientGetReplies(
     params: {
       page,
       page_size,
+    },
+  });
+}
+
+// 给位文章点赞
+export function ClientLikeEntity(entity_id: string) {
+  return alovaServerInstance.articles_auth.UpdateLikeCount({
+    data: {
+      id: entity_id,
+    },
+  });
+}
+
+// 给评论点赞
+export function ClientLikeComment(comment_id: string) {
+  return alovaServerInstance.comments_auth.UpdateCommentLikeCount({
+    data: {
+      comment_id,
     },
   });
 }

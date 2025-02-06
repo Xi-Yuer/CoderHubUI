@@ -2,6 +2,7 @@
 import { GetArticle } from "@/alova/globals";
 import AppShortPreview from "@/app/_components/appShortPreview";
 import { ClientGetArticleList } from "@/request/apis";
+import { useAppStore } from "@/store";
 import React, {
   Ref,
   useEffect,
@@ -21,6 +22,7 @@ export default function MicroPostList({ ref }: Props) {
   const [page, setPage] = useState(1);
   const [list, setList] = useState<GetArticle[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const { userInfo } = useAppStore();
   const loadingRef = useRef(null); // 目标 DOM 元素
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function MicroPostList({ ref }: Props) {
 
   const getList = (reFreshed = false) => {
     if (!hasMore) return;
-    ClientGetArticleList("micro_post", page, 10)
+    ClientGetArticleList("micro_post", page, 10, userInfo.id)
       .send(reFreshed)
       .then((res) => {
         if (!res.data) {

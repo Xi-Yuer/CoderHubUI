@@ -357,6 +357,11 @@ export type Article = {
    */
   likeCount: number;
   /**
+   * 是否已点赞
+   * [required]
+   */
+  isLiked: boolean;
+  /**
    * 评论数
    * [required]
    */
@@ -707,6 +712,11 @@ export type Comment = {
    * [required]
    */
   like_count: number;
+  /**
+   * 是否已点赞
+   * [required]
+   */
+  is_liked: boolean;
   /**
    * 评论图片列表
    * [required]
@@ -2487,6 +2497,16 @@ declare global {
        *
        * ---
        *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // 用户 ID
+       *   user_id?: string
+       * }
+       * ```
+       *
+       * ---
+       *
        * **Response**
        * ```ts
        * type Response = {
@@ -2533,6 +2553,9 @@ declare global {
        *       // 点赞次数
        *       // [required]
        *       likeCount: number
+       *       // 是否已点赞
+       *       // [required]
+       *       isLiked: boolean
        *       // 评论数
        *       // [required]
        *       commentCount: number
@@ -2598,6 +2621,12 @@ declare global {
              */
             id: string;
           };
+          params: {
+            /**
+             * 用户 ID
+             */
+            user_id?: string;
+          };
         }
       >(
         config: Config
@@ -2623,6 +2652,8 @@ declare global {
        *   // 每页数量
        *   // [required]
        *   page_size: number
+       *   // 用户 ID
+       *   user_id?: string
        * }
        * ```
        *
@@ -2674,6 +2705,9 @@ declare global {
        *       // 点赞次数
        *       // [required]
        *       likeCount: number
+       *       // 是否已点赞
+       *       // [required]
+       *       isLiked: boolean
        *       // 评论数
        *       // [required]
        *       commentCount: number
@@ -2749,6 +2783,10 @@ declare global {
              * [required]
              */
             page_size: number;
+            /**
+             * 用户 ID
+             */
+            user_id?: string;
           };
         }
       >(
@@ -2902,6 +2940,9 @@ declare global {
        *       // 点赞数
        *       // [required]
        *       like_count: number
+       *       // 是否已点赞
+       *       // [required]
+       *       is_liked: boolean
        *       // 评论图片列表
        *       // [required]
        *       images: Array<{
@@ -3092,6 +3133,9 @@ declare global {
        *     // 点赞数
        *     // [required]
        *     like_count: number
+       *     // 是否已点赞
+       *     // [required]
+       *     is_liked: boolean
        *     // 评论图片列表
        *     // [required]
        *     images: Array<{
@@ -3262,6 +3306,9 @@ declare global {
        *       // 点赞数
        *       // [required]
        *       like_count: number
+       *       // 是否已点赞
+       *       // [required]
+       *       is_liked: boolean
        *       // 评论图片列表
        *       // [required]
        *       images: Array<{
@@ -3476,6 +3523,9 @@ declare global {
        *     // 点赞数
        *     // [required]
        *     like_count: number
+       *     // 是否已点赞
+       *     // [required]
+       *     is_liked: boolean
        *     // 评论图片列表
        *     // [required]
        *     images: Array<{

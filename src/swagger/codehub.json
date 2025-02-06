@@ -293,10 +293,20 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "user_id",
+            "description": " 用户 ID",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
           "articles_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -339,6 +349,13 @@
             "required": true,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "user_id",
+            "description": " 用户 ID",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -768,6 +785,9 @@
         ],
         "tags": [
           "emotion_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -2161,6 +2181,11 @@
           "format": "int64",
           "description": " 点赞次数"
         },
+        "isLiked": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否已点赞"
+        },
         "commentCount": {
           "type": "integer",
           "format": "int64",
@@ -2194,6 +2219,7 @@
         "tags",
         "viewCount",
         "likeCount",
+        "isLiked",
         "commentCount",
         "status",
         "createdAt",
@@ -2285,6 +2311,11 @@
           "format": "int32",
           "description": " 点赞数"
         },
+        "is_liked": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否已点赞"
+        },
         "images": {
           "type": "array",
           "items": {
@@ -2307,6 +2338,7 @@
         "reply_to_user_info",
         "replies_count",
         "like_count",
+        "is_liked",
         "images"
       ]
     },
@@ -3352,6 +3384,12 @@
     },
     "GetArticleReq": {
       "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "description": " 用户 ID"
+        }
+      },
       "title": "GetArticleReq"
     },
     "GetArticleResp": {
@@ -3396,6 +3434,10 @@
           "type": "integer",
           "format": "int32",
           "description": " 每页数量"
+        },
+        "user_id": {
+          "type": "string",
+          "description": " 用户 ID"
         }
       },
       "title": "GetArticlesReq",
