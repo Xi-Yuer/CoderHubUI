@@ -81,7 +81,7 @@ export default function MicroPostList({ ref }: Props) {
     []
   );
 
-  useEffect(getList, [page]);
+  useEffect(getList, [page, userInfo.id]);
   return (
     <div>
       {list?.map((item) => {

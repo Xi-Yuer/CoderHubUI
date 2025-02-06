@@ -3,7 +3,7 @@ import Image from "next/image";
 import { MdPreview } from "md-editor-rt";
 import React, { useEffect, useState } from "react";
 import { formatTime } from "@/utils";
-import { CommentOutlined, LikeOutlined } from "@ant-design/icons";
+import { CommentOutlined, LikeOutlined, LikeFilled } from "@ant-design/icons";
 import { AppCommentEditor } from "../appCommentEditor";
 import {
   ClientGetReplies,
@@ -75,13 +75,24 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
                   setCommentFromProps((prev) => {
                     return {
                       ...prev,
-                      like_count: prev.like_count ? prev.like_count + 1 : 1,
+                      like_count: prev.is_liked
+                        ? prev.like_count - 1
+                        : prev.like_count + 1,
+                      is_liked: !prev.is_liked,
                     };
                   });
                 });
               }}
             >
-              <LikeOutlined />
+              {commentFromProps.is_liked ? (
+                <LikeFilled
+                  style={{
+                    color: "#ff4d4f",
+                  }}
+                />
+              ) : (
+                <LikeOutlined />
+              )}
               {commentFromProps.like_count}
             </div>
             <div

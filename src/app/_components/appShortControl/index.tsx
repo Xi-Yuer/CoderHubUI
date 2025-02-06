@@ -2,6 +2,7 @@
 import { GetArticle } from "@/alova/globals";
 import {
   CommentOutlined,
+  LikeFilled,
   LikeOutlined,
   ShareAltOutlined,
 } from "@ant-design/icons";
@@ -55,15 +56,24 @@ export default function AppShortControl({
                 ...prev,
                 article: {
                   ...prev.article,
-                  likeCount: prev.article.likeCount
-                    ? prev.article.likeCount + 1
-                    : 1,
+                  likeCount: prev.article.isLiked
+                    ? prev.article.likeCount - 1
+                    : prev.article.likeCount + 1,
+                  isLiked: !prev.article.isLiked,
                 },
               }));
             });
           }}
         >
-          <LikeOutlined className="text-sm" />
+          {articleFromProps.article.isLiked ? (
+            <LikeFilled
+              style={{
+                color: "#ff4d4f",
+              }}
+            />
+          ) : (
+            <LikeOutlined />
+          )}
           <span>{articleFromProps.article.likeCount || 0}</span>
         </button>
         <button
