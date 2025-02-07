@@ -52,3 +52,5 @@ export const popoverList = [
     page: <System />,
   },
 ];
+
+export const TOKEN = "token";

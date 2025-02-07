@@ -1,4 +1,5 @@
 import { Emoji, UserInfo } from "@/alova/globals";
+import { TOKEN } from "@/constant";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -7,11 +8,13 @@ type AppStore = {
   token: string;
   userInfo: UserInfo;
   emotions: Emoji[];
+  showLoginPanel: boolean;
   setToken: (token: string) => void;
   clearToken: () => void;
   setUserInfo: (userInfo: UserInfo) => void;
   setEmotions: (emotions: Emoji[]) => void;
   reset: () => void;
+  setShowLoginPanel: (showLoginPanel: boolean) => void;
 };
 
 export const useAppStore = create<AppStore>()(
@@ -20,8 +23,9 @@ export const useAppStore = create<AppStore>()(
       token: "",
       userInfo: {} as UserInfo,
       emotions: [],
+      showLoginPanel: false,
       setToken: (token: string) => {
-        window.localStorage.setItem("token", token);
+        window.localStorage.setItem(TOKEN, token);
         set(() => ({ token }));
       },
       clearToken: () =>
@@ -34,7 +38,11 @@ export const useAppStore = create<AppStore>()(
       setEmotions: (emotions: Emoji[]) => {
         set(() => ({ emotions }));
       },
+      setShowLoginPanel: (showLoginPanel: boolean) => {
+        set(() => ({ showLoginPanel }));
+      },
       reset: () => {
+        window.localStorage.clear();
         set(() => ({
           token: "",
           userInfo: {} as UserInfo,

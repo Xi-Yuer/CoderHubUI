@@ -51,7 +51,8 @@ export default function AppShortControl({
         <button
           className="flex items-center space-x-1 hover:text-gray-950"
           onClick={() => {
-            ClientLikeEntity(articleFromProps.article.id).then(() => {
+            ClientLikeEntity(articleFromProps.article.id).then((res) => {
+              if (!res) return;
               setArticleFromProps((prev) => ({
                 ...prev,
                 article: {
@@ -68,7 +69,7 @@ export default function AppShortControl({
           {articleFromProps.article.isLiked ? (
             <LikeFilled
               style={{
-                color: "#ff4d4f",
+                color: "black",
               }}
             />
           ) : (

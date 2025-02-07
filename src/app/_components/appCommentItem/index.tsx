@@ -71,7 +71,8 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
             <div
               className="flex gap-1 items-center cursor-pointer"
               onClick={() => {
-                ClientLikeComment(commentFromProps.id).then(() => {
+                ClientLikeComment(commentFromProps.id).then((res) => {
+                  if (!res) return;
                   setCommentFromProps((prev) => {
                     return {
                       ...prev,
@@ -87,7 +88,7 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
               {commentFromProps.is_liked ? (
                 <LikeFilled
                   style={{
-                    color: "#ff4d4f",
+                    color: "black",
                   }}
                 />
               ) : (

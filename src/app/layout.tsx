@@ -4,6 +4,7 @@ import zhCN from "antd/locale/zh_CN";
 import { ConfigProvider } from "antd";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { AppFooter, AppHeader } from "./_components";
+import AppLoginPanel from "./_components/appLoginPanel";
 
 export const metadata: Metadata = {
   title: "Coderhub-程序员的技术社区",
@@ -32,6 +33,7 @@ export default function RootLayout({
           <AntdRegistry>
             <AppHeader />
             <main className="p-4">{children}</main>
+            <AppLoginPanel />
             <AppFooter />
           </AntdRegistry>
         </ConfigProvider>

@@ -23,6 +23,7 @@ export default function AppCommentList({ entityID, ref }: Props) {
 
   useEffect(() => {
     ClientGetComments(entityID, page, pageSize).then((res) => {
+      if (!res) return;
       setList(res.data.list || []);
       setTotal(res.data.total || 0);
       if (res.data.list.length < pageSize) {
