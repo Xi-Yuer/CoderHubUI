@@ -4,5 +4,5 @@ interface Props {
   children: React.ReactNode;
 }
 export default function Layout({ children }: Props) {
-  return <div className="container mx-auto">{children}</div>;
+  return <div className="container mx-auto mt-10">{children}</div>;
 }

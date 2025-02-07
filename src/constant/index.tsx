@@ -2,27 +2,39 @@ import Comments from "@/app/(pages)/notification/_components/Comment";
 import Follow from "@/app/(pages)/notification/_components/Follow";
 import Like from "@/app/(pages)/notification/_components/Like";
 import System from "@/app/(pages)/notification/_components/System";
+import {
+  BarChartOutlined,
+  BulbOutlined,
+  CoffeeOutlined,
+  FileDoneOutlined,
+  FileTextOutlined,
+} from "@ant-design/icons";
 
 export const navigatonList = [
   {
     name: "沸点",
     path: "/shorts",
+    icon: <CoffeeOutlined />,
   },
   {
     name: "推荐",
     path: "/recommend",
+    icon: <BarChartOutlined />,
   },
   {
     name: "文章",
     path: "/articles",
+    icon: <FileTextOutlined />,
   },
   {
     name: "经验",
     path: "/experiences",
+    icon: <BulbOutlined />,
   },
   {
     name: "面试题库",
     path: "/questionBanks",
+    icon: <FileDoneOutlined />,
   },
 ];
 
