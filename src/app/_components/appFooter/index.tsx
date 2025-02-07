@@ -84,6 +84,17 @@ export function AppFooter() {
               Xi-Yuer
             </Link>
           </p>
+          {/* 备案信息 */}
+          <p className="text-sm text-gray-500 mt-2">
+            <Link
+              href="http://www.beian.miit.gov.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-blue-500"
+            >
+              京ICP备2021000001号
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
