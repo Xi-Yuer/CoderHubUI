@@ -60,7 +60,7 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
     },
   };
   return (
-    <div>
+    <div className="relative">
       <div className="overflow-hidden relative">
         <div className="border relative h-fit">
           <MdEditor
@@ -69,7 +69,7 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
             preview={false}
             footers={[]}
             toolbars={toolbars}
-            placeholder="平等表达，友善交流"
+            placeholder={appStore.token ? "平等表达，友善交流" : ""}
             style={{
               height: "fit-content",
               minHeight: "100px",
@@ -122,6 +122,19 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
           </div>
         </div>
       </div>
+      {!appStore.token && (
+        <div className="absolute top-0 bottom-0 left-0 right-0 w-full h-full z-10 p-2 cursor-not-allowed text-slate-500">
+          点击
+          <Button
+            type="link"
+            onClick={() => appStore.setShowLoginPanel(true)}
+            className="!p-1"
+          >
+            登录
+          </Button>
+          , 和大家分享你此刻的心情
+        </div>
+      )}
     </div>
   );
 }

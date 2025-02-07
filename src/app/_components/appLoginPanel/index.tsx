@@ -48,6 +48,7 @@ export default function AppLoginPanel() {
         ClientGetUserInfo().then((res) => {
           setUserInfo(res.data);
           setShowLoginPanel(false);
+          window.location.reload();
         });
       });
     }

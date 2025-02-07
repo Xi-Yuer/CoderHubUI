@@ -22,7 +22,6 @@ export default function MicroPostList({ ref }: Props) {
   const [page, setPage] = useState(1);
   const [list, setList] = useState<GetArticle[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const { userInfo } = useAppStore();
   const loadingRef = useRef(null); // 目标 DOM 元素
 
   useEffect(() => {
@@ -51,6 +50,7 @@ export default function MicroPostList({ ref }: Props) {
   }, []);
 
   const getList = (reFreshed = false) => {
+    const { userInfo } = useAppStore.getState();
     if (!hasMore) return;
     ClientGetArticleList("micro_post", page, 10, userInfo.id)
       .send(reFreshed)
@@ -81,7 +81,7 @@ export default function MicroPostList({ ref }: Props) {
     []
   );
 
-  useEffect(getList, [page, userInfo.id]);
+  useEffect(getList, [page]);
   return (
     <div>
       {list?.map((item) => {

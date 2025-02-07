@@ -6,7 +6,6 @@ import { $$userConfigMap } from "@/alova";
 import { responded } from "@/request/alova/responded";
 import "@/alova";
 import { useAppStore } from "@/store";
-const { token } = useAppStore.getState();
 
 // 创建本地网络请求实例
 export const alovaServerInstance = createApis(
@@ -16,6 +15,7 @@ export const alovaServerInstance = createApis(
     timeout: 10000,
     statesHook: ReactHook,
     async beforeRequest(method) {
+      const { token } = useAppStore.getState();
       method.config.headers.Authorization = `Bearer ${token}`;
     },
     responded: responded,

@@ -58,7 +58,7 @@ export function AppShortEditor({ PublicSuccess }: Props) {
     },
   };
   return (
-    <div>
+    <div className="relative">
       <div className="overflow-hidden">
         <MdEditor
           value={text}
@@ -89,7 +89,7 @@ export function AppShortEditor({ PublicSuccess }: Props) {
               />
             }
           >
-            <div className="flex gap-1 cursor-pointer hover:text-gray-950">
+            <div className="flex items-center gap-1 cursor-pointer hover:text-gray-950">
               <span>
                 <SmileOutlined />
               </span>
@@ -100,8 +100,10 @@ export function AppShortEditor({ PublicSuccess }: Props) {
             {...props}
             className="flex cursor-pointer !text-gray-500 hover:!text-gray-950"
           >
-            <PictureOutlined className=" mx-1" />
-            <span>图片</span>
+            <div className="flex items-center">
+              <PictureOutlined className="mx-1" />
+              <span>图片</span>
+            </div>
           </Upload>
         </div>
         <div className="right">
@@ -116,6 +118,19 @@ export function AppShortEditor({ PublicSuccess }: Props) {
           </Button>
         </div>
       </div>
+      {!appStore.token && (
+        <div className="absolute top-0 bottom-0 left-0 right-0 w-full h-full z-10 p-2 cursor-not-allowed text-slate-500">
+          点击
+          <Button
+            type="link"
+            onClick={() => appStore.setShowLoginPanel(true)}
+            className="!p-1"
+          >
+            登录
+          </Button>
+          , 和大家分享你此刻的心情
+        </div>
+      )}
     </div>
   );
 }
