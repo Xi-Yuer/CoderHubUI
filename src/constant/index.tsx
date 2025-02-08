@@ -4,10 +4,12 @@ import Like from "@/app/(pages)/notification/_components/Like";
 import System from "@/app/(pages)/notification/_components/System";
 import {
   BarChartOutlined,
+  BellOutlined,
   BulbOutlined,
   CoffeeOutlined,
   FileDoneOutlined,
   FileTextOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 export const navigatonList = [
@@ -62,6 +64,19 @@ export const popoverList = [
     path: "/notification/system",
     key: "system",
     page: <System />,
+  },
+];
+
+export const mobileNavigatonList = [
+  {
+    name: "个人中心",
+    path: "/user/profile",
+    icon: <UserOutlined />,
+  },
+  {
+    name: "消息中心",
+    path: "/notification",
+    icon: <BellOutlined />,
   },
 ];
 

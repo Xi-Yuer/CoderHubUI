@@ -3,6 +3,7 @@ import { GetArticle } from "@/alova/globals";
 import AppShortPreview from "@/app/_components/appShortPreview";
 import { ClientGetArticleList } from "@/request/apis";
 import { useAppStore } from "@/store";
+import { Card } from "antd";
 import React, {
   Ref,
   useEffect,
@@ -83,10 +84,13 @@ export default function MicroPostList({ ref }: Props) {
 
   useEffect(getList, [page]);
   return (
-    <div>
+    <Card>
       {list?.map((item) => {
         return (
-          <div key={item.article.id} className="mt-4">
+          <div
+            key={item.article.id}
+            className="mb-10 border-b border-gray-100 pb-4"
+          >
             <AppShortPreview item={item} />
           </div>
         );
@@ -94,6 +98,6 @@ export default function MicroPostList({ ref }: Props) {
       <div ref={loadingRef} className="text-center mt-4 text-gray-400">
         {hasMore ? "Loaing" : "没有更多了"}
       </div>
-    </div>
+    </Card>
   );
 }

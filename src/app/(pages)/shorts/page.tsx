@@ -8,15 +8,15 @@ export default function Page() {
   const MicroPostRef = useRef<RefCallBack>(null);
 
   return (
-    <div className="flex flex-wrap gap-4 justify-between px-4 py-6">
+    <div className="flex flex-wrap gap-4 justify-between">
       {/* 左侧推荐栏 */}
-      <div className="hidden lg:flex w-[300px] h-full gap-4 flex-col">
+      <div className="hidden lg:flex w-[200px] h-full gap-4 flex-col">
         <Card>Recommend</Card>
       </div>
 
       {/* 主内容区域 */}
-      <div className="flex-1 min-w-[300px]">
-        <Card className="mb-4">
+      <div className="flex-1 flex flex-col gap-4">
+        <Card>
           <AppShortEditor
             PublicSuccess={() => MicroPostRef.current?.refreshList()}
           />
@@ -25,7 +25,7 @@ export default function Page() {
       </div>
 
       {/* 右侧推荐栏 */}
-      <div className="hidden xl:flex w-[350px] gap-4 flex-col">
+      <div className="hidden xl:flex w-[250px] gap-4 flex-col">
         <Card>Recommend</Card>
         <Card>Recommend</Card>
       </div>

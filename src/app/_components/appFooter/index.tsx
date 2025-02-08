@@ -3,7 +3,7 @@ import React from "react";
 
 export function AppFooter() {
   return (
-    <footer className="bg-gray-900 text-white py-10">
+    <footer className="bg-gray-900 text-white py-10 mt-10">
       <div className="container mx-auto px-4">
         {/* 上部 - Logo 和简要介绍 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">

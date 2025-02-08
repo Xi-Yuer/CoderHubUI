@@ -1,0 +1,7 @@
+.no-scrollbar {
+  scrollbar-width: none; /* 针对 Firefox */
+  -ms-overflow-style: none; /* 针对 IE 和 Edge */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* 针对 Chrome、Safari 和 Opera */
+}

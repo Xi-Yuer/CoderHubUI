@@ -34,7 +34,7 @@ export default function RootLayout({
         >
           <AntdRegistry>
             <AppHeader />
-            <main className="p-4">{children}</main>
+            <main>{children}</main>
             <AppLoginPanel />
             <AppFooter />
           </AntdRegistry>
