@@ -47,7 +47,7 @@ export default function AppShortControl({
         </div>
       </div>
       {children}
-      <div className="flex items-center gap-10 text-gray-500 text-sm mt-4 pt-4">
+      <div className="flex items-center gap-10 text-gray-500 text-sm mt-4 pt-4 px-6">
         <button
           className="flex items-center space-x-1 hover:text-gray-950"
           onClick={() => {
@@ -89,7 +89,7 @@ export default function AppShortControl({
           <span className="text-[13px]">分享</span>
         </button>
       </div>
-      <div className="mt-2">
+      <div className="mt-2 px-6">
         {showCommentEditor && (
           <>
             <AppCommentEditor
