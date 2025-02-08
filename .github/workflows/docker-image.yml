@@ -1,0 +1,49 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # 设置运行环境
+    runs-on: ubuntu-latest
+    # 设置超时时间, 防止长时间等待
+    timeout-minutes: 30
+
+    # 使用矩阵策略来构建和推送多个镜像
+    strategy:
+      # 定义镜像矩阵
+      matrix:
+        # 定义镜像列表
+        image:
+          - name: coderhub-web
+            dockerfile: ./Dockerfile
+
+    # 定义步骤（该 Step 会根据矩阵策略执行多次）
+    steps:
+      # 检出代码
+      - uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      # 构建和推送镜像
+      - name: Build and Push Docker image
+        # 设置超时时间, 防止长时间等待
+        timeout-minutes: 25
+        run: |
+          # 保存时间戳到变量中,使用时间戳是为了防止镜像标签重复
+          TIMESTAMP=$(date +%s)
+          # 构建镜像, 并设置镜像标签
+          docker build . --file ${{ matrix.image.dockerfile }} --tag ${{ matrix.image.name }}:${TIMESTAMP}
+          # 打标签, 将镜像标签设置为最新版本，类似于重命名
+          docker tag ${{ matrix.image.name }}:${TIMESTAMP} ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image.name }}:latest
+          # 推送镜像
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image.name }}:latest
+        # 设置错误忽略, 防止失败后终止
+        continue-on-error: true
