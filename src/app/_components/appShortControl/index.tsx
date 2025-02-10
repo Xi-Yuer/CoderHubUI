@@ -6,12 +6,13 @@ import {
   LikeOutlined,
   ShareAltOutlined,
 } from "@ant-design/icons";
-import { Image } from "antd";
+import { Image, Popover } from "antd";
 import React from "react";
 import { AppCommentEditor } from "../appCommentEditor";
 import { ClientLikeEntity, ClientSendComment } from "@/request/apis";
 import { formatTime } from "@/utils";
 import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
+import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 
 export default function AppShortControl({
   article,
@@ -27,15 +28,23 @@ export default function AppShortControl({
   return (
     <>
       <div className="flex items-center justify-between space-x-3">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-full bg-pink-300 flex items-center justify-center text-white text-lg">
-            <Image
-              src={article.author.avatar}
-              alt="Avatar"
-              preview={false}
-              className="rounded-full"
-            ></Image>
-          </div>
+        <div className="flex items-center space-x-3 cursor-pointer">
+          <Popover
+            placement="bottomLeft"
+            destroyTooltipOnHide
+            content={
+              <AppUserInfoMationPopUP id={articleFromProps.article.authorId} />
+            }
+          >
+            <div className="w-10 h-10 rounded-full bg-pink-300 flex items-center justify-center text-white text-lg">
+              <Image
+                src={article.author.avatar}
+                alt="Avatar"
+                preview={false}
+                className="rounded-full"
+              ></Image>
+            </div>
+          </Popover>
           <div>
             <p className="font-bold text-gray-800">
               {article.author.nickname || article.author.username}

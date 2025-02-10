@@ -5048,6 +5048,16 @@
           "type": "integer",
           "format": "int64",
           "description": " 更新时间"
+        },
+        "follow_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 关注数量"
+        },
+        "fans_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 粉丝数量"
         }
       },
       "title": "UserInfo",
@@ -5063,7 +5073,9 @@
         "status",
         "is_admin",
         "create_at",
-        "update_at"
+        "update_at",
+        "follow_count",
+        "fans_count"
       ]
     },
     "UserList": {

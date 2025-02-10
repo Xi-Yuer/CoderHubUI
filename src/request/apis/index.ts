@@ -33,6 +33,54 @@ export function ClientGetUserInfo() {
   return alovaServerInstance.user_auth.GetUserInfoByToken();
 }
 
+// 获取用户信息（通过ID）
+export function ClientGetUserInfoById(user_id: string) {
+  return alovaServerInstance.user_public.GetUserInfo({
+    pathParams: {
+      id: user_id,
+    },
+  });
+}
+
+// 获取用户粉丝
+export function ClientGetUserFollowers(
+  user_id: string,
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.follow_public.GetFansList({
+    params: {
+      user_id,
+      page,
+      page_size,
+    },
+  });
+}
+
+// 获取用户关注列表
+export function ClientGetUserFollowings(
+  user_id: string,
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.follow_public.GetFollowList({
+    params: {
+      user_id,
+      page,
+      page_size,
+    },
+  });
+}
+
+// 关注用户
+export function ClientFollowUser(follow_id: string) {
+  return alovaServerInstance.follow_auth.FollowUser({
+    data: {
+      follow_id,
+    },
+  });
+}
+
 // 获取文章列表
 export function ClientGetArticleList(
   type: "article" | "micro_post",

@@ -443,6 +443,16 @@ export type UserInfo = {
    * [required]
    */
   update_at: number;
+  /**
+   * 关注数量
+   * [required]
+   */
+  follow_count: number;
+  /**
+   * 粉丝数量
+   * [required]
+   */
+  fans_count: number;
 };
 export type GetArticle = {
   /**
@@ -2608,6 +2618,12 @@ declare global {
        *       // 更新时间
        *       // [required]
        *       update_at: number
+       *       // 关注数量
+       *       // [required]
+       *       follow_count: number
+       *       // 粉丝数量
+       *       // [required]
+       *       fans_count: number
        *     }
        *   }
        * }
@@ -2760,6 +2776,12 @@ declare global {
        *       // 更新时间
        *       // [required]
        *       update_at: number
+       *       // 关注数量
+       *       // [required]
+       *       follow_count: number
+       *       // 粉丝数量
+       *       // [required]
+       *       fans_count: number
        *     }
        *   }>
        * }
@@ -2921,6 +2943,12 @@ declare global {
        *         // 更新时间
        *         // [required]
        *         update_at: number
+       *         // 关注数量
+       *         // [required]
+       *         follow_count: number
+       *         // 粉丝数量
+       *         // [required]
+       *         fans_count: number
        *       }
        *       // 创建时间
        *       // [required]
@@ -3114,6 +3142,12 @@ declare global {
        *       // 更新时间
        *       // [required]
        *       update_at: number
+       *       // 关注数量
+       *       // [required]
+       *       follow_count: number
+       *       // 粉丝数量
+       *       // [required]
+       *       fans_count: number
        *     }
        *     // 创建时间
        *     // [required]
@@ -3287,6 +3321,12 @@ declare global {
        *         // 更新时间
        *         // [required]
        *         update_at: number
+       *         // 关注数量
+       *         // [required]
+       *         follow_count: number
+       *         // 粉丝数量
+       *         // [required]
+       *         fans_count: number
        *       }
        *       // 创建时间
        *       // [required]
@@ -3504,6 +3544,12 @@ declare global {
        *       // 更新时间
        *       // [required]
        *       update_at: number
+       *       // 关注数量
+       *       // [required]
+       *       follow_count: number
+       *       // 粉丝数量
+       *       // [required]
+       *       fans_count: number
        *     }
        *     // 创建时间
        *     // [required]
@@ -4177,6 +4223,12 @@ declare global {
        *           // 更新时间
        *           // [required]
        *           update_at: number
+       *           // 关注数量
+       *           // [required]
+       *           follow_count: number
+       *           // 粉丝数量
+       *           // [required]
+       *           fans_count: number
        *         }
        *       }
        *       // [required]
@@ -4389,6 +4441,12 @@ declare global {
        *       // 更新时间
        *       // [required]
        *       update_at: number
+       *       // 关注数量
+       *       // [required]
+       *       follow_count: number
+       *       // 粉丝数量
+       *       // [required]
+       *       fans_count: number
        *     }>
        *   }
        * }
@@ -4495,6 +4553,12 @@ declare global {
        *       // 更新时间
        *       // [required]
        *       update_at: number
+       *       // 关注数量
+       *       // [required]
+       *       follow_count: number
+       *       // 粉丝数量
+       *       // [required]
+       *       fans_count: number
        *     }>
        *   }
        * }
@@ -5221,6 +5285,12 @@ declare global {
        *         // 更新时间
        *         // [required]
        *         update_at: number
+       *         // 关注数量
+       *         // [required]
+       *         follow_count: number
+       *         // 粉丝数量
+       *         // [required]
+       *         fans_count: number
        *       }
        *       // [required]
        *       createdAt: number
@@ -5530,6 +5600,12 @@ declare global {
        *     // 更新时间
        *     // [required]
        *     update_at: number
+       *     // 关注数量
+       *     // [required]
+       *     follow_count: number
+       *     // 粉丝数量
+       *     // [required]
+       *     fans_count: number
        *   }
        * }
        * ```
@@ -5707,6 +5783,12 @@ declare global {
        *     // 更新时间
        *     // [required]
        *     update_at: number
+       *     // 关注数量
+       *     // [required]
+       *     follow_count: number
+       *     // 粉丝数量
+       *     // [required]
+       *     fans_count: number
        *   }
        * }
        * ```
@@ -5798,6 +5880,12 @@ declare global {
        *       // 更新时间
        *       // [required]
        *       update_at: number
+       *       // 关注数量
+       *       // [required]
+       *       follow_count: number
+       *       // 粉丝数量
+       *       // [required]
+       *       fans_count: number
        *     }>
        *   }
        * }
