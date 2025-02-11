@@ -453,6 +453,11 @@ export type UserInfo = {
    * [required]
    */
   fans_count: number;
+  /**
+   * 是否已关注
+   * [required]
+   */
+  is_followed: boolean;
 };
 export type GetArticle = {
   /**
@@ -2624,6 +2629,9 @@ declare global {
        *       // 粉丝数量
        *       // [required]
        *       fans_count: number
+       *       // 是否已关注
+       *       // [required]
+       *       is_followed: boolean
        *     }
        *   }
        * }
@@ -2782,6 +2790,9 @@ declare global {
        *       // 粉丝数量
        *       // [required]
        *       fans_count: number
+       *       // 是否已关注
+       *       // [required]
+       *       is_followed: boolean
        *     }
        *   }>
        * }
@@ -2949,6 +2960,9 @@ declare global {
        *         // 粉丝数量
        *         // [required]
        *         fans_count: number
+       *         // 是否已关注
+       *         // [required]
+       *         is_followed: boolean
        *       }
        *       // 创建时间
        *       // [required]
@@ -3148,6 +3162,9 @@ declare global {
        *       // 粉丝数量
        *       // [required]
        *       fans_count: number
+       *       // 是否已关注
+       *       // [required]
+       *       is_followed: boolean
        *     }
        *     // 创建时间
        *     // [required]
@@ -3327,6 +3344,9 @@ declare global {
        *         // 粉丝数量
        *         // [required]
        *         fans_count: number
+       *         // 是否已关注
+       *         // [required]
+       *         is_followed: boolean
        *       }
        *       // 创建时间
        *       // [required]
@@ -3550,6 +3570,9 @@ declare global {
        *       // 粉丝数量
        *       // [required]
        *       fans_count: number
+       *       // 是否已关注
+       *       // [required]
+       *       is_followed: boolean
        *     }
        *     // 创建时间
        *     // [required]
@@ -4229,6 +4252,9 @@ declare global {
        *           // 粉丝数量
        *           // [required]
        *           fans_count: number
+       *           // 是否已关注
+       *           // [required]
+       *           is_followed: boolean
        *         }
        *       }
        *       // [required]
@@ -4447,6 +4473,9 @@ declare global {
        *       // 粉丝数量
        *       // [required]
        *       fans_count: number
+       *       // 是否已关注
+       *       // [required]
+       *       is_followed: boolean
        *     }>
        *   }
        * }
@@ -4559,6 +4588,9 @@ declare global {
        *       // 粉丝数量
        *       // [required]
        *       fans_count: number
+       *       // 是否已关注
+       *       // [required]
+       *       is_followed: boolean
        *     }>
        *   }
        * }
@@ -5291,6 +5323,9 @@ declare global {
        *         // 粉丝数量
        *         // [required]
        *         fans_count: number
+       *         // 是否已关注
+       *         // [required]
+       *         is_followed: boolean
        *       }
        *       // [required]
        *       createdAt: number
@@ -5606,6 +5641,9 @@ declare global {
        *     // 粉丝数量
        *     // [required]
        *     fans_count: number
+       *     // 是否已关注
+       *     // [required]
+       *     is_followed: boolean
        *   }
        * }
        * ```
@@ -5789,6 +5827,9 @@ declare global {
        *     // 粉丝数量
        *     // [required]
        *     fans_count: number
+       *     // 是否已关注
+       *     // [required]
+       *     is_followed: boolean
        *   }
        * }
        * ```
@@ -5886,6 +5927,9 @@ declare global {
        *       // 粉丝数量
        *       // [required]
        *       fans_count: number
+       *       // 是否已关注
+       *       // [required]
+       *       is_followed: boolean
        *     }>
        *   }
        * }

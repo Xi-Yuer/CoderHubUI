@@ -15,8 +15,9 @@ export const alovaServerInstance = createApis(
     timeout: 10000,
     statesHook: ReactHook,
     async beforeRequest(method) {
-      const { token } = useAppStore.getState();
+      const { token, userInfo } = useAppStore.getState();
       method.config.headers.Authorization = `Bearer ${token}`;
+      method.config.headers["request-user-id"] = userInfo.id;
     },
     responded: responded,
   }),

@@ -1740,6 +1740,12 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "request-user-id",
+            "in": "header",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -5058,6 +5064,11 @@
           "type": "integer",
           "format": "int64",
           "description": " 粉丝数量"
+        },
+        "is_followed": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否已关注"
         }
       },
       "title": "UserInfo",
@@ -5075,7 +5086,8 @@
         "create_at",
         "update_at",
         "follow_count",
-        "fans_count"
+        "fans_count",
+        "is_followed"
       ]
     },
     "UserList": {

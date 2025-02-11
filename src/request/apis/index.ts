@@ -34,7 +34,10 @@ export function ClientGetUserInfo() {
 }
 
 // 获取用户信息（通过ID）
-export function ClientGetUserInfoById(user_id: string) {
+export function ClientGetUserInfoById(
+  user_id: string,
+  request_user_id?: string
+) {
   return alovaServerInstance.user_public.GetUserInfo({
     pathParams: {
       id: user_id,

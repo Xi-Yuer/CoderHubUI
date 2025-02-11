@@ -1,17 +1,19 @@
 import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis";
+import { useAppStore } from "@/store";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Divider, Image, message } from "antd";
 import React, { useEffect, useState } from "react";
 
 export default function AppUserInfoMationPopUP({ id }: { id: string }) {
+  const { userInfo: LoginUserInfo } = useAppStore();
   const [userInfo, setUserInfo] = useState<UserInfo>();
   const [messageApi, contextHolder] = message.useMessage();
   useEffect(() => {
-    ClientGetUserInfoById(id).then((res) => {
+    ClientGetUserInfoById(id, LoginUserInfo.id).then((res) => {
       setUserInfo(res.data);
     });
-  }, [id]);
+  }, [id, LoginUserInfo]);
 
   const FollowdUser = () => {
     ClientFollowUser(id).then((res) => {
