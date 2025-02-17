@@ -23,6 +23,7 @@ export default {
   'academic_auth.PostAcademicNavigatorLike': ['POST', '/api/academic_navigator/like/{id}'],
   'articles_auth.CreateArticle': ['POST', '/api/articles/create'],
   'articles_public.GetArticle': ['GET', '/api/articles/detail/{id}'],
+  'articles_public.GetArticleExtra': ['GET', '/api/articles/extra/{id}'],
   'articles_public.GetArticles': ['GET', '/api/articles/list'],
   'articles_auth.UpdateLikeCount': ['POST', '/api/articles/update_like_count'],
   'articles_auth.DeleteArticle': ['DELETE', '/api/articles/{id}'],

@@ -1,11 +1,12 @@
 import {
   CreateArticleReq,
   CreateCommentReq,
+  GetArticle,
   LoginReq,
   RegisterReq,
   UpdatePasswordReq,
 } from "@/alova/globals";
-import { alovaServerInstance } from "../alova/server";
+import { alovaLocalInstance, alovaServerInstance } from "../alova/server";
 
 // 登录
 export function ClientLogin(params: LoginReq) {
@@ -34,10 +35,7 @@ export function ClientGetUserInfo() {
 }
 
 // 获取用户信息（通过ID）
-export function ClientGetUserInfoById(
-  user_id: string,
-  request_user_id?: string
-) {
+export function ClientGetUserInfoById(user_id: string) {
   return alovaServerInstance.user_public.GetUserInfo({
     pathParams: {
       id: user_id,
@@ -185,3 +183,11 @@ export function ClientLikeComment(comment_id: string) {
     },
   });
 }
+
+// 获取文章详情
+export async function ServiceGetArticleDetail(id: string) {
+  return alovaLocalInstance.get(`/api/articles/detail/${id}`);
+}
+
+// 获取文章格外信息
+export async function ServiceGetArticleExtraInfo(id: string) {}

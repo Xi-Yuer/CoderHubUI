@@ -6,22 +6,27 @@ import {
   LikeOutlined,
   ShareAltOutlined,
 } from "@ant-design/icons";
-import { Image, Popover } from "antd";
+import { Button, Image, Popover } from "antd";
 import React from "react";
 import { AppCommentEditor } from "../appCommentEditor";
 import { ClientLikeEntity, ClientSendComment } from "@/request/apis";
 import { formatTime } from "@/utils";
 import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
+import AppSharedPopUp from "../appSharedPopup";
 
 export default function AppShortControl({
   article,
   children,
+  showComment,
 }: {
   article: GetArticle;
   children: React.ReactNode;
+  showComment?: boolean;
 }) {
-  const [showCommentEditor, setShowCommentEditor] = React.useState(false);
+  const [showCommentEditor, setShowCommentEditor] = React.useState(
+    showComment || false
+  );
   const appCommentListRef = React.useRef<appendCommentRefCallBack>(null);
   const [articleFromProps, setArticleFromProps] = React.useState(article);
 
@@ -93,10 +98,18 @@ export default function AppShortControl({
           <CommentOutlined className="text-sm" />
           <span>{articleFromProps.article.commentCount || 0}</span>
         </button>
-        <button className="flex items-center space-x-1 hover:text-gray-950">
-          <ShareAltOutlined className="text-sm" />
-          <span className="text-[13px]">分享</span>
-        </button>
+        <Popover
+          content={<AppSharedPopUp id={articleFromProps.article.id} />}
+          placement="bottomLeft"
+        >
+          <Button
+            type="text"
+            className="flex items-center space-x-1 hover:text-gray-950"
+          >
+            <ShareAltOutlined className="text-sm" />
+            <span className="text-[13px]">分享</span>
+          </Button>
+        </Popover>
       </div>
       <div className="mt-2 px-6">
         {showCommentEditor && (

@@ -1,13 +1,20 @@
-import { Card, Image } from "antd";
+"use client";
+import { Image } from "antd";
 import { MdPreview } from "md-editor-rt";
 import React from "react";
 import { GetArticle } from "@/alova/globals";
 import AppShartControl from "../appShortControl";
 
-export default function AppShortPreview({ item }: { item: GetArticle }) {
+export default function AppShortPreview({
+  item,
+  showComment,
+}: {
+  item: GetArticle;
+  showComment?: boolean;
+}) {
   return (
     <div>
-      <AppShartControl article={item}>
+      <AppShartControl article={item} showComment={showComment}>
         <MdPreview value={item.article.content} />
         <div className="grid grid-cols-2 gap-2 mt-2 px-6">
           {item.article.imageUrls.map((url, index) => (

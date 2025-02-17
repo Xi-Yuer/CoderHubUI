@@ -35,7 +35,7 @@ export default function RootLayout({
           <AntdRegistry>
             <AppHeader />
             <main>{children}</main>
-            <AppLoginPanel />
+            <AppLoginPanel />  
             <AppFooter />
           </AntdRegistry>
         </ConfigProvider>

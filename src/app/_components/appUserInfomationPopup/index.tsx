@@ -1,62 +1,84 @@
 import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis";
-import { useAppStore } from "@/store";
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Divider, Image, message } from "antd";
+import { Button, Divider, Image, message, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 
 export default function AppUserInfoMationPopUP({ id }: { id: string }) {
-  const { userInfo: LoginUserInfo } = useAppStore();
   const [userInfo, setUserInfo] = useState<UserInfo>();
-  const [messageApi, contextHolder] = message.useMessage();
+  const [loading, setLoading] = useState(false);
+  const [messageApi, messageContext] = message.useMessage();
   useEffect(() => {
-    ClientGetUserInfoById(id, LoginUserInfo.id).then((res) => {
-      setUserInfo(res.data);
-    });
-  }, [id, LoginUserInfo]);
+    setLoading(true);
+    ClientGetUserInfoById(id)
+      .then((res) => {
+        setUserInfo(res.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
 
   const FollowdUser = () => {
     ClientFollowUser(id).then((res) => {
-      messageApi.info(res.message);
+      if (!res.data) {
+        messageApi.error(res.message);
+        return;
+      }
+      setUserInfo((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          is_followed: prev.is_followed ? false : true,
+          fans_count: prev.is_followed
+            ? prev.fans_count === 0
+              ? 0
+              : prev.fans_count - 1
+            : prev.fans_count + 1,
+        };
+      });
     });
   };
   return (
-    <div className="text-slate-800 px-4">
-      {contextHolder}
-      <div className="flex gap-4">
-        <Image
-          src={userInfo?.avatar}
-          alt=""
-          className="rounded-full"
-          width={40}
-        />
-        <div>
-          <div className="text-lg font-semibold">
-            {userInfo?.nickname || userInfo?.username}
-          </div>
-          <div className="text-slate-500">{userInfo?.email}</div>
-        </div>
-      </div>
-      <Divider />
-      <div className="flex gap-4 justify-between items-center">
+    <Spin spinning={loading}>
+      <div className="text-slate-800 px-4">
+        {messageContext}
         <div className="flex gap-4">
+          <Image
+            src={userInfo?.avatar}
+            alt=""
+            className="rounded-full"
+            width={40}
+          />
           <div>
-            <span className="text-slate-500">粉丝</span> {userInfo?.fans_count}
-          </div>
-          <div>
-            <span className="text-slate-500">关注</span>{" "}
-            {userInfo?.follow_count}
+            <div className="font-semibold">
+              {userInfo?.nickname || userInfo?.username}
+            </div>
+            <div className="text-slate-500">{userInfo?.email}</div>
           </div>
         </div>
-        <Button
-          type="primary"
-          size="small"
-          icon={<PlusOutlined />}
-          onClick={FollowdUser}
-        >
-          关注
-        </Button>
+        <Divider />
+        <div className="flex gap-4 justify-between items-center">
+          <div className="flex gap-4">
+            <div>
+              <span className="text-slate-500">粉丝</span>{" "}
+              {userInfo?.fans_count}
+            </div>
+            <div>
+              <span className="text-slate-500">关注</span>{" "}
+              {userInfo?.follow_count}
+            </div>
+          </div>
+          <Button
+            type={userInfo?.is_followed ? "default" : "primary"}
+            size="small"
+            icon={userInfo?.is_followed ? undefined : <PlusOutlined />}
+            onClick={FollowdUser}
+          >
+            {userInfo?.is_followed ? "已关注" : "关注"}
+          </Button>
+        </div>
       </div>
-    </div>
+    </Spin>
   );
 }

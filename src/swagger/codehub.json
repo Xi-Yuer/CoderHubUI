@@ -295,18 +295,45 @@
             "type": "string"
           },
           {
-            "name": "user_id",
-            "description": " 用户 ID",
-            "in": "query",
+            "name": "request-user-id",
+            "in": "header",
             "required": false,
             "type": "string"
           }
         ],
         "tags": [
           "articles_public"
+        ]
+      }
+    },
+    "/api/articles/extra/{id}": {
+      "get": {
+        "summary": "获取文章附加信息",
+        "operationId": "GetArticleExtra",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetArticleExtraResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "request-user-id",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
         ],
-        "consumes": [
-          "multipart/form-data"
+        "tags": [
+          "articles_public"
         ]
       }
     },
@@ -2232,6 +2259,38 @@
         "updatedAt"
       ]
     },
+    "ArticleExtra": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "view_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "like_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "comment_count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "is_liked": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "ArticleExtra",
+      "required": [
+        "id",
+        "view_count",
+        "like_count",
+        "comment_count",
+        "is_liked"
+      ]
+    },
     "CancelLikeAcademicNavigatorReq": {
       "type": "object",
       "title": "CancelLikeAcademicNavigatorReq"
@@ -3388,14 +3447,29 @@
         "author"
       ]
     },
-    "GetArticleReq": {
+    "GetArticleExtraResp": {
       "type": "object",
       "properties": {
-        "user_id": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
           "type": "string",
-          "description": " 用户 ID"
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/ArticleExtra"
         }
       },
+      "title": "GetArticleExtraResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetArticleReq": {
+      "type": "object",
       "title": "GetArticleReq"
     },
     "GetArticleResp": {

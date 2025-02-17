@@ -24,7 +24,7 @@ export function AppHeader() {
   };
 
   return (
-    <header className="h-[80px] md:h-[60px] w-full bg-white shadow-sm">
+    <header className="w-full py-3 pb-0 md:pb-3 bg-white shadow-sm text-nowrap">
       <div className="container mx-auto flex justify-between items-center px-4 h-full">
         {/* Logo 部分 */}
         <div className="flex items-center gap-4">

@@ -489,6 +489,44 @@ export type GetArticleResp = {
    */
   data: GetArticle;
 };
+export type ArticleExtra = {
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  view_count: number;
+  /**
+   * [required]
+   */
+  like_count: number;
+  /**
+   * [required]
+   */
+  comment_count: number;
+  /**
+   * [required]
+   */
+  is_liked: boolean;
+};
+export type GetArticleExtraResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * ArticleExtra
+   * ---
+   * [required]
+   */
+  data: ArticleExtra;
+};
 export type GetArticlesResp = {
   /**
    * 状态码
@@ -2512,16 +2550,6 @@ declare global {
        *
        * ---
        *
-       * **Query Parameters**
-       * ```ts
-       * type QueryParameters = {
-       *   // 用户 ID
-       *   user_id?: string
-       * }
-       * ```
-       *
-       * ---
-       *
        * **Response**
        * ```ts
        * type Response = {
@@ -2645,16 +2673,65 @@ declare global {
              */
             id: string;
           };
-          params: {
-            /**
-             * 用户 ID
-             */
-            user_id?: string;
-          };
         }
       >(
         config: Config
       ): Alova2Method<GetArticleResp, 'articles_public.GetArticle', Config>;
+      /**
+       * ---
+       *
+       * [GET] 获取文章附加信息
+       *
+       * **path:** /api/articles/extra/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] ArticleExtra
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     id: string
+       *     // [required]
+       *     view_count: number
+       *     // [required]
+       *     like_count: number
+       *     // [required]
+       *     comment_count: number
+       *     // [required]
+       *     is_liked: boolean
+       *   }
+       * }
+       * ```
+       */
+      GetArticleExtra<
+        Config extends Alova2MethodConfig<GetArticleExtraResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetArticleExtraResp, 'articles_public.GetArticleExtra', Config>;
       /**
        * ---
        *
