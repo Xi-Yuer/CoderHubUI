@@ -1,19 +1,27 @@
 "use client";
 import { GetArticle } from "@/alova/globals";
 import {
+  AlertOutlined,
   CommentOutlined,
+  EllipsisOutlined,
   LikeFilled,
   LikeOutlined,
+  RestOutlined,
   ShareAltOutlined,
 } from "@ant-design/icons";
 import { Button, Image, Popover } from "antd";
 import React from "react";
 import { AppCommentEditor } from "../appCommentEditor";
-import { ClientLikeEntity, ClientSendComment } from "@/request/apis";
+import {
+  ClientDeleteComment,
+  ClientLikeEntity,
+  ClientSendComment,
+} from "@/request/apis";
 import { formatTime } from "@/utils";
 import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import AppSharedPopUp from "../appSharedPopup";
+import { useAppStore } from "@/store";
 
 export default function AppShortControl({
   article,
@@ -29,6 +37,7 @@ export default function AppShortControl({
   );
   const appCommentListRef = React.useRef<appendCommentRefCallBack>(null);
   const [articleFromProps, setArticleFromProps] = React.useState(article);
+  const { userInfo } = useAppStore();
 
   return (
     <>
@@ -61,54 +70,92 @@ export default function AppShortControl({
         </div>
       </div>
       {children}
-      <div className="flex items-center gap-10 text-gray-500 text-sm mt-4 pt-4 px-6">
-        <button
-          className="flex items-center space-x-1 hover:text-gray-950"
-          onClick={() => {
-            ClientLikeEntity(articleFromProps.article.id).then((res) => {
-              if (!res) return;
-              setArticleFromProps((prev) => ({
-                ...prev,
-                article: {
-                  ...prev.article,
-                  likeCount: prev.article.isLiked
-                    ? prev.article.likeCount - 1
-                    : prev.article.likeCount + 1,
-                  isLiked: !prev.article.isLiked,
-                },
-              }));
-            });
-          }}
-        >
-          {articleFromProps.article.isLiked ? (
-            <LikeFilled
-              style={{
-                color: "black",
-              }}
-            />
-          ) : (
-            <LikeOutlined />
-          )}
-          <span>{articleFromProps.article.likeCount || 0}</span>
-        </button>
-        <button
-          className="flex items-center space-x-1 hover:text-gray-950"
-          onClick={() => setShowCommentEditor(!showCommentEditor)}
-        >
-          <CommentOutlined className="text-sm" />
-          <span>{articleFromProps.article.commentCount || 0}</span>
-        </button>
-        <Popover
-          content={<AppSharedPopUp id={articleFromProps.article.id} />}
-          placement="bottomLeft"
-        >
-          <Button
-            type="text"
+      <div className="flex items-center justify-between gap-10 text-gray-500 text-sm mt-4 pt-4 px-6">
+        <div className="flex items-center gap-10">
+          <button
             className="flex items-center space-x-1 hover:text-gray-950"
+            onClick={() => {
+              ClientLikeEntity(articleFromProps.article.id).then((res) => {
+                if (!res) return;
+                setArticleFromProps((prev) => ({
+                  ...prev,
+                  article: {
+                    ...prev.article,
+                    likeCount: prev.article.isLiked
+                      ? prev.article.likeCount - 1
+                      : prev.article.likeCount + 1,
+                    isLiked: !prev.article.isLiked,
+                  },
+                }));
+              });
+            }}
           >
-            <ShareAltOutlined className="text-sm" />
-            <span className="text-[13px]">分享</span>
-          </Button>
+            {articleFromProps.article.isLiked ? (
+              <LikeFilled
+                style={{
+                  color: "black",
+                }}
+              />
+            ) : (
+              <LikeOutlined />
+            )}
+            <span>{articleFromProps.article.likeCount || 0}</span>
+          </button>
+          <button
+            className="flex items-center space-x-1 hover:text-gray-950"
+            onClick={() => setShowCommentEditor(!showCommentEditor)}
+          >
+            <CommentOutlined className="text-sm" />
+            <span>{articleFromProps.article.commentCount || 0}</span>
+          </button>
+          <Popover
+            content={<AppSharedPopUp id={articleFromProps.article.id} />}
+            placement="bottomLeft"
+          >
+            <button className="flex items-center space-x-1 hover:text-gray-950">
+              <ShareAltOutlined className="text-sm" />
+              <span className="text-[13px]">分享</span>
+            </button>
+          </Popover>
+        </div>
+        <Popover
+          placement="bottom"
+          content={
+            <div className="flex flex-col gap-2 px-2 text-slate-700">
+              {userInfo.id === articleFromProps.author.id && (
+                <button
+                  className="text-red-500 flex items-cente gap-1"
+                  onClick={() => {
+                    ClientDeleteComment(articleFromProps.article.id).then(
+                      (res) => {
+                        if (!res) return;
+                        setArticleFromProps((prev) => ({
+                          ...prev,
+                          article: {
+                            ...prev.article,
+                            commentCount: prev.article.commentCount
+                              ? prev.article.commentCount - 1
+                              : 0,
+                          },
+                        }));
+                      }
+                    );
+                  }}
+                >
+                  <RestOutlined />
+                  删除
+                </button>
+              )}
+              <button className="flex items-cente gap-1">
+                <AlertOutlined />
+                举报
+              </button>
+            </div>
+          }
+        >
+          <button className="flex items-center space-x-1 hover:text-gray-950">
+            <EllipsisOutlined />
+          </button>
         </Popover>
       </div>
       <div className="mt-2 px-6">

@@ -3,14 +3,24 @@ import Image from "next/image";
 import { MdPreview } from "md-editor-rt";
 import React, { useEffect, useState } from "react";
 import { formatTime } from "@/utils";
-import { CommentOutlined, LikeOutlined, LikeFilled } from "@ant-design/icons";
+import {
+  CommentOutlined,
+  LikeOutlined,
+  LikeFilled,
+  RestOutlined,
+  AlertOutlined,
+  EllipsisOutlined,
+} from "@ant-design/icons";
 import { AppCommentEditor } from "../appCommentEditor";
 import {
+  ClientDeleteComment,
   ClientGetReplies,
   ClientLikeComment,
   ClientSendComment,
 } from "@/request/apis";
-import { Button } from "antd";
+import { Button, Popover } from "antd";
+import { useAppStore } from "@/store";
+import DOMPurify from "dompurify";
 
 interface AppCommentItemProps {
   comment: Comment;
@@ -23,6 +33,7 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
   const [pageNo, setPageNo] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [commentFromProps, setCommentFromProps] = useState(comment);
+  const { userInfo } = useAppStore();
 
   // 查看全部回复
   const getCommentRepliesAction = () => {
@@ -64,45 +75,89 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
           </div>
           <MdPreview
             value={commentFromProps.content}
-            className=" relative -left-4"
+            className="relative -left-4"
+            sanitize={(html) => {
+              return DOMPurify.sanitize(html);
+            }}
           ></MdPreview>
-          <div className="flex gap-6 text-gray-500">
-            <div>{formatTime(commentFromProps.created_at)}</div>
-            <div
-              className="flex gap-1 items-center cursor-pointer"
-              onClick={() => {
-                ClientLikeComment(commentFromProps.id).then((res) => {
-                  if (!res) return;
-                  setCommentFromProps((prev) => {
-                    return {
-                      ...prev,
-                      like_count: prev.is_liked
-                        ? prev.like_count - 1
-                        : prev.like_count + 1,
-                      is_liked: !prev.is_liked,
-                    };
+          <div className="flex gap-6 items-center justify-between text-gray-500">
+            <div className="flex gap-6 text-gray-500">
+              <div>{formatTime(commentFromProps.created_at)}</div>
+              <div
+                className="flex gap-1 items-center cursor-pointer"
+                onClick={() => {
+                  ClientLikeComment(commentFromProps.id).then((res) => {
+                    if (!res) return;
+                    setCommentFromProps((prev) => {
+                      return {
+                        ...prev,
+                        like_count: prev.is_liked
+                          ? prev.like_count - 1
+                          : prev.like_count + 1,
+                        is_liked: !prev.is_liked,
+                      };
+                    });
                   });
-                });
-              }}
-            >
-              {commentFromProps.is_liked ? (
-                <LikeFilled
-                  style={{
-                    color: "black",
-                  }}
-                />
-              ) : (
-                <LikeOutlined />
-              )}
-              {commentFromProps.like_count}
+                }}
+              >
+                {commentFromProps.is_liked ? (
+                  <LikeFilled
+                    style={{
+                      color: "black",
+                    }}
+                  />
+                ) : (
+                  <LikeOutlined />
+                )}
+                {commentFromProps.like_count}
+              </div>
+              <div
+                className="flex gap-1 items-center cursor-pointer"
+                onClick={() => setShowAppCommentEditor(!showAppCommentEditor)}
+              >
+                <CommentOutlined />
+                {commentFromProps.replies_count}
+              </div>
             </div>
-            <div
-              className="flex gap-1 items-center cursor-pointer"
-              onClick={() => setShowAppCommentEditor(!showAppCommentEditor)}
+            <Popover
+              placement="bottom"
+              content={
+                <div className="flex flex-col gap-2 px-2 text-slate-700">
+                  {userInfo.id === commentFromProps.user_info.id && (
+                    <button
+                      className="text-red-500 flex items-cente gap-1"
+                      onClick={() => {
+                        ClientDeleteComment(commentFromProps.user_info.id).then(
+                          (res) => {
+                            if (!res) return;
+                            setCommentFromProps((prev) => ({
+                              ...prev,
+                              article: {
+                                ...prev,
+                                commentCount: prev.replies_count
+                                  ? prev.replies_count - 1
+                                  : 0,
+                              },
+                            }));
+                          }
+                        );
+                      }}
+                    >
+                      <RestOutlined />
+                      删除
+                    </button>
+                  )}
+                  <button className="flex items-cente gap-1">
+                    <AlertOutlined />
+                    举报
+                  </button>
+                </div>
+              }
             >
-              <CommentOutlined />
-              {commentFromProps.replies_count}
-            </div>
+              <button className="flex items-center space-x-1 hover:text-gray-950">
+                <EllipsisOutlined />
+              </button>
+            </Popover>
           </div>
           {showAppCommentEditor && (
             <div className="w-full mt-4">

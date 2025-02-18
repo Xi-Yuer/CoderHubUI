@@ -184,6 +184,16 @@ export function ClientLikeComment(comment_id: string) {
   });
 }
 
+// 删除评论
+export function ClientDeleteComment(comment_id: string) {
+  return alovaServerInstance.comments_auth.DeleteComment({
+    pathParams: {
+      comment_id,
+    },
+    data: {},
+  });
+}
+
 // 获取文章详情
 export async function ServiceGetArticleDetail(id: string) {
   return alovaLocalInstance.get(`/api/articles/detail/${id}`);

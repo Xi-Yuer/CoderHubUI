@@ -1,36 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, QRCode, message } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 
 export default function AppSharedPopUp({ id }: { id: string }) {
   const LocalHostURL = process.env.NEXT_PUBLIC_LOCAL_BASE_URL;
   const [messageApi, contextHolder] = message.useMessage();
+  const [qrSize, setQrSize] = useState(120);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // 根据屏幕宽度调整二维码尺寸
+      const newSize = window.innerWidth < 768 ? 100 : 120;
+      setQrSize(newSize);
+    };
+
+    // 初始设置
+    handleResize();
+
+    // 添加窗口大小变化监听
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleCopyLink = () => {
     const shareUrl = `${LocalHostURL}/post/${id}`;
     navigator.clipboard.writeText(shareUrl).then(() => {
-      messageApi.success("链接已复制到剪贴板！");
+      messageApi.success({
+        content: "链接已复制到剪贴板！",
+        duration: 2,
+        className: "md:mt-4", // 桌面端增加上边距
+      });
     });
   };
 
   return (
     <div className="flex flex-col items-center">
       {contextHolder}
-      <h2 className="font-semibold mb-2">分享内容</h2>
-      <QRCode
-        errorLevel="H"
-        size={120}
-        value={`${LocalHostURL}/post/${id}`}
-        icon="/favicon.ico"
-      />
-      <Button
-        type="text"
-        className="text-slate-500 mt-2"
+      <div className="bg-white rounded-lg">
+        <QRCode
+          errorLevel="H"
+          size={qrSize}
+          value={`${LocalHostURL}/post/${id}`}
+          icon="/favicon.ico"
+          className="border-0"
+        />
+      </div>
+
+      <span
+        className="text-slate-600 hover:text-slate-800 text-sm h-auto active:bg-gray-100"
         onClick={handleCopyLink}
       >
-        <CopyOutlined />
-        复制分享链接
-      </Button>
+        <div className="flex items-center justify-center space-x-2 mt-2">
+          <CopyOutlined />
+          <span>复制链接</span>
+        </div>
+      </span>
     </div>
   );
 }
