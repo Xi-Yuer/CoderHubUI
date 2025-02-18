@@ -1,9 +1,9 @@
 "use client";
 import { Image } from "antd";
 import { MdPreview } from "md-editor-rt";
-import React, { useEffect, useState } from "react";
-import { ArticleExtra, GetArticle } from "@/alova/globals";
-import { ClientGetArticleExtraInfo, ClientSendComment } from "@/request/apis";
+import React from "react";
+import { GetArticle } from "@/alova/globals";
+import { ClientSendComment } from "@/request/apis";
 import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 import { AppCommentEditor } from "../appCommentEditor";
 
@@ -12,14 +12,8 @@ export default function AppArticlePreviewDetail({
 }: {
   item: GetArticle;
 }) {
-  const [extraInfo, setExtraInfo] = useState<ArticleExtra>();
   const appCommentListRef = React.useRef<appendCommentRefCallBack>(null);
   const [articleFromProps, setArticleFromProps] = React.useState(item);
-  useEffect(() => {
-    ClientGetArticleExtraInfo(item.article.id).then((res) => {
-      setExtraInfo(res.data);
-    });
-  }, []);
   return (
     <div>
       <MdPreview value={item.article.content} />

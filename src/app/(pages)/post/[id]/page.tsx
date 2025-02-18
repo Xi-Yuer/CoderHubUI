@@ -1,7 +1,7 @@
 import AppArticlePreviewDetail from "@/app/_components/appArticlePreviewDetail";
-import AppShortPreview from "@/app/_components/appShortPreview";
 import { ServiceGetArticleDetail } from "@/request/apis";
 import { Card } from "antd";
+import Operation from "../_components/operation";
 
 interface PostProps {
   params: Promise<{
@@ -14,9 +14,7 @@ export default async function Page({ params }: PostProps) {
   const response = await ServiceGetArticleDetail(id);
   return (
     <div className="flex gap-4">
-      <Card className="hidden lg:flex w-[200px] h-full gap-4 flex-col">
-        Operation:点赞、收藏、转发等操作
-      </Card>
+      <Operation id={id} />
       <div className="flex-1 flex flex-col px-4 pb-10 bg-white">
         <div>{response?.data?.data.article?.title}</div>
         <AppArticlePreviewDetail item={response?.data?.data} />
