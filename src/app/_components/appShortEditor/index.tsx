@@ -35,6 +35,8 @@ export function AppShortEditor({ PublicSuccess }: Props) {
       imageIds: imageListID,
     }).then((res) => {
       setText("");
+      setImageList([]);
+      setImageListID([]);
       PublicSuccess(res);
     });
   };

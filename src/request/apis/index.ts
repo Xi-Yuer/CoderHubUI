@@ -194,10 +194,26 @@ export function ClientDeleteComment(comment_id: string) {
   });
 }
 
+// 删除文章
+export function ClientDeleteArticle(id: string) {
+  return alovaServerInstance.articles_auth.DeleteArticle({
+    pathParams: {
+      id,
+    },
+    data: {},
+  });
+}
+
 // 获取文章详情
 export async function ServiceGetArticleDetail(id: string) {
   return alovaLocalInstance.get(`/api/articles/detail/${id}`);
 }
 
 // 获取文章格外信息
-export async function ServiceGetArticleExtraInfo(id: string) {}
+export async function ClientGetArticleExtraInfo(id: string) {
+  return alovaServerInstance.articles_public.GetArticleExtra({
+    pathParams: {
+      id,
+    },
+  });
+}

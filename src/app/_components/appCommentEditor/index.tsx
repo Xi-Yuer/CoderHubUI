@@ -74,19 +74,17 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
               height: "fit-content",
               minHeight: "100px",
               border: "none",
+              paddingBottom: "0px",
             }}
             previewTheme={previewTheme}
           />
-          {imageList.map((item, index) => {
-            return (
-              <div
-                className="image_list flex gap-2 mt-2 mb-10 mx-2"
-                key={index}
-              >
-                <Image src={item} width={100} height={100} alt="" />
-              </div>
-            );
-          })}
+          <div className="image_list flex gap-2 mb-10 mx-2">
+            {imageList.map((item, index) => {
+              return (
+                <Image src={item} key={index} width={100} height={100} alt="" />
+              );
+            })}
+          </div>
           <div className="flex gap-6 absolute bottom-2 left-2 text-gray-500">
             <Popover
               placement="bottom"
@@ -109,7 +107,7 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
               {...props}
               className="flex cursor-pointer !text-gray-500 hover:!text-gray-950"
             >
-              <PictureOutlined className=" mx-1" />
+              <PictureOutlined className="mx-1" />
               <span>图片</span>
             </Upload>
           </div>

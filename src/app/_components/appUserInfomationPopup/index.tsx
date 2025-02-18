@@ -1,3 +1,4 @@
+"use client"
 import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis";
 import { PlusOutlined } from "@ant-design/icons";

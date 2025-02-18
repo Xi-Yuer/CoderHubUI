@@ -87,10 +87,7 @@ export default function MicroPostList({ ref }: Props) {
     <Card>
       {list?.map((item) => {
         return (
-          <div
-            key={item.article.id}
-            className="mb-10 border-b border-gray-100 pb-4"
-          >
+          <div key={item.article.id}>
             <AppShortPreview item={item} />
           </div>
         );

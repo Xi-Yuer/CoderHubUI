@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { MdPreview, MdCatalog } from "md-editor-rt";
 import "md-editor-rt/lib/preview.css";
-import DOMPurify from "dompurify";
 
 export function AppEditorPreview() {
   const [id] = useState("preview-only");
@@ -15,14 +14,7 @@ export function AppEditorPreview() {
   return (
     <>
       <div className="flex gap-2">
-        <MdPreview
-          id={id}
-          value={text}
-          className="flex-1"
-          sanitize={(html) => {
-            return DOMPurify.sanitize(html);
-          }}
-        />
+        <MdPreview id={id} value={text} className="flex-1" />
         <MdCatalog
           editorId={id}
           scrollElement={scrollElement}
