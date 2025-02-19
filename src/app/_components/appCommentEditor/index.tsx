@@ -24,6 +24,7 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
   const [previewTheme] = useState("arknights");
   const [toolbars] = useState<ToolbarNames[]>([]);
   const appStore = useStore(useAppStore, (state) => state);
+  const [editorHeight, setEditorHeight] = useState("50px");
 
   const confirmAction = () => {
     if (!text && imageListID.length == 0) return;
@@ -70,11 +71,18 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
             footers={[]}
             toolbars={toolbars}
             placeholder={appStore.token ? "平等表达，友善交流" : ""}
+            onFocus={() => {
+              setEditorHeight("100px");
+            }}
+            onBlur={() => {
+              setEditorHeight("50px");
+            }}
             style={{
               height: "fit-content",
-              minHeight: "100px",
+              minHeight: editorHeight,
               border: "none",
               paddingBottom: "0px",
+              transition: "all 0.2s ease-in-out",
             }}
             previewTheme={previewTheme}
           />

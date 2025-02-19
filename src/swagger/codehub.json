@@ -2219,6 +2219,10 @@
           "format": "boolean",
           "description": " 是否已点赞"
         },
+        "isFavorited": {
+          "type": "boolean",
+          "format": "boolean"
+        },
         "commentCount": {
           "type": "integer",
           "format": "int64",
@@ -2253,6 +2257,7 @@
         "viewCount",
         "likeCount",
         "isLiked",
+        "isFavorited",
         "commentCount",
         "status",
         "createdAt",
@@ -2280,6 +2285,10 @@
         "is_liked": {
           "type": "boolean",
           "format": "boolean"
+        },
+        "is_favorited": {
+          "type": "boolean",
+          "format": "boolean"
         }
       },
       "title": "ArticleExtra",
@@ -2288,7 +2297,8 @@
         "view_count",
         "like_count",
         "comment_count",
-        "is_liked"
+        "is_liked",
+        "is_favorited"
       ]
     },
     "CancelLikeAcademicNavigatorReq": {

@@ -1,7 +1,8 @@
 import AppArticlePreviewDetail from "@/app/_components/appArticlePreviewDetail";
 import { ServiceGetArticleDetail } from "@/request/apis";
 import { Card } from "antd";
-import Operation from "../_components/operation";
+import AuthInfomation from "../_components/authInfomation";
+import OperationPC from "../_components/operationPC";
 
 interface PostProps {
   params: Promise<{
@@ -12,15 +13,16 @@ interface PostProps {
 export default async function Page({ params }: PostProps) {
   const id = (await params).id;
   const response = await ServiceGetArticleDetail(id);
+
   return (
-    <div className="flex gap-4">
-      <Operation id={id} />
-      <div className="flex-1 flex flex-col px-4 pb-10 bg-white">
-        <div>{response?.data?.data.article?.title}</div>
+    <div className="flex lg:gap-4">
+      <OperationPC id={id} />
+      <div className="flex-1 flex flex-col px-4 pb-10 bg-white box-content">
         <AppArticlePreviewDetail item={response?.data?.data} />
       </div>
+      {/* 右侧作者信息，仅桌面端显示 */}
       <Card className="hidden xl:flex w-[250px] gap-4 flex-col">
-        Something:作者的信息
+        <AuthInfomation />
       </Card>
     </div>
   );

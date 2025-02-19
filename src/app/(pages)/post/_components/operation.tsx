@@ -1,64 +1,87 @@
 "use client";
 import { ArticleExtra } from "@/alova/globals";
-import { ClientGetArticleExtraInfo, ClientLikeEntity } from "@/request/apis";
+import AppSharedPopUp from "@/app/_components/appSharedPopup";
+import {
+  ClientDeleteArticle,
+  ClientGetArticleExtraInfo,
+  ClientLikeEntity,
+} from "@/request/apis";
+import { useAppStore } from "@/store";
 import {
   LikeFilled,
   LikeOutlined,
   ShareAltOutlined,
   StarOutlined,
   StarFilled,
+  AlertOutlined,
+  CommentOutlined,
+  EllipsisOutlined,
+  RestOutlined,
 } from "@ant-design/icons";
-import { Badge, Button } from "antd";
+import { Badge, Button, Popover } from "antd";
 import React, { useEffect } from "react";
 
 interface Props {
   id: string;
 }
 export default function Operation({ id }: Props) {
-  const [extraInfo, setExtraInfo] = React.useState<ArticleExtra>();
+  const [extraInfo, setExtraInfo] = React.useState<ArticleExtra>({
+    id: "",
+  } as ArticleExtra);
+  const { userInfo } = useAppStore();
+  const [isDeleted, setIsDeleted] = React.useState(false);
+  const [showCommentEditor, setShowCommentEditor] = React.useState(true);
   useEffect(() => {
     ClientGetArticleExtraInfo(id).then((res) => {
       setExtraInfo(res.data);
     });
   }, [id]);
   return (
-    <div className="hidden lg:flex w-[200px] h-full gap-8 flex-col justify-center items-center py-10">
-      <Badge count={extraInfo?.like_count}>
-        <Button
-          type="primary"
-          size="large"
-          icon={extraInfo?.is_liked ? <LikeFilled /> : <LikeOutlined />}
-          shape="circle"
+    <>
+      {/* 移动端操作按钮（底部固定） */}
+      <div className="lg:hidden fixed bottom-0 z-10 left-0 w-full bg-white border-t flex justify-around py-2 shadow-md">
+        <button
+          className="flex flex-col items-center text-gray-500 hover:text-gray-950"
           onClick={() => {
             if (!extraInfo) return;
             ClientLikeEntity(extraInfo.id).then((res) => {
               if (!res) return;
-              setExtraInfo((prev: any) => {
-                return {
-                  ...prev,
-                  like_count: prev?.is_liked
-                    ? prev.like_count - 1
-                    : prev.like_count + 1,
-                  is_liked: !prev.is_liked,
-                } as ArticleExtra;
-              });
+              setExtraInfo((prev: any) => ({
+                ...prev,
+                like_count: prev?.is_liked
+                  ? prev.like_count - 1
+                  : prev.like_count + 1,
+                is_liked: !prev.is_liked,
+              }));
             });
           }}
-        ></Button>
-      </Badge>
+        >
+          {extraInfo?.is_liked ? (
+            <LikeFilled className="text-lg text-black" />
+          ) : (
+            <LikeOutlined className="text-lg" />
+          )}
+          <span className="text-xs">{extraInfo?.like_count || 0}</span>
+        </button>
 
-      <Button
-        type="primary"
-        size="large"
-        icon={<StarOutlined />}
-        shape="circle"
-      ></Button>
-      <Button
-        type="primary"
-        size="large"
-        icon={<ShareAltOutlined />}
-        shape="circle"
-      ></Button>
-    </div>
+        <button
+          className="flex flex-col items-center text-gray-500 hover:text-gray-950"
+          onClick={() => setShowCommentEditor(!showCommentEditor)}
+        >
+          <CommentOutlined className="text-lg" />
+          <span className="text-xs">{extraInfo?.comment_count || 0}</span>
+        </button>
+
+        <Popover
+          content={<AppSharedPopUp id={extraInfo!.id} />}
+          placement="top"
+        >
+          <button className="flex flex-col items-center text-gray-500 hover:text-gray-950">
+            <ShareAltOutlined className="text-lg" />
+            <span className="text-xs">分享</span>
+          </button>
+        </Popover>
+      </div>
+    </>
   );
 }

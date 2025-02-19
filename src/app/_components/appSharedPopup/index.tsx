@@ -52,7 +52,7 @@ export default function AppSharedPopUp({ id }: { id: string }) {
       >
         <div className="flex items-center justify-center space-x-2 mt-2">
           <CopyOutlined />
-          <span>复制链接</span>
+          <span className="text-slate-600 hover:text-slate-800 text-sm h-auto active:bg-gray-100 cursor-pointer">复制链接</span>
         </div>
       </span>
     </div>
