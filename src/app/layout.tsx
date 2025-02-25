@@ -29,13 +29,22 @@ export default function RootLayout({
               colorPrimary: "#000000",
               controlOutlineWidth: 0,
               borderRadius: 4,
+              colorBgContainer: "#fff",
+              colorBgBase: "#fff",
+            },
+            components: {
+              Menu: {
+                itemBg: "#fff",
+                itemSelectedBg: "#eee",
+                itemActiveBg: "#eee",
+              },
             },
           }}
         >
           <AntdRegistry>
             <AppHeader />
             <main>{children}</main>
-            <AppLoginPanel />  
+            <AppLoginPanel />
             <AppFooter />
           </AntdRegistry>
         </ConfigProvider>

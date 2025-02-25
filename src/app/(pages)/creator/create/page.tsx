@@ -1,0 +1,209 @@
+"use client";
+import { AppEditor } from "@/app/_components";
+import { EditorRefCallBack } from "@/app/_components/appEditor";
+import { ClientCreateArticle, ClientUploadImage } from "@/request/apis";
+import { getBase64 } from "@/utils";
+import { PlusOutlined, SaveOutlined, SendOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Card,
+  Divider,
+  Image,
+  Input,
+  message,
+  Space,
+  Upload,
+  UploadProps,
+} from "antd";
+import { Select, Tag } from "antd";
+import type { InputRef, SelectProps } from "antd";
+import React from "react";
+
+type TagRender = SelectProps["tagRender"];
+export default function Page() {
+  const [messageApi, messageContext] = message.useMessage();
+  const [items, setItems] = React.useState<string[]>([]);
+  const [name, setName] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [imageListID, setImageListID] = React.useState<string[]>([]);
+  const [imageList, setImageList] = React.useState<string[]>([]);
+  const [tagList, setTagList] = React.useState<string[]>([]);
+  const inputRef = React.useRef<InputRef>(null);
+  const AppEditorRef = React.useRef<EditorRefCallBack>(null);
+
+  const onPublish = () => {
+    const content = AppEditorRef.current?.getText();
+    if (!content) return;
+    ClientCreateArticle({
+      type: "article",
+      title: title,
+      coverImageID: imageListID[0],
+      content: content,
+      summary: description,
+      tags: tagList,
+      status: "published",
+    }).then((res) => {
+      messageApi.info(res.message);
+      setTitle("");
+      setDescription("");
+      setTagList([]);
+      setImageList([]);
+      setImageListID([]);
+      AppEditorRef.current?.restText();
+    });
+  };
+
+  const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  const props: UploadProps = {
+    name: "file",
+    accept: "image/*",
+    showUploadList: false,
+    maxCount: 1,
+    beforeUpload(file) {
+      return false;
+    },
+    async onChange(info) {
+      // 预览列表
+      const fileBase64 = await getBase64(info.file as unknown as File);
+      setImageList((prev) => [...prev, fileBase64]);
+      // 上传图片
+      ClientUploadImage(info.file as unknown as File).then((res) => {
+        setImageListID((prev) => [...prev, res.data.image_id]);
+      });
+    },
+  };
+
+  const tagRender: TagRender = (props) => {
+    const { label, value, closable, onClose } = props;
+    const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    return (
+      <Tag
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginInlineEnd: 4 }}
+      >
+        {label}
+      </Tag>
+    );
+  };
+  const addItem = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+  ) => {
+    e.preventDefault();
+    if (!name || items.includes(name)) return;
+    setItems([...items, name]);
+    setName("");
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
+  };
+
+  return (
+    <Card>
+      {messageContext}
+      <div className="flex-1 flex flex-col gap-4">
+        <Input.TextArea
+          placeholder="请输入标题"
+          autoSize
+          className="placeholder:text-lg placeholder:text-gray-800 placeholder:font-bold font-bold"
+          style={{ fontSize: "1.5rem" }}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <Input.TextArea
+          placeholder="请输入文章摘要（限100字，选填）"
+          maxLength={100}
+          autoSize={{ minRows: 3 }}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <AppEditor ref={AppEditorRef} />
+        <Divider />
+        <div className="flex flex-col gap-8">
+          <span className="text-lg font-bold">发布设置</span>
+          <div className="flex gap-6 items-center text-md">
+            <span className="w-20">添加封面</span>
+            {imageListID.length ? (
+              <>
+                <div className="flex flex-col gap-2">
+                  {imageList.map((item) => {
+                    return (
+                      <Image src={item} alt="" key={item} height={150}></Image>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <>
+                <Upload
+                  {...props}
+                  className="flex cursor-pointer !text-gray-500 hover:!text-gray-950"
+                >
+                  <div className="flex flex-col items-center justify-center border w-40 h-40 border-dashed">
+                    <PlusOutlined />
+                    <div style={{ marginTop: 8 }}>上传</div>
+                  </div>
+                </Upload>
+              </>
+            )}
+          </div>
+          <div className="flex gap-6 items-center">
+            <span className="w-20">标签</span>
+            <Select
+              mode="multiple"
+              tagRender={tagRender}
+              defaultValue={tagList}
+              value={tagList}
+              onSelect={(value) => {
+                setTagList([...tagList, value]);
+              }}
+              style={{ width: "100%" }}
+              options={items.map((item) => ({ label: item, value: item }))}
+              dropdownRender={(menu) => (
+                <>
+                  {menu}
+                  <Divider style={{ margin: "8px 0" }} />
+                  <Space style={{ padding: "0 8px 4px" }}>
+                    <Input
+                      placeholder="点击添加标签"
+                      ref={inputRef}
+                      value={name}
+                      onChange={onNameChange}
+                      onKeyDown={(e) => e.stopPropagation()}
+                    />
+                    <Button
+                      type="text"
+                      icon={<PlusOutlined />}
+                      onClick={addItem}
+                    >
+                      添加标签
+                    </Button>
+                  </Space>
+                </>
+              )}
+            />
+          </div>
+        </div>
+        <Divider />
+        <div className="flex justify-end">
+          <div className="flex gap-2">
+            <Button onClick={() => {}} icon={<SaveOutlined />}>
+              保存草稿
+            </Button>
+            <Button type="primary" onClick={onPublish} icon={<SendOutlined />}>
+              发布
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}

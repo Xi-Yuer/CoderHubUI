@@ -6,7 +6,7 @@ import {
   MenuOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Drawer, Input, Popover, Tabs } from "antd";
+import { Button, Drawer, Input, Popover } from "antd";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,7 +59,7 @@ export function AppHeader() {
             suffix={<SearchOutlined />}
             className="w-60"
           />
-          <Link href="/">
+          <Link href="/creator">
             <Button type="primary" icon={<EditOutlined />}>
               创作中心
             </Button>
@@ -132,7 +132,7 @@ export function AppHeader() {
             style={{ marginBottom: "20px" }} // 提高输入框与按钮间距
           />
           <div>
-            <Link href="/">
+            <Link href="/creator">
               <Button
                 type="primary"
                 block

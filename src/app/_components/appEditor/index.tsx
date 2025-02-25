@@ -1,11 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useImperativeHandle, useState } from "react";
 import { MdEditor, ToolbarNames } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
 
-export function AppEditor() {
-  const [text, setText] = useState("# Hello, Markdown!");
-  const [previewTheme] = useState('arknights');
+export interface EditorRefCallBack {
+  getText: () => string;
+  restText: () => void;
+}
+export function AppEditor({ ref }: any) {
+  const [text, setText] = useState("");
+  const [previewTheme] = useState("arknights");
   const [toolbars] = useState<ToolbarNames[]>([
     "title",
     "underline",
@@ -27,14 +31,23 @@ export function AppEditor() {
     "prettier",
     "-",
     "=",
+    "fullscreen",
   ]);
+
+  useImperativeHandle(ref, () => ({
+    getText: () => {
+      return text;
+    },
+    restText: () => {
+      setText("");
+    },
+  }));
 
   return (
     <MdEditor
       value={text}
       onChange={setText}
       preview={true}
-      
       toolbars={toolbars}
       previewTheme={previewTheme}
     />
