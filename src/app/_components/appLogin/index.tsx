@@ -22,7 +22,7 @@ export function AppLogin() {
           icon={
             appStore.userInfo.avatar ? (
               <Image
-                src={appStore.userInfo.avatar}
+                src={appStore.userInfo.avatar || "/default-avatar.png"}
                 alt="avatar"
                 width={50}
                 height={50}

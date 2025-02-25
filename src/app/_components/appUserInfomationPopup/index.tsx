@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis";
 import { PlusOutlined } from "@ant-design/icons";
@@ -31,11 +31,11 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
         return {
           ...prev,
           is_followed: prev.is_followed ? false : true,
-          fans_count: prev.is_followed
-            ? prev.fans_count === 0
+          follow_count: prev.is_followed
+            ? prev.follow_count === 0
               ? 0
-              : prev.fans_count - 1
-            : prev.fans_count + 1,
+              : prev.follow_count - 1
+            : prev.follow_count + 1,
         };
       });
     });
@@ -46,7 +46,7 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
         {messageContext}
         <div className="flex gap-4">
           <Image
-            src={userInfo?.avatar}
+            src={userInfo?.avatar || "/default-avatar.png"}
             alt=""
             className="rounded-full"
             width={40}
@@ -63,11 +63,11 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
           <div className="flex gap-4">
             <div>
               <span className="text-slate-500">粉丝</span>{" "}
-              {userInfo?.fans_count}
+              {userInfo?.follow_count}
             </div>
             <div>
               <span className="text-slate-500">关注</span>{" "}
-              {userInfo?.follow_count}
+              {userInfo?.fans_count}
             </div>
           </div>
           <Button

@@ -60,7 +60,7 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
         >
           <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg cursor-pointer">
             <Image
-              src={commentFromProps.user_info.avatar}
+              src={commentFromProps.user_info.avatar || "/default-avatar.png"}
               alt="Avatar"
               preview={false}
               className="rounded-full w-10 h-10 cursor-pointer"

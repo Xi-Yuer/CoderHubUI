@@ -70,7 +70,7 @@ export default function AppLoginPanel() {
           icon={
             userInfo.avatar ? (
               <Image
-                src={userInfo.avatar}
+                src={userInfo.avatar || "/default-avatar.png"}
                 alt="avatar"
                 width={64}
                 height={64}

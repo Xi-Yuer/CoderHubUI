@@ -61,7 +61,7 @@ export default function AppShortControl({
               >
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg">
                   <Image
-                    src={article.author.avatar}
+                    src={article.author.avatar || "/default-avatar.png"}
                     alt="Avatar"
                     preview={false}
                     className="rounded-full"

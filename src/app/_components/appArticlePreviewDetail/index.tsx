@@ -3,11 +3,7 @@ import { Image, Popover } from "antd";
 import { MdPreview } from "md-editor-rt";
 import React from "react";
 import { GetArticle } from "@/alova/globals";
-import {
-  ClientDeleteArticle,
-  ClientLikeEntity,
-  ClientSendComment,
-} from "@/request/apis";
+import { ClientSendComment } from "@/request/apis";
 import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 import { AppCommentEditor } from "../appCommentEditor";
 import { formatTime } from "@/utils";
@@ -25,7 +21,7 @@ export default function AppArticlePreviewDetail({
 
   return (
     <div>
-      {articleFromProps.article.type === "article" && (
+      {articleFromProps?.article?.type === "article" && (
         <>
           <h1 className="text-3xl p-4 pb-0 font-semibold">
             {articleFromProps.article.title}
@@ -45,7 +41,7 @@ export default function AppArticlePreviewDetail({
           </div>
         </>
       )}
-      {articleFromProps.article.type === "micro_post" && (
+      {articleFromProps?.article?.type === "micro_post" && (
         <div className="flex items-center justify-between space-x-3 mt-4">
           <div className="flex items-center space-x-3 cursor-pointer">
             <Popover
@@ -59,7 +55,7 @@ export default function AppArticlePreviewDetail({
             >
               <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg">
                 <Image
-                  src={articleFromProps.author.avatar}
+                  src={articleFromProps.author.avatar || "/default-avatar.png"}
                   alt="Avatar"
                   preview={false}
                   className="rounded-full"
@@ -78,7 +74,7 @@ export default function AppArticlePreviewDetail({
           </div>
         </div>
       )}
-      <MdPreview value={item.article.content} />
+      <MdPreview value={item?.article?.content} />
       <div className="grid grid-cols-2 gap-2 mt-2 px-6">
         {item.article.imageUrls.map((url, index) => (
           <div className="flex flex-wrap" key={index}>

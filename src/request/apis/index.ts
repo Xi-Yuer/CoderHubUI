@@ -217,3 +217,33 @@ export async function ClientGetArticleExtraInfo(id: string) {
     },
   });
 }
+
+// 获取用户的收藏夹
+export async function ClientGetUserFavorFold(
+  user_id: string,
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.favorites_public.ListFavorite({
+    params: {
+      user_id,
+      page,
+      page_size,
+    },
+  });
+}
+
+// 创建收藏夹
+export async function ClientCreateFavorFold(
+  isPublic: boolean,
+  name: string,
+  description: string
+) {
+  return alovaServerInstance.favorites_auth.CreateFavorite({
+    data: {
+      isPublic,
+      name,
+      description,
+    },
+  });
+}

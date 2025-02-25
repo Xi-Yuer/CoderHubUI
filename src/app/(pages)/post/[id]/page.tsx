@@ -21,9 +21,9 @@ export default async function Page({ params }: PostProps) {
         <AppArticlePreviewDetail item={response?.data?.data} />
       </div>
       {/* 右侧作者信息，仅桌面端显示 */}
-      <Card className="hidden xl:flex w-[250px] gap-4 flex-col">
-        <AuthInfomation />
-      </Card>
+      <div className="hidden xl:flex w-[250px] gap-4 flex-col">
+        <AuthInfomation id={response?.data?.data?.author?.id} />
+      </div>
     </div>
   );
 }

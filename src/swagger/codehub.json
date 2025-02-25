@@ -1036,17 +1036,17 @@
         },
         "parameters": [
           {
+            "name": "request-user-id",
+            "description": " 请求用户 ID",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "user_id",
             "description": " 用户 ID",
             "in": "query",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "request_user_id",
-            "description": " 请求用户 ID",
-            "in": "query",
-            "required": false,
             "type": "string"
           },
           {
@@ -1059,7 +1059,7 @@
           },
           {
             "name": "page_size",
-            "description": "requestUserId 每页数量",
+            "description": " 每页数量",
             "in": "query",
             "required": true,
             "type": "integer",
@@ -1068,6 +1068,9 @@
         ],
         "tags": [
           "favorites_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -3767,10 +3770,6 @@
           "type": "string",
           "description": " 用户 ID"
         },
-        "request_user_id": {
-          "type": "string",
-          "description": " 请求用户 ID"
-        },
         "page": {
           "type": "integer",
           "format": "int32",
@@ -3779,7 +3778,7 @@
         "page_size": {
           "type": "integer",
           "format": "int32",
-          "description": "requestUserId 每页数量"
+          "description": " 每页数量"
         }
       },
       "title": "GetFavorFoldListReq",

@@ -75,7 +75,7 @@ export function AppShortEditor({ PublicSuccess }: Props) {
       <div className="image_list flex gap-2 mt-2">
         {imageList.map((item, index) => {
           return (
-            <Image key={index} src={item} width={100} height={100} alt="" />
+            <Image key={index} src={item || "/default-avatar.png"} width={100} height={100} alt="" />
           );
         })}
       </div>
