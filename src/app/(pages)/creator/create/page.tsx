@@ -32,9 +32,16 @@ export default function Page() {
   const inputRef = React.useRef<InputRef>(null);
   const AppEditorRef = React.useRef<EditorRefCallBack>(null);
 
-  const onPublish = () => {
+  const onPublish = (status: "publish" | "draft") => {
     const content = AppEditorRef.current?.getText();
-    if (!content) return;
+    if (!title) {
+      messageApi.error("标题不能为空");
+      return;
+    }
+    if (!content) {
+      messageApi.error("内容不能为空");
+      return;
+    }
     ClientCreateArticle({
       type: "article",
       title: title,
@@ -116,7 +123,9 @@ export default function Page() {
           className="placeholder:text-lg placeholder:text-gray-800 placeholder:font-bold font-bold"
           style={{ fontSize: "1.5rem" }}
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) =>
+            setTitle(e.target.value.replaceAll(/^\s+|\s+$/g, ""))
+          }
         />
         <Input.TextArea
           placeholder="请输入文章摘要（限100字，选填）"
@@ -195,10 +204,14 @@ export default function Page() {
         <Divider />
         <div className="flex justify-end">
           <div className="flex gap-2">
-            <Button onClick={() => {}} icon={<SaveOutlined />}>
+            <Button onClick={() => onPublish("draft")} icon={<SaveOutlined />}>
               保存草稿
             </Button>
-            <Button type="primary" onClick={onPublish} icon={<SendOutlined />}>
+            <Button
+              type="primary"
+              onClick={() => onPublish("publish")}
+              icon={<SendOutlined />}
+            >
               发布
             </Button>
           </div>

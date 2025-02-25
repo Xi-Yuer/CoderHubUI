@@ -362,6 +362,10 @@ export type Article = {
    */
   isLiked: boolean;
   /**
+   * [required]
+   */
+  isFavorited: boolean;
+  /**
    * 评论数
    * [required]
    */
@@ -510,6 +514,10 @@ export type ArticleExtra = {
    * [required]
    */
   is_liked: boolean;
+  /**
+   * [required]
+   */
+  is_favorited: boolean;
 };
 export type GetArticleExtraResp = {
   /**
@@ -2599,6 +2607,8 @@ declare global {
        *       // 是否已点赞
        *       // [required]
        *       isLiked: boolean
+       *       // [required]
+       *       isFavorited: boolean
        *       // 评论数
        *       // [required]
        *       commentCount: number
@@ -2716,6 +2726,8 @@ declare global {
        *     comment_count: number
        *     // [required]
        *     is_liked: boolean
+       *     // [required]
+       *     is_favorited: boolean
        *   }
        * }
        * ```
@@ -2809,6 +2821,8 @@ declare global {
        *       // 是否已点赞
        *       // [required]
        *       isLiked: boolean
+       *       // [required]
+       *       isFavorited: boolean
        *       // 评论数
        *       // [required]
        *       commentCount: number
@@ -4391,12 +4405,10 @@ declare global {
        *   // 用户 ID
        *   // [required]
        *   user_id: string
-       *   // 请求用户 ID
-       *   request_user_id?: string
        *   // 页码
        *   // [required]
        *   page: number
-       *   // requestUserId 每页数量
+       *   // 每页数量
        *   // [required]
        *   page_size: number
        * }
@@ -4446,16 +4458,12 @@ declare global {
              */
             user_id: string;
             /**
-             * 请求用户 ID
-             */
-            request_user_id?: string;
-            /**
              * 页码
              * [required]
              */
             page: number;
             /**
-             * requestUserId 每页数量
+             * 每页数量
              * [required]
              */
             page_size: number;

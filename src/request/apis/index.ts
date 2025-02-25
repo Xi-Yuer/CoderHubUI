@@ -1,7 +1,7 @@
 import {
   CreateArticleReq,
   CreateCommentReq,
-  GetArticle,
+  CreateFavorReq,
   LoginReq,
   RegisterReq,
   UpdatePasswordReq,
@@ -224,13 +224,15 @@ export async function ClientGetUserFavorFold(
   page: number,
   page_size: number
 ) {
-  return alovaServerInstance.favorites_public.ListFavorite({
-    params: {
-      user_id,
-      page,
-      page_size,
-    },
-  });
+  return alovaServerInstance.favorites_public
+    .ListFavorite({
+      params: {
+        user_id,
+        page,
+        page_size,
+      },
+    })
+    .send(true);
 }
 
 // 创建收藏夹
@@ -245,5 +247,12 @@ export async function ClientCreateFavorFold(
       name,
       description,
     },
+  });
+}
+
+// 添加内容到收藏夹
+export async function ClientAddContentToFavor(params: CreateFavorReq) {
+  return alovaServerInstance.favorites_auth.AddFavoriteContent({
+    data: params,
   });
 }
