@@ -11,7 +11,7 @@ export default function AppShortPreview({ item }: { item: GetArticle }) {
       <AppShartControl article={item}>
         <MdPreview value={item.article.content} />
         <div className="grid grid-cols-2 gap-2 mt-2 px-6">
-          {item.article.imageUrls.map((url, index) => (
+          {item?.article?.imageUrls?.map((url, index) => (
             <div className="flex flex-wrap" key={index}>
               <Image src={url} alt="" width={120} height={120} />
             </div>

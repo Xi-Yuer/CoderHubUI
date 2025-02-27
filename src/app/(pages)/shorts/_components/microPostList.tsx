@@ -3,7 +3,7 @@ import { GetArticle } from "@/alova/globals";
 import AppShortPreview from "@/app/_components/appShortPreview";
 import { ClientGetArticleList } from "@/request/apis";
 import { useAppStore } from "@/store";
-import { Card } from "antd";
+import { Card, Skeleton } from "antd";
 import React, {
   Ref,
   useEffect,
@@ -23,12 +23,14 @@ export default function MicroPostList({ ref }: Props) {
   const [page, setPage] = useState(1);
   const [list, setList] = useState<GetArticle[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !loading) {
           // 触发加载更多
           setPage((prev) => prev + 1);
         }
@@ -48,11 +50,12 @@ export default function MicroPostList({ ref }: Props) {
         observer.unobserve(target); // 停止观察
       }
     };
-  }, []);
+  }, [loadingRef.current]);
 
   const getList = (reFreshed = false) => {
     const { userInfo } = useAppStore.getState();
     if (!hasMore) return;
+    setLoading(true);
     ClientGetArticleList("micro_post", page, 10, userInfo.id)
       .send(reFreshed)
       .then((res) => {
@@ -60,7 +63,13 @@ export default function MicroPostList({ ref }: Props) {
           setHasMore(false);
           return;
         }
-        setList([...list, ...res.data]);
+        setList((pre) => {
+          return [...pre, ...res.data];
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+        setFirstLoad(false);
       });
   };
 
@@ -87,11 +96,28 @@ export default function MicroPostList({ ref }: Props) {
     <Card>
       {list?.map((item) => {
         return (
-          <div key={item.article.id}>
+          <div key={item?.article?.id}>
             <AppShortPreview item={item} />
           </div>
         );
       })}
+      {loading && firstLoad && (
+        <div className="flex flex-col gap-10">
+          {Array(3)
+            .fill(0)
+            .map((_, index) => {
+              return (
+                <div
+                  className="flex justify-between items-center gap-4 mt-2"
+                  key={index}
+                >
+                  <Skeleton active />
+                  <Skeleton.Image active />
+                </div>
+              );
+            })}
+        </div>
+      )}
       <div ref={loadingRef} className="text-center mt-4 text-gray-400">
         {hasMore ? "Loaing" : "没有更多了"}
       </div>

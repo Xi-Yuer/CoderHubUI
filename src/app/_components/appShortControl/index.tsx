@@ -84,19 +84,21 @@ export default function AppShortControl({
               <button
                 className="flex items-center space-x-1 hover:text-gray-950"
                 onClick={() => {
-                  ClientLikeEntity(articleFromProps.article.id).then((res) => {
-                    if (!res) return;
-                    setArticleFromProps((prev) => ({
-                      ...prev,
-                      article: {
-                        ...prev.article,
-                        likeCount: prev.article.isLiked
-                          ? prev.article.likeCount - 1
-                          : prev.article.likeCount + 1,
-                        isLiked: !prev.article.isLiked,
-                      },
-                    }));
-                  });
+                  ClientLikeEntity(articleFromProps?.article?.id).then(
+                    (res) => {
+                      if (!res) return;
+                      setArticleFromProps((prev) => ({
+                        ...prev,
+                        article: {
+                          ...prev.article,
+                          likeCount: prev.article.isLiked
+                            ? prev.article.likeCount - 1
+                            : prev.article.likeCount + 1,
+                          isLiked: !prev.article.isLiked,
+                        },
+                      }));
+                    }
+                  );
                 }}
               >
                 {articleFromProps.article.isLiked ? (
@@ -118,7 +120,7 @@ export default function AppShortControl({
                 <span>{articleFromProps.article.commentCount || 0}</span>
               </button>
               <Popover
-                content={<AppSharedPopUp id={articleFromProps.article.id} />}
+                content={<AppSharedPopUp id={articleFromProps?.article?.id} />}
                 placement="bottomLeft"
               >
                 <button className="flex items-center space-x-1 hover:text-gray-950">
@@ -135,7 +137,7 @@ export default function AppShortControl({
                     <button
                       className="text-red-500 flex items-cente gap-1"
                       onClick={() => {
-                        ClientDeleteArticle(articleFromProps.article.id).then(
+                        ClientDeleteArticle(articleFromProps?.article?.id).then(
                           () => {
                             setIsDeleted(true);
                           }
@@ -164,7 +166,7 @@ export default function AppShortControl({
                 <AppCommentEditor
                   publicSuccess={async (params) => {
                     await ClientSendComment({
-                      entity_id: articleFromProps.article.id,
+                      entity_id: articleFromProps?.article?.id,
                       content: params.content,
                       image_ids: params.imageIds,
                       root_id: "",
@@ -186,10 +188,10 @@ export default function AppShortControl({
                       });
                   }}
                   cancel={() => {}}
-                  entityID={articleFromProps.article.id}
+                  entityID={articleFromProps?.article?.id}
                 />
                 <AppCommentList
-                  entityID={articleFromProps.article.id}
+                  entityID={articleFromProps?.article?.id}
                   ref={appCommentListRef}
                 />
               </>

@@ -76,18 +76,18 @@ export default function AppArticlePreviewDetail({
       )}
       <MdPreview value={item?.article?.content} id="preview-only" />
       <div className="grid grid-cols-2 gap-2 mt-2 px-6">
-        {item.article.imageUrls.map((url, index) => (
+        {item?.article?.imageUrls?.map((url, index) => (
           <div className="flex flex-wrap" key={index}>
             <Image src={url} alt="" className="w-20" width={120} />
           </div>
         ))}
       </div>
-      <Operation id={item.article.id} />
+      <Operation id={item?.article?.id} />
       <div className="mt-10 border-t pt-4 px-2 lg:px-6">
         <AppCommentEditor
           publicSuccess={async (params) => {
             await ClientSendComment({
-              entity_id: articleFromProps.article.id,
+              entity_id: articleFromProps?.article?.id,
               content: params.content,
               image_ids: params.imageIds,
               root_id: "",
@@ -109,10 +109,10 @@ export default function AppArticlePreviewDetail({
               });
           }}
           cancel={() => {}}
-          entityID={articleFromProps.article.id}
+          entityID={articleFromProps?.article?.id}
         />
         <AppCommentList
-          entityID={articleFromProps.article.id}
+          entityID={articleFromProps?.article?.id}
           ref={appCommentListRef}
         />
       </div>
