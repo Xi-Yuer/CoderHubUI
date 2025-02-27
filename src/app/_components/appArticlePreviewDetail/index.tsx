@@ -74,7 +74,7 @@ export default function AppArticlePreviewDetail({
           </div>
         </div>
       )}
-      <MdPreview value={item?.article?.content} />
+      <MdPreview value={item?.article?.content} id="preview-only" />
       <div className="grid grid-cols-2 gap-2 mt-2 px-6">
         {item.article.imageUrls.map((url, index) => (
           <div className="flex flex-wrap" key={index}>

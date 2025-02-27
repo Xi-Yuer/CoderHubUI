@@ -74,9 +74,6 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
             onFocus={() => {
               setEditorHeight("100px");
             }}
-            onBlur={() => {
-              setEditorHeight("50px");
-            }}
             style={{
               height: "fit-content",
               minHeight: editorHeight,

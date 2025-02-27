@@ -35,9 +35,15 @@ export default function AppFavorite({ ref }: any) {
         {favorList?.list.map((item, index) => (
           <div
             key={item.id}
-            onClick={() => setSelectedFolder(item.id)}
-            className={`bg-white py-2 px-4 rounded-lg border cursor-pointer mb-2 transition-all duration-200 
-              ${selectedFolder === item.id ? "border-blue-500 bg-blue-200 shadow-md" : "hover:shadow-md"}`}
+            onClick={() => {
+              if (selectedFolder !== item.id) {
+                setSelectedFolder(item.id);
+              } else {
+                setSelectedFolder("");
+              }
+            }}
+            className={` py-2 px-4 rounded-lg border cursor-pointer mb-2 transition-all duration-200 
+              ${selectedFolder === item.id ? "border-blue-500 bg-blue-100 shadow-md" : "hover:shadow-md bg-white"}`}
           >
             <div className="flex items-center justify-between mb-2">
               <div className="text-lg font-semibold text-gray-800 pr-10 truncate">
