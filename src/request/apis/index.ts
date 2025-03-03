@@ -2,6 +2,7 @@ import {
   CreateArticleReq,
   CreateCommentReq,
   CreateFavorReq,
+  CreateTagReq,
   LoginReq,
   RegisterReq,
   UpdatePasswordReq,
@@ -269,5 +270,12 @@ export async function ClientGetAllTags(page: number, page_size: number) {
       page,
       page_size,
     },
+  });
+}
+
+// 创建 tag
+export async function ClientCreateTag(params: CreateTagReq) {
+  return alovaServerInstance.tag_auth.CreateTag({
+    data: params,
   });
 }

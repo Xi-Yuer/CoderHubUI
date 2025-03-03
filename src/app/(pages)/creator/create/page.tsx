@@ -1,7 +1,12 @@
 "use client";
 import { AppEditor } from "@/app/_components";
 import { EditorRefCallBack } from "@/app/_components/appEditor";
-import { ClientCreateArticle, ClientUploadImage } from "@/request/apis";
+import {
+  ClientCreateArticle,
+  ClientUploadImage,
+  ClientGetAllTags,
+  ClientCreateTag,
+} from "@/request/apis";
 import { getBase64 } from "@/utils";
 import { PlusOutlined, SaveOutlined, SendOutlined } from "@ant-design/icons";
 import {
@@ -29,9 +34,33 @@ export default function Page() {
   const [imageListID, setImageListID] = React.useState<string[]>([]);
   const [imageList, setImageList] = React.useState<string[]>([]);
   const [tagList, setTagList] = React.useState<string[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [page, setPage] = React.useState(1);
+  const [tagOptions, setTagOptions] = React.useState<any[]>([]);
+  const [hasMore, setHasMore] = React.useState(true);
   const inputRef = React.useRef<InputRef>(null);
   const AppEditorRef = React.useRef<EditorRefCallBack>(null);
-  
+
+  const loadTags = async (pageNum: number) => {
+    if (!hasMore || loading) return;
+    setLoading(true);
+    const res = await ClientGetAllTags(pageNum, 10);
+    if (res.data) {
+      const newTags = res.data.list.map((tag) => ({
+        label: tag.name,
+        value: tag.name,
+      }));
+      setTagOptions((prev) => [...prev, ...newTags]);
+      setHasMore(res.data.list.length < 10);
+      setPage(pageNum + 1);
+    }
+    setLoading(false);
+  };
+
+  React.useEffect(() => {
+    loadTags(1);
+  }, []);
+
   const onPublish = (status: "publish" | "draft") => {
     const content = AppEditorRef.current?.getText();
     if (!title) {
@@ -105,12 +134,29 @@ export default function Page() {
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
     e.preventDefault();
-    if (!name || items.includes(name)) return;
-    setItems([...items, name]);
-    setName("");
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 0);
+    if (!name || tagOptions.includes(name)) return;
+    ClientCreateTag({
+      name,
+      description,
+      is_system_provider: false,
+      icon: "",
+    }).then((res) => {
+      if (res.data) {
+        setTagOptions([
+          ...tagOptions,
+          {
+            label: name,
+            value: name,
+          },
+        ]);
+        setName("");
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 0);
+      } else {
+        messageApi.error(res.message);
+      }
+    });
   };
 
   return (
@@ -169,13 +215,20 @@ export default function Page() {
             <Select
               mode="multiple"
               tagRender={tagRender}
-              defaultValue={tagList}
               value={tagList}
-              onSelect={(value) => {
-                setTagList([...tagList, value]);
-              }}
+              onChange={(value) => setTagList(value)}
               style={{ width: "100%" }}
-              options={items.map((item) => ({ label: item, value: item }))}
+              options={tagOptions}
+              loading={loading}
+              onPopupScroll={(e) => {
+                const target = e.target as HTMLDivElement;
+                if (
+                  target.scrollTop + target.clientHeight >=
+                  target.scrollHeight - 10
+                ) {
+                  loadTags(page);
+                }
+              }}
               dropdownRender={(menu) => (
                 <>
                   {menu}

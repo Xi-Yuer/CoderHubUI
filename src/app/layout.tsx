@@ -38,6 +38,9 @@ export default function RootLayout({
                 itemSelectedBg: "#eee",
                 itemActiveBg: "#eee",
               },
+              Select: {
+                optionSelectedBg: "#f5f5f5", // 修改 Select 选中项的背景色
+              },
             },
           }}
         >
