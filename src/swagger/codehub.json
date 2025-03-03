@@ -1680,6 +1680,133 @@
         ]
       }
     },
+    "/api/tag/create": {
+      "post": {
+        "summary": "创建分类标签",
+        "operationId": "CreateTag",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateTagResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " 创建标签",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateTagReq"
+            }
+          }
+        ],
+        "tags": [
+          "tag_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/tag/list": {
+      "get": {
+        "summary": "获取全部分类标签（包含系统和用户自定义的标签）",
+        "operationId": "GetAllTagList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetTagListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "tag_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/tag/system/list": {
+      "get": {
+        "summary": "获取系统分类标签",
+        "operationId": "GetSystemTagList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetTagListResp"
+            }
+          }
+        },
+        "tags": [
+          "tag_public"
+        ]
+      }
+    },
+    "/api/tag/{id}": {
+      "delete": {
+        "summary": "删除分类标签",
+        "operationId": "DeleteTag",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteTagResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": " 删除标签",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteTagReq"
+            }
+          }
+        ],
+        "tags": [
+          "tag_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/user/change_password": {
       "post": {
         "summary": "修改密码",
@@ -2820,6 +2947,57 @@
         "data"
       ]
     },
+    "CreateTagReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": " 标签名称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 标签描述"
+        },
+        "is_system_provider": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否为系统标签"
+        },
+        "icon": {
+          "type": "string",
+          "description": " 标签图标"
+        }
+      },
+      "title": "CreateTagReq",
+      "required": [
+        "name",
+        "description",
+        "is_system_provider",
+        "icon"
+      ]
+    },
+    "CreateTagResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "CreateTagResp",
+      "required": [
+        "data"
+      ]
+    },
     "DeleteAcademicNavigatorReq": {
       "type": "object",
       "title": "DeleteAcademicNavigatorReq"
@@ -3087,6 +3265,32 @@
       "title": "DeleteResponse",
       "required": [
         "success"
+      ]
+    },
+    "DeleteTagReq": {
+      "type": "object",
+      "title": "DeleteTagReq"
+    },
+    "DeleteTagResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteTagResp",
+      "required": [
+        "data"
       ]
     },
     "DeleteUserReq": {
@@ -4055,6 +4259,47 @@
         "data"
       ]
     },
+    "GetTagListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        }
+      },
+      "title": "GetTagListReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetTagListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/TagList"
+        }
+      },
+      "title": "GetTagListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetUserInfoReq": {
       "type": "object",
       "title": "GetUserInfoReq"
@@ -4706,6 +4951,78 @@
       "title": "SendResetPasswordLinkResp",
       "required": [
         "data"
+      ]
+    },
+    "Tag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": " 标签 ID"
+        },
+        "name": {
+          "type": "string",
+          "description": " 标签名称"
+        },
+        "description": {
+          "type": "string",
+          "description": " 标签描述"
+        },
+        "is_system_provider": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 是否为系统标签"
+        },
+        "icon": {
+          "type": "string",
+          "description": " 标签图标"
+        },
+        "usage_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 标签使用次数"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 创建时间"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 更新时间"
+        }
+      },
+      "title": "Tag",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "is_system_provider",
+        "icon",
+        "usage_count",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "TagList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tag"
+          }
+        }
+      },
+      "title": "TagList",
+      "required": [
+        "total",
+        "list"
       ]
     },
     "UnfollowUserReq": {

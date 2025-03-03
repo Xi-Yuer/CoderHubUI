@@ -1,17 +1,21 @@
 "use client";
-import { GetArticle } from "@/alova/globals";
+import { GetArticle, Tag } from "@/alova/globals";
+import { AppIcon } from "@/app/_components";
 import AppArticlePreview from "@/app/_components/appArticlePreview";
-import { ClientGetArticleList } from "@/request/apis";
+import { ClientGetArticleList, ClientGetSystemTags } from "@/request/apis";
 import { useAppStore } from "@/store";
-import { Card, Skeleton } from "antd";
+import { Button, Card, Skeleton } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 
 export default function Page() {
   const { userInfo } = useAppStore.getState();
   const [page, setPage] = useState(1);
   const [list, setList] = useState<GetArticle[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [currentTag, setCurrentTag] = useState<Tag | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [getTagLoading, setGetTagLoading] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
 
@@ -60,13 +64,62 @@ export default function Page() {
       });
   };
 
+  const getSideTags = () => {
+    setGetTagLoading(true);
+    ClientGetSystemTags()
+      .then((res) => {
+        setTags(res.data?.list || []);
+      })
+      .finally(() => {
+        setGetTagLoading(false);
+      });
+  };
+
+  useEffect(getSideTags, []);
+
   useEffect(getList, [page, userInfo.id]);
 
   return (
     <div className="flex flex-wrap gap-4 justify-between">
       {/* 左侧推荐栏 */}
       <div className="hidden lg:flex w-[200px] h-full gap-4 flex-col">
-        <Card>Recommend</Card>
+        <Card className="flex flex-col flex-1 w-full items-center justify-center gap-10">
+          {getTagLoading && (
+            <>
+              {Array(5)
+                .fill(0)
+                .map((_, index) => {
+                  return (
+                    <div
+                      className="flex-1 text-base justify-start cursor-pointer text-slate-600 w-40 py-2"
+                      key={index}
+                    >
+                      <Skeleton.Node active style={{ height: 20 }} />
+                    </div>
+                  );
+                })}
+            </>
+          )}
+          {tags?.map((item) => {
+            return (
+              <div key={item.id}>
+                <Button
+                  type="text"
+                  className={`
+                    flex-1 text-base justify-start cursor-pointer text-slate-600 w-40 !py-4 my-2
+                     ${currentTag?.id === item.id ? "!bg-slate-100" : ""}
+                    `}
+                  onClick={() => setCurrentTag(item)}
+                >
+                  <span className="text-start w-full flex gap-2">
+                    <AppIcon type={item.icon} />
+                    {item.name}
+                  </span>
+                </Button>
+              </div>
+            );
+          })}
+        </Card>
       </div>
 
       {/* 主内容区域 */}

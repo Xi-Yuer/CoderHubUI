@@ -1730,6 +1730,125 @@ export type GetQuestionListResp = {
    */
   data: QuestionList;
 };
+export type CreateTagResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type CreateTagReq = {
+  /**
+   * 标签名称
+   * [required]
+   */
+  name: string;
+  /**
+   * 标签描述
+   * [required]
+   */
+  description: string;
+  /**
+   * 是否为系统标签
+   * [required]
+   */
+  is_system_provider: boolean;
+  /**
+   * 标签图标
+   * [required]
+   */
+  icon: string;
+};
+export type Tag = {
+  /**
+   * 标签 ID
+   * [required]
+   */
+  id: string;
+  /**
+   * 标签名称
+   * [required]
+   */
+  name: string;
+  /**
+   * 标签描述
+   * [required]
+   */
+  description: string;
+  /**
+   * 是否为系统标签
+   * [required]
+   */
+  is_system_provider: boolean;
+  /**
+   * 标签图标
+   * [required]
+   */
+  icon: string;
+  /**
+   * 标签使用次数
+   * [required]
+   */
+  usage_count: number;
+  /**
+   * 创建时间
+   * [required]
+   */
+  createdAt: number;
+  /**
+   * 更新时间
+   * [required]
+   */
+  updatedAt: number;
+};
+export type TagList = {
+  /**
+   * [required]
+   */
+  total: number;
+  /**
+   * [required]
+   */
+  list: Tag[];
+};
+export type GetTagListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * TagList
+   * ---
+   * [required]
+   */
+  data: TagList;
+};
+export type DeleteTagResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type DeleteTagReq = object;
 export type UpdatePasswordResp = {
   /**
    * 状态码
@@ -5568,6 +5687,248 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetQuestionListResp, 'questions_public.ListQuestions', Config>;
+    };
+    tag_auth: {
+      /**
+       * ---
+       *
+       * [POST] 创建分类标签
+       *
+       * **path:** /api/tag/create
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // 标签名称
+       *   // [required]
+       *   name: string
+       *   // 标签描述
+       *   // [required]
+       *   description: string
+       *   // 是否为系统标签
+       *   // [required]
+       *   is_system_provider: boolean
+       *   // 标签图标
+       *   // [required]
+       *   icon: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      CreateTag<
+        Config extends Alova2MethodConfig<CreateTagResp> & {
+          data: CreateTagReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<CreateTagResp, 'tag_auth.CreateTag', Config>;
+      /**
+       * ---
+       *
+       * [DELETE] 删除分类标签
+       *
+       * **path:** /api/tag/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      DeleteTag<
+        Config extends Alova2MethodConfig<DeleteTagResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+          data: DeleteTagReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<DeleteTagResp, 'tag_auth.DeleteTag', Config>;
+    };
+    tag_public: {
+      /**
+       * ---
+       *
+       * [GET] 获取全部分类标签（包含系统和用户自定义的标签）
+       *
+       * **path:** /api/tag/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // 页码
+       *   // [required]
+       *   page: number
+       *   // 每页数量
+       *   // [required]
+       *   page_size: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] TagList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     total: number
+       *     // [required]
+       *     list: Array<{
+       *       // 标签 ID
+       *       // [required]
+       *       id: string
+       *       // 标签名称
+       *       // [required]
+       *       name: string
+       *       // 标签描述
+       *       // [required]
+       *       description: string
+       *       // 是否为系统标签
+       *       // [required]
+       *       is_system_provider: boolean
+       *       // 标签图标
+       *       // [required]
+       *       icon: string
+       *       // 标签使用次数
+       *       // [required]
+       *       usage_count: number
+       *       // 创建时间
+       *       // [required]
+       *       createdAt: number
+       *       // 更新时间
+       *       // [required]
+       *       updatedAt: number
+       *     }>
+       *   }
+       * }
+       * ```
+       */
+      GetAllTagList<
+        Config extends Alova2MethodConfig<GetTagListResp> & {
+          params: {
+            /**
+             * 页码
+             * [required]
+             */
+            page: number;
+            /**
+             * 每页数量
+             * [required]
+             */
+            page_size: number;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetTagListResp, 'tag_public.GetAllTagList', Config>;
+      /**
+       * ---
+       *
+       * [GET] 获取系统分类标签
+       *
+       * **path:** /api/tag/system/list
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] TagList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     total: number
+       *     // [required]
+       *     list: Array<{
+       *       // 标签 ID
+       *       // [required]
+       *       id: string
+       *       // 标签名称
+       *       // [required]
+       *       name: string
+       *       // 标签描述
+       *       // [required]
+       *       description: string
+       *       // 是否为系统标签
+       *       // [required]
+       *       is_system_provider: boolean
+       *       // 标签图标
+       *       // [required]
+       *       icon: string
+       *       // 标签使用次数
+       *       // [required]
+       *       usage_count: number
+       *       // 创建时间
+       *       // [required]
+       *       createdAt: number
+       *       // 更新时间
+       *       // [required]
+       *       updatedAt: number
+       *     }>
+       *   }
+       * }
+       * ```
+       */
+      GetSystemTagList<Config extends Alova2MethodConfig<GetTagListResp>>(
+        config?: Config
+      ): Alova2Method<GetTagListResp, 'tag_public.GetSystemTagList', Config>;
     };
     user_auth: {
       /**

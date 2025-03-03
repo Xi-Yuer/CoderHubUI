@@ -256,3 +256,18 @@ export async function ClientAddContentToFavor(params: CreateFavorReq) {
     data: params,
   });
 }
+
+// 获取系统标签
+export async function ClientGetSystemTags() {
+  return alovaServerInstance.tag_public.GetSystemTagList();
+}
+
+// 获取全部标签
+export async function ClientGetAllTags(page: number, page_size: number) {
+  return alovaServerInstance.tag_public.GetAllTagList({
+    params: {
+      page,
+      page_size,
+    },
+  });
+}
