@@ -31,7 +31,7 @@ export default function Page() {
   const [tagList, setTagList] = React.useState<string[]>([]);
   const inputRef = React.useRef<InputRef>(null);
   const AppEditorRef = React.useRef<EditorRefCallBack>(null);
-
+  
   const onPublish = (status: "publish" | "draft") => {
     const content = AppEditorRef.current?.getText();
     if (!title) {
