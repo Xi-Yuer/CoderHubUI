@@ -12,7 +12,7 @@ export default function Page() {
   const [page, setPage] = useState(1);
   const [list, setList] = useState<GetArticle[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
-  const [currentTag, setCurrentTag] = useState<Tag | null>(null);
+  const [currentTag, setCurrentTag] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [getTagLoading, setGetTagLoading] = useState(true);
@@ -24,7 +24,6 @@ export default function Page() {
       ([entry]) => {
         if (entry.isIntersecting) {
           // 触发加载更多
-          console.log("object");
           setPage((prev) => prev + 1);
         }
       },
@@ -46,9 +45,10 @@ export default function Page() {
   }, [loadingRef.current]);
 
   const getList = () => {
+    if (!currentTag) return;
     if (!hasMore) return;
     setLoading(true);
-    ClientGetArticleList("article", "154833878727528448", page, 10, userInfo.id)
+    ClientGetArticleList("article", currentTag, page, 10, userInfo.id)
       .then((res) => {
         if (!res.data) {
           setHasMore(false);
@@ -70,6 +70,7 @@ export default function Page() {
     ClientGetSystemTags()
       .then((res) => {
         setTags(res.data?.list || []);
+        setCurrentTag(res.data?.list[0].id);
       })
       .finally(() => {
         setGetTagLoading(false);
@@ -78,7 +79,7 @@ export default function Page() {
 
   useEffect(getSideTags, []);
 
-  useEffect(getList, [page, userInfo.id]);
+  useEffect(getList, [page, userInfo.id, currentTag]);
 
   return (
     <div className="flex flex-wrap gap-4 justify-between">
@@ -108,9 +109,16 @@ export default function Page() {
                   type="text"
                   className={`
                     flex-1 text-base justify-start cursor-pointer text-slate-600 w-40 !py-4 my-2
-                     ${currentTag?.id === item.id ? "!bg-slate-100" : ""}
+                     ${currentTag === item.id ? "!bg-slate-100" : ""}
                     `}
-                  onClick={() => setCurrentTag(item)}
+                  onClick={() => {
+                    if (currentTag !== item.id) {
+                      setHasMore(true);
+                    }
+                    setPage(1);
+                    setList([]);
+                    setCurrentTag(item.id);
+                  }}
                 >
                   <span className="text-start w-full flex gap-2">
                     <AppIcon type={item.icon} />

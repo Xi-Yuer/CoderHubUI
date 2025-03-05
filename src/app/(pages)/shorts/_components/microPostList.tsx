@@ -1,6 +1,7 @@
 "use client";
 import { GetArticle } from "@/alova/globals";
 import AppShortPreview from "@/app/_components/appShortPreview";
+import { SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
 import { ClientGetArticleList } from "@/request/apis";
 import { useAppStore } from "@/store";
 import { Card, Skeleton } from "antd";
@@ -58,7 +59,7 @@ export default function MicroPostList({ ref }: Props) {
     setLoading(true);
     ClientGetArticleList(
       "micro_post",
-      "154833878727528448",
+      SHORT_ARTICLE_CATEGORY_ID,
       page,
       10,
       userInfo.id

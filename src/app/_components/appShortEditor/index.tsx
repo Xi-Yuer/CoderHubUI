@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import Emotion from "../emotion";
 import { useStore } from "zustand";
 import { useAppStore } from "@/store";
+import { SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
 
 type Props = {
   PublicSuccess: (params: CreateArticleResp) => void;
@@ -33,7 +34,7 @@ export function AppShortEditor({ PublicSuccess }: Props) {
       type: "micro_post",
       status: "published",
       imageIds: imageListID,
-      categoryId: "",
+      categoryId: SHORT_ARTICLE_CATEGORY_ID,
     }).then((res) => {
       setText("");
       setImageList([]);

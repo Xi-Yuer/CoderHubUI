@@ -81,3 +81,4 @@ export const mobileNavigatonList = [
 ];
 
 export const TOKEN = "token";
+export const SHORT_ARTICLE_CATEGORY_ID = "1";

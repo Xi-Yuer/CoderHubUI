@@ -1,4 +1,5 @@
 "use client";
+import type { Tag as TagOptionType } from "@/alova/globals";
 import { AppEditor } from "@/app/_components";
 import { EditorRefCallBack } from "@/app/_components/appEditor";
 import {
@@ -6,6 +7,7 @@ import {
   ClientUploadImage,
   ClientGetAllTags,
   ClientCreateTag,
+  ClientGetSystemTags,
 } from "@/request/apis";
 import { getBase64 } from "@/utils";
 import { PlusOutlined, SaveOutlined, SendOutlined } from "@ant-design/icons";
@@ -19,6 +21,8 @@ import {
   Space,
   Upload,
   UploadProps,
+  Flex,
+  Radio,
 } from "antd";
 import { Select, Tag } from "antd";
 import type { InputRef, SelectProps } from "antd";
@@ -27,12 +31,15 @@ import React from "react";
 type TagRender = SelectProps["tagRender"];
 export default function Page() {
   const [messageApi, messageContext] = message.useMessage();
-  const [items, setItems] = React.useState<string[]>([]);
   const [name, setName] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [imageListID, setImageListID] = React.useState<string[]>([]);
   const [imageList, setImageList] = React.useState<string[]>([]);
+  const [categoryOptions, setCategoryOptions] = React.useState<TagOptionType[]>(
+    []
+  );
+  const [category, setCategory] = React.useState("");
   const [tagList, setTagList] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [page, setPage] = React.useState(1);
@@ -57,11 +64,18 @@ export default function Page() {
     setLoading(false);
   };
 
+  const loadCategory = () => {
+    ClientGetSystemTags().then((res) => {
+      setCategoryOptions(res.data?.list || []);
+    });
+  };
+
   React.useEffect(() => {
     loadTags(1);
+    loadCategory();
   }, []);
 
-  const onPublish = (status: "publish" | "draft") => {
+  const onPublish = (status: "published" | "draft") => {
     const content = AppEditorRef.current?.getText();
     if (!title) {
       messageApi.error("标题不能为空");
@@ -71,6 +85,14 @@ export default function Page() {
       messageApi.error("内容不能为空");
       return;
     }
+    if (!category) {
+      messageApi.error("请选择分类");
+      return;
+    }
+    if (!tagList.length) {
+      messageApi.error("请选择标签");
+      return;
+    }
     ClientCreateArticle({
       type: "article",
       title: title,
@@ -78,8 +100,8 @@ export default function Page() {
       content: content,
       summary: description,
       tags: tagList,
-      status: "published",
-      categoryId: "",
+      status: status,
+      categoryId: category,
     }).then((res) => {
       messageApi.info(res.message);
       setTitle("");
@@ -186,33 +208,29 @@ export default function Page() {
         <div className="flex flex-col gap-8">
           <span className="text-lg font-bold">发布设置</span>
           <div className="flex gap-6 items-center text-md">
-            <span className="w-20">添加封面</span>
-            {imageListID.length ? (
-              <>
-                <div className="flex flex-col gap-2">
-                  {imageList.map((item) => {
-                    return (
-                      <Image src={item} alt="" key={item} height={150}></Image>
-                    );
-                  })}
-                </div>
-              </>
-            ) : (
-              <>
-                <Upload
-                  {...props}
-                  className="flex cursor-pointer !text-gray-500 hover:!text-gray-950"
-                >
-                  <div className="flex flex-col items-center justify-center border w-40 h-40 border-dashed">
-                    <PlusOutlined />
-                    <div style={{ marginTop: 8 }}>上传</div>
-                  </div>
-                </Upload>
-              </>
-            )}
+            <span className="w-20">
+              <span className="text-red-500 mr-2">*</span>
+              选择分类
+            </span>
+            <Radio.Group defaultValue="a" buttonStyle="solid">
+              {categoryOptions.map((item) => {
+                return (
+                  <Radio.Button
+                    key={item.id}
+                    value={item.id}
+                    onClick={() => setCategory(item.id)}
+                  >
+                    {item.name}
+                  </Radio.Button>
+                );
+              })}
+            </Radio.Group>
           </div>
-          <div className="flex gap-6 items-center">
-            <span className="w-20">标签</span>
+          <div className="flex items-center">
+            <div className="flex items-center w-28">
+              <span className="text-red-500 mr-2">*</span>
+              <span>标签</span>
+            </div>
             <Select
               mode="multiple"
               tagRender={tagRender}
@@ -254,16 +272,42 @@ export default function Page() {
               )}
             />
           </div>
+          <div className="flex gap-6 items-center text-md">
+            <span className="w-20 ml-2">文章封面</span>
+            {imageListID.length ? (
+              <>
+                <div className="flex flex-col gap-2">
+                  {imageList.map((item) => {
+                    return (
+                      <Image src={item} alt="" key={item} height={150}></Image>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <>
+                <Upload
+                  {...props}
+                  className="flex cursor-pointer !text-gray-500 hover:!text-gray-950"
+                >
+                  <div className="flex flex-col items-center justify-center border w-40 h-40 border-dashed">
+                    <PlusOutlined />
+                    <div style={{ marginTop: 8 }}>上传</div>
+                  </div>
+                </Upload>
+              </>
+            )}
+          </div>
         </div>
         <Divider />
         <div className="flex justify-end">
           <div className="flex gap-2">
             <Button onClick={() => onPublish("draft")} icon={<SaveOutlined />}>
-              保存草稿
+              私密暂存
             </Button>
             <Button
               type="primary"
-              onClick={() => onPublish("publish")}
+              onClick={() => onPublish("published")}
               icon={<SendOutlined />}
             >
               发布
