@@ -86,6 +86,7 @@ export function ClientFollowUser(follow_id: string) {
 // 获取文章列表
 export function ClientGetArticleList(
   type: "article" | "micro_post",
+  category_id: string,
   page: number,
   page_size: number,
   user_id?: string
@@ -96,6 +97,7 @@ export function ClientGetArticleList(
       page,
       page_size,
       user_id,
+      category_id,
     },
   });
 }

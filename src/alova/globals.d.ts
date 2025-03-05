@@ -299,6 +299,11 @@ export type CreateArticleReq = {
    * [required]
    */
   status: 'draft' | 'published';
+  /**
+   * 分类 ID
+   * [required]
+   */
+  categoryId: string;
 };
 export type Article = {
   /**
@@ -347,6 +352,11 @@ export type Article = {
    */
   tags: string[];
   /**
+   * 分类 ID
+   * [required]
+   */
+  categoryId: string;
+  /**
    * 阅读次数
    * [required]
    */
@@ -362,6 +372,7 @@ export type Article = {
    */
   isLiked: boolean;
   /**
+   * 是否已收藏
    * [required]
    */
   isFavorited: boolean;
@@ -632,6 +643,11 @@ export type UpdateArticleReq = {
    * 文章状态
    */
   status?: string;
+  /**
+   * 分类 ID
+   * [required]
+   */
+  categoryId: string;
 };
 export type HealthResp = {
   /**
@@ -2472,6 +2488,9 @@ declare global {
        *   // 文章状态
        *   // [required]
        *   status: 'draft' | 'published'
+       *   // 分类 ID
+       *   // [required]
+       *   categoryId: string
        * }
        * ```
        *
@@ -2625,6 +2644,9 @@ declare global {
        *   tags?: string[]
        *   // 文章状态
        *   status?: string
+       *   // 分类 ID
+       *   // [required]
+       *   categoryId: string
        * }
        * ```
        *
@@ -2717,6 +2739,9 @@ declare global {
        *       // 标签列表
        *       // [required]
        *       tags: string[]
+       *       // 分类 ID
+       *       // [required]
+       *       categoryId: string
        *       // 阅读次数
        *       // [required]
        *       viewCount: number
@@ -2726,6 +2751,7 @@ declare global {
        *       // 是否已点赞
        *       // [required]
        *       isLiked: boolean
+       *       // 是否已收藏
        *       // [required]
        *       isFavorited: boolean
        *       // 评论数
@@ -2886,6 +2912,9 @@ declare global {
        *   page_size: number
        *   // 用户 ID
        *   user_id?: string
+       *   // 分类 ID
+       *   // [required]
+       *   category_id: string
        * }
        * ```
        *
@@ -2931,6 +2960,9 @@ declare global {
        *       // 标签列表
        *       // [required]
        *       tags: string[]
+       *       // 分类 ID
+       *       // [required]
+       *       categoryId: string
        *       // 阅读次数
        *       // [required]
        *       viewCount: number
@@ -2940,6 +2972,7 @@ declare global {
        *       // 是否已点赞
        *       // [required]
        *       isLiked: boolean
+       *       // 是否已收藏
        *       // [required]
        *       isFavorited: boolean
        *       // 评论数
@@ -3030,6 +3063,11 @@ declare global {
              * 用户 ID
              */
             user_id?: string;
+            /**
+             * 分类 ID
+             * [required]
+             */
+            category_id: string;
           };
         }
       >(

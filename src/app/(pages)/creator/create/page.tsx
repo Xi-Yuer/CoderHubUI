@@ -79,6 +79,7 @@ export default function Page() {
       summary: description,
       tags: tagList,
       status: "published",
+      categoryId: "",
     }).then((res) => {
       messageApi.info(res.message);
       setTitle("");

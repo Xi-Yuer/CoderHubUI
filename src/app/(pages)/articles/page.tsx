@@ -22,8 +22,9 @@ export default function Page() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !loading) {
+        if (entry.isIntersecting) {
           // 触发加载更多
+          console.log("object");
           setPage((prev) => prev + 1);
         }
       },
@@ -47,7 +48,7 @@ export default function Page() {
   const getList = () => {
     if (!hasMore) return;
     setLoading(true);
-    ClientGetArticleList("article", page, 10, userInfo.id)
+    ClientGetArticleList("article", "154833878727528448", page, 10, userInfo.id)
       .then((res) => {
         if (!res.data) {
           setHasMore(false);

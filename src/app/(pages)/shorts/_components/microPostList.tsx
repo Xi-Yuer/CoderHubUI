@@ -30,7 +30,7 @@ export default function MicroPostList({ ref }: Props) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !loading) {
+        if (entry.isIntersecting) {
           // 触发加载更多
           setPage((prev) => prev + 1);
         }
@@ -56,7 +56,13 @@ export default function MicroPostList({ ref }: Props) {
     const { userInfo } = useAppStore.getState();
     if (!hasMore) return;
     setLoading(true);
-    ClientGetArticleList("micro_post", page, 10, userInfo.id)
+    ClientGetArticleList(
+      "micro_post",
+      "154833878727528448",
+      page,
+      10,
+      userInfo.id
+    )
       .send(reFreshed)
       .then((res) => {
         if (!res.data) {
