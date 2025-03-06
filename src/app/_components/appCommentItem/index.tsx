@@ -71,7 +71,14 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
         </Popover>
         <div className="flex flex-col w-full">
           <div className="flex gap-2">
-            <span>{commentFromProps.user_info?.nickname}</span>
+            <div className="flex gap-1 items-center">
+              <span>{commentFromProps.user_info?.nickname}</span>
+              {userInfo.id === commentFromProps.entity_author_id && (
+                <span className="text-white bg-black px-1 text-[12px] flex justify-center items-center">
+                  作者
+                </span>
+              )}
+            </div>
             {commentFromProps.reply_to_user_info && (
               <>
                 <span>回复</span>
@@ -84,10 +91,17 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
                     />
                   }
                 >
-                  <span className="text-gray-400 cursor-pointer">
-                    {commentFromProps.reply_to_user_info?.nickname ||
-                      commentFromProps.reply_to_user_info?.username}
-                  </span>
+                  <div className="flex gap-1 items-center">
+                    <span className="text-gray-400 cursor-pointer">
+                      {commentFromProps.reply_to_user_info?.nickname ||
+                        commentFromProps.reply_to_user_info?.username}
+                    </span>
+                    {userInfo.id === commentFromProps.entity_author_id && (
+                      <span className="text-white bg-black px-1 text-[12px] flex justify-center items-center">
+                        作者
+                      </span>
+                    )}
+                  </div>
                 </Popover>
               </>
             )}
@@ -196,11 +210,11 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
               <AppCommentEditor
                 entityID={commentFromProps.entity_id}
                 publicSuccess={(params) => {
-                  console.log(params);
                   ClientSendComment({
                     entity_id: commentFromProps.id,
                     content: params.content,
                     image_ids: params.imageIds,
+                    entity_author_id: commentFromProps?.entity_author_id,
                     root_id:
                       commentFromProps?.root_id !== "0"
                         ? commentFromProps?.root_id

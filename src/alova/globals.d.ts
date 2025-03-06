@@ -753,6 +753,11 @@ export type Comment = {
    */
   parent_id: string;
   /**
+   * 实体作者ID
+   * [required]
+   */
+  entity_author_id: string;
+  /**
    * UserInfo
    * ---
    * [required]
@@ -865,6 +870,11 @@ export type CreateCommentReq = {
    * [required]
    */
   parent_id: string;
+  /**
+   * 实体作者ID
+   * [required]
+   */
+  entity_author_id: string;
   /**
    * 回复的目标评论ID（可选）
    * [required]
@@ -3163,6 +3173,9 @@ declare global {
        *       // 父评论ID
        *       // [required]
        *       parent_id: string
+       *       // 实体作者ID
+       *       // [required]
+       *       entity_author_id: string
        *       // [title] UserInfo
        *       // [required]
        *       user_info: {
@@ -3329,6 +3342,9 @@ declare global {
        *   // 父评论ID（可选）
        *   // [required]
        *   parent_id: string
+       *   // 实体作者ID
+       *   // [required]
+       *   entity_author_id: string
        *   // 回复的目标评论ID（可选）
        *   // [required]
        *   reply_to_uid: string
@@ -3365,6 +3381,9 @@ declare global {
        *     // 父评论ID
        *     // [required]
        *     parent_id: string
+       *     // 实体作者ID
+       *     // [required]
+       *     entity_author_id: string
        *     // [title] UserInfo
        *     // [required]
        *     user_info: {
@@ -3547,6 +3566,9 @@ declare global {
        *       // 父评论ID
        *       // [required]
        *       parent_id: string
+       *       // 实体作者ID
+       *       // [required]
+       *       entity_author_id: string
        *       // [title] UserInfo
        *       // [required]
        *       user_info: {
@@ -3773,6 +3795,9 @@ declare global {
        *     // 父评论ID
        *     // [required]
        *     parent_id: string
+       *     // 实体作者ID
+       *     // [required]
+       *     entity_author_id: string
        *     // [title] UserInfo
        *     // [required]
        *     user_info: {

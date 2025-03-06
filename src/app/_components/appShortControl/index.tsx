@@ -172,6 +172,7 @@ export default function AppShortControl({
                       root_id: "",
                       parent_id: "",
                       reply_to_uid: "",
+                      entity_author_id: articleFromProps?.author?.id,
                     })
                       .send()
                       .then((res) => {
