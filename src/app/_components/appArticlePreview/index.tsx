@@ -1,5 +1,10 @@
 import { GetArticle } from "@/alova/globals";
-import { EyeOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  LikeFilled,
+} from "@ant-design/icons";
 import { Image } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -32,7 +37,11 @@ export default function AppArticlePreview({ article }: AppArticlePreviewProps) {
               {article.article.viewCount}
             </span>
             <span className="text-sm">
-              <LikeOutlined className="mr-1" />
+              {article.article.isLiked ? (
+                <LikeFilled className="mr-1" />
+              ) : (
+                <LikeOutlined className="mr-1" />
+              )}
               {article.article.likeCount}
             </span>
             <span className="text-sm">

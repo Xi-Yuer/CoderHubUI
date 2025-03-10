@@ -19,11 +19,6 @@ export const navigatonList = [
     icon: <CoffeeOutlined />,
   },
   {
-    name: "推荐",
-    path: "/recommend",
-    icon: <BarChartOutlined />,
-  },
-  {
     name: "文章",
     path: "/articles",
     icon: <FileTextOutlined />,

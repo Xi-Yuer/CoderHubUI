@@ -73,7 +73,8 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
           <div className="flex gap-2">
             <div className="flex gap-1 items-center">
               <span>{commentFromProps.user_info?.nickname}</span>
-              {userInfo.id === commentFromProps.entity_author_id && (
+              {commentFromProps.user_info.id ===
+                commentFromProps.entity_author_id && (
                 <span className="text-white bg-black px-1 text-[12px] flex justify-center items-center">
                   作者
                 </span>
@@ -96,7 +97,8 @@ export default function AppCommentItem({ comment }: AppCommentItemProps) {
                       {commentFromProps.reply_to_user_info?.nickname ||
                         commentFromProps.reply_to_user_info?.username}
                     </span>
-                    {userInfo.id === commentFromProps.entity_author_id && (
+                    {commentFromProps.reply_to_user_info.id ===
+                      commentFromProps.entity_author_id && (
                       <span className="text-white bg-black px-1 text-[12px] flex justify-center items-center">
                         作者
                       </span>
