@@ -13,6 +13,6 @@ export const models = (token: string) => ({
     }),
     parseMessage: (message: string) => messageParse(message),
     // protocol: "sse" | "websocket" | "http"
-    protocol: "http",
+    protocol: "sse",
   } as any,
 });
