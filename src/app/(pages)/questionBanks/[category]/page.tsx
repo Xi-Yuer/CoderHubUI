@@ -32,7 +32,7 @@ export default async function Page({ params }: any) {
               target="_self"
               key={item.id}
               className={
-                category === item.id
+                categoryID === item.id
                   ? "text-center bg-slate-800 rounded-2xl px-4 sm:px-7 py-1 text-white cursor-pointer text-sm"
                   : "text-center bg-white rounded-2xl px-4 sm:px-7 py-1 text-slate-900 cursor-pointer text-sm"
               }

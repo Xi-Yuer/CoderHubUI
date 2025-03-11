@@ -19,7 +19,7 @@ export default function Page() {
   const [getTagLoading, setGetTagLoading] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   useEffect(() => {
@@ -56,6 +56,7 @@ export default function Page() {
   }
 
   useEffect(() => {
+    changeMobile();
     window.addEventListener("resize", changeMobile);
     return () => {
       window.removeEventListener("resize", changeMobile);

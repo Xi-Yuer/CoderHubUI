@@ -87,6 +87,7 @@ export default function AppArticlePreviewDetail({
         <AppCommentEditor
           publicSuccess={async (params) => {
             await ClientSendComment({
+              entity_author_id: articleFromProps?.author?.id,
               entity_id: articleFromProps?.article?.id,
               content: params.content,
               image_ids: params.imageIds,

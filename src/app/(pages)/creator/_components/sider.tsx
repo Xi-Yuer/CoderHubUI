@@ -44,7 +44,7 @@ export default function Sider() {
   const router = useRouter();
   const [openKeys, setOpenKeys] = useState<string[]>([path]);
   const [drawerVisible, setDrawerVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(false);
 
   function changeMobile() {
     if (window.innerWidth < 768) {
@@ -55,6 +55,7 @@ export default function Sider() {
   }
 
   useEffect(() => {
+    changeMobile();
     window.addEventListener("resize", changeMobile);
     return () => {
       window.removeEventListener("resize", changeMobile);
