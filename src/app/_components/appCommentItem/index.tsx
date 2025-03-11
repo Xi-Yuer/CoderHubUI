@@ -37,7 +37,7 @@ export default function AppCommentItem({
   const [commentFromProps, setCommentFromProps] = useState(comment);
   const { userInfo } = useAppStore();
   const [isDeleted, setIsDeleted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   function changeMobile() {
     if (window.innerWidth < 768) {
@@ -48,9 +48,6 @@ export default function AppCommentItem({
   }
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setIsMobile(true);
-    }
     window.addEventListener("resize", changeMobile);
     return () => {
       window.removeEventListener("resize", changeMobile);

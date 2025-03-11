@@ -19,13 +19,13 @@ export default function Page() {
   const [getTagLoading, setGetTagLoading] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && currentTag) {
           // 触发加载更多
           setPage((prev) => prev + 1);
         }
@@ -56,9 +56,6 @@ export default function Page() {
   }
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setIsMobile(true);
-    }
     window.addEventListener("resize", changeMobile);
     return () => {
       window.removeEventListener("resize", changeMobile);
@@ -105,7 +102,7 @@ export default function Page() {
   const SideBar = () => (
     <div className="lg:flex w-[200px] h-full gap-4 flex-col">
       <Card className="flex flex-col flex-1 w-full items-center justify-center gap-10 !border-none">
-        {getTagLoading && (
+        {!isMobile && getTagLoading && (
           <>
             {Array(5)
               .fill(0)
