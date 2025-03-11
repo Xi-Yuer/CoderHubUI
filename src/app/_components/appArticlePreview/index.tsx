@@ -62,7 +62,7 @@ export default function AppArticlePreview({ article }: AppArticlePreviewProps) {
         </div>
       </div>
       {article.article.coverImage && (
-        <div className="rounded-lg overflow-hidden w-full sm:w-[180px] flex justify-center items-center">
+        <div className="rounded-lg overflow-hidden w-full sm:w-[180px] hidden sm:flex justify-center items-center">
           <Image
             src={article.article.coverImage}
             alt=""
