@@ -281,3 +281,22 @@ export async function ClientCreateTag(params: CreateTagReq) {
     data: params,
   });
 }
+
+// 获取题库分类
+export async function ClientGetQuestionCategory() {
+  return alovaLocalInstance.get("/api/question_bank_category/list");
+}
+
+// 获取题库列表
+export async function ClientGetQuestionList(categoryID: string) {
+  return alovaLocalInstance.get(
+    `/api/questions/bank_list`,
+    {
+      data: {
+        categoryId: categoryID,
+        page: 1,
+        page_size: 100,
+      },
+    }
+  );
+}

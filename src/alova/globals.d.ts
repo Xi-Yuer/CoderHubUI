@@ -248,6 +248,27 @@ export type PostAcademicNavigatorLikeResp = {
   data: boolean;
 };
 export type PostAcademicNavigatorLikeReq = object;
+export type ChatWithAIResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: string;
+};
+export type ChatWithAIReq = {
+  /**
+   * 内容
+   * [required]
+   */
+  content: string;
+};
 export type CreateArticleResp = {
   /**
    * 状态码
@@ -1503,6 +1524,89 @@ export type UploadResponse = {
    */
   data: ImageInfo;
 };
+export type CreateQuestionBankCategoryResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type CreateQuestionBankCategoryReq = {
+  /**
+   * [required]
+   */
+  name: string;
+  /**
+   * [required]
+   */
+  description: string;
+};
+export type QuestionBankCategory = {
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  name: string;
+  /**
+   * [required]
+   */
+  description: string;
+  /**
+   * [required]
+   */
+  createdAt: number;
+  /**
+   * [required]
+   */
+  updatedAt: number;
+};
+export type QuestionBankCategoryList = {
+  /**
+   * [required]
+   */
+  list: QuestionBankCategory[];
+};
+export type GetQuestionBankCategoryListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * QuestionBankCategoryList
+   * ---
+   * [required]
+   */
+  data: QuestionBankCategoryList;
+};
+export type DeleteQuestionBankCategoryResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type DeleteQuestionBankCategoryReq = object;
 export type CreateQuestionBankResp = {
   /**
    * 状态码
@@ -1519,6 +1623,10 @@ export type CreateQuestionBankResp = {
   data: boolean;
 };
 export type CreateQuestionBankReq = {
+  /**
+   * [required]
+   */
+  categoryId: string;
   /**
    * [required]
    */
@@ -2465,6 +2573,47 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetAcademicNavigatorResp, 'academic_public.GetAcademicNavigator', Config>;
+    };
+    ai_auth: {
+      /**
+       * ---
+       *
+       * [POST] 与AI对话
+       *
+       * **path:** /api/ai/chat
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // 内容
+       *   // [required]
+       *   content: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: string
+       * }
+       * ```
+       */
+      ChatWithAI<
+        Config extends Alova2MethodConfig<ChatWithAIResp> & {
+          data: ChatWithAIReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<ChatWithAIResp, 'ai_auth.ChatWithAI', Config>;
     };
     articles_auth: {
       /**
@@ -5260,6 +5409,144 @@ declare global {
         config?: Config
       ): Alova2Method<UploadResponse, 'image_auth.Upload', Config>;
     };
+    question_bank_category_auth: {
+      /**
+       * ---
+       *
+       * [POST] 创建题库分类
+       *
+       * **path:** /api/question_bank_category/create
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // [required]
+       *   name: string
+       *   // [required]
+       *   description: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      CreateQuestionBankCategory<
+        Config extends Alova2MethodConfig<CreateQuestionBankCategoryResp> & {
+          data: CreateQuestionBankCategoryReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<CreateQuestionBankCategoryResp, 'question_bank_category_auth.CreateQuestionBankCategory', Config>;
+      /**
+       * ---
+       *
+       * [DELETE] 删除题库分类
+       *
+       * **path:** /api/question_bank_category/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      DeleteQuestionBankCategory<
+        Config extends Alova2MethodConfig<DeleteQuestionBankCategoryResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+          data: DeleteQuestionBankCategoryReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<DeleteQuestionBankCategoryResp, 'question_bank_category_auth.DeleteQuestionBankCategory', Config>;
+    };
+    question_bank_category_public: {
+      /**
+       * ---
+       *
+       * [GET] 获取题库分类列表
+       *
+       * **path:** /api/question_bank_category/list
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] QuestionBankCategoryList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     list: Array<{
+       *       // [required]
+       *       id: string
+       *       // [required]
+       *       name: string
+       *       // [required]
+       *       description: string
+       *       // [required]
+       *       createdAt: number
+       *       // [required]
+       *       updatedAt: number
+       *     }>
+       *   }
+       * }
+       * ```
+       */
+      ListQuestionBankCategory<Config extends Alova2MethodConfig<GetQuestionBankCategoryListResp>>(
+        config?: Config
+      ): Alova2Method<
+        GetQuestionBankCategoryListResp,
+        'question_bank_category_public.ListQuestionBankCategory',
+        Config
+      >;
+    };
     questions_auth: {
       /**
        * ---
@@ -5273,6 +5560,8 @@ declare global {
        * **RequestBody**
        * ```ts
        * type RequestBody = {
+       *   // [required]
+       *   categoryId: string
        *   // [required]
        *   name: string
        *   // [required]
@@ -5473,6 +5762,8 @@ declare global {
        * ```ts
        * type QueryParameters = {
        *   // [required]
+       *   categoryId: string
+       *   // [required]
        *   page: number
        *   // [required]
        *   page_size: number
@@ -5606,6 +5897,10 @@ declare global {
       ListQuestionBanks<
         Config extends Alova2MethodConfig<GetQuestionBankListResp> & {
           params: {
+            /**
+             * [required]
+             */
+            categoryId: string;
             /**
              * [required]
              */

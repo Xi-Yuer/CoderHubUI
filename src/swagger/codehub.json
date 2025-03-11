@@ -243,6 +243,38 @@
         ]
       }
     },
+    "/api/ai/chat": {
+      "post": {
+        "summary": "与AI对话",
+        "operationId": "ChatWithAI",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ChatWithAIResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChatWithAIReq"
+            }
+          }
+        ],
+        "tags": [
+          "ai_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/articles/create": {
       "post": {
         "summary": "创建文章",
@@ -1445,6 +1477,93 @@
         ]
       }
     },
+    "/api/question_bank_category/create": {
+      "post": {
+        "summary": "创建题库分类",
+        "operationId": "CreateQuestionBankCategory",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateQuestionBankCategoryResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateQuestionBankCategoryReq"
+            }
+          }
+        ],
+        "tags": [
+          "question_bank_category_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/question_bank_category/list": {
+      "get": {
+        "summary": "获取题库分类列表",
+        "operationId": "ListQuestionBankCategory",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetQuestionBankCategoryListResp"
+            }
+          }
+        },
+        "tags": [
+          "question_bank_category_public"
+        ]
+      }
+    },
+    "/api/question_bank_category/{id}": {
+      "delete": {
+        "summary": "删除题库分类",
+        "operationId": "DeleteQuestionBankCategory",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteQuestionBankCategoryResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteQuestionBankCategoryReq"
+            }
+          }
+        ],
+        "tags": [
+          "question_bank_category_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/questions/bank/create": {
       "post": {
         "summary": "创建题库",
@@ -1530,6 +1649,12 @@
           }
         },
         "parameters": [
+          {
+            "name": "categoryId",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "page",
             "in": "query",
@@ -2471,6 +2596,40 @@
         "data"
       ]
     },
+    "ChatWithAIReq": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": " 内容"
+        }
+      },
+      "title": "ChatWithAIReq",
+      "required": [
+        "content"
+      ]
+    },
+    "ChatWithAIResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "string"
+        }
+      },
+      "title": "ChatWithAIResp",
+      "required": [
+        "data"
+      ]
+    },
     "Comment": {
       "type": "object",
       "properties": {
@@ -2861,9 +3020,50 @@
         "data"
       ]
     },
+    "CreateQuestionBankCategoryReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "title": "CreateQuestionBankCategoryReq",
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "CreateQuestionBankCategoryResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "CreateQuestionBankCategoryResp",
+      "required": [
+        "data"
+      ]
+    },
     "CreateQuestionBankReq": {
       "type": "object",
       "properties": {
+        "categoryId": {
+          "type": "string"
+        },
         "name": {
           "type": "string"
         },
@@ -2892,6 +3092,7 @@
       },
       "title": "CreateQuestionBankReq",
       "required": [
+        "categoryId",
         "name",
         "description",
         "difficulty",
@@ -3201,6 +3402,32 @@
         }
       },
       "title": "DeleteFavorResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteQuestionBankCategoryReq": {
+      "type": "object",
+      "title": "DeleteQuestionBankCategoryReq"
+    },
+    "DeleteQuestionBankCategoryResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteQuestionBankCategoryResp",
       "required": [
         "data"
       ]
@@ -4153,9 +4380,37 @@
         "data"
       ]
     },
+    "GetQuestionBankCategoryListReq": {
+      "type": "object",
+      "title": "GetQuestionBankCategoryListReq"
+    },
+    "GetQuestionBankCategoryListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/QuestionBankCategoryList"
+        }
+      },
+      "title": "GetQuestionBankCategoryListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetQuestionBankListReq": {
       "type": "object",
       "properties": {
+        "categoryId": {
+          "type": "string"
+        },
         "page": {
           "type": "integer",
           "format": "int32"
@@ -4167,6 +4422,7 @@
       },
       "title": "GetQuestionBankListReq",
       "required": [
+        "categoryId",
         "page",
         "page_size"
       ]
@@ -4785,6 +5041,51 @@
         "createUser",
         "createdAt",
         "updatedAt"
+      ]
+    },
+    "QuestionBankCategory": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "QuestionBankCategory",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "QuestionBankCategoryList": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QuestionBankCategory"
+          }
+        }
+      },
+      "title": "QuestionBankCategoryList",
+      "required": [
+        "list"
       ]
     },
     "QuestionBankList": {
