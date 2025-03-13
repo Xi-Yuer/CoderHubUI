@@ -13,7 +13,6 @@ export class RedisStorageAdapter implements AlovaGlobalCacheAdapter {
   // Save or update cache
   async set(key: string, value: [any, number]) {
     const [data, expireTs] = value;
-    console.log(expireTs);
     const now = Date.now();
     const dataToStore = JSON.stringify(data);
 

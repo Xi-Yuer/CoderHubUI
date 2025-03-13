@@ -43,7 +43,6 @@ export async function generateMetadata({
 export default async function Page({ params }: PostProps) {
   const id = (await params).id;
   const response = await ServiceGetArticleDetail(id);
-  console.log(response.data.article)
 
   return (
     <div className="flex lg:gap-4">
