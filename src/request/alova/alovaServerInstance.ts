@@ -6,7 +6,6 @@ import { $$userConfigMap } from "@/alova";
 import { responded } from "@/request/alova/responded";
 import "@/alova";
 import { useAppStore } from "@/store";
-import axios from "axios";
 
 // 创建本地网络请求实例
 export const alovaServerInstance = createApis(
@@ -24,7 +23,3 @@ export const alovaServerInstance = createApis(
   }),
   $$userConfigMap
 );
-
-export const alovaLocalInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_API_BASE_URL,
-});

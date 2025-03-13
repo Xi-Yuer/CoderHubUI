@@ -5754,15 +5754,23 @@ declare global {
        *
        * [GET] 获取题库列表
        *
-       * **path:** /api/questions/bank_list
+       * **path:** /api/questions/bank_list/{categoryId}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   categoryId: string
+       * }
+       * ```
        *
        * ---
        *
        * **Query Parameters**
        * ```ts
        * type QueryParameters = {
-       *   // [required]
-       *   categoryId: string
        *   // [required]
        *   page: number
        *   // [required]
@@ -5896,11 +5904,13 @@ declare global {
        */
       ListQuestionBanks<
         Config extends Alova2MethodConfig<GetQuestionBankListResp> & {
-          params: {
+          pathParams: {
             /**
              * [required]
              */
             categoryId: string;
+          };
+          params: {
             /**
              * [required]
              */

@@ -7,7 +7,7 @@ import {
   RegisterReq,
   UpdatePasswordReq,
 } from "@/alova/globals";
-import { alovaLocalInstance, alovaServerInstance } from "../alova/server";
+import { alovaServerInstance } from "../alova/alovaServerInstance";
 
 // 登录
 export function ClientLogin(params: LoginReq) {
@@ -207,11 +207,6 @@ export function ClientDeleteArticle(id: string) {
   });
 }
 
-// 获取文章详情
-export async function ServiceGetArticleDetail(id: string) {
-  return alovaLocalInstance.get(`/api/articles/detail/${id}`);
-}
-
 // 获取文章格外信息
 export async function ClientGetArticleExtraInfo(id: string) {
   return alovaServerInstance.articles_public.GetArticleExtra({
@@ -280,23 +275,4 @@ export async function ClientCreateTag(params: CreateTagReq) {
   return alovaServerInstance.tag_auth.CreateTag({
     data: params,
   });
-}
-
-// 获取题库分类
-export async function ClientGetQuestionCategory() {
-  return alovaLocalInstance.get("/api/question_bank_category/list");
-}
-
-// 获取题库列表
-export async function ClientGetQuestionList(categoryID: string) {
-  return alovaLocalInstance.get(
-    `/api/questions/bank_list`,
-    {
-      data: {
-        categoryId: categoryID,
-        page: 1,
-        page_size: 100,
-      },
-    }
-  );
 }

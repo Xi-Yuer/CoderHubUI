@@ -1,5 +1,4 @@
 import AppArticlePreviewDetail from "@/app/_components/appArticlePreviewDetail";
-import { ServiceGetArticleDetail } from "@/request/apis";
 import AuthInfomation from "../_components/authInfomation";
 import OperationPC from "../_components/operationPC";
 import Category from "../_components/category";
@@ -7,24 +6,18 @@ import NotFond from "@/app/not-found";
 import { Metadata } from "next";
 import { Article } from "@/alova/globals";
 import { cache } from "react";
+import { ServiceGetArticleDetail } from "@/request/apis/server";
 interface PostProps {
   params: Promise<{
     id: string;
   }>;
 }
 
-// **缓存请求，确保相同 ID 只请求一次**
-const getArticleDetail = cache(async (id: string) => {
-  const response = await ServiceGetArticleDetail(id);
-  return response || null;
-});
-
 export async function generateMetadata({
   params,
 }: PostProps): Promise<Metadata> {
   const { id } = await params;
-  const response = await getArticleDetail(id);
-
+  const response = await ServiceGetArticleDetail(id);
   if (!response?.data) {
     return {
       title: "文章未找到",
@@ -32,7 +25,7 @@ export async function generateMetadata({
     };
   }
 
-  const article: Article = response.data?.data?.article || {};
+  const article: Article = response.data?.article || {};
   return {
     title: article.title || "文章详情",
     description: article.summary || "阅读更多精彩内容。",
@@ -49,19 +42,20 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PostProps) {
   const id = (await params).id;
-  const response = await getArticleDetail(id);
+  const response = await ServiceGetArticleDetail(id);
+  console.log(response.data.article)
 
   return (
     <div className="flex lg:gap-4">
-      {response.data.data ? (
+      {response.data ? (
         <>
           <OperationPC id={id} />
           <div className="flex-1 flex flex-col pb-10 pt-6 px-6 bg-white w-full">
-            <AppArticlePreviewDetail item={response?.data?.data} />
+            <AppArticlePreviewDetail item={response?.data} />
           </div>
           {/* 右侧作者信息，仅桌面端显示 */}
           <div className="hidden xl:flex w-[250px] gap-4 flex-col">
-            <AuthInfomation id={response?.data?.data?.author?.id} />
+            <AuthInfomation id={response?.data?.author?.id} />
             <Category />
           </div>
         </>

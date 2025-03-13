@@ -2,19 +2,19 @@ import { QuestionBank, QuestionBankCategory } from "@/alova/globals";
 import {
   ClientGetQuestionCategory,
   ClientGetQuestionList,
-} from "@/request/apis";
+} from "@/request/apis/server";
 import { Card, Image } from "antd";
 import Link from "next/link";
 
 export default async function Page({ params }: any) {
   const categoryListResponse = await ClientGetQuestionCategory();
   const categoryList: QuestionBankCategory[] =
-    categoryListResponse.data.data.list;
+    categoryListResponse.data.list;
   const firstCategory = categoryList[0];
   const { category } = await params;
   const categoryID = category === "all" ? firstCategory.id : category;
   const bankListResponse = await ClientGetQuestionList(categoryID);
-  const bankList: QuestionBank[] = bankListResponse.data.data.list;
+  const bankList: QuestionBank[] = bankListResponse.data.list;
 
   return (
     <div className="px-4 sm:px-10 md:px-20 lg:px-40 py-4">

@@ -59,7 +59,7 @@ export default {
   'question_bank_category_auth.DeleteQuestionBankCategory': ['DELETE', '/api/question_bank_category/{id}'],
   'questions_auth.CreateQuestionBank': ['POST', '/api/questions/bank/create'],
   'questions_auth.DeleteQuestionBank': ['DELETE', '/api/questions/bank/{id}'],
-  'questions_public.ListQuestionBanks': ['GET', '/api/questions/bank_list'],
+  'questions_public.ListQuestionBanks': ['GET', '/api/questions/bank_list/{categoryId}'],
   'questions_auth.CreateQuestion': ['POST', '/api/questions/question/create'],
   'questions_public.GetQuestionBank': ['GET', '/api/questions/question/{id}'],
   'questions_auth.DeleteQuestion': ['DELETE', '/api/questions/question/{id}'],

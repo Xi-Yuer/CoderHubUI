@@ -1636,7 +1636,7 @@
         ]
       }
     },
-    "/api/questions/bank_list": {
+    "/api/questions/bank_list/{categoryId}": {
       "get": {
         "summary": "获取题库列表",
         "operationId": "ListQuestionBanks",
@@ -1651,7 +1651,7 @@
         "parameters": [
           {
             "name": "categoryId",
-            "in": "query",
+            "in": "path",
             "required": true,
             "type": "string"
           },
@@ -1672,6 +1672,9 @@
         ],
         "tags": [
           "questions_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -4408,9 +4411,6 @@
     "GetQuestionBankListReq": {
       "type": "object",
       "properties": {
-        "categoryId": {
-          "type": "string"
-        },
         "page": {
           "type": "integer",
           "format": "int32"
@@ -4422,7 +4422,6 @@
       },
       "title": "GetQuestionBankListReq",
       "required": [
-        "categoryId",
         "page",
         "page_size"
       ]
