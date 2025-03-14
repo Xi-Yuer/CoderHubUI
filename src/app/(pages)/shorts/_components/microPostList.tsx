@@ -2,7 +2,7 @@
 import { GetArticle } from "@/alova/globals";
 import AppShortPreview from "@/app/_components/appShortPreview";
 import { SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
-import { ClientGetArticleList } from "@/request/apis";
+import { ClientGetArticleList } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { Card, Skeleton } from "antd";
 import React, {

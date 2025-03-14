@@ -30,7 +30,7 @@ export const navigatonList = [
   },
   {
     name: "面试题库",
-    path: "/questionBanks/all",
+    path: "/bank/all",
     icon: <FileDoneOutlined />,
   },
 ];

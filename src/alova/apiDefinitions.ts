@@ -63,7 +63,7 @@ export default {
   'questions_auth.CreateQuestion': ['POST', '/api/questions/question/create'],
   'questions_public.GetQuestionBank': ['GET', '/api/questions/question/{id}'],
   'questions_auth.DeleteQuestion': ['DELETE', '/api/questions/question/{id}'],
-  'questions_public.ListQuestions': ['GET', '/api/questions/question_list'],
+  'questions_public.ListQuestions': ['GET', '/api/questions/question_list/{id}'],
   'tag_auth.CreateTag': ['POST', '/api/tag/create'],
   'tag_public.GetAllTagList': ['GET', '/api/tag/list'],
   'tag_public.GetSystemTagList': ['GET', '/api/tag/system/list'],

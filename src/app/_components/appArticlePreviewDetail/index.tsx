@@ -3,7 +3,7 @@ import { Image, Popover } from "antd";
 import { MdPreview } from "md-editor-rt";
 import React from "react";
 import { GetArticle } from "@/alova/globals";
-import { ClientSendComment } from "@/request/apis";
+import { ClientSendComment } from "@/request/apis/web";
 import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 import { AppCommentEditor } from "../appCommentEditor";
 import { formatTime } from "@/utils";
@@ -109,7 +109,7 @@ export default function AppArticlePreviewDetail({
                 }));
               });
           }}
-          cancel={() => {}}
+          cancel={() => { }}
           entityID={articleFromProps?.article?.id}
         />
         <AppCommentList

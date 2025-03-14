@@ -1,6 +1,6 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
-import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis";
+import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button, Card, message, Spin } from "antd";

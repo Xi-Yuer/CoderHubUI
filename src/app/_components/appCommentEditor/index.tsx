@@ -2,7 +2,7 @@
 import { MdEditor, ToolbarNames } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
 import { Emoji } from "@/alova/globals";
-import { ClientUploadImage } from "@/request/apis";
+import { ClientUploadImage } from "@/request/apis/web";
 import { getBase64, RenderEmotion } from "@/utils";
 import { PictureOutlined, SmileOutlined } from "@ant-design/icons";
 import { Button, Upload, UploadProps, Image, Popover } from "antd";

@@ -2,7 +2,7 @@
 import { GetArticle, Tag } from "@/alova/globals";
 import { AppIcon } from "@/app/_components";
 import AppArticlePreview from "@/app/_components/appArticlePreview";
-import { ClientGetArticleList, ClientGetSystemTags } from "@/request/apis";
+import { ClientGetArticleList, ClientGetSystemTags } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Card, Drawer, FloatButton, Skeleton } from "antd";

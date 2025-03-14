@@ -26,3 +26,21 @@ export async function ClientGetQuestionList(categoryID: string) {
     },
   });
 }
+
+// 获取题库详情列表
+export async function ClientGetQuestionDetailList(id: string) {
+  return alovaLocalInstance.questions_public.ListQuestions({
+    pathParams: {
+      id,
+    },
+  });
+}
+
+// 获取题目详情
+export async function ClientGetQuestionDetail(id: string) {
+  return alovaLocalInstance.questions_public.GetQuestionBank({
+    pathParams: {
+      id,
+    },
+  });
+}

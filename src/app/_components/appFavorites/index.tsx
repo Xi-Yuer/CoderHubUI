@@ -1,6 +1,6 @@
 "use client";
 import { FavorFoldList } from "@/alova/globals";
-import { ClientGetUserFavorFold } from "@/request/apis";
+import { ClientGetUserFavorFold } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { LockOutlined, UnlockOutlined } from "@ant-design/icons";
 import { Pagination } from "antd";

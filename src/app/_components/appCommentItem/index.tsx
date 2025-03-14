@@ -16,7 +16,7 @@ import {
   ClientGetReplies,
   ClientLikeComment,
   ClientSendComment,
-} from "@/request/apis";
+} from "@/request/apis/web";
 import { Button, Popover, Image } from "antd";
 import { useAppStore } from "@/store";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
@@ -91,8 +91,8 @@ export default function AppCommentItem({
           </span>
           {commentFromProps.user_info.id ===
             commentFromProps.entity_author_id && (
-            <span className="text-white bg-black px-1 text-xs">作者</span>
-          )}
+              <span className="text-white bg-black px-1 text-xs">作者</span>
+            )}
         </div>
         {/* 回复对象 */}
         {commentFromProps.reply_to_user_info && (
@@ -197,7 +197,7 @@ export default function AppCommentItem({
                   }));
                 });
               }}
-              cancel={() => {}}
+              cancel={() => { }}
             />
             {replies.map((item) => (
               <AppCommentItem key={item.id} comment={item} isTop={false} />

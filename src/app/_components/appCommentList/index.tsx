@@ -1,6 +1,6 @@
 "use client";
 import { Comment } from "@/alova/globals";
-import { ClientGetComments } from "@/request/apis";
+import { ClientGetComments } from "@/request/apis/web";
 import { DoubleRightOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React, { useEffect, useImperativeHandle, useState, Ref } from "react";

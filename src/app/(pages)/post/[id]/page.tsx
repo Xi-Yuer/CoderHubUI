@@ -5,7 +5,6 @@ import Category from "../_components/category";
 import NotFond from "@/app/not-found";
 import { Metadata } from "next";
 import { Article } from "@/alova/globals";
-import { cache } from "react";
 import { ServiceGetArticleDetail } from "@/request/apis/server";
 interface PostProps {
   params: Promise<{
@@ -41,30 +40,34 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: PostProps) {
-  const id = (await params).id;
-  const response = await ServiceGetArticleDetail(id);
+  try {
+    const id = (await params).id;
+    const response = await ServiceGetArticleDetail(id);
 
-  return (
-    <div className="flex lg:gap-4">
-      {response.data ? (
-        <>
-          <OperationPC id={id} />
-          <div className="flex-1 flex flex-col pb-10 pt-6 px-6 bg-white w-full">
-            <AppArticlePreviewDetail item={response?.data} />
-          </div>
-          {/* 右侧作者信息，仅桌面端显示 */}
-          <div className="hidden xl:flex w-[250px] gap-4 flex-col">
-            <AuthInfomation id={response?.data?.author?.id} />
-            <Category />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="flex-1 flex flex-col pb-10 pt-6 px-6 bg-white w-full">
-            <NotFond />
-          </div>
-        </>
-      )}
-    </div>
-  );
+    return (
+      <div className="flex lg:gap-4">
+        {response.data ? (
+          <>
+            <OperationPC id={id} />
+            <div className="flex-1 flex flex-col pb-10 pt-6 px-6 bg-white w-full">
+              <AppArticlePreviewDetail item={response?.data} />
+            </div>
+            {/* 右侧作者信息，仅桌面端显示 */}
+            <div className="hidden xl:flex w-[250px] gap-4 flex-col">
+              <AuthInfomation id={response?.data?.author?.id} />
+              <Category />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex-1 flex flex-col pb-10 pt-6 px-6 bg-white w-full">
+              <NotFond />
+            </div>
+          </>
+        )}
+      </div>
+    );
+  } catch (error) {
+    return <div>{JSON.stringify(error)}</div>
+  }
 }

@@ -7,7 +7,7 @@ import {
   ClientGetAllTags,
   ClientCreateTag,
   ClientGetSystemTags,
-} from "@/request/apis";
+} from "@/request/apis/web";
 import { getBase64 } from "@/utils";
 import { PlusOutlined, SaveOutlined, SendOutlined } from "@ant-design/icons";
 import {

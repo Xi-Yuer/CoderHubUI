@@ -2,21 +2,15 @@
 import { ArticleExtra } from "@/alova/globals";
 import AppSharedPopUp from "@/app/_components/appSharedPopup";
 import {
-  ClientDeleteArticle,
   ClientGetArticleExtraInfo,
   ClientLikeEntity,
-} from "@/request/apis";
+} from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import {
   LikeFilled,
   LikeOutlined,
   ShareAltOutlined,
-  StarOutlined,
-  StarFilled,
-  AlertOutlined,
   CommentOutlined,
-  EllipsisOutlined,
-  RestOutlined,
 } from "@ant-design/icons";
 import { Badge, Button, Popover } from "antd";
 import React, { useEffect } from "react";

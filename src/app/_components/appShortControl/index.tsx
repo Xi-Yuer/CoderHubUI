@@ -16,7 +16,7 @@ import {
   ClientDeleteArticle,
   ClientLikeEntity,
   ClientSendComment,
-} from "@/request/apis";
+} from "@/request/apis/web";
 import { formatTime } from "@/utils";
 import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
@@ -188,7 +188,7 @@ export default function AppShortControl({
                         }));
                       });
                   }}
-                  cancel={() => {}}
+                  cancel={() => { }}
                   entityID={articleFromProps?.article?.id}
                 />
                 <AppCommentList

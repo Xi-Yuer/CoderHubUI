@@ -1773,7 +1773,7 @@
         ]
       }
     },
-    "/api/questions/question_list": {
+    "/api/questions/question_list/{id}": {
       "get": {
         "summary": "获取题目列表",
         "operationId": "ListQuestions",
@@ -1787,27 +1787,10 @@
         },
         "parameters": [
           {
-            "name": "bankId",
-            "description": " 题库 ID",
-            "in": "query",
+            "name": "id",
+            "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "page",
-            "description": " 页码",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "page_size",
-            "description": " 每页数量",
-            "in": "query",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
           }
         ],
         "tags": [
@@ -4476,28 +4459,7 @@
     },
     "GetQuestionListReq": {
       "type": "object",
-      "properties": {
-        "bankId": {
-          "type": "string",
-          "description": " 题库 ID"
-        },
-        "page": {
-          "type": "integer",
-          "format": "int32",
-          "description": " 页码"
-        },
-        "page_size": {
-          "type": "integer",
-          "format": "int32",
-          "description": " 每页数量"
-        }
-      },
-      "title": "GetQuestionListReq",
-      "required": [
-        "bankId",
-        "page",
-        "page_size"
-      ]
+      "title": "GetQuestionListReq"
     },
     "GetQuestionListResp": {
       "type": "object",
@@ -5135,12 +5097,16 @@
         },
         "title": {
           "type": "string"
+        },
+        "difficult": {
+          "type": "string"
         }
       },
       "title": "QuestionMenus",
       "required": [
         "id",
-        "title"
+        "title",
+        "difficult"
       ]
     },
     "RegisterReq": {

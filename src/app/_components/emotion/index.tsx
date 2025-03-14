@@ -1,6 +1,6 @@
 "use client"
 import { Emoji } from '@/alova/globals'
-import { ClientGetEmojiList } from '@/request/apis'
+import { ClientGetEmojiList } from '@/request/apis/web'
 import { useAppStore } from '@/store'
 import Image from 'next/image'
 import React, { useEffect, useImperativeHandle, useState } from 'react'

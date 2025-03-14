@@ -1837,6 +1837,10 @@ export type QuestionMenus = {
    * [required]
    */
   title: string;
+  /**
+   * [required]
+   */
+  difficult: string;
 };
 export type QuestionList = {
   /**
@@ -5988,22 +5992,15 @@ declare global {
        *
        * [GET] 获取题目列表
        *
-       * **path:** /api/questions/question_list
+       * **path:** /api/questions/question_list/{id}
        *
        * ---
        *
-       * **Query Parameters**
+       * **Path Parameters**
        * ```ts
-       * type QueryParameters = {
-       *   // 题库 ID
+       * type PathParameters = {
        *   // [required]
-       *   bankId: string
-       *   // 页码
-       *   // [required]
-       *   page: number
-       *   // 每页数量
-       *   // [required]
-       *   page_size: number
+       *   id: string
        * }
        * ```
        *
@@ -6027,6 +6024,8 @@ declare global {
        *       id: string
        *       // [required]
        *       title: string
+       *       // [required]
+       *       difficult: string
        *     }>
        *   }
        * }
@@ -6034,22 +6033,11 @@ declare global {
        */
       ListQuestions<
         Config extends Alova2MethodConfig<GetQuestionListResp> & {
-          params: {
+          pathParams: {
             /**
-             * 题库 ID
              * [required]
              */
-            bankId: string;
-            /**
-             * 页码
-             * [required]
-             */
-            page: number;
-            /**
-             * 每页数量
-             * [required]
-             */
-            page_size: number;
+            id: string;
           };
         }
       >(

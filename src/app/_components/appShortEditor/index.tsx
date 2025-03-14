@@ -2,7 +2,7 @@
 import { MdEditor, ToolbarNames } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
 import { CreateArticleResp, Emoji } from "@/alova/globals";
-import { ClientCreateArticle, ClientUploadImage } from "@/request/apis";
+import { ClientCreateArticle, ClientUploadImage } from "@/request/apis/web";
 import { getBase64, RenderEmotion } from "@/utils";
 import {
   PictureOutlined,

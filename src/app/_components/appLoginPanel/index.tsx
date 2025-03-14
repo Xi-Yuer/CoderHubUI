@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import "@ant-design/v5-patch-for-react-19";
 import type { FormProps } from "antd";
-import { ClientGetUserInfo, ClientLogin, ClientRegister } from "@/request/apis";
+import { ClientGetUserInfo, ClientLogin, ClientRegister } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { useStore } from "zustand";
 import { md5 } from "@/utils";
