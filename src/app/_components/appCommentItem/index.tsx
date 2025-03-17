@@ -112,6 +112,7 @@ export default function AppCommentItem({
               height={120}
               preview={{ src: item.url }}
               alt={item.content_type}
+              className="object-cover"
             />
           ))}
         </div>
