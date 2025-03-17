@@ -1,15 +1,16 @@
 "use client";
-import { MdEditor, ToolbarNames } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
 import { Emoji } from "@/alova/globals";
 import { ClientUploadImage } from "@/request/apis/web";
 import { getBase64, RenderEmotion } from "@/utils";
 import { PictureOutlined, SmileOutlined } from "@ant-design/icons";
-import { Button, Upload, UploadProps, Image, Popover } from "antd";
+import { Button, Upload, UploadProps, Image, Popover, Spin } from "antd";
 import React, { useState } from "react";
 import Emotion from "../emotion";
 import { useStore } from "zustand";
 import { useAppStore } from "@/store";
+import dynamic from "next/dynamic";
+import { simpleToolbarKeys } from "../AIEditor/toolbarKeys";
 
 type Props = {
   entityID: string;
@@ -17,14 +18,16 @@ type Props = {
   cancel: () => void;
 };
 
+const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
+  ssr: false,
+  loading: () => <Spin style={{ margin: "0 0 0 10px" }} />,
+});
+
 export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
   const [imageList, setImageList] = useState<string[]>([]);
   const [imageListID, setImageListID] = useState<string[]>([]);
   const [text, setText] = useState("");
-  const [previewTheme] = useState("arknights");
-  const [toolbars] = useState<ToolbarNames[]>([]);
   const appStore = useStore(useAppStore, (state) => state);
-  const [editorHeight, setEditorHeight] = useState("50px");
 
   const confirmAction = () => {
     if (!text && imageListID.length == 0) return;
@@ -63,30 +66,28 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
   return (
     <div className="relative">
       <div className="overflow-hidden relative">
-        <div className="border relative h-fit">
-          <MdEditor
+        <div className="border relative h-fit comment">
+          <AIEditor
+            placeholder="输入正文内容，支持 Markdown 语法.."
             value={text}
-            onChange={setText}
-            preview={false}
-            footers={[]}
-            toolbars={toolbars}
-            placeholder={appStore.token ? "平等表达，友善交流" : ""}
-            onFocus={() => {
-              setEditorHeight("100px");
-            }}
-            style={{
-              height: "fit-content",
-              minHeight: editorHeight,
-              border: "none",
-              paddingBottom: "0px",
-              transition: "all 0.2s ease-in-out",
-            }}
-            previewTheme={previewTheme}
-          />
-          <div className="image_list flex gap-2 mb-10 mx-2">
+            allowUploadImage={false}
+            textSelectionBubbleMenu={false}
+            onChange={(val: string) => setText(val)}
+            toolbarKeys={simpleToolbarKeys}
+            style={{ height: "content-fit", minHeight: 100 }}
+            className="relative"
+          ></AIEditor>
+          <div className="image_list flex gap-2 mb-10 mx-2 mt-2">
             {imageList.map((item, index) => {
               return (
-                <Image src={item} key={index} width={100} height={100} alt="" />
+                <Image
+                  src={item}
+                  key={index}
+                  width={100}
+                  height={100}
+                  alt={item}
+                  className="object-cover"
+                />
               );
             })}
           </div>

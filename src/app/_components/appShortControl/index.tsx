@@ -1,13 +1,15 @@
 "use client";
-import { GetArticle } from "@/alova/globals";
+import { Emoji, GetArticle } from "@/alova/globals";
 import {
   AlertOutlined,
   CommentOutlined,
   EllipsisOutlined,
   LikeFilled,
   LikeOutlined,
+  PictureOutlined,
   RestOutlined,
   ShareAltOutlined,
+  SmileOutlined,
 } from "@ant-design/icons";
 import { Image, Popover } from "antd";
 import React, { useEffect } from "react";
@@ -188,7 +190,7 @@ export default function AppShortControl({
                         }));
                       });
                   }}
-                  cancel={() => { }}
+                  cancel={() => {}}
                   entityID={articleFromProps?.article?.id}
                 />
                 <AppCommentList

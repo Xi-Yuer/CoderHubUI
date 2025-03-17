@@ -2,6 +2,7 @@
 import { Spin } from "antd";
 import dynamic from "next/dynamic";
 import { Ref, useImperativeHandle, useState } from "react";
+import { toolbarKeys } from "./toolbarKeys";
 
 const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
   ssr: false,
@@ -28,10 +29,11 @@ export function AppAIEditor({ ref }: AppAIEditorProps) {
   return (
     <AIEditor
       placeholder="输入正文内容，支持 Markdown 语法.."
+      toolbarKeys={toolbarKeys}
       value={value}
       onChange={(val) => setValue(val)}
-      style={{ height: 500 }}
-      className="min-h-96 h-fit"
+      className="article_editor"
+      style={{ height: "content-fit" }}
     />
   );
 }

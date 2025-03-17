@@ -51,12 +51,12 @@ export default function Page() {
     setLoading(true);
     const res = await ClientGetAllTags(pageNum, 10);
     if (res.data) {
-      const newTags = res.data.list.map((tag) => ({
+      const newTags = res.data?.list.map((tag) => ({
         label: tag.name,
         value: tag.name,
       }));
       setTagOptions((prev) => [...prev, ...newTags]);
-      setHasMore(res.data.list.length < 10);
+      setHasMore(res.data?.list.length < 10);
       setPage(pageNum + 1);
     }
     setLoading(false);

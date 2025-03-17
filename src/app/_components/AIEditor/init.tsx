@@ -5,7 +5,6 @@ import "aieditor/dist/style.css";
 
 import { HTMLAttributes, forwardRef, useEffect, useRef } from "react";
 import { AIMenus } from "./menus";
-import { toolbarKeys } from "./toolbarKeys";
 import { models } from "./models";
 import { images } from "./image";
 
@@ -13,6 +12,9 @@ type AIEditorProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
   placeholder?: string;
   defaultValue?: string;
   value?: string;
+  toolbarKeys?: string[];
+  allowUploadImage?: boolean;
+  textSelectionBubbleMenu?: boolean;
   onChange?: (val: string) => void;
   options?: Omit<AiEditorOptions, "element">;
 };
@@ -24,6 +26,9 @@ export default forwardRef<HTMLDivElement, AIEditorProps>(function AIEditor(
     value,
     onChange,
     options,
+    toolbarKeys,
+    allowUploadImage,
+    textSelectionBubbleMenu = true,
     ...props
   }: AIEditorProps,
   ref
@@ -41,6 +46,18 @@ export default forwardRef<HTMLDivElement, AIEditorProps>(function AIEditor(
         placeholder: placeholder,
         content: defaultValue,
         toolbarKeys: toolbarKeys,
+        textSelectionBubbleMenu: {
+          enable: true,
+          items: [
+            textSelectionBubbleMenu ? "ai" : "",
+            "Bold",
+            "Italic",
+            "Underline",
+            "Strike",
+            "code",
+            "comment",
+          ],
+        },
         ai: {
           models: models(token),
           menus: AIMenus,
@@ -64,7 +81,7 @@ export default forwardRef<HTMLDivElement, AIEditorProps>(function AIEditor(
             onChange(ed.getMarkdown());
           }
         },
-        image: images(token),
+        image: images(token, allowUploadImage),
         // 提及
         onMentionQuery: () => [],
         ...options,

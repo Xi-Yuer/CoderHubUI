@@ -22,14 +22,16 @@ export default function AppCommentList({ entityID, ref }: Props) {
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    ClientGetComments(entityID, page, pageSize).then((res) => {
-      if (!res) return;
-      setList(res.data.list || []);
-      setTotal(res.data.total || 0);
-      if (res.data.list.length < pageSize) {
-        setHasMore(false);
-      }
-    });
+    ClientGetComments(entityID, page, pageSize)
+      .send(true)
+      .then((res) => {
+        if (!res) return;
+        setList(res.data?.list || []);
+        setTotal(res.data.total || 0);
+        if (res.data?.list.length < pageSize) {
+          setHasMore(false);
+        }
+      });
   }, [page, pageSize]);
 
   useImperativeHandle(ref, function () {

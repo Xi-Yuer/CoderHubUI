@@ -19,3 +19,11 @@ body {
 .text-orange-500 {
   color: #f97316;
 }
+
+.comment .aie-content {
+  min-height: 150px;
+}
+
+.article_editor .aie-content {
+  min-height: 500px;
+}

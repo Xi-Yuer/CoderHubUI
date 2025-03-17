@@ -42,3 +42,14 @@ export const toolbarKeys = [
   "fullscreen",
   "ai",
 ];
+
+export const simpleToolbarKeys = [
+  "undo",
+  "redo",
+  "brush",
+  "eraser",
+  "|",
+  "bold",
+  "italic",
+  "underline",
+];

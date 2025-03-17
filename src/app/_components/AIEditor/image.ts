@@ -1,4 +1,4 @@
-export const images = (token: string) => ({
+export const images = (token: string, allowUploadImage = true) => ({
   uploadUrl: "/api/image/upload",
   uploadHeaders: {
     Authorization: `Bearer ${token}`,
@@ -27,6 +27,10 @@ export const images = (token: string) => ({
     });
   },
   uploaderEvent: {
+    onUploadBefore: () => {
+      //监听图片上传之前，此方法可以不用回任何内容，但若返回 false，则终止上传
+      if (!allowUploadImage) return false;
+    },
     onSuccess: (file: File, response: any) => {
       return {
         errorCode: 0,
