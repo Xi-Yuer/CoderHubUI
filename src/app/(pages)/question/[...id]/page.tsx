@@ -10,9 +10,37 @@ import QuestionComments from "../_components/comments";
 import QuestionDrawer from "../_components/questionDrawer";
 import QuestionBankDetail from "../_components/questionBankDetail";
 import { difficultyMap } from "@/constant";
+import AppPageError from "@/app/_components/appPageError";
+import { Metadata } from "next";
+import { ClientGetQuestionBankDetail } from "@/request/apis/server";
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const [bankID] = (await params).id;
+  const response = await ClientGetQuestionBankDetail(bankID);
+  if (!response?.data) {
+    return {
+      title: "题库未找到",
+      description: "你访问的题库不存在或已被删除。",
+    };
+  }
+
+  const bank = response.data || {};
+  return {
+    title: bank.name || "题库列表",
+    description: bank.description || "阅读更多精彩内容。",
+    openGraph: {
+      siteName: "CoderHub",
+      title: bank.name,
+      url: `${process.env.NEXT_PUBLIC_LOCAL_BASE_URL}/question/${bankID}`,
+      description: bank.description,
+      images: bank.coverImage?.url ? [{ url: bank.coverImage.url }] : [],
+      type: "article",
+    },
+  };
 }
 
 export default async function Page({ params }: Props) {
@@ -34,8 +62,7 @@ export default async function Page({ params }: Props) {
           bankID={bankID}
           questionID={questionID}
         />
-
-        <div className="left hidden md:w-80 md:flex md:flex-col gap-4">
+        <div className="hidden md:w-80 md:flex md:flex-col gap-4">
           <Card>
             {questionList?.map((item) => (
               <Link
@@ -53,8 +80,7 @@ export default async function Page({ params }: Props) {
             ))}
           </Card>
         </div>
-
-        <div className="center w-full flex-1 flex flex-col gap-4">
+        <div className="w-full flex-1 flex flex-col gap-4">
           <Card>
             <div className="flex gap-4 items-center">
               <h2 className="text-xl font-semibold">
@@ -85,13 +111,12 @@ export default async function Page({ params }: Props) {
             <QuestionComments item={questionDetailResponse.data} />
           </Card>
         </div>
-
-        <div className="right hidden md:w-80 md:block">
+        <div className="hidden md:w-80 md:block">
           <QuestionBankDetail id={bankID} />
         </div>
       </div>
     );
   } catch (error) {
-    return <div>{JSON.stringify(error)}</div>;
+    return <AppPageError />;
   }
 }

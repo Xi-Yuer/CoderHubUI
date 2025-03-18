@@ -20,7 +20,7 @@ type Props = {
 
 const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
   ssr: false,
-  loading: () => <Spin style={{ margin: "0 0 0 10px" }} />,
+  loading: () => <Spin style={{ margin: "0 auto" }} />,
 });
 
 export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {

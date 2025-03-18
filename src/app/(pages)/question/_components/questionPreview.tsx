@@ -1,14 +1,14 @@
-"use client"
-import React from 'react'
-import { MdPreview, MdCatalog } from "md-editor-rt";
+"use client";
+import React from "react";
+import { MdPreview } from "md-editor-rt";
 
 interface QuestionPreviewProps {
-    content: string
+  content: string;
 }
 export default function QuestionPreview({ content }: QuestionPreviewProps) {
-    return (
-        <div>
-            <MdPreview value={content} />
-        </div>
-    )
+  return (
+    <div>
+      <MdPreview value={content} id="preview-only" />
+    </div>
+  );
 }

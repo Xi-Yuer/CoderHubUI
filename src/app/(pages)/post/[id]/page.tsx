@@ -6,6 +6,7 @@ import NotFond from "@/app/not-found";
 import { Metadata } from "next";
 import { Article } from "@/alova/globals";
 import { ServiceGetArticleDetail } from "@/request/apis/server";
+import AppPageError from "@/app/_components/appPageError";
 interface PostProps {
   params: Promise<{
     id: string;
@@ -68,6 +69,6 @@ export default async function Page({ params }: PostProps) {
       </div>
     );
   } catch (error) {
-    return <div>{JSON.stringify(error)}</div>
+    return <AppPageError />;
   }
 }

@@ -44,3 +44,12 @@ export async function ClientGetQuestionDetail(id: string) {
     },
   });
 }
+
+// 获取题库详情
+export async function ClientGetQuestionBankDetail(id: string) {
+  return alovaLocalInstance.questions_public.GetQuestionBankDetail({
+    pathParams: {
+      id,
+    },
+  });
+}

@@ -104,7 +104,7 @@ export default function AppCommentItem({
         <MdPreview value={commentFromProps.content} className="mt-2 -ml-4" />
         {/* 图片展示 */}
         <div className="flex gap-2 mt-2 flex-wrap">
-          {commentFromProps.images.map((item) => (
+          {commentFromProps.images?.map((item) => (
             <Image
               key={item.url}
               src={item.thumbnail_url}
