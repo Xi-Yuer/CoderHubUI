@@ -63,7 +63,7 @@ export default async function Page({ params }: Props) {
           questionID={questionID}
         />
         <div className="hidden w-56 lg:w-80 md:flex md:flex-col gap-4">
-          <Card>
+          <Card title="题库列表">
             {questionList?.map((item) => (
               <Link
                 key={item.id}
