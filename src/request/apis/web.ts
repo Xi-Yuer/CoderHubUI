@@ -3,6 +3,7 @@ import {
   CreateCommentReq,
   CreateFavorReq,
   CreateTagReq,
+  DeleteFavorReq,
   LoginReq,
   RegisterReq,
   UpdatePasswordReq,
@@ -255,6 +256,13 @@ export async function ClientAddContentToFavor(params: CreateFavorReq) {
   });
 }
 
+// 取消收藏
+export async function ClientRemoveContentFromFavor(params: DeleteFavorReq) {
+  return alovaServerInstance.favorites_auth.DeleteFavoriteContent({
+    data:params
+  });
+}
+
 // 获取系统标签
 export async function ClientGetSystemTags() {
   return alovaServerInstance.tag_public.GetSystemTagList();
@@ -274,5 +282,14 @@ export async function ClientGetAllTags(page: number, page_size: number) {
 export async function ClientCreateTag(params: CreateTagReq) {
   return alovaServerInstance.tag_auth.CreateTag({
     data: params,
+  });
+}
+
+// 获取题库详情
+export async function ClientGetQuestionBankDetail(id: string) {
+  return alovaServerInstance.questions_public.GetQuestionBankDetail({
+    pathParams: {
+      id,
+    },
   });
 }

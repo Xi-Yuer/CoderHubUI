@@ -1,6 +1,6 @@
 import { Emoji } from "@/alova/globals";
 import { Md5 } from "ts-md5";
-import { format, formatDistance } from "date-fns";
+import { formatDistance } from "date-fns";
 import { zhCN } from "date-fns/locale";
 
 export const md5 = (str: string) => {
@@ -28,6 +28,9 @@ export const RenderEmotion = (emotions: Emoji[], text: string) => {
 
 export const formatTime = (time: number | string) => {
   try {
+    if (!time) {
+      return "Invalid time";
+    }
     let date: Date;
     if (typeof time === "number") {
       // 假设 time 是秒级时间戳，转换为毫秒级

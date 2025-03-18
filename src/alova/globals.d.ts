@@ -1126,10 +1126,6 @@ export type DeleteFavorReq = {
   /**
    * [required]
    */
-  favor_fold_id: string;
-  /**
-   * [required]
-   */
   entity_id: string;
   /**
    * [required]
@@ -1648,6 +1644,46 @@ export type CreateQuestionBankReq = {
    * [required]
    */
   coverImage: string;
+};
+export type GetQuestionBankResqonse = {
+  id?: string;
+  name?: string;
+  description?: string;
+  difficulty?: string;
+  tags?: string[];
+  /**
+   * ImageInfo
+   * ---
+   */
+  coverImage?: ImageInfo;
+  /**
+   * UserInfo
+   * ---
+   */
+  createUser?: UserInfo;
+  createdAt?: number;
+  updatedAt?: number;
+  /**
+   * 是否收藏
+   * [required]
+   */
+  isFavorited: boolean;
+};
+export type GetQuestionBankDetailResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * GetQuestionBankResqonse
+   * ---
+   * [required]
+   */
+  data: GetQuestionBankResqonse;
 };
 export type DeleteQuestionBankResp = {
   /**
@@ -4355,25 +4391,13 @@ declare global {
        *
        * [DELETE] 删除收藏夹内容
        *
-       * **path:** /api/favorites/content/{id}
-       *
-       * ---
-       *
-       * **Path Parameters**
-       * ```ts
-       * type PathParameters = {
-       *   // [required]
-       *   id: string
-       * }
-       * ```
+       * **path:** /api/favorites/content
        *
        * ---
        *
        * **RequestBody**
        * ```ts
        * type RequestBody = {
-       *   // [required]
-       *   favor_fold_id: string
        *   // [required]
        *   entity_id: string
        *   // [required]
@@ -4397,12 +4421,6 @@ declare global {
        */
       DeleteFavoriteContent<
         Config extends Alova2MethodConfig<DeleteFavorResp> & {
-          pathParams: {
-            /**
-             * [required]
-             */
-            id: string;
-          };
           data: DeleteFavorReq;
         }
       >(
@@ -5753,6 +5771,148 @@ declare global {
       ): Alova2Method<DeleteQuestionResp, 'questions_auth.DeleteQuestion', Config>;
     };
     questions_public: {
+      /**
+       * ---
+       *
+       * [GET] 获取题库详情
+       *
+       * **path:** /api/questions/bank/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] GetQuestionBankResqonse
+       *   // [required]
+       *   data: {
+       *     id?: string
+       *     name?: string
+       *     description?: string
+       *     difficulty?: string
+       *     tags?: string[]
+       *     // [title] ImageInfo
+       *     coverImage?: {
+       *       // 图片ID
+       *       // [required]
+       *       image_id: string
+       *       // MinIO bucket名称
+       *       // [required]
+       *       bucket_name: string
+       *       // MinIO中的对象名称
+       *       // [required]
+       *       object_name: string
+       *       // 完整的访问URL
+       *       // [required]
+       *       url: string
+       *       // 缩略图URL
+       *       // [required]
+       *       thumbnail_url: string
+       *       // 文件MIME类型
+       *       // [required]
+       *       content_type: string
+       *       // 文件大小(bytes)
+       *       // [required]
+       *       size: number
+       *       // 图片宽度(px)
+       *       // [required]
+       *       width: number
+       *       // 图片高度(px)
+       *       // [required]
+       *       height: number
+       *       // 上传者IP
+       *       // [required]
+       *       upload_ip: string
+       *       // 上传者ID
+       *       // [required]
+       *       user_id: string
+       *       // 创建时间
+       *       // [required]
+       *       created_at: number
+       *     }
+       *     // [title] UserInfo
+       *     createUser?: {
+       *       // 用户ID
+       *       // [required]
+       *       id: string
+       *       // 用户名
+       *       // [required]
+       *       username: string
+       *       // 昵称
+       *       // [required]
+       *       nickname: string
+       *       // 邮箱
+       *       // [required]
+       *       email: string
+       *       // 手机号
+       *       // [required]
+       *       phone: string
+       *       // 头像
+       *       // [required]
+       *       avatar: string
+       *       // 性别 0:未知 1:男 2:女
+       *       // [required]
+       *       gender: '0' | '1'
+       *       // 年龄
+       *       // [required]
+       *       age: number
+       *       // 状态 true:正常 false:禁用
+       *       // [required]
+       *       status: boolean
+       *       // 角色 0:普通用户 1:管理员
+       *       // [required]
+       *       is_admin: boolean
+       *       // 创建时间
+       *       // [required]
+       *       create_at: number
+       *       // 更新时间
+       *       // [required]
+       *       update_at: number
+       *       // 关注数量
+       *       // [required]
+       *       follow_count: number
+       *       // 粉丝数量
+       *       // [required]
+       *       fans_count: number
+       *       // 是否已关注
+       *       // [required]
+       *       is_followed: boolean
+       *     }
+       *     createdAt?: number
+       *     updatedAt?: number
+       *     // 是否收藏
+       *     // [required]
+       *     isFavorited: boolean
+       *   }
+       * }
+       * ```
+       */
+      GetQuestionBankDetail<
+        Config extends Alova2MethodConfig<GetQuestionBankDetailResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetQuestionBankDetailResp, 'questions_public.GetQuestionBankDetail', Config>;
       /**
        * ---
        *

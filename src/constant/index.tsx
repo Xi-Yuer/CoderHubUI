@@ -75,5 +75,13 @@ export const mobileNavigatonList = [
   },
 ];
 
+export const difficultyMap = {
+  easy: { color: "green", label: "简单" },
+  medium: { color: "orange", label: "中等" },
+  hard: { color: "red", label: "困难" },
+};
+
 export const TOKEN = "token";
 export const SHORT_ARTICLE_CATEGORY_ID = "1";
+export const FAVORITE_ARTICLE = "article";
+export const FAVORITE_QUESTION = "question";
