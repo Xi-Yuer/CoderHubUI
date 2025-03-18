@@ -66,7 +66,7 @@ export default function MicroPostList({ ref }: Props) {
     )
       .send(reFreshed)
       .then((res) => {
-        if (!res.data) {
+        if (!res?.data) {
           setHasMore(false);
           return;
         }

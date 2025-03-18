@@ -22,7 +22,7 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
 
   const FollowdUser = () => {
     ClientFollowUser(id).then((res) => {
-      if (!res.data) {
+      if (!res?.data) {
         messageApi.error(res.message);
         return;
       }

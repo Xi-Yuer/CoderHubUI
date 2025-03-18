@@ -22,7 +22,7 @@ export default function AuthInfomation({ id }: Props) {
 
   const FollowdUser = () => {
     ClientFollowUser(id).then((res) => {
-      if (!res.data) {
+      if (!res?.data) {
         messageApi.error(res.message);
         return;
       }

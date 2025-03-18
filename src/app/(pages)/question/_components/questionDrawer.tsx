@@ -4,9 +4,11 @@ import { useState } from "react";
 import { Button, Drawer, FloatButton } from "antd";
 import Link from "next/link";
 import { MenuOutlined } from "@ant-design/icons";
+import { difficultyMap } from "@/constant";
+import { QuestionMenus } from "@/alova/globals";
 
 interface QuestionDrawerProps {
-  questionList: { id: string; title: string }[];
+  questionList: QuestionMenus[];
   bankID: string;
   questionID: string;
 }
@@ -43,9 +45,11 @@ export default function QuestionDrawer({
             <Link
               key={item.id}
               href={`/question/${bankID}/${item.id}`}
-              className={`p-2 block ${
-                item.id === questionID ? "bg-gray-100 font-bold" : ""
-              }`}
+              className={`p-2 block rounded-md transition ${
+                item.id === questionID
+                  ? "bg-gray-200 font-bold shadow"
+                  : "hover:bg-gray-100"
+              } text-${difficultyMap[item?.difficult as keyof typeof difficultyMap]?.color}-500`}
             >
               {item.title}
             </Link>

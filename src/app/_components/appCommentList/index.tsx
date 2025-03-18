@@ -5,6 +5,7 @@ import { DoubleRightOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React, { useEffect, useImperativeHandle, useState, Ref } from "react";
 import AppCommentItem from "../appCommentItem";
+import { useAppStore } from "@/store";
 
 export type appendCommentRefCallBack = {
   appendComment: (comment: Comment) => void;
@@ -20,8 +21,14 @@ export default function AppCommentList({ entityID, ref }: Props) {
   const [list, setList] = useState<Comment[]>([]);
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const { token, reset, setShowLoginPanel } = useAppStore();
 
   useEffect(() => {
+    if (!token) {
+      reset();
+      setShowLoginPanel(true);
+      return;
+    }
     ClientGetComments(entityID, page, pageSize)
       .send(true)
       .then((res) => {

@@ -12,6 +12,7 @@ type AIEditorProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
   placeholder?: string;
   defaultValue?: string;
   value?: string;
+  editable?: boolean;
   toolbarKeys?: string[];
   allowUploadImage?: boolean;
   textSelectionBubbleMenu?: boolean;
@@ -25,6 +26,7 @@ export default forwardRef<HTMLDivElement, AIEditorProps>(function AIEditor(
     defaultValue,
     value,
     onChange,
+    editable = true,
     options,
     toolbarKeys,
     allowUploadImage,
@@ -46,6 +48,7 @@ export default forwardRef<HTMLDivElement, AIEditorProps>(function AIEditor(
         placeholder: placeholder,
         content: defaultValue,
         toolbarKeys: toolbarKeys,
+        editable: editable,
         textSelectionBubbleMenu: {
           enable: true,
           items: [

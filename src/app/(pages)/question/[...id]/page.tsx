@@ -55,25 +55,24 @@ export default async function Page({ params }: Props) {
     const questionDetailResponse = await ClientGetQuestionDetail(questionID);
 
     return (
-      <div className="container flex flex-wrap gap-0 md:gap-4">
+      <div className="container flex flex-wrap md:flex-nowrap md:gap-4">
         {/* 移动端的 Drawer 控件 */}
         <QuestionDrawer
           questionList={questionList}
           bankID={bankID}
           questionID={questionID}
         />
-        <div className="hidden md:w-80 md:flex md:flex-col gap-4">
+        <div className="hidden w-56 lg:w-80 md:flex md:flex-col gap-4">
           <Card>
             {questionList?.map((item) => (
               <Link
                 key={item.id}
                 href={`/question/${bankID}/${item.id}`}
-                className={`p-2 block ${
-                  item.id === questionID ? "bg-gray-100 font-bold" : ""
-                } text-${
-                  difficultyMap[item.difficult as keyof typeof difficultyMap]
-                    .color
-                }-500`}
+                className={`p-2 block rounded-md transition ${
+                  item.id === questionID
+                    ? "bg-gray-200 font-bold shadow"
+                    : "hover:bg-gray-100"
+                } text-${difficultyMap[item.difficult as keyof typeof difficultyMap].color}-500`}
               >
                 {item.title}
               </Link>
@@ -111,7 +110,7 @@ export default async function Page({ params }: Props) {
             <QuestionComments item={questionDetailResponse.data} />
           </Card>
         </div>
-        <div className="hidden md:w-80 md:block">
+        <div className="hidden sm:hidden md:w-80 lg:w-80 lg:block md:hidden">
           <QuestionBankDetail id={bankID} />
         </div>
       </div>

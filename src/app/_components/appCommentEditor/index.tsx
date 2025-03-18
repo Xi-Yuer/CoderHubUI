@@ -53,6 +53,7 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
     beforeUpload(file) {
       return false;
     },
+    disabled: !appStore.token,
     async onChange(info) {
       // 预览列表
       const fileBase64 = await getBase64(info.file as unknown as File);
@@ -70,6 +71,7 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
           <AIEditor
             placeholder="输入正文内容，支持 Markdown 语法.."
             value={text}
+            editable={!!appStore.token}
             allowUploadImage={false}
             textSelectionBubbleMenu={false}
             onChange={(val: string) => setText(val)}
@@ -95,14 +97,18 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
             <Popover
               placement="bottom"
               content={
-                <Emotion
-                  onClick={(emoji: Emoji) => {
-                    setText(text + emoji.code);
-                  }}
-                />
+                appStore.token && (
+                  <Emotion
+                    onClick={(emoji: Emoji) => {
+                      setText(text + emoji.code);
+                    }}
+                  />
+                )
               }
             >
-              <div className="flex gap-1 cursor-pointer hover:text-gray-950">
+              <div
+                className={`flex gap-1 ${!appStore.token ? "cursor-not-allowed text-[#bfbfbf]" : "cursor-pointer hover:text-gray-950"}`}
+              >
                 <span>
                   <SmileOutlined />
                 </span>
@@ -119,26 +125,17 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
           </div>
           <div className="flex justify-between items-center mt-2 absolute bottom-2 right-2">
             <div className="left flex gap-6 text-md text-gray-500">
-              <Button type="primary" onClick={confirmAction}>
-                发送
+              <Button
+                type="primary"
+                onClick={confirmAction}
+                disabled={!appStore.token}
+              >
+                {appStore.token ? "发送" : "登录后发送"}
               </Button>
             </div>
           </div>
         </div>
       </div>
-      {!appStore.token && (
-        <div className="absolute top-0 bottom-0 left-0 right-0 w-full h-full z-10 p-2 cursor-not-allowed text-slate-500">
-          点击
-          <Button
-            type="link"
-            onClick={() => appStore.setShowLoginPanel(true)}
-            className="!p-1"
-          >
-            登录
-          </Button>
-          , 和大家分享你此刻的心情
-        </div>
-      )}
     </div>
   );
 }

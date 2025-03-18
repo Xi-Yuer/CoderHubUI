@@ -69,7 +69,7 @@ export default function Page() {
     setLoading(true);
     ClientGetArticleList("article", currentTag, page, 10, userInfo.id)
       .then((res) => {
-        if (!res.data) {
+        if (!res?.data) {
           setHasMore(false);
           return;
         } else {

@@ -123,8 +123,9 @@ export function AppShortEditor({ PublicSuccess }: Props) {
             icon={<SendOutlined />}
             iconPosition="end"
             onClick={publicMicroPost}
+            disabled={!appStore.token}
           >
-            发布
+            {appStore.token ? "发布" : "登录后发布"}
           </Button>
         </div>
       </div>
