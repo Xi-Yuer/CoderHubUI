@@ -1,3 +1,4 @@
+"use client";
 import { dictionary } from "@/dictionary";
 import { SearchOutlined } from "@ant-design/icons";
 import { Form, Select, Button } from "antd";

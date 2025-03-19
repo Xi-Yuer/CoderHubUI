@@ -1,3 +1,4 @@
+"use client";
 import { dictionary } from "@/dictionary";
 import { SearchOutlined } from "@ant-design/icons";
 import { Form, Select, Button, Input } from "antd";
@@ -23,7 +24,7 @@ export default function WorkFilter({ setWorkParams }: Props) {
         </Select>
       </Form.Item>
       <Form.Item label="公司" name="company">
-        <Input placeholder="请输入公司名称" allowClear />
+        <Input placeholder="请输入公司名称" allowClear autoComplete="off" />
       </Form.Item>
       <Form.Item label="岗位" name="position">
         <Select placeholder="请选择岗位" showSearch allowClear>

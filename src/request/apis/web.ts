@@ -2,7 +2,9 @@ import {
   CreateArticleReq,
   CreateCommentReq,
   CreateFavorReq,
+  CreateSchoolExpReq,
   CreateTagReq,
+  CreateWorkExpReq,
   DeleteFavorReq,
   GetSchoolExpListResp,
   LoginReq,
@@ -319,5 +321,39 @@ export async function ClientGetCompanyExp(params: {
 }) {
   return alovaServerInstance.work_exp_public.ListWorkExp({
     params,
+  });
+}
+
+// 新增学习经验
+export async function ClientCreateSchoolExp(params: CreateSchoolExpReq) {
+  return alovaServerInstance.school_exp_auth.CreateSchoolExp({
+    data: params,
+  });
+}
+
+// 新增工作经验
+export async function ClientCreateWorkExp(params: CreateWorkExpReq) {
+  return alovaServerInstance.work_exp_auth.CreateWorkExp({
+    data: params,
+  });
+}
+
+// 删除学习经验
+export async function ClientDeleteSchoolExp(id: string) {
+  return alovaServerInstance.school_exp_auth.DeleteSchoolExp({
+    pathParams: {
+      id,
+    },
+    data: {},
+  });
+}
+
+// 删除工作经验
+export async function ClientDeleteWorkExp(id: string) {
+  return alovaServerInstance.work_exp_auth.DeleteWorkExp({
+    pathParams: {
+      id,
+    },
+    data: {},
   });
 }

@@ -58,6 +58,7 @@ export function AppHeader() {
             placeholder="全站搜索"
             suffix={<SearchOutlined />}
             className="w-60"
+            autoComplete="off"
           />
           <Link href="/creator">
             <Button type="primary" icon={<EditOutlined />}>
@@ -130,6 +131,7 @@ export function AppHeader() {
             suffix={<SearchOutlined />}
             className="w-full rounded-lg shadow-md border-gray-300"
             style={{ marginBottom: "20px" }} // 提高输入框与按钮间距
+            autoComplete="off"
           />
           <div>
             <Link href="/creator">

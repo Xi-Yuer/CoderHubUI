@@ -59,13 +59,18 @@ export const useFavorFlod = (
             name="name"
             rules={[{ required: true, message: "请输入收藏集名称" }]}
           >
-            <Input placeholder="请输入收藏集名称" maxLength={20} />
+            <Input
+              placeholder="请输入收藏集名称"
+              maxLength={20}
+              autoComplete="off"
+            />
           </Form.Item>
           <Form.Item label="描述" name="description">
             <Input.TextArea
               placeholder="请输入收藏描述（限100字，选填）"
               maxLength={100}
               autoSize={{ minRows: 3 }}
+              autoComplete="off"
             />
           </Form.Item>
 

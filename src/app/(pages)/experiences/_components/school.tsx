@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { ClientGetCollegeExp } from "@/request/apis/web";
+import { ClientDeleteSchoolExp, ClientGetCollegeExp } from "@/request/apis/web";
 import {
   GetSchoolExpListResp,
   SchoolExp,
@@ -7,6 +7,8 @@ import {
 } from "@/alova/globals";
 import { Avatar, Button, Card, Pagination, Spin } from "antd";
 import { format } from "date-fns";
+import { useAppStore } from "@/store";
+import { DeleteOutlined } from "@ant-design/icons";
 
 interface Props {
   filterParams: any;
@@ -17,6 +19,7 @@ export default function School({ filterParams }: Props) {
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  const { userInfo } = useAppStore();
   const ColorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
   useEffect(() => {
     setLoading(true);
@@ -76,7 +79,22 @@ export default function School({ filterParams }: Props) {
           )}
         </p>
         <div className="flex justify-between text-gray-400 text-xs mt-2">
-          <span>工作经验：{data.workExp}</span>
+          <span>
+            工作经验：{data.workExp}
+            {userInfo.id === data.userId && (
+              <span
+                className="inline-block mx-2 cursor-pointer"
+                onClick={() => {
+                  ClientDeleteSchoolExp(data.id).then(() => {
+                    setList(list.filter((item) => item.id !== data.id));
+                    setPage(1);
+                  });
+                }}
+              >
+                <DeleteOutlined />
+              </span>
+            )}
+          </span>
           <span>
             更新于：{format(new Date(data.updatedAt * 1000), "yyyy-MM-dd")}
           </span>

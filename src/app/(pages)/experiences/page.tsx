@@ -1,20 +1,29 @@
 "use client";
-import { Card } from "antd";
+import { Button, Card, message } from "antd";
 import React, { useState } from "react";
-import { BankOutlined, ReadOutlined } from "@ant-design/icons";
+import { BankOutlined, EditOutlined, ReadOutlined } from "@ant-design/icons";
 import { Tabs } from "antd";
 import School from "./_components/school";
 import Work from "./_components/work";
 import SchoolFilter from "./_components/schoolFilter";
 import WorkFilter from "./_components/workFilter";
+import AddSchoolExperienceModal from "./_components/schoolDialog";
+import AddWorkExperienceModal from "./_components/workDialog";
+import { ClientCreateSchoolExp, ClientCreateWorkExp } from "@/request/apis/web";
 
 export default function Page() {
+  const [messageApi, contextHolder] = message.useMessage();
   const [current, setCurrent] = useState("school");
   const [schoolParams, setSchoolParams] = useState({});
   const [workParams, setWorkParams] = useState({});
+  const [AddSchoolExperienceModalVsible, setAddSchoolExperienceModalVisible] =
+    useState(false);
+  const [AddWorkExperienceModalVsible, setAddWorkExperienceModalVisible] =
+    useState(false);
 
   return (
     <div className="container flex flex-wrap gap-4">
+      {contextHolder}
       <Card className="w-full sm:w-80" title="条件筛选">
         {current === "school" ? (
           <SchoolFilter setSchoolParams={setSchoolParams} />
@@ -22,8 +31,26 @@ export default function Page() {
           <WorkFilter setWorkParams={setWorkParams} />
         )}
       </Card>
-
-      <Card className="flex-1 w-full">
+      <Card
+        title="经验列表"
+        className="flex-1 w-full"
+        extra={
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => {
+              if (current === "school") {
+                setAddSchoolExperienceModalVisible(true);
+              }
+              if (current === "work") {
+                setAddWorkExperienceModalVisible(true);
+              }
+            }}
+          >
+            我也要留言
+          </Button>
+        }
+      >
         <Tabs
           type="card"
           defaultActiveKey={current}
@@ -45,6 +72,28 @@ export default function Page() {
           ]}
         />
       </Card>
+      <AddSchoolExperienceModal
+        visible={AddSchoolExperienceModalVsible}
+        onClose={() => setAddSchoolExperienceModalVisible(false)}
+        onSubmit={(val) => {
+          ClientCreateSchoolExp(val).then(() => {
+            setAddSchoolExperienceModalVisible(false);
+            setSchoolParams({});
+            messageApi.success("感谢您的留言");
+          });
+        }}
+      />
+      <AddWorkExperienceModal
+        visible={AddWorkExperienceModalVsible}
+        onClose={() => setAddWorkExperienceModalVisible(false)}
+        onSubmit={(val) => {
+          ClientCreateWorkExp(val).then(() => {
+            setAddWorkExperienceModalVisible(false);
+            setWorkParams({});
+            messageApi.success("感谢您的留言");
+          });
+        }}
+      />
     </div>
   );
 }
