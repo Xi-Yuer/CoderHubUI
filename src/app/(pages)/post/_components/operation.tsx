@@ -5,7 +5,6 @@ import {
   ClientGetArticleExtraInfo,
   ClientLikeEntity,
 } from "@/request/apis/web";
-import { useAppStore } from "@/store";
 import {
   LikeFilled,
   LikeOutlined,
@@ -22,8 +21,6 @@ export default function Operation({ id }: Props) {
   const [extraInfo, setExtraInfo] = React.useState<ArticleExtra>({
     id: "",
   } as ArticleExtra);
-  const { userInfo } = useAppStore();
-  const [isDeleted, setIsDeleted] = React.useState(false);
   const [showCommentEditor, setShowCommentEditor] = React.useState(true);
   useEffect(() => {
     ClientGetArticleExtraInfo(id).then((res) => {

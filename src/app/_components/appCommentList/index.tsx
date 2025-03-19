@@ -21,10 +21,10 @@ export default function AppCommentList({ entityID, ref }: Props) {
   const [list, setList] = useState<Comment[]>([]);
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const { token, reset, setShowLoginPanel } = useAppStore();
+  const { reset, setShowLoginPanel } = useAppStore();
 
   useEffect(() => {
-    if (!token) {
+    if (!useAppStore.getState().token) {
       reset();
       setShowLoginPanel(true);
       return;

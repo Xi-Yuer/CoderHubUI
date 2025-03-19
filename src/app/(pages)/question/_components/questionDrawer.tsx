@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Drawer, FloatButton } from "antd";
+import { Drawer, FloatButton } from "antd";
 import Link from "next/link";
 import { MenuOutlined } from "@ant-design/icons";
 import { difficultyMap } from "@/constant";

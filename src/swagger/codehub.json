@@ -1827,6 +1827,142 @@
         ]
       }
     },
+    "/api/school_exp/create": {
+      "post": {
+        "summary": "创建学校经历",
+        "operationId": "CreateSchoolExp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateSchoolExpResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "request-user-id",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSchoolExpReq"
+            }
+          }
+        ],
+        "tags": [
+          "school_exp_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/school_exp/list": {
+      "get": {
+        "summary": "获取学校经历列表",
+        "operationId": "ListSchoolExp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetSchoolExpListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "education",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "school",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "major",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "workExp",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "school_exp_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/school_exp/{id}": {
+      "delete": {
+        "summary": "删除学校经历",
+        "operationId": "DeleteSchoolExp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteSchoolExpResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteSchoolExpReq"
+            }
+          }
+        ],
+        "tags": [
+          "school_exp_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/tag/create": {
       "post": {
         "summary": "创建分类标签",
@@ -2299,6 +2435,142 @@
         ],
         "tags": [
           "user_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/work_exp/create": {
+      "post": {
+        "summary": "创建工作经历",
+        "operationId": "CreateWorkExp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateWorkExpResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "request-user-id",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateWorkExpReq"
+            }
+          }
+        ],
+        "tags": [
+          "work_exp_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/work_exp/list": {
+      "get": {
+        "summary": "获取工作经历列表",
+        "operationId": "ListWorkExp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetWorkExpListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "workExp",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "company",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "work_exp_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
+    "/api/work_exp/{id}": {
+      "delete": {
+        "summary": "删除工作经历",
+        "operationId": "DeleteWorkExp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteWorkExpResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteWorkExpReq"
+            }
+          }
+        ],
+        "tags": [
+          "work_exp_auth"
         ],
         "security": [
           {
@@ -3191,6 +3463,56 @@
         "data"
       ]
     },
+    "CreateSchoolExpReq": {
+      "type": "object",
+      "properties": {
+        "education": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "major": {
+          "type": "string"
+        },
+        "workExp": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "title": "CreateSchoolExpReq",
+      "required": [
+        "education",
+        "school",
+        "major",
+        "workExp",
+        "content"
+      ]
+    },
+    "CreateSchoolExpResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "CreateSchoolExpResp",
+      "required": [
+        "data"
+      ]
+    },
     "CreateTagReq": {
       "type": "object",
       "properties": {
@@ -3238,6 +3560,56 @@
         }
       },
       "title": "CreateTagResp",
+      "required": [
+        "data"
+      ]
+    },
+    "CreateWorkExpReq": {
+      "type": "object",
+      "properties": {
+        "workExp": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      },
+      "title": "CreateWorkExpReq",
+      "required": [
+        "workExp",
+        "company",
+        "position",
+        "region",
+        "content"
+      ]
+    },
+    "CreateWorkExpResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "CreateWorkExpResp",
       "required": [
         "data"
       ]
@@ -3533,6 +3905,32 @@
         "success"
       ]
     },
+    "DeleteSchoolExpReq": {
+      "type": "object",
+      "title": "DeleteSchoolExpReq"
+    },
+    "DeleteSchoolExpResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteSchoolExpResp",
+      "required": [
+        "data"
+      ]
+    },
     "DeleteTagReq": {
       "type": "object",
       "title": "DeleteTagReq"
@@ -3582,6 +3980,32 @@
         }
       },
       "title": "DeleteUserResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteWorkExpReq": {
+      "type": "object",
+      "title": "DeleteWorkExpReq"
+    },
+    "DeleteWorkExpResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteWorkExpResp",
       "required": [
         "data"
       ]
@@ -4606,6 +5030,57 @@
         "data"
       ]
     },
+    "GetSchoolExpListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "education": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "major": {
+          "type": "string"
+        },
+        "workExp": {
+          "type": "string"
+        }
+      },
+      "title": "GetSchoolExpListReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetSchoolExpListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolExpList"
+        }
+      },
+      "title": "GetSchoolExpListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetTagListReq": {
       "type": "object",
       "properties": {
@@ -4711,6 +5186,57 @@
         }
       },
       "title": "GetUserListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetWorkExpListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "workExp": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "title": "GetWorkExpListReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetWorkExpListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/WorkExpList"
+        }
+      },
+      "title": "GetWorkExpListResp",
       "required": [
         "data"
       ]
@@ -5313,6 +5839,72 @@
         "message"
       ]
     },
+    "SchoolExp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "education": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "major": {
+          "type": "string"
+        },
+        "workExp": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string"
+        }
+      },
+      "title": "SchoolExp",
+      "required": [
+        "id",
+        "education",
+        "school",
+        "major",
+        "workExp",
+        "content",
+        "createdAt",
+        "updatedAt",
+        "userId"
+      ]
+    },
+    "SchoolExpList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolExp"
+          }
+        }
+      },
+      "title": "SchoolExpList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
     "SendResetPasswordLinkReq": {
       "type": "object",
       "properties": {
@@ -5910,6 +6502,72 @@
         }
       },
       "title": "UserList",
+      "required": [
+        "total",
+        "list"
+      ]
+    },
+    "WorkExp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "workExp": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "userID": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "WorkExp",
+      "required": [
+        "id",
+        "workExp",
+        "company",
+        "region",
+        "position",
+        "content",
+        "userID",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "WorkExpList": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WorkExp"
+          }
+        }
+      },
+      "title": "WorkExpList",
       "required": [
         "total",
         "list"

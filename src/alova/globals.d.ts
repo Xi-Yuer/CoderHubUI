@@ -1904,6 +1904,121 @@ export type GetQuestionListResp = {
    */
   data: QuestionList;
 };
+export type CreateSchoolExpResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type CreateSchoolExpReq = {
+  /**
+   * [required]
+   */
+  education: string;
+  /**
+   * [required]
+   */
+  school: string;
+  /**
+   * [required]
+   */
+  major: string;
+  /**
+   * [required]
+   */
+  workExp: string;
+  /**
+   * [required]
+   */
+  content: string;
+};
+export type SchoolExp = {
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  education: string;
+  /**
+   * [required]
+   */
+  school: string;
+  /**
+   * [required]
+   */
+  major: string;
+  /**
+   * [required]
+   */
+  workExp: string;
+  /**
+   * [required]
+   */
+  content: string;
+  /**
+   * [required]
+   */
+  createdAt: number;
+  /**
+   * [required]
+   */
+  updatedAt: number;
+  /**
+   * [required]
+   */
+  userId: string;
+};
+export type SchoolExpList = {
+  /**
+   * [required]
+   */
+  total: number;
+  /**
+   * [required]
+   */
+  list: SchoolExp[];
+};
+export type GetSchoolExpListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * SchoolExpList
+   * ---
+   * [required]
+   */
+  data: SchoolExpList;
+};
+export type DeleteSchoolExpResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type DeleteSchoolExpReq = object;
 export type CreateTagResp = {
   /**
    * 状态码
@@ -2278,6 +2393,121 @@ export type UpdateUserAvatarReq = {
    */
   avatar: string;
 };
+export type CreateWorkExpResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type CreateWorkExpReq = {
+  /**
+   * [required]
+   */
+  workExp: string;
+  /**
+   * [required]
+   */
+  company: string;
+  /**
+   * [required]
+   */
+  position: string;
+  /**
+   * [required]
+   */
+  region: string;
+  /**
+   * [required]
+   */
+  content: string;
+};
+export type WorkExp = {
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  workExp: string;
+  /**
+   * [required]
+   */
+  company: string;
+  /**
+   * [required]
+   */
+  region: string;
+  /**
+   * [required]
+   */
+  position: string;
+  /**
+   * [required]
+   */
+  content: string;
+  /**
+   * [required]
+   */
+  userID: string;
+  /**
+   * [required]
+   */
+  createdAt: number;
+  /**
+   * [required]
+   */
+  updatedAt: number;
+};
+export type WorkExpList = {
+  /**
+   * [required]
+   */
+  total: number;
+  /**
+   * [required]
+   */
+  list: WorkExp[];
+};
+export type GetWorkExpListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * WorkExpList
+   * ---
+   * [required]
+   */
+  data: WorkExpList;
+};
+export type DeleteWorkExpResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type DeleteWorkExpReq = object;
 declare global {
   interface Apis {
     academic_auth: {
@@ -6204,6 +6434,189 @@ declare global {
         config: Config
       ): Alova2Method<GetQuestionListResp, 'questions_public.ListQuestions', Config>;
     };
+    school_exp_auth: {
+      /**
+       * ---
+       *
+       * [POST] 创建学校经历
+       *
+       * **path:** /api/school_exp/create
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // [required]
+       *   education: string
+       *   // [required]
+       *   school: string
+       *   // [required]
+       *   major: string
+       *   // [required]
+       *   workExp: string
+       *   // [required]
+       *   content: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      CreateSchoolExp<
+        Config extends Alova2MethodConfig<CreateSchoolExpResp> & {
+          data: CreateSchoolExpReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<CreateSchoolExpResp, 'school_exp_auth.CreateSchoolExp', Config>;
+      /**
+       * ---
+       *
+       * [DELETE] 删除学校经历
+       *
+       * **path:** /api/school_exp/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      DeleteSchoolExp<
+        Config extends Alova2MethodConfig<DeleteSchoolExpResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+          data: DeleteSchoolExpReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<DeleteSchoolExpResp, 'school_exp_auth.DeleteSchoolExp', Config>;
+    };
+    school_exp_public: {
+      /**
+       * ---
+       *
+       * [GET] 获取学校经历列表
+       *
+       * **path:** /api/school_exp/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // [required]
+       *   page: number
+       *   // [required]
+       *   page_size: number
+       *   education?: string
+       *   school?: string
+       *   major?: string
+       *   workExp?: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] SchoolExpList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     total: number
+       *     // [required]
+       *     list: Array<{
+       *       // [required]
+       *       id: string
+       *       // [required]
+       *       education: string
+       *       // [required]
+       *       school: string
+       *       // [required]
+       *       major: string
+       *       // [required]
+       *       workExp: string
+       *       // [required]
+       *       content: string
+       *       // [required]
+       *       createdAt: number
+       *       // [required]
+       *       updatedAt: number
+       *       // [required]
+       *       userId: string
+       *     }>
+       *   }
+       * }
+       * ```
+       */
+      ListSchoolExp<
+        Config extends Alova2MethodConfig<GetSchoolExpListResp> & {
+          params: {
+            /**
+             * [required]
+             */
+            page: number;
+            /**
+             * [required]
+             */
+            page_size: number;
+            education?: string;
+            school?: string;
+            major?: string;
+            workExp?: string;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetSchoolExpListResp, 'school_exp_public.ListSchoolExp', Config>;
+    };
     tag_auth: {
       /**
        * ---
@@ -7086,6 +7499,189 @@ declare global {
       >(
         config: Config
       ): Alova2Method<SendResetPasswordLinkResp, 'user_public.SendResetPasswordLink', Config>;
+    };
+    work_exp_auth: {
+      /**
+       * ---
+       *
+       * [POST] 创建工作经历
+       *
+       * **path:** /api/work_exp/create
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // [required]
+       *   workExp: string
+       *   // [required]
+       *   company: string
+       *   // [required]
+       *   position: string
+       *   // [required]
+       *   region: string
+       *   // [required]
+       *   content: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      CreateWorkExp<
+        Config extends Alova2MethodConfig<CreateWorkExpResp> & {
+          data: CreateWorkExpReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<CreateWorkExpResp, 'work_exp_auth.CreateWorkExp', Config>;
+      /**
+       * ---
+       *
+       * [DELETE] 删除工作经历
+       *
+       * **path:** /api/work_exp/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      DeleteWorkExp<
+        Config extends Alova2MethodConfig<DeleteWorkExpResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+          data: DeleteWorkExpReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<DeleteWorkExpResp, 'work_exp_auth.DeleteWorkExp', Config>;
+    };
+    work_exp_public: {
+      /**
+       * ---
+       *
+       * [GET] 获取工作经历列表
+       *
+       * **path:** /api/work_exp/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // [required]
+       *   page: number
+       *   // [required]
+       *   page_size: number
+       *   workExp?: string
+       *   company?: string
+       *   position?: string
+       *   region?: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] WorkExpList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     total: number
+       *     // [required]
+       *     list: Array<{
+       *       // [required]
+       *       id: string
+       *       // [required]
+       *       workExp: string
+       *       // [required]
+       *       company: string
+       *       // [required]
+       *       region: string
+       *       // [required]
+       *       position: string
+       *       // [required]
+       *       content: string
+       *       // [required]
+       *       userID: string
+       *       // [required]
+       *       createdAt: number
+       *       // [required]
+       *       updatedAt: number
+       *     }>
+       *   }
+       * }
+       * ```
+       */
+      ListWorkExp<
+        Config extends Alova2MethodConfig<GetWorkExpListResp> & {
+          params: {
+            /**
+             * [required]
+             */
+            page: number;
+            /**
+             * [required]
+             */
+            page_size: number;
+            workExp?: string;
+            company?: string;
+            position?: string;
+            region?: string;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetWorkExpListResp, 'work_exp_public.ListWorkExp', Config>;
     };
   }
 

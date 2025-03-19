@@ -65,6 +65,9 @@ export default {
   'questions_public.GetQuestionBank': ['GET', '/api/questions/question/{id}'],
   'questions_auth.DeleteQuestion': ['DELETE', '/api/questions/question/{id}'],
   'questions_public.ListQuestions': ['GET', '/api/questions/question_list/{id}'],
+  'school_exp_auth.CreateSchoolExp': ['POST', '/api/school_exp/create'],
+  'school_exp_public.ListSchoolExp': ['GET', '/api/school_exp/list'],
+  'school_exp_auth.DeleteSchoolExp': ['DELETE', '/api/school_exp/{id}'],
   'tag_auth.CreateTag': ['POST', '/api/tag/create'],
   'tag_public.GetAllTagList': ['GET', '/api/tag/list'],
   'tag_public.GetSystemTagList': ['GET', '/api/tag/system/list'],
@@ -79,5 +82,8 @@ export default {
   'user_public.ResetPasswordByLink': ['POST', '/api/user/reset-password-by-link'],
   'user_public.SendResetPasswordLink': ['POST', '/api/user/send-reset-password-link'],
   'user_auth.UpdateUserInfo': ['PUT', '/api/user/update/{id}'],
-  'user_auth.UpdateUserAvatar': ['PUT', '/api/user/update_avatar']
+  'user_auth.UpdateUserAvatar': ['PUT', '/api/user/update_avatar'],
+  'work_exp_auth.CreateWorkExp': ['POST', '/api/work_exp/create'],
+  'work_exp_public.ListWorkExp': ['GET', '/api/work_exp/list'],
+  'work_exp_auth.DeleteWorkExp': ['DELETE', '/api/work_exp/{id}']
 };

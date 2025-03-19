@@ -4,6 +4,7 @@ import {
   CreateFavorReq,
   CreateTagReq,
   DeleteFavorReq,
+  GetSchoolExpListResp,
   LoginReq,
   RegisterReq,
   UpdatePasswordReq,
@@ -259,7 +260,7 @@ export async function ClientAddContentToFavor(params: CreateFavorReq) {
 // 取消收藏
 export async function ClientRemoveContentFromFavor(params: DeleteFavorReq) {
   return alovaServerInstance.favorites_auth.DeleteFavoriteContent({
-    data:params
+    data: params,
   });
 }
 
@@ -291,5 +292,32 @@ export async function ClientGetQuestionBankDetail(id: string) {
     pathParams: {
       id,
     },
+  });
+}
+
+// 获取学院经验
+export async function ClientGetCollegeExp(params: {
+  page: number;
+  page_size: number;
+  education: string;
+  school: string;
+  major: string;
+  workExp: string;
+}) {
+  return alovaServerInstance.school_exp_public.ListSchoolExp({
+    params,
+  });
+}
+
+// 获取公司经验
+export async function ClientGetCompanyExp(params: {
+  page: number;
+  page_size: number;
+  region: string;
+  company: string;
+  workExp: string;
+}) {
+  return alovaServerInstance.work_exp_public.ListWorkExp({
+    params,
   });
 }
