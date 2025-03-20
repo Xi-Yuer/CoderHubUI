@@ -44,7 +44,7 @@ export function AppLogin() {
             {appStore.userInfo.email || appStore.userInfo.phone || "未绑定邮箱"}
           </Text>
         </div>
-        <Link href="/" className="text-gray-950">
+        <Link href={`/user/${appStore.userInfo.id}`} className="text-gray-950">
           <RightOutlined />
         </Link>
       </div>

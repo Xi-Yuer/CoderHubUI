@@ -24,6 +24,7 @@ import AppCommentList, { appendCommentRefCallBack } from "../appCommentList";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import AppSharedPopUp from "../appSharedPopup";
 import { useAppStore } from "@/store";
+import Link from "next/link";
 
 export default function AppShortControl({
   article,
@@ -61,14 +62,18 @@ export default function AppShortControl({
                   />
                 }
               >
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg">
+                <Link
+                  href={`/user/${article.author.id}`}
+                  target="_blank"
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg"
+                >
                   <Image
                     src={article.author.avatar || "/default-avatar.png"}
                     alt="Avatar"
                     preview={false}
                     className="rounded-full"
                   ></Image>
-                </div>
+                </Link>
               </Popover>
               <div>
                 <p className="font-bold text-gray-800">

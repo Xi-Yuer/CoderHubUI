@@ -20,6 +20,7 @@ import {
 import { Button, Popover, Image } from "antd";
 import { useAppStore } from "@/store";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
+import Link from "next/link";
 
 interface AppCommentItemProps {
   comment: Comment;
@@ -85,7 +86,11 @@ export default function AppCommentItem({
       </Popover>
       <div className="flex flex-col w-full">
         {/* 昵称 & 标识 */}
-        <div className="flex gap-2 items-center">
+        <Link
+          href={`/user/${commentFromProps.user_info.id}`}
+          target="_blank"
+          className="flex gap-2 items-center text-slate-800"
+        >
           <span className="font-bold">
             {commentFromProps.user_info?.nickname}
           </span>
@@ -93,12 +98,16 @@ export default function AppCommentItem({
             commentFromProps.entity_author_id && (
             <span className="text-white bg-black px-1 text-xs">作者</span>
           )}
-        </div>
+        </Link>
         {/* 回复对象 */}
         {commentFromProps.reply_to_user_info && (
-          <div className="text-gray-500 text-sm">
+          <Link
+            href={`/user/${commentFromProps.reply_to_user_info.id}`}
+            target="_blank"
+            className="text-gray-500 text-sm"
+          >
             回复 @{commentFromProps.reply_to_user_info.nickname}
-          </div>
+          </Link>
         )}
         {/* 评论内容 */}
         <MdPreview value={commentFromProps.content} className="mt-2 -ml-4" />

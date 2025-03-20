@@ -400,3 +400,39 @@ export async function ClientGetUserArticles(
     },
   });
 }
+
+// 获取用户关注
+export async function ClientGetUserFollow(
+  user_id: string,
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.follow_public.GetFollowList({
+    pathParams: {
+      user_id,
+    },
+    params: {
+      user_id,
+      page,
+      page_size,
+    },
+  });
+}
+
+// 获取用户粉丝
+export async function ClientGetUserFans(
+  user_id: string,
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.follow_public.GetFansList({
+    pathParams: {
+      user_id,
+    },
+    params: {
+      user_id,
+      page,
+      page_size,
+    },
+  });
+}

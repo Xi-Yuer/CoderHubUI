@@ -44,7 +44,6 @@ export default async function Page({ params }: PostProps) {
   try {
     const id = (await params).id;
     const response = await ServiceGetArticleDetail(id);
-
     return (
       <div className="flex lg:gap-4">
         {response.data ? (

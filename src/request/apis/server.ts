@@ -53,3 +53,12 @@ export async function ClientGetQuestionBankDetail(id: string) {
     },
   });
 }
+
+// 获取用户信息（通过ID）
+export function ClientGetUserInfoById(user_id: string) {
+  return alovaLocalInstance.user_public.GetUserInfo({
+    pathParams: {
+      id: user_id,
+    },
+  });
+}

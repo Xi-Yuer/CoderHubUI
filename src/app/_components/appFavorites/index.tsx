@@ -42,7 +42,7 @@ export default function AppFavorite({ ref }: any) {
                 setSelectedFolder("");
               }
             }}
-            className={` py-2 px-4 rounded-lg border cursor-pointer mb-2 transition-all duration-200 
+            className={`py-2 px-4 rounded-lg border cursor-pointer mb-2 transition-all duration-200 
               ${selectedFolder === item.id ? "border-blue-500 bg-blue-100 shadow-md" : "hover:shadow-md bg-white"}`}
           >
             <div className="flex items-center justify-between mb-2">

@@ -10,6 +10,7 @@ import { formatTime } from "@/utils";
 import { EyeOutlined } from "@ant-design/icons";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Operation from "@/app/(pages)/post/_components/operation";
+import Link from "next/link";
 
 export default function AppArticlePreviewDetail({
   item,
@@ -27,10 +28,14 @@ export default function AppArticlePreviewDetail({
             {articleFromProps.article.title}
           </h1>
           <div className="flex gap-4 px-4 pt-6">
-            <span className="text-slate-700 cursor-pointer hover:text-slate-950">
+            <Link
+              href={`/user/${articleFromProps.author.id}`}
+              target="_blank"
+              className="text-slate-700 cursor-pointer hover:text-slate-950"
+            >
               {articleFromProps.author.nickname ||
                 articleFromProps.author.username}
-            </span>
+            </Link>
             <span className="text-gray-400">
               {formatTime(articleFromProps.article.createdAt)}
             </span>
@@ -53,20 +58,27 @@ export default function AppArticlePreviewDetail({
                 />
               }
             >
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg">
+              <Link
+                href={`/user/${articleFromProps.author.id}`}
+                target="_blank"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg"
+              >
                 <Image
                   src={articleFromProps.author.avatar || "/default-avatar.png"}
                   alt="Avatar"
                   preview={false}
                   className="rounded-full"
                 ></Image>
-              </div>
+              </Link>
             </Popover>
             <div>
-              <p className="font-bold text-gray-800">
+              <Link
+                href={`/user/${articleFromProps.author.id}`}
+                className="font-bold text-gray-800"
+              >
                 {articleFromProps.author.nickname ||
                   articleFromProps.author.username}
-              </p>
+              </Link>
               <p className="text-sm text-gray-500">
                 {formatTime(articleFromProps.article.updatedAt)}
               </p>
@@ -109,7 +121,7 @@ export default function AppArticlePreviewDetail({
                 }));
               });
           }}
-          cancel={() => { }}
+          cancel={() => {}}
           entityID={articleFromProps?.article?.id}
         />
         <AppCommentList

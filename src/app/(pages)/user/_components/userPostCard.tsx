@@ -2,7 +2,7 @@
 
 import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
-import { Card, Avatar, Button, Typography, message, Divider } from "antd";
+import { Card, Avatar, Button, Typography, message, Divider, Spin } from "antd";
 import {
   UserOutlined,
   ManOutlined,
@@ -49,17 +49,21 @@ export default function UserPostCard({ userID }: Props) {
   }, [userID]);
 
   if (!user) {
-    return <div className="text-center text-gray-500">加载中...</div>;
+    return (
+      <Card className="text-center text-gray-500">
+        <Spin></Spin>
+      </Card>
+    );
   }
 
   return (
     <Card className="w-full mx-auto p-4">
       {messageContext}
       {/* 头像 */}
-      <div className="flex gap-4">
+      <div className="flex gap-8">
         <Avatar
-          size={64}
-          src={user.avatar || "https://via.placeholder.com/64"}
+          size={{ xs: 64, sm: 80, md: 100, lg: 120, xl: 120, xxl: 120 }}
+          src={user.avatar}
           icon={!user.avatar && <UserOutlined />}
         />
         <div className="flex items-center space-x-4">

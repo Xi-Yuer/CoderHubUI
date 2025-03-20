@@ -3,6 +3,7 @@ import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Divider, Image, message, Spin } from "antd";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function AppUserInfoMationPopUP({ id }: { id: string }) {
@@ -44,12 +45,17 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
     <Spin spinning={loading}>
       <div className="text-slate-800 px-4">
         {messageContext}
-        <div className="flex gap-4">
+        <Link
+          href={`/user/${id}`}
+          target="_blank"
+          className="flex gap-4 text-slate-800"
+        >
           <Image
             src={userInfo?.avatar || "/default-avatar.png"}
             alt=""
             className="rounded-full"
             width={40}
+            preview={false}
           />
           <div>
             <div className="font-semibold">
@@ -57,7 +63,7 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
             </div>
             <div className="text-slate-500">{userInfo?.email}</div>
           </div>
-        </div>
+        </Link>
         <Divider />
         <div className="flex gap-4 justify-between items-center">
           <div className="flex gap-4">
