@@ -464,6 +464,75 @@
         ]
       }
     },
+    "/api/articles/user/{user_id}": {
+      "get": {
+        "summary": "获取某个用户的文章列表",
+        "operationId": "GetArticlesByUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetArticlesByUserResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "request-user-id",
+            "description": " 请求用户 ID",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "description": " 内容类型",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "article",
+              "micro_post"
+            ]
+          },
+          {
+            "name": "page",
+            "description": " 页码",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "description": " 每页数量",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "author_id",
+            "description": " 作者 ID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "articles_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
     "/api/articles/{id}": {
       "delete": {
         "summary": "删除文章",
@@ -4543,6 +4612,82 @@
         }
       },
       "title": "GetArticleResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetArticleResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GetArticle"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "GetArticleResponse",
+      "required": [
+        "list",
+        "total"
+      ]
+    },
+    "GetArticlesByUserReq": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "article",
+            "micro_post"
+          ],
+          "description": " 内容类型"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 页码"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 每页数量"
+        },
+        "author_id": {
+          "type": "string",
+          "description": " 作者 ID"
+        }
+      },
+      "title": "GetArticlesByUserReq",
+      "required": [
+        "type",
+        "page",
+        "page_size",
+        "author_id"
+      ]
+    },
+    "GetArticlesByUserResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/GetArticleResponse",
+          "description": " 文章列表"
+        }
+      },
+      "title": "GetArticlesByUserResp",
       "required": [
         "data"
       ]

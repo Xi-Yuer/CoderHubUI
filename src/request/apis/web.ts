@@ -379,3 +379,24 @@ export async function ClientGetMessage(
 export async function ClientGetMessageCount() {
   return alovaServerInstance.message_auth.GetUnReadMessageCount();
 }
+
+// 获取用户的文章
+export async function ClientGetUserArticles(
+  user_id: string,
+  author_id: string,
+  type: "article" | "micro_post",
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.articles_public.GetArticlesByUser({
+    pathParams: {
+      user_id,
+    },
+    params: {
+      author_id,
+      type,
+      page,
+      page_size,
+    },
+  });
+}

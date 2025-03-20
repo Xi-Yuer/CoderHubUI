@@ -27,6 +27,7 @@ export default {
   'articles_public.GetArticleExtra': ['GET', '/api/articles/extra/{id}'],
   'articles_public.GetArticles': ['GET', '/api/articles/list'],
   'articles_auth.UpdateLikeCount': ['POST', '/api/articles/update_like_count'],
+  'articles_public.GetArticlesByUser': ['GET', '/api/articles/user/{user_id}'],
   'articles_auth.DeleteArticle': ['DELETE', '/api/articles/{id}'],
   'articles_auth.UpdateArticle': ['PUT', '/api/articles/{id}'],
   'coderhub.AcademicHealth': ['GET', '/api/coderhub/health'],
