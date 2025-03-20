@@ -6,19 +6,26 @@ import {
   MenuOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Button, Drawer, Input, Popover } from "antd";
+import { Badge, Button, Drawer, Input, Popover } from "antd";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AppLogin } from "../appLogin";
 import "./index.css";
+import { ClientGetMessageCount } from "@/request/apis/web";
 
 export function AppHeader() {
   const pathname = usePathname();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [messageCount, setMessageCount] = useState(0);
 
+  useEffect(() => {
+    ClientGetMessageCount().then((res) => {
+      setMessageCount(res.data.total);
+    });
+  }, []);
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
   };
@@ -79,7 +86,9 @@ export function AppHeader() {
               </Link>
             ))}
           >
-            <BellOutlined className="cursor-pointer text-xl" />
+            <Badge count={messageCount} overflowCount={99}>
+              <BellOutlined className="cursor-pointer text-xl" />
+            </Badge>
           </Popover>
           <div>
             <AppLogin />

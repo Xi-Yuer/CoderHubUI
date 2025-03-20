@@ -374,3 +374,8 @@ export async function ClientGetMessage(
     },
   });
 }
+
+// 获取未读消息条数
+export async function ClientGetMessageCount() {
+  return alovaServerInstance.message_auth.GetUnReadMessageCount();
+}

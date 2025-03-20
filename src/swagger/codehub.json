@@ -1575,6 +1575,28 @@
         ]
       }
     },
+    "/api/message/unread": {
+      "get": {
+        "summary": "获取是否有未读消息",
+        "operationId": "GetUnReadMessageCount",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetUnreadMessageResp"
+            }
+          }
+        },
+        "tags": [
+          "message_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/question_bank_category/create": {
       "post": {
         "summary": "创建题库分类",
@@ -5290,6 +5312,31 @@
         "data"
       ]
     },
+    "GetUnreadMessageReq": {
+      "type": "object",
+      "title": "GetUnreadMessageReq"
+    },
+    "GetUnreadMessageResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/UnreadMessage"
+        }
+      },
+      "title": "GetUnreadMessageResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetUserInfoReq": {
       "type": "object",
       "title": "GetUserInfoReq"
@@ -6282,6 +6329,19 @@
       "title": "UnfollowUserResp",
       "required": [
         "data"
+      ]
+    },
+    "UnreadMessage": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "UnreadMessage",
+      "required": [
+        "total"
       ]
     },
     "UpdateArticleReq": {

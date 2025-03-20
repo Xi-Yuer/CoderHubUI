@@ -56,6 +56,7 @@ export default {
   'image_auth.Upload': ['POST', '/api/image/upload'],
   'message_auth.DeleteMessage': ['DELETE', '/api/message/delete/{id}'],
   'message_auth.ListMessage': ['GET', '/api/message/list'],
+  'message_auth.GetUnReadMessageCount': ['GET', '/api/message/unread'],
   'question_bank_category_auth.CreateQuestionBankCategory': ['POST', '/api/question_bank_category/create'],
   'question_bank_category_public.ListQuestionBankCategory': ['GET', '/api/question_bank_category/list'],
   'question_bank_category_auth.DeleteQuestionBankCategory': ['DELETE', '/api/question_bank_category/{id}'],

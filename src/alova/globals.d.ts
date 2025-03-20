@@ -1546,7 +1546,6 @@ export type DeleteMessageResp = {
 };
 export type DeleteMessage = object;
 export type Message = {
-  avatar: any;
   /**
    * [required]
    */
@@ -1611,6 +1610,28 @@ export type GetMessageListResp = {
    * [required]
    */
   data: MessageList;
+};
+export type UnreadMessage = {
+  /**
+   * [required]
+   */
+  total: number;
+};
+export type GetUnreadMessageResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * UnreadMessage
+   * ---
+   * [required]
+   */
+  data: UnreadMessage;
 };
 export type CreateQuestionBankCategoryResp = {
   /**
@@ -5938,6 +5959,34 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetMessageListResp, 'message_auth.ListMessage', Config>;
+      /**
+       * ---
+       *
+       * [GET] 获取是否有未读消息
+       *
+       * **path:** /api/message/unread
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] UnreadMessage
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     total: number
+       *   }
+       * }
+       * ```
+       */
+      GetUnReadMessageCount<Config extends Alova2MethodConfig<GetUnreadMessageResp>>(
+        config?: Config
+      ): Alova2Method<GetUnreadMessageResp, 'message_auth.GetUnReadMessageCount', Config>;
     };
     question_bank_category_auth: {
       /**
