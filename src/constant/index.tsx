@@ -1,9 +1,5 @@
-import Comments from "@/app/(pages)/notification/_components/Comment";
-import Follow from "@/app/(pages)/notification/_components/Follow";
-import Like from "@/app/(pages)/notification/_components/Like";
-import System from "@/app/(pages)/notification/_components/System";
+import Message from "@/app/(pages)/notification/_components/Message";
 import {
-  BarChartOutlined,
   BellOutlined,
   BulbOutlined,
   CoffeeOutlined,
@@ -33,32 +29,51 @@ export const navigatonList = [
     path: "/bank/all",
     icon: <FileDoneOutlined />,
   },
+  {
+    name: "求职",
+    path: "/bank/all",
+    icon: <FileDoneOutlined />,
+  },
 ];
+
+export const MESSAG_TYPE = {
+  MessageComment: 1,
+  MessageFollow: 2,
+  MessageLike: 3,
+  MessageFavorite: 4,
+  MessageSystem: 5,
+};
 
 export const popoverList = [
   {
     name: "评论",
     path: "/notification/comment",
     key: "comment",
-    page: <Comments />,
+    page: <Message messageType={MESSAG_TYPE.MessageComment} />,
   },
   {
-    name: "赞和收藏",
+    name: "赞",
     path: "/notification/like",
     key: "like",
-    page: <Like />,
+    page: <Message messageType={MESSAG_TYPE.MessageLike} />,
+  },
+  {
+    name: "收藏",
+    path: "/notification/Favorite",
+    key: "Favorite",
+    page: <Message messageType={MESSAG_TYPE.MessageFavorite} />,
   },
   {
     name: "关注",
     path: "/notification/follow",
     key: "follow",
-    page: <Follow />,
+    page: <Message messageType={MESSAG_TYPE.MessageFollow} />,
   },
   {
     name: "系统通知",
     path: "/notification/system",
     key: "system",
-    page: <System />,
+    page: <Message messageType={MESSAG_TYPE.MessageSystem} />,
   },
 ];
 

@@ -54,6 +54,8 @@ export default {
   'image_auth.Get': ['GET', '/api/image/get/{image_id}'],
   'image_auth.ListByUser': ['GET', '/api/image/list'],
   'image_auth.Upload': ['POST', '/api/image/upload'],
+  'message_auth.DeleteMessage': ['DELETE', '/api/message/delete/{id}'],
+  'message_auth.ListMessage': ['GET', '/api/message/list'],
   'question_bank_category_auth.CreateQuestionBankCategory': ['POST', '/api/question_bank_category/create'],
   'question_bank_category_public.ListQuestionBankCategory': ['GET', '/api/question_bank_category/list'],
   'question_bank_category_auth.DeleteQuestionBankCategory': ['DELETE', '/api/question_bank_category/{id}'],

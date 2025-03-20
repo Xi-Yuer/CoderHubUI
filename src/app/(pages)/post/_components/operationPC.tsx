@@ -59,16 +59,18 @@ export default function OperationPC({ id }: Props) {
             shape="circle"
             onClick={() => {
               if (!extraInfo) return;
-              ClientLikeEntity(extraInfo.id).then((res) => {
-                if (!res) return;
-                setExtraInfo((prev: any) => ({
-                  ...prev,
-                  like_count: prev?.is_liked
-                    ? prev.like_count - 1
-                    : prev.like_count + 1,
-                  is_liked: !prev.is_liked,
-                }));
-              });
+              ClientLikeEntity(extraInfo.id, !extraInfo.is_liked).then(
+                (res) => {
+                  if (!res) return;
+                  setExtraInfo((prev: any) => ({
+                    ...prev,
+                    like_count: prev?.is_liked
+                      ? prev.like_count - 1
+                      : prev.like_count + 1,
+                    is_liked: !prev.is_liked,
+                  }));
+                }
+              );
             }}
           />
         </Badge>

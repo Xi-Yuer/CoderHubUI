@@ -122,7 +122,10 @@ export default function AppCommentItem({
           <span
             className="flex items-center gap-1 cursor-pointer"
             onClick={() => {
-              ClientLikeComment(commentFromProps.id).then(() => {
+              ClientLikeComment(
+                commentFromProps.id,
+                !commentFromProps.is_liked
+              ).then(() => {
                 setCommentFromProps((prev) => ({
                   ...prev,
                   like_count: prev.is_liked

@@ -53,11 +53,11 @@ export function AppHeader() {
         </nav>
 
         {/* 搜索框 + 功能按钮 */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-10">
           <Input
             placeholder="全站搜索"
             suffix={<SearchOutlined />}
-            className="w-60"
+            className="w-96"
             autoComplete="off"
           />
           <Link href="/creator">
@@ -73,7 +73,7 @@ export function AppHeader() {
                 href={item.path}
                 className="text-gray-600 text-sm hover:text-black hover:font-bold"
               >
-                <div className="px-2 py-1 w-32 hover:bg-gray-50 rounded-sm">
+                <div className="px-2 py-2 w-40 hover:bg-gray-50 rounded-sm">
                   {item.name}
                 </div>
               </Link>

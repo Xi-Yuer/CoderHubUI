@@ -174,19 +174,21 @@ export function ClientGetReplies(
 }
 
 // 给位文章点赞
-export function ClientLikeEntity(entity_id: string) {
+export function ClientLikeEntity(entity_id: string, trigger: boolean) {
   return alovaServerInstance.articles_auth.UpdateLikeCount({
     data: {
       id: entity_id,
+      trigger,
     },
   });
 }
 
 // 给评论点赞
-export function ClientLikeComment(comment_id: string) {
+export function ClientLikeComment(comment_id: string, trigger: boolean) {
   return alovaServerInstance.comments_auth.UpdateCommentLikeCount({
     data: {
       comment_id,
+      trigger,
     },
   });
 }
@@ -355,5 +357,20 @@ export async function ClientDeleteWorkExp(id: string) {
       id,
     },
     data: {},
+  });
+}
+
+// 获取消息
+export async function ClientGetMessage(
+  type: number,
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.message_auth.ListMessage({
+    params: {
+      type,
+      page,
+      page_size,
+    },
   });
 }

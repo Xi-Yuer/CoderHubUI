@@ -1477,6 +1477,104 @@
         ]
       }
     },
+    "/api/message/delete/{id}": {
+      "delete": {
+        "summary": "删除消息",
+        "operationId": "DeleteMessage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteMessageResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "request-user-id",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteMessage"
+            }
+          }
+        ],
+        "tags": [
+          "message_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/message/list": {
+      "get": {
+        "summary": "获取消息列表",
+        "operationId": "ListMessage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetMessageListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "request-user-id",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "message_auth"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/question_bank_category/create": {
       "post": {
         "summary": "创建题库分类",
@@ -3789,6 +3887,32 @@
         "data"
       ]
     },
+    "DeleteMessage": {
+      "type": "object",
+      "title": "DeleteMessage"
+    },
+    "DeleteMessageResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteMessageResp",
+      "required": [
+        "data"
+      ]
+    },
     "DeleteQuestionBankCategoryReq": {
       "type": "object",
       "title": "DeleteQuestionBankCategoryReq"
@@ -4815,6 +4939,50 @@
         "data"
       ]
     },
+    "GetMessageListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetMessageListReq",
+      "required": [
+        "page",
+        "page_size",
+        "type"
+      ]
+    },
+    "GetMessageListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/MessageList"
+        }
+      },
+      "title": "GetMessageListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetQuestionBankCategoryListReq": {
       "type": "object",
       "title": "GetQuestionBankCategoryListReq"
@@ -5465,6 +5633,73 @@
       "title": "LoginResp",
       "required": [
         "data"
+      ]
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "senderID": {
+          "type": "string"
+        },
+        "receiverID": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "entityID": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "senderInfo": {
+          "$ref": "#/definitions/UserInfo"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Message",
+      "required": [
+        "id",
+        "senderID",
+        "receiverID",
+        "type",
+        "entityID",
+        "content",
+        "senderInfo",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "MessageList": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Message"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "MessageList",
+      "required": [
+        "list",
+        "total"
       ]
     },
     "PageRequest": {
@@ -6125,11 +6360,17 @@
         "comment_id": {
           "type": "string",
           "description": " 评论ID"
+        },
+        "trigger": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 操作类型, true:点赞, false:取消点赞"
         }
       },
       "title": "UpdateCommentLikeCountReq",
       "required": [
-        "comment_id"
+        "comment_id",
+        "trigger"
       ]
     },
     "UpdateCommentLikeCountResp": {
@@ -6203,11 +6444,17 @@
         "id": {
           "type": "string",
           "description": " 文章 ID"
+        },
+        "trigger": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " 操作类型, true:点赞, false:取消点赞"
         }
       },
       "title": "UpdateLikeCountReq",
       "required": [
-        "id"
+        "id",
+        "trigger"
       ]
     },
     "UpdateLikeCountResp": {

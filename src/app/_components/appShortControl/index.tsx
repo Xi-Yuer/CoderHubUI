@@ -86,21 +86,22 @@ export default function AppShortControl({
               <button
                 className="flex items-center space-x-1 hover:text-gray-950"
                 onClick={() => {
-                  ClientLikeEntity(articleFromProps?.article?.id).then(
-                    (res) => {
-                      if (!res) return;
-                      setArticleFromProps((prev) => ({
-                        ...prev,
-                        article: {
-                          ...prev.article,
-                          likeCount: prev.article.isLiked
-                            ? prev.article.likeCount - 1
-                            : prev.article.likeCount + 1,
-                          isLiked: !prev.article.isLiked,
-                        },
-                      }));
-                    }
-                  );
+                  ClientLikeEntity(
+                    articleFromProps?.article?.id,
+                    !articleFromProps.article.isLiked
+                  ).then((res) => {
+                    if (!res) return;
+                    setArticleFromProps((prev) => ({
+                      ...prev,
+                      article: {
+                        ...prev.article,
+                        likeCount: prev.article.isLiked
+                          ? prev.article.likeCount - 1
+                          : prev.article.likeCount + 1,
+                        isLiked: !prev.article.isLiked,
+                      },
+                    }));
+                  });
                 }}
               >
                 {articleFromProps.article.isLiked ? (

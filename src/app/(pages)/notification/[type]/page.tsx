@@ -9,9 +9,10 @@ export default function Page() {
   const router = useRouter();
   const [defaultType] = useState(params.type as string);
   return (
-    <Card>
+    <Card className="min-h-[calc(100vh-80px)]">
       <Tabs
         defaultActiveKey={defaultType}
+        animated={true}
         items={popoverList.map((item) => ({
           label: item.name,
           key: item.key,

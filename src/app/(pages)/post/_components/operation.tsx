@@ -35,7 +35,7 @@ export default function Operation({ id }: Props) {
           className="flex flex-col items-center text-gray-500 hover:text-gray-950"
           onClick={() => {
             if (!extraInfo) return;
-            ClientLikeEntity(extraInfo.id).then((res) => {
+            ClientLikeEntity(extraInfo.id, !extraInfo.is_liked).then((res) => {
               if (!res) return;
               setExtraInfo((prev: any) => ({
                 ...prev,

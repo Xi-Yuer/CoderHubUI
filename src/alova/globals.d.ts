@@ -603,6 +603,11 @@ export type UpdateLikeCountReq = {
    * [required]
    */
   id: string;
+  /**
+   * 操作类型, true:点赞, false:取消点赞
+   * [required]
+   */
+  trigger: boolean;
 };
 export type DeleteArticleResp = {
   /**
@@ -944,6 +949,11 @@ export type UpdateCommentLikeCountReq = {
    * [required]
    */
   comment_id: string;
+  /**
+   * 操作类型, true:点赞, false:取消点赞
+   * [required]
+   */
+  trigger: boolean;
 };
 export type GetCommentResp = {
   /**
@@ -1519,6 +1529,88 @@ export type UploadResponse = {
    * [required]
    */
   data: ImageInfo;
+};
+export type DeleteMessageResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type DeleteMessage = object;
+export type Message = {
+  avatar: any;
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  senderID: string;
+  /**
+   * [required]
+   */
+  receiverID: string;
+  /**
+   * [required]
+   */
+  type: number;
+  /**
+   * [required]
+   */
+  entityID: string;
+  /**
+   * [required]
+   */
+  content: string;
+  /**
+   * UserInfo
+   * ---
+   * [required]
+   */
+  senderInfo: UserInfo;
+  /**
+   * [required]
+   */
+  createdAt: number;
+  /**
+   * [required]
+   */
+  updatedAt: number;
+};
+export type MessageList = {
+  /**
+   * [required]
+   */
+  list: Message[];
+  /**
+   * [required]
+   */
+  total: number;
+};
+export type GetMessageListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * MessageList
+   * ---
+   * [required]
+   */
+  data: MessageList;
 };
 export type CreateQuestionBankCategoryResp = {
   /**
@@ -2960,6 +3052,9 @@ declare global {
        *   // 文章 ID
        *   // [required]
        *   id: string
+       *   // 操作类型, true:点赞, false:取消点赞
+       *   // [required]
+       *   trigger: boolean
        * }
        * ```
        *
@@ -4145,6 +4240,9 @@ declare global {
        *   // 评论ID
        *   // [required]
        *   comment_id: string
+       *   // 操作类型, true:点赞, false:取消点赞
+       *   // [required]
+       *   trigger: boolean
        * }
        * ```
        *
@@ -5660,6 +5758,186 @@ declare global {
       Upload<Config extends Alova2MethodConfig<UploadResponse>>(
         config?: Config
       ): Alova2Method<UploadResponse, 'image_auth.Upload', Config>;
+    };
+    message_auth: {
+      /**
+       * ---
+       *
+       * [DELETE] 删除消息
+       *
+       * **path:** /api/message/delete/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      DeleteMessage<
+        Config extends Alova2MethodConfig<DeleteMessageResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+          data: DeleteMessage;
+        }
+      >(
+        config: Config
+      ): Alova2Method<DeleteMessageResp, 'message_auth.DeleteMessage', Config>;
+      /**
+       * ---
+       *
+       * [GET] 获取消息列表
+       *
+       * **path:** /api/message/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // [required]
+       *   page: number
+       *   // [required]
+       *   page_size: number
+       *   // [required]
+       *   type: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] MessageList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     list: Array<{
+       *       // [required]
+       *       id: string
+       *       // [required]
+       *       senderID: string
+       *       // [required]
+       *       receiverID: string
+       *       // [required]
+       *       type: number
+       *       // [required]
+       *       entityID: string
+       *       // [required]
+       *       content: string
+       *       // [title] UserInfo
+       *       // [required]
+       *       senderInfo: {
+       *         // 用户ID
+       *         // [required]
+       *         id: string
+       *         // 用户名
+       *         // [required]
+       *         username: string
+       *         // 昵称
+       *         // [required]
+       *         nickname: string
+       *         // 邮箱
+       *         // [required]
+       *         email: string
+       *         // 手机号
+       *         // [required]
+       *         phone: string
+       *         // 头像
+       *         // [required]
+       *         avatar: string
+       *         // 性别 0:未知 1:男 2:女
+       *         // [required]
+       *         gender: '0' | '1'
+       *         // 年龄
+       *         // [required]
+       *         age: number
+       *         // 状态 true:正常 false:禁用
+       *         // [required]
+       *         status: boolean
+       *         // 角色 0:普通用户 1:管理员
+       *         // [required]
+       *         is_admin: boolean
+       *         // 创建时间
+       *         // [required]
+       *         create_at: number
+       *         // 更新时间
+       *         // [required]
+       *         update_at: number
+       *         // 关注数量
+       *         // [required]
+       *         follow_count: number
+       *         // 粉丝数量
+       *         // [required]
+       *         fans_count: number
+       *         // 是否已关注
+       *         // [required]
+       *         is_followed: boolean
+       *       }
+       *       // [required]
+       *       createdAt: number
+       *       // [required]
+       *       updatedAt: number
+       *     }>
+       *     // [required]
+       *     total: number
+       *   }
+       * }
+       * ```
+       */
+      ListMessage<
+        Config extends Alova2MethodConfig<GetMessageListResp> & {
+          params: {
+            /**
+             * [required]
+             */
+            page: number;
+            /**
+             * [required]
+             */
+            page_size: number;
+            /**
+             * [required]
+             */
+            type: number;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetMessageListResp, 'message_auth.ListMessage', Config>;
     };
     question_bank_category_auth: {
       /**
