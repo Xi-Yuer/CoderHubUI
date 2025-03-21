@@ -52,4 +52,5 @@ export const simpleToolbarKeys = [
   "bold",
   "italic",
   "underline",
+  "ai",
 ];

@@ -52,13 +52,14 @@ export default forwardRef<HTMLDivElement, AIEditorProps>(function AIEditor(
         textSelectionBubbleMenu: {
           enable: true,
           items: [
-            textSelectionBubbleMenu ? "ai" : "",
+            "ai",
             "Bold",
             "Italic",
             "Underline",
             "Strike",
             "code",
             "comment",
+            "translate",
           ],
         },
         ai: {

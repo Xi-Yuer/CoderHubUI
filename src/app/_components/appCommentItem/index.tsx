@@ -22,6 +22,7 @@ import { Button, Popover, Image, Avatar } from "antd";
 import { useAppStore } from "@/store";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Link from "next/link";
+import { PREVIEW_THEME } from "@/constant";
 
 interface AppCommentItemProps {
   comment: Comment;
@@ -76,7 +77,9 @@ export default function AppCommentItem({
       >
         <div className="z-10">
           <Avatar
-            src={commentFromProps.user_info.avatar || '/public/default-avatar.png'}
+            src={
+              commentFromProps.user_info.avatar || "/public/default-avatar.png"
+            }
             alt="Avatar"
             shape="circle"
             size={40}
@@ -111,7 +114,11 @@ export default function AppCommentItem({
           </Link>
         )}
         {/* 评论内容 */}
-        <MdPreview value={commentFromProps.content} className="mt-2 -ml-4" />
+        <MdPreview
+          value={commentFromProps.content}
+          className="mt-2 -ml-4"
+          previewTheme={PREVIEW_THEME}
+        />
         {/* 图片展示 */}
         <div className="flex gap-2 mt-2 flex-wrap">
           {commentFromProps.images?.map((item) => (

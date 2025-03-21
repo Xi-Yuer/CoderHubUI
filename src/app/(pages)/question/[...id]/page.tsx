@@ -79,7 +79,7 @@ export default async function Page({ params }: Props) {
             ))}
           </Card>
         </div>
-        <div className="w-full flex-1 flex flex-col gap-4">
+        <div className="w-full flex-1 flex flex-col gap-4 min-w-0">
           <Card>
             <div className="flex gap-4 items-center">
               <h2 className="text-xl font-semibold">
@@ -106,7 +106,7 @@ export default async function Page({ params }: Props) {
           <Card title="推荐答案">
             <QuestionPreview content={questionDetailResponse.data.content} />
           </Card>
-          <Card title="相关回答">
+          <Card title="相关回答" className="overflow-hidden">
             <QuestionComments item={questionDetailResponse.data} />
           </Card>
         </div>

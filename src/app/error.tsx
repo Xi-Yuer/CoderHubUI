@@ -15,8 +15,9 @@ export default function Error({ error, reset }: ErrorProps) {
         <div className="text-center">
           <p className="text-base font-semibold text-black">500</p>
           <h1 className="mt-4 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
-            Page Error：{error.message}
+            Page Error
           </h1>
+          <span>{error.message}</span>
           <p className="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
             ❌ 很抱歉，页面发生错误
           </p>

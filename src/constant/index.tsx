@@ -7,6 +7,7 @@ import {
   FileTextOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { PreviewThemes } from "md-editor-rt";
 
 export const navigatonList = [
   {
@@ -100,3 +101,4 @@ export const TOKEN = "token";
 export const SHORT_ARTICLE_CATEGORY_ID = "1";
 export const FAVORITE_ARTICLE = "article";
 export const FAVORITE_QUESTION = "question";
+export const PREVIEW_THEME: PreviewThemes = "smart-blue";

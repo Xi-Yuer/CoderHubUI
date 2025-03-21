@@ -2,7 +2,7 @@
 import { Tabs } from "antd";
 import React from "react";
 import Article from "./article";
-import Question from "./question";
+import Bank from "./bank";
 
 interface FavorProps {
   id: string;
@@ -20,9 +20,9 @@ export default function List({ id }: FavorProps) {
             children: <Article id={id} />,
           },
           {
-            label: "问题",
-            key: "question",
-            children: <Question id={id} />,
+            label: "面试题库",
+            key: "bank",
+            children: <Bank id={id} />,
           },
         ]}
       ></Tabs>

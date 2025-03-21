@@ -10,7 +10,7 @@ interface FavorProps {
   id: string;
 }
 
-export default function Article({ id }: FavorProps) {
+export default function Bank({ id }: FavorProps) {
   const { userInfo } = useAppStore();
   const [list, setList] = useState<Favor[]>([]);
   const [total, setTotal] = useState(0);

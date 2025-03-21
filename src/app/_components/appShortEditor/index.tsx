@@ -15,6 +15,8 @@ import Emotion from "../emotion";
 import { useStore } from "zustand";
 import { useAppStore } from "@/store";
 import { SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
+import AiEditor from "@/app/_components/AIEditor/init";
+import { simpleToolbarKeys } from "../AIEditor/toolbarKeys";
 
 type Props = {
   PublicSuccess: (params: CreateArticleResp) => void;
@@ -63,15 +65,17 @@ export function AppShortEditor({ PublicSuccess }: Props) {
   };
   return (
     <div className="relative">
-      <div className="overflow-hidden">
-        <MdEditor
+      <div className="border comment">
+        <AiEditor
+          placeholder="输入正文内容，支持 Markdown 语法.."
           value={text}
-          onChange={setText}
-          preview={false}
-          footers={[]}
-          toolbars={toolbars}
-          style={{ height: "fit-content", minHeight: "100px" }}
-          previewTheme={previewTheme}
+          editable={!!appStore.token}
+          allowUploadImage={false}
+          textSelectionBubbleMenu={false}
+          onChange={(val: string) => setText(val)}
+          toolbarKeys={simpleToolbarKeys}
+          style={{ height: "content-fit", minHeight: 100 }}
+          className="relative"
         />
       </div>
       <div className="image_list flex gap-2 mt-2">
@@ -130,7 +134,7 @@ export function AppShortEditor({ PublicSuccess }: Props) {
         </div>
       </div>
       {!appStore.token && (
-        <div className="absolute top-0 bottom-0 left-0 right-0 w-full h-full z-10 p-2 cursor-not-allowed text-slate-500">
+        <div className="absolute top-10 bottom-0 left-0 right-0 w-full h-full z-10 p-2 cursor-not-allowed text-slate-500">
           点击
           <Button
             type="link"

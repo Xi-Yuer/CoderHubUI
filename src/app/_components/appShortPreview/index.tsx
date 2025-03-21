@@ -4,12 +4,13 @@ import { MdPreview } from "md-editor-rt";
 import React from "react";
 import { GetArticle } from "@/alova/globals";
 import AppShartControl from "../appShortControl";
+import { PREVIEW_THEME } from "@/constant";
 
 export default function AppShortPreview({ item }: { item: GetArticle }) {
   return (
     <div>
       <AppShartControl article={item}>
-        <MdPreview value={item.article.content} />
+        <MdPreview value={item.article.content} previewTheme={PREVIEW_THEME} />
         <div className="grid grid-cols-2 gap-2 mt-2 px-6">
           {item?.article?.imageUrls?.map((url, index) => (
             <div className="flex flex-wrap" key={index}>

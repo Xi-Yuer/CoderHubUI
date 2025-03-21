@@ -100,7 +100,7 @@ export default function MicroPostList({ ref }: Props) {
 
   useEffect(getList, [page]);
   return (
-    <Card>
+    <Card className="px-2 py-6">
       {list?.map((item) => {
         return (
           <div key={item?.article?.id}>

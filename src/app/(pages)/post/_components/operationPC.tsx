@@ -49,7 +49,7 @@ export default function OperationPC({ id }: Props) {
   return (
     <div>
       {/* 桌面端操作按钮（固定在右侧） */}
-      <div className="hidden lg:flex w-[200px] h-full gap-8 flex-col items-end py-10 pr-8">
+      <div className="hidden lg:flex w-[100px] h-full gap-8 flex-col items-end py-10 pr-8">
         {contextHolder}
         <Badge count={extraInfo?.like_count}>
           <Button

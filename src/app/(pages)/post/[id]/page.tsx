@@ -45,22 +45,26 @@ export default async function Page({ params }: PostProps) {
     const id = (await params).id;
     const response = await ServiceGetArticleDetail(id);
     return (
-      <div className="flex lg:gap-4">
+      <div className="flex lg:gap-4 w-full">
         {response.data ? (
           <>
+            {/* 左侧操作栏（固定宽度） */}
             <OperationPC id={id} />
-            <div className="flex-1 flex flex-col pb-10 pt-6 px-6 bg-white w-full">
+
+            {/* 中间内容区域（自适应，确保不会溢出） */}
+            <div className="flex-1 min-w-0 flex flex-col pb-10 pt-6 px-6 bg-white">
               <AppArticlePreviewDetail item={response?.data} />
             </div>
-            {/* 右侧作者信息，仅桌面端显示 */}
-            <div className="hidden xl:flex w-[250px] gap-4 flex-col">
+
+            {/* 右侧信息栏（固定宽度，xl 及以上显示） */}
+            <div className="hidden xl:flex w-[300px] gap-4 flex-col">
               <AuthInfomation id={response?.data?.author?.id} />
               <Category />
             </div>
           </>
         ) : (
           <>
-            <div className="flex-1 flex flex-col pb-10 pt-6 px-6 bg-white w-full">
+            <div className="flex-1 min-w-0 flex flex-col pb-10 pt-6 px-6 bg-white">
               <NotFond />
             </div>
           </>

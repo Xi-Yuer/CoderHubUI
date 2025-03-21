@@ -21,13 +21,14 @@ export function AppHeader() {
   const pathname = usePathname();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
-  const { userInfo } = useAppStore();
+  const { userInfo, token } = useAppStore();
 
   useEffect(() => {
+    if (!token) return;
     ClientGetMessageCount().then((res) => {
       setMessageCount(res.data.total);
     });
-  }, [pathname,userInfo.id]);
+  }, [pathname, userInfo.id]);
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
   };

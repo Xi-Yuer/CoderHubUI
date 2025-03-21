@@ -15,7 +15,7 @@ export default function Page() {
       </div>
 
       {/* 主内容区域 */}
-      <div className="flex-1 flex flex-col gap-4">
+      <div className="flex-1 min-w-0 flex flex-col pb-10 px-6 gap-4">
         <Card>
           <AppShortEditor
             PublicSuccess={() => MicroPostRef.current?.refreshList()}

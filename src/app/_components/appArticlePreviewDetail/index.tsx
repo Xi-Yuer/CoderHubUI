@@ -11,6 +11,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Operation from "@/app/(pages)/post/_components/operation";
 import Link from "next/link";
+import { PREVIEW_THEME } from "@/constant";
 
 export default function AppArticlePreviewDetail({
   item,
@@ -86,7 +87,11 @@ export default function AppArticlePreviewDetail({
           </div>
         </div>
       )}
-      <MdPreview value={item?.article?.content} id="preview-only" />
+      <MdPreview
+        value={item?.article?.content}
+        id="preview-only"
+        previewTheme={PREVIEW_THEME}
+      />
       <div className="grid grid-cols-2 gap-2 mt-2 px-6">
         {item?.article?.imageUrls?.map((url, index) => (
           <div className="flex flex-wrap" key={index}>
