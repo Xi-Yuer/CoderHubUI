@@ -27,3 +27,7 @@ body {
 .article_editor .aie-content {
   min-height: 500px;
 }
+
+a:hover {
+  color: #000 !important;
+}

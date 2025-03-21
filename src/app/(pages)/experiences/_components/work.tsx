@@ -43,10 +43,10 @@ export default function School({ filterParams }: Props) {
     const toggleExpand = () => setExpanded(!expanded);
 
     const maxLength = 100;
-    const isLongContent = data.content.length > maxLength;
+    const isLongContent = data?.content?.length > maxLength;
     const displayedContent = expanded
-      ? data.content
-      : data.content.slice(0, maxLength) + (isLongContent ? "..." : "");
+      ? data?.content
+      : data?.content?.slice(0, maxLength) + (isLongContent ? "..." : "");
     const color = useRef(ColorList[Math.floor(Math.random() * (3 + 1))]);
 
     return (

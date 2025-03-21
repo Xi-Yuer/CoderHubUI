@@ -8,7 +8,7 @@ import {
 import { Avatar, Button, Card, Pagination, Spin } from "antd";
 import { format } from "date-fns";
 import { useAppStore } from "@/store";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, UserOutlined } from "@ant-design/icons";
 
 interface Props {
   filterParams: any;

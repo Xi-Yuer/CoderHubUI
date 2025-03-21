@@ -9,6 +9,7 @@ import {
   RestOutlined,
   AlertOutlined,
   EllipsisOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { AppCommentEditor } from "../appCommentEditor";
 import {
@@ -17,7 +18,7 @@ import {
   ClientLikeComment,
   ClientSendComment,
 } from "@/request/apis/web";
-import { Button, Popover, Image } from "antd";
+import { Button, Popover, Image, Avatar } from "antd";
 import { useAppStore } from "@/store";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Link from "next/link";
@@ -60,7 +61,7 @@ export default function AppCommentItem({
     if (!showAppCommentEditor) return;
     ClientGetReplies(commentFromProps.id, pageNo).then((res) => {
       setReplies(res.data?.list || []);
-      setShowReplies(res.data?.list.length >= 10);
+      setShowReplies(res.data?.list?.length >= 10);
     });
   }, [pageNo, showAppCommentEditor]);
 
@@ -74,13 +75,12 @@ export default function AppCommentItem({
         content={<AppUserInfoMationPopUP id={commentFromProps.user_info.id} />}
       >
         <div className="z-10">
-          <Image
-            src={commentFromProps.user_info.avatar || "/default-avatar.png"}
+          <Avatar
+            src={commentFromProps.user_info.avatar || '/public/default-avatar.png'}
             alt="Avatar"
-            preview={false}
-            className="rounded-full w-10 h-10 cursor-pointer object-cover"
-            width={40}
-            height={40}
+            shape="circle"
+            size={40}
+            icon={<UserOutlined />}
           />
         </div>
       </Popover>
@@ -92,7 +92,8 @@ export default function AppCommentItem({
           className="flex gap-2 items-center text-slate-800"
         >
           <span className="font-bold">
-            {commentFromProps.user_info?.nickname}
+            {commentFromProps.user_info?.nickname ||
+              commentFromProps.user_info?.username}
           </span>
           {commentFromProps.user_info.id ===
             commentFromProps.entity_author_id && (

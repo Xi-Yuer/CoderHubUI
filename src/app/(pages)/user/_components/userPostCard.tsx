@@ -1,8 +1,7 @@
 "use client";
-
 import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
-import { Card, Avatar, Button, Typography, message, Divider, Spin } from "antd";
+import { Card, Avatar, Button, Typography, message, Spin } from "antd";
 import {
   UserOutlined,
   ManOutlined,
@@ -63,7 +62,7 @@ export default function UserPostCard({ userID }: Props) {
       <div className="flex gap-8">
         <Avatar
           size={{ xs: 64, sm: 80, md: 100, lg: 120, xl: 120, xxl: 120 }}
-          src={user.avatar}
+          src={user.avatar || "/public/default-avatar.png"}
           icon={!user.avatar && <UserOutlined />}
         />
         <div className="flex items-center space-x-4">
@@ -74,7 +73,7 @@ export default function UserPostCard({ userID }: Props) {
             </Typography.Title>
             {/* 关注/粉丝信息 */}
             <Typography.Text type="secondary">
-              关注 {user.follow_count} · 粉丝 {user.fans_count}
+              关注 {user.fans_count} · 粉丝 {user.follow_count}
             </Typography.Text>
 
             <div className="text-gray-500 flex items-center space-x-2">
@@ -87,11 +86,11 @@ export default function UserPostCard({ userID }: Props) {
             </div>
             <div className="text-sm text-gray-500 flex items-center space-x-2">
               <MailOutlined />
-              <span>{user.email}</span>
+              <span>{user.email || "未绑定邮箱"}</span>
             </div>
             <div className="text-sm text-gray-500 flex items-center space-x-2">
               <PhoneOutlined />
-              <span>{user.phone}</span>
+              <span>{user.phone || "未绑定手机号"}</span>
             </div>
           </div>
         </div>

@@ -1,10 +1,9 @@
 "use client";
 import { GetArticle } from "@/alova/globals";
 import AppArticlePreview from "@/app/_components/appArticlePreview";
-import AppShortPreview from "@/app/_components/appShortPreview";
 import { ClientGetUserArticles } from "@/request/apis/web";
 import { useAppStore } from "@/store";
-import { Empty, Pagination } from "antd";
+import { List } from "antd";
 import React, { useEffect, useState } from "react";
 
 interface Props {
@@ -18,31 +17,24 @@ export default function MicroPost({ userID }: Props) {
   useEffect(() => {
     ClientGetUserArticles(userInfo.id, userID, "article", page, 10).then(
       (res) => {
-        setList(res.data.list);
-        setTotal(res.data.total);
+        setList(res.data?.list || []);
+        setTotal(res.data?.total || 0);
       }
     );
   }, [userID, page]);
   return (
-    <>
-      <div>
-        {list?.map((item) => {
-          return (
-            <div key={item?.article?.id}>
-              <AppArticlePreview article={item} />
-            </div>
-          );
-        })}
-        <div className="mt-2">
-          <Pagination
-            current={page}
-            total={total}
-            pageSize={10}
-            onChange={setPage}
-          />
+    <List
+      pagination={{
+        onChange: setPage,
+        total: total,
+        pageSize: 10,
+      }}
+      dataSource={list}
+      renderItem={(item) => (
+        <div key={item?.article?.id}>
+          <AppArticlePreview article={item} />
         </div>
-      </div>
-      {list && list.length === 0 && <Empty />}
-    </>
+      )}
+    ></List>
   );
 }

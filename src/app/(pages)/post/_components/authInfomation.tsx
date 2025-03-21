@@ -3,8 +3,8 @@ import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Button, Card, message, Spin } from "antd";
-import { ManOutlined, WomanOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, message, Spin } from "antd";
+import { ManOutlined, UserOutlined, WomanOutlined } from "@ant-design/icons";
 
 interface Props {
   id: string;
@@ -46,12 +46,12 @@ export default function AuthInfomation({ id }: Props) {
       <Card className="p-4 bg-white rounded-lg shadow-md">
         {messageContext}
         <div className="flex items-center">
-          <Image
-            src={authorInfo?.avatar || "/default-avatar.png"}
+          <Avatar
+            src={authorInfo?.avatar || "/public/default-avatar.png"}
             alt="Avatar"
-            width={50}
-            height={50}
-            className="rounded-full"
+            size={50}
+            shape="circle"
+            icon={<UserOutlined />}
           />
           <div className="ml-3">
             <h2 className="text-lg font-semibold">

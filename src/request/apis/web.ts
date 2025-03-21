@@ -436,3 +436,22 @@ export async function ClientGetUserFans(
     },
   });
 }
+
+// 获取收藏夹列表内容
+export async function ClientGetFavorFoldList(
+  userId: string,
+  favor_fold_id: string,
+  entity_type: "article" | "question",
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.favorites_public.ListFavoriteContent({
+    params: {
+      userId,
+      entity_type,
+      favor_fold_id,
+      page,
+      page_size,
+    },
+  });
+}

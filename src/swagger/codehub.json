@@ -1094,6 +1094,9 @@
         ],
         "tags": [
           "favorites_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -1272,6 +1275,13 @@
         },
         "parameters": [
           {
+            "name": "request-user-id",
+            "description": " 请求用户ID",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "user_id",
             "description": " 用户ID",
             "in": "query",
@@ -1349,6 +1359,13 @@
           }
         },
         "parameters": [
+          {
+            "name": "request-user-id",
+            "description": " 请求用户ID",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
           {
             "name": "user_id",
             "description": " 用户ID",

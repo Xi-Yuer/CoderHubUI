@@ -1,15 +1,7 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
 import { ClientGetUserFollow, ClientFollowUser } from "@/request/apis/web";
-import {
-  Avatar,
-  Button,
-  Card,
-  List,
-  Pagination,
-  Typography,
-  message,
-} from "antd";
+import { Avatar, Button, List, Typography, message } from "antd";
 import {
   ManOutlined,
   WomanOutlined,
@@ -35,8 +27,8 @@ export default function Fans({ userID }: Props) {
     setLoading(true);
     ClientGetUserFollow(userID, page, 10)
       .then((res) => {
-        setList(res.data.list);
-        setTotal(res.data.total);
+        setList(res.data?.list || []);
+        setTotal(res.data?.total || 0);
       })
       .finally(() => setLoading(false));
   };
@@ -65,18 +57,26 @@ export default function Fans({ userID }: Props) {
       <List
         loading={loading}
         dataSource={list}
+        pagination={{
+          current: page,
+          total,
+          pageSize: 10,
+          onChange: (page) => setPage(page),
+        }}
         renderItem={(item) => (
           <List.Item className="border-b pb-2 flex items-center justify-between">
             <div className="flex items-center space-x-4">
               {/* 头像 */}
               <Avatar
                 size={48}
-                src={item.avatar}
+                src={item.avatar || "/public/default-avatar.png"}
                 icon={!item.avatar && <UserOutlined />}
               />
               {/* 用户信息 */}
               <Link href={`/user/${item.id}`} target="_blank">
-                <Typography.Text strong>{item.nickname}</Typography.Text>
+                <Typography.Text strong>
+                  {item.nickname || item.username}
+                </Typography.Text>
                 <div className="text-gray-500 text-sm flex items-center space-x-2">
                   {(item.gender as any) === 1 ? (
                     <ManOutlined style={{ color: "#2db7f5" }} />
@@ -105,14 +105,6 @@ export default function Fans({ userID }: Props) {
           </List.Item>
         )}
       />
-      <div className="flex mt-4">
-        <Pagination
-          current={page}
-          total={total}
-          pageSize={10}
-          onChange={setPage}
-        />
-      </div>
     </div>
   );
 }

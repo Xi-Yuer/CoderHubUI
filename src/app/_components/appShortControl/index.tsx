@@ -10,8 +10,9 @@ import {
   RestOutlined,
   ShareAltOutlined,
   SmileOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Image, Popover } from "antd";
+import { Avatar, Image, Popover } from "antd";
 import React, { useEffect } from "react";
 import { AppCommentEditor } from "../appCommentEditor";
 import {
@@ -67,12 +68,12 @@ export default function AppShortControl({
                   target="_blank"
                   className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg"
                 >
-                  <Image
-                    src={article.author.avatar || "/default-avatar.png"}
+                  <Avatar
+                    src={article.author.avatar || "/public/default-avatar.png"}
                     alt="Avatar"
-                    preview={false}
-                    className="rounded-full"
-                  ></Image>
+                    icon={<UserOutlined />}
+                    shape="circle"
+                  ></Avatar>
                 </Link>
               </Popover>
               <div>
