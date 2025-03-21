@@ -5866,6 +5866,10 @@
         "content": {
           "type": "string"
         },
+        "isRead": {
+          "type": "boolean",
+          "format": "boolean"
+        },
         "senderInfo": {
           "$ref": "#/definitions/UserInfo"
         },
@@ -5886,6 +5890,7 @@
         "type",
         "entityID",
         "content",
+        "isRead",
         "senderInfo",
         "createdAt",
         "updatedAt"

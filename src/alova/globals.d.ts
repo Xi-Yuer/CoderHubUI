@@ -1597,6 +1597,10 @@ export type Message = {
    */
   content: string;
   /**
+   * [required]
+   */
+  isRead: boolean;
+  /**
    * UserInfo
    * ---
    * [required]
@@ -6104,6 +6108,8 @@ declare global {
        *       entityID: string
        *       // [required]
        *       content: string
+       *       // [required]
+       *       isRead: boolean
        *       // [title] UserInfo
        *       // [required]
        *       senderInfo: {

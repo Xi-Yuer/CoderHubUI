@@ -71,6 +71,7 @@ export default function AppShortControl({
                   <Avatar
                     src={article.author.avatar || "/public/default-avatar.png"}
                     alt="Avatar"
+                    size={40}
                     icon={<UserOutlined />}
                     shape="circle"
                   ></Avatar>

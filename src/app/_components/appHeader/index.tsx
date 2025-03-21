@@ -15,17 +15,19 @@ import React, { useEffect, useState } from "react";
 import { AppLogin } from "../appLogin";
 import "./index.css";
 import { ClientGetMessageCount } from "@/request/apis/web";
+import { useAppStore } from "@/store";
 
 export function AppHeader() {
   const pathname = usePathname();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
+  const { userInfo } = useAppStore();
 
   useEffect(() => {
     ClientGetMessageCount().then((res) => {
       setMessageCount(res.data.total);
     });
-  }, []);
+  }, [pathname,userInfo.id]);
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
   };
