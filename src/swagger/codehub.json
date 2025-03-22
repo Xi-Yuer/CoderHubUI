@@ -855,6 +855,28 @@
         ]
       }
     },
+    "/api/creator/data": {
+      "get": {
+        "summary": "获取创作者相关数据信息",
+        "operationId": "GetCreatorData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetCreatorDashboardResp"
+            }
+          }
+        },
+        "tags": [
+          "creator_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/emotion/create": {
       "post": {
         "summary": "创建表情包",
@@ -3825,6 +3847,54 @@
         "data"
       ]
     },
+    "CreatorDashboard": {
+      "type": "object",
+      "properties": {
+        "articleCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "microPostCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "likeCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "commentCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "articleFavorCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "followerCount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "birthday": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "articlePV": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CreatorDashboard",
+      "required": [
+        "articleCount",
+        "microPostCount",
+        "likeCount",
+        "commentCount",
+        "articleFavorCount",
+        "followerCount",
+        "birthday",
+        "articlePV"
+      ]
+    },
     "DeleteAcademicNavigatorReq": {
       "type": "object",
       "title": "DeleteAcademicNavigatorReq"
@@ -4883,6 +4953,31 @@
         }
       },
       "title": "GetCommentsResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetCreatorDashboardReq": {
+      "type": "object",
+      "title": "GetCreatorDashboardReq"
+    },
+    "GetCreatorDashboardResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/CreatorDashboard"
+        }
+      },
+      "title": "GetCreatorDashboardResp",
       "required": [
         "data"
       ]

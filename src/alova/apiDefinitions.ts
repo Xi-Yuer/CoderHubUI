@@ -37,6 +37,7 @@ export default {
   'comments_auth.UpdateCommentLikeCount': ['POST', '/api/comments/update_like_count'],
   'comments_auth.GetComment': ['GET', '/api/comments/{comment_id}'],
   'comments_auth.DeleteComment': ['DELETE', '/api/comments/{comment_id}'],
+  'creator_auth.GetCreatorData': ['GET', '/api/creator/data'],
   'emotion_auth.CreateEmotion': ['POST', '/api/emotion/create'],
   'emotion_public.ListEmotion': ['GET', '/api/emotion/list'],
   'emotion_auth.DeleteEmotion': ['DELETE', '/api/emotion/{id}'],

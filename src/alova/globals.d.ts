@@ -1022,6 +1022,56 @@ export type DeleteCommentResp = {
   data: boolean;
 };
 export type DeleteCommentReq = object;
+export type CreatorDashboard = {
+  /**
+   * [required]
+   */
+  articleCount: number;
+  /**
+   * [required]
+   */
+  microPostCount: number;
+  /**
+   * [required]
+   */
+  likeCount: number;
+  /**
+   * [required]
+   */
+  commentCount: number;
+  /**
+   * [required]
+   */
+  articleFavorCount: number;
+  /**
+   * [required]
+   */
+  followerCount: number;
+  /**
+   * [required]
+   */
+  birthday: number;
+  /**
+   * [required]
+   */
+  articlePV: number;
+};
+export type GetCreatorDashboardResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * CreatorDashboard
+   * ---
+   * [required]
+   */
+  data: CreatorDashboard;
+};
 export type CreateEmojiResp = {
   /**
    * 状态码
@@ -4775,6 +4825,50 @@ declare global {
       >(
         config: Config
       ): Alova2Method<DeleteCommentResp, 'comments_auth.DeleteComment', Config>;
+    };
+    creator_auth: {
+      /**
+       * ---
+       *
+       * [GET] 获取创作者相关数据信息
+       *
+       * **path:** /api/creator/data
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] CreatorDashboard
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     articleCount: number
+       *     // [required]
+       *     microPostCount: number
+       *     // [required]
+       *     likeCount: number
+       *     // [required]
+       *     commentCount: number
+       *     // [required]
+       *     articleFavorCount: number
+       *     // [required]
+       *     followerCount: number
+       *     // [required]
+       *     birthday: number
+       *     // [required]
+       *     articlePV: number
+       *   }
+       * }
+       * ```
+       */
+      GetCreatorData<Config extends Alova2MethodConfig<GetCreatorDashboardResp>>(
+        config?: Config
+      ): Alova2Method<GetCreatorDashboardResp, 'creator_auth.GetCreatorData', Config>;
     };
     emotion_auth: {
       /**

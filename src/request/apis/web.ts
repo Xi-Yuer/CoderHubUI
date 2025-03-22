@@ -455,3 +455,8 @@ export async function ClientGetFavorFoldList(
     },
   });
 }
+
+// 获取创作者相关数据信息
+export async function ClientGetCreatorInfo() {
+  return alovaServerInstance.creator_auth.GetCreatorData();
+}
