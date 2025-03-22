@@ -1,5 +1,4 @@
 "use client";
-import { MdEditor, ToolbarNames } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
 import { CreateArticleResp, Emoji } from "@/alova/globals";
 import { ClientCreateArticle, ClientUploadImage } from "@/request/apis/web";
@@ -16,7 +15,6 @@ import { useStore } from "zustand";
 import { useAppStore } from "@/store";
 import { SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
 import AiEditor from "@/app/_components/AIEditor/init";
-import { simpleToolbarKeys } from "../AIEditor/toolbarKeys";
 
 type Props = {
   PublicSuccess: (params: CreateArticleResp) => void;
@@ -26,8 +24,6 @@ export function AppShortEditor({ PublicSuccess }: Props) {
   const [imageList, setImageList] = useState<string[]>([]);
   const [imageListID, setImageListID] = useState<string[]>([]);
   const [text, setText] = useState("");
-  const [previewTheme] = useState("arknights");
-  const [toolbars] = useState<ToolbarNames[]>([]);
   const appStore = useStore(useAppStore, (state) => state);
   const publicMicroPost = () => {
     if (!text) return;
@@ -67,13 +63,13 @@ export function AppShortEditor({ PublicSuccess }: Props) {
     <div className="relative">
       <div className="border comment">
         <AiEditor
-          placeholder="输入正文内容，支持 Markdown 语法.."
+          placeholder="输入正文内容，分享新鲜事"
           value={text}
           editable={!!appStore.token}
           allowUploadImage={false}
           textSelectionBubbleMenu={false}
           onChange={(val: string) => setText(val)}
-          toolbarKeys={simpleToolbarKeys}
+          toolbarKeys={["ai"]}
           style={{ height: "content-fit", minHeight: 100 }}
           className="relative"
         />

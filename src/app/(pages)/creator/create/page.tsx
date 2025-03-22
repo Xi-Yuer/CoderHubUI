@@ -201,7 +201,9 @@ export default function Page() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <AppAIEditor ref={AppEditorRef} />
+        <div className="border border-b-0">
+        <AppAIEditor ref={AppEditorRef}/>
+        </div>
         <Divider />
         <div className="flex flex-col gap-8">
           <span className="text-lg font-bold">发布设置</span>

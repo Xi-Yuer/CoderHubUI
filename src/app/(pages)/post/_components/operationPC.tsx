@@ -74,13 +74,15 @@ export default function OperationPC({ id }: Props) {
             }}
           />
         </Badge>
-        <Button
-          type="primary"
-          size="large"
-          icon={extraInfo.is_favorited ? <StarFilled /> : <StarOutlined />}
-          shape="circle"
-          onClick={async () => favorEntity(extraInfo.is_favorited)}
-        />
+        <Badge count={extraInfo?.favorite_count}>
+          <Button
+            type="primary"
+            size="large"
+            icon={extraInfo.is_favorited ? <StarFilled /> : <StarOutlined />}
+            shape="circle"
+            onClick={async () => favorEntity(extraInfo.is_favorited)}
+          />
+        </Badge>
         <Popover
           content={<AppSharedPopUp id={extraInfo!.id} />}
           placement="bottomRight"

@@ -200,7 +200,7 @@ export default function AppCommentItem({
               entityID={commentFromProps.entity_id}
               publicSuccess={(params) => {
                 ClientSendComment({
-                  entity_id: commentFromProps.id,
+                  entity_id: commentFromProps.entity_id,
                   entity_author_id: commentFromProps.entity_author_id,
                   content: params.content,
                   image_ids: params.imageIds,

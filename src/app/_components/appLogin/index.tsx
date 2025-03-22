@@ -49,14 +49,27 @@ export function AppLogin() {
         </Link>
       </div>
       <div className="flex items-center mt-4">
-        {["关注", "点赞", "收藏"].map((label, index) => (
+        {[
+          {
+            label: "关注",
+            value: appStore.userInfo.fans_count,
+          },
+          {
+            label: "粉丝",
+            value: appStore.userInfo.follow_count,
+          },
+          {
+            label: "文章",
+            value: appStore.userInfo.article_count,
+          },
+        ].map(({ label, value }, index) => (
           <Link
             key={index}
             href="/"
             className="flex flex-col gap-2 text-sm items-center flex-1 text-gray-950"
           >
-            <span className="font-bold">0</span>
-            <span className="text-gray-400">{label}</span>
+            <span className="font-bold">{label}</span>
+            <span className="text-gray-400">{value}</span>
           </Link>
         ))}
       </div>

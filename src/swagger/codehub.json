@@ -3050,6 +3050,10 @@
         "is_favorited": {
           "type": "boolean",
           "format": "boolean"
+        },
+        "favorite_count": {
+          "type": "integer",
+          "format": "int32"
         }
       },
       "title": "ArticleExtra",
@@ -3059,7 +3063,8 @@
         "like_count",
         "comment_count",
         "is_liked",
-        "is_favorited"
+        "is_favorited",
+        "favorite_count"
       ]
     },
     "CancelLikeAcademicNavigatorReq": {
@@ -6938,6 +6943,11 @@
           "type": "boolean",
           "format": "boolean",
           "description": " 是否已关注"
+        },
+        "article_count": {
+          "type": "integer",
+          "format": "int64",
+          "description": " 文章数量"
         }
       },
       "title": "UserInfo",
@@ -6956,7 +6966,8 @@
         "update_at",
         "follow_count",
         "fans_count",
-        "is_followed"
+        "is_followed",
+        "article_count"
       ]
     },
     "UserList": {

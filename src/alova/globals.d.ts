@@ -494,6 +494,11 @@ export type UserInfo = {
    * [required]
    */
   is_followed: boolean;
+  /**
+   * 文章数量
+   * [required]
+   */
+  article_count: number;
 };
 export type GetArticle = {
   /**
@@ -550,6 +555,10 @@ export type ArticleExtra = {
    * [required]
    */
   is_favorited: boolean;
+  /**
+   * [required]
+   */
+  favorite_count: number;
 };
 export type GetArticleExtraResp = {
   /**
@@ -3390,6 +3399,9 @@ declare global {
        *       // 是否已关注
        *       // [required]
        *       is_followed: boolean
+       *       // 文章数量
+       *       // [required]
+       *       article_count: number
        *     }
        *   }
        * }
@@ -3448,6 +3460,8 @@ declare global {
        *     is_liked: boolean
        *     // [required]
        *     is_favorited: boolean
+       *     // [required]
+       *     favorite_count: number
        *   }
        * }
        * ```
@@ -3611,6 +3625,9 @@ declare global {
        *       // 是否已关注
        *       // [required]
        *       is_followed: boolean
+       *       // 文章数量
+       *       // [required]
+       *       article_count: number
        *     }
        *   }>
        * }
@@ -3805,6 +3822,9 @@ declare global {
        *         // 是否已关注
        *         // [required]
        *         is_followed: boolean
+       *         // 文章数量
+       *         // [required]
+       *         article_count: number
        *       }
        *     }>
        *     // [required]
@@ -3988,6 +4008,9 @@ declare global {
        *         // 是否已关注
        *         // [required]
        *         is_followed: boolean
+       *         // 文章数量
+       *         // [required]
+       *         article_count: number
        *       }
        *       // 创建时间
        *       // [required]
@@ -4196,6 +4219,9 @@ declare global {
        *       // 是否已关注
        *       // [required]
        *       is_followed: boolean
+       *       // 文章数量
+       *       // [required]
+       *       article_count: number
        *     }
        *     // 创建时间
        *     // [required]
@@ -4381,6 +4407,9 @@ declare global {
        *         // 是否已关注
        *         // [required]
        *         is_followed: boolean
+       *         // 文章数量
+       *         // [required]
+       *         article_count: number
        *       }
        *       // 创建时间
        *       // [required]
@@ -4613,6 +4642,9 @@ declare global {
        *       // 是否已关注
        *       // [required]
        *       is_followed: boolean
+       *       // 文章数量
+       *       // [required]
+       *       article_count: number
        *     }
        *     // 创建时间
        *     // [required]
@@ -5277,6 +5309,9 @@ declare global {
        *           // 是否已关注
        *           // [required]
        *           is_followed: boolean
+       *           // 文章数量
+       *           // [required]
+       *           article_count: number
        *         }
        *       }
        *       // [required]
@@ -5492,6 +5527,9 @@ declare global {
        *       // 是否已关注
        *       // [required]
        *       is_followed: boolean
+       *       // 文章数量
+       *       // [required]
+       *       article_count: number
        *     }>
        *   }
        * }
@@ -5607,6 +5645,9 @@ declare global {
        *       // 是否已关注
        *       // [required]
        *       is_followed: boolean
+       *       // 文章数量
+       *       // [required]
+       *       article_count: number
        *     }>
        *   }
        * }
@@ -6158,6 +6199,9 @@ declare global {
        *         // 是否已关注
        *         // [required]
        *         is_followed: boolean
+       *         // 文章数量
+       *         // [required]
+       *         article_count: number
        *       }
        *       // [required]
        *       createdAt: number
@@ -6679,6 +6723,9 @@ declare global {
        *       // 是否已关注
        *       // [required]
        *       is_followed: boolean
+       *       // 文章数量
+       *       // [required]
+       *       article_count: number
        *     }
        *     createdAt?: number
        *     updatedAt?: number
@@ -6844,6 +6891,9 @@ declare global {
        *         // 是否已关注
        *         // [required]
        *         is_followed: boolean
+       *         // 文章数量
+       *         // [required]
+       *         article_count: number
        *       }
        *       // [required]
        *       createdAt: number
@@ -7577,6 +7627,9 @@ declare global {
        *     // 是否已关注
        *     // [required]
        *     is_followed: boolean
+       *     // 文章数量
+       *     // [required]
+       *     article_count: number
        *   }
        * }
        * ```
@@ -7763,6 +7816,9 @@ declare global {
        *     // 是否已关注
        *     // [required]
        *     is_followed: boolean
+       *     // 文章数量
+       *     // [required]
+       *     article_count: number
        *   }
        * }
        * ```
@@ -7863,6 +7919,9 @@ declare global {
        *       // 是否已关注
        *       // [required]
        *       is_followed: boolean
+       *       // 文章数量
+       *       // [required]
+       *       article_count: number
        *     }>
        *   }
        * }
