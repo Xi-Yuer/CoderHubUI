@@ -460,3 +460,8 @@ export async function ClientGetFavorFoldList(
 export async function ClientGetCreatorInfo() {
   return alovaServerInstance.creator_auth.GetCreatorData();
 }
+
+// 获取职位信息
+export async function ClientGetJobInfo() {
+  return alovaServerInstance.position_public.ListPosition();
+}

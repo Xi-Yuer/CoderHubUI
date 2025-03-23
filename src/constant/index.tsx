@@ -32,7 +32,7 @@ export const navigatonList = [
   },
   {
     name: "求职",
-    path: "/bank/all",
+    path: "/position",
     icon: <FileDoneOutlined />,
   },
 ];

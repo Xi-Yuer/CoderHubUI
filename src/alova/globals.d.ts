@@ -1722,6 +1722,72 @@ export type GetUnreadMessageResp = {
    */
   data: UnreadMessage;
 };
+export type Position = {
+  /**
+   * [required]
+   */
+  name: string;
+  /**
+   * [required]
+   */
+  subName: string;
+  /**
+   * [required]
+   */
+  description: string;
+  /**
+   * [required]
+   */
+  experience: string;
+  /**
+   * [required]
+   */
+  location: string;
+  /**
+   * [required]
+   */
+  requirement: string;
+  /**
+   * [required]
+   */
+  url: string;
+};
+export type PositionList = {
+  /**
+   * [required]
+   */
+  name: string;
+  /**
+   * [required]
+   */
+  jobs: Position[];
+};
+export type GetPositionListRes = {
+  /**
+   * [required]
+   */
+  date: string;
+  /**
+   * [required]
+   */
+  list: PositionList[];
+};
+export type GetPositionListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * GetPositionListRes
+   * ---
+   * [required]
+   */
+  data: GetPositionListRes;
+};
 export type CreateQuestionBankCategoryResp = {
   /**
    * 状态码
@@ -6356,6 +6422,58 @@ declare global {
       GetUnReadMessageCount<Config extends Alova2MethodConfig<GetUnreadMessageResp>>(
         config?: Config
       ): Alova2Method<GetUnreadMessageResp, 'message_auth.GetUnReadMessageCount', Config>;
+    };
+    position_public: {
+      /**
+       * ---
+       *
+       * [GET] 获取职位列表
+       *
+       * **path:** /api/position/list
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] GetPositionListRes
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     date: string
+       *     // [required]
+       *     list: Array<{
+       *       // [required]
+       *       name: string
+       *       // [required]
+       *       jobs: Array<{
+       *         // [required]
+       *         name: string
+       *         // [required]
+       *         subName: string
+       *         // [required]
+       *         description: string
+       *         // [required]
+       *         experience: string
+       *         // [required]
+       *         location: string
+       *         // [required]
+       *         requirement: string
+       *         // [required]
+       *         url: string
+       *       }>
+       *     }>
+       *   }
+       * }
+       * ```
+       */
+      ListPosition<Config extends Alova2MethodConfig<GetPositionListResp>>(
+        config?: Config
+      ): Alova2Method<GetPositionListResp, 'position_public.ListPosition', Config>;
     };
     question_bank_category_auth: {
       /**

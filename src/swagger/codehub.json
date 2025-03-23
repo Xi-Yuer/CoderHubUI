@@ -1705,6 +1705,23 @@
         ]
       }
     },
+    "/api/position/list": {
+      "get": {
+        "summary": "获取职位列表",
+        "operationId": "ListPosition",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetPositionListResp"
+            }
+          }
+        },
+        "tags": [
+          "position_public"
+        ]
+      }
+    },
     "/api/question_bank_category/create": {
       "post": {
         "summary": "创建题库分类",
@@ -5267,6 +5284,65 @@
         "data"
       ]
     },
+    "GetPositionList": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PositionList"
+          }
+        }
+      },
+      "title": "GetPositionList",
+      "required": [
+        "list"
+      ]
+    },
+    "GetPositionListReq": {
+      "type": "object",
+      "title": "GetPositionListReq"
+    },
+    "GetPositionListRes": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PositionList"
+          }
+        }
+      },
+      "title": "GetPositionListRes",
+      "required": [
+        "date",
+        "list"
+      ]
+    },
+    "GetPositionListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/GetPositionListRes"
+        }
+      },
+      "title": "GetPositionListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetQuestionBankCategoryListReq": {
       "type": "object",
       "title": "GetQuestionBankCategoryListReq"
@@ -6060,6 +6136,61 @@
         "total",
         "page",
         "page_size"
+      ]
+    },
+    "Position": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "subName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "experience": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "requirement": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "title": "Position",
+      "required": [
+        "name",
+        "subName",
+        "description",
+        "experience",
+        "location",
+        "requirement",
+        "url"
+      ]
+    },
+    "PositionList": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "jobs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Position"
+          }
+        }
+      },
+      "title": "PositionList",
+      "required": [
+        "name",
+        "jobs"
       ]
     },
     "PostAcademicNavigatorLikeReq": {
