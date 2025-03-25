@@ -1,5 +1,5 @@
 import { $$userConfigMap } from "@/alova";
-import { RedisStorageAdapter } from "./RedisStorageAdapter";
+// import { RedisStorageAdapter } from "./RedisStorageAdapter";
 import { createApis } from "@/alova/createApis";
 import { createAlova, Method } from "alova";
 import ReactHook from "alova/react";
@@ -24,12 +24,12 @@ export const alovaLocalInstance = createApis(
       },
     },
     cacheFor: process.env.NODE_ENV === "development" ? null : {},
-    l2Cache: new RedisStorageAdapter({
-      host: process.env.NEXT_PUBLIC_REDIS_HOST,
-      port: 6379,
-      password: "",
-      db: 0,
-    }),
+    // l2Cache: new RedisStorageAdapter({
+    //   host: process.env.NEXT_PUBLIC_REDIS_HOST,
+    //   port: 6379,
+    //   password: "",
+    //   db: 0,
+    // }),
   }),
   $$userConfigMap
 );
