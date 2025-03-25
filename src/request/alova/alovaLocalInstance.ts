@@ -8,7 +8,7 @@ export const alovaLocalInstance = createApis(
   createAlova({
     baseURL: process.env.NEXT_PUBLIC_SERVER_API_BASE_URL,
     requestAdapter: adapterFetch(),
-    timeout: 10000,
+    timeout: 60000,
     statesHook: ReactHook,
     responded: {
       onSuccess: async (response: Response, method: Method) => {
