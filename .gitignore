@@ -10,6 +10,13 @@
 !.yarn/releases
 !.yarn/versions
 
+# 忽略本地环境配置
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
 # testing
 /coverage
 

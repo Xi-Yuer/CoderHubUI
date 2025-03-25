@@ -1,0 +1,36 @@
+# 忽略 node_modules，避免复制无用的依赖
+node_modules
+npm-debug.log
+yarn.lock
+pnpm-lock.yaml
+
+# 忽略本地环境配置
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+# 忽略构建产物（防止影响构建缓存）
+.next
+out
+dist
+.cache
+
+# 忽略日志文件
+logs
+*.log
+yarn-error.log
+
+# 忽略 Git 相关文件
+.git
+.gitignore
+
+# 忽略 Docker 相关文件（避免嵌套）
+.dockerignore
+Dockerfile
+
+# 忽略 IDE/编辑器生成的临时文件
+.vscode
+.idea
+.DS_Store
+Thumbs.db

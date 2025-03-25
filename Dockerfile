@@ -1,22 +1,35 @@
-# 第一阶段：构建前端
-FROM node:23 AS build-stage
+# 第一阶段：构建阶段
+FROM node:23-alpine AS build-stage
 
 # 设置工作目录
 WORKDIR /app
 
-# 复制package.json到工作目录
+# 复制 package.json 和 package-lock.json（如果存在）
 COPY package*.json ./
 
-# 安装依赖
+# 安装依赖，仅安装生产依赖
 RUN npm install --legacy-peer-deps
 
-# 复制源代码到工作目录
+# 复制所有源代码
 COPY . .
 
-# 构建前端
+# 构建 Next.js 项目
 RUN npm run build
+
+# 第二阶段：运行阶段
+FROM node:23-slim AS run-stage
+
+# 设置工作目录
+WORKDIR /app
+
+# 仅复制构建产物和必要文件
+COPY --from=build-stage /app/package*.json ./
+COPY --from=build-stage /app/node_modules ./node_modules
+COPY --from=build-stage /app/.next ./.next
+COPY --from=build-stage /app/public ./public
 
 # 暴露端口
 EXPOSE 3000
 
+# 运行 Next.js
 CMD ["npm", "start"]
