@@ -10,7 +10,7 @@ import { useAppStore } from "@/store";
 // 创建本地网络请求实例
 export const alovaServerInstance = createApis(
   createAlova({
-    baseURL: process.env.NEXT_PUBLIC_SERVER_API_BASE_URL,
+    baseURL: "http://localhost:80",
     requestAdapter: adapterFetch(),
     timeout: 10000,
     statesHook: ReactHook,
