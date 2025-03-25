@@ -25,7 +25,7 @@ export const alovaLocalInstance = createApis(
     },
     cacheFor: process.env.NODE_ENV === "development" ? null : {},
     l2Cache: new RedisStorageAdapter({
-      host: "localhost",
+      host: process.env.NEXT_PUBLIC_REDIS_HOST,
       port: 6379,
       password: "",
       db: 0,
