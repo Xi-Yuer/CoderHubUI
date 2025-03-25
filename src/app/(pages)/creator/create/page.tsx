@@ -1,6 +1,6 @@
 "use client";
 import type { Tag as TagOptionType } from "@/alova/globals";
-import { AppAIEditor, EditorRefCallBack } from "@/app/_components";
+import { EditorRefCallBack } from "@/app/_components";
 import {
   ClientCreateArticle,
   ClientUploadImage,
@@ -24,9 +24,15 @@ import {
 } from "antd";
 import { Select, Tag } from "antd";
 import type { InputRef, SelectProps } from "antd";
+import dynamic from "next/dynamic";
 import React from "react";
 
 type TagRender = SelectProps["tagRender"];
+
+const AppAIEditor = dynamic(
+  () => import("@/app/_components/AIEditor"),
+  { ssr: false } // 禁用服务器端渲染
+);
 export default function Page() {
   const [messageApi, messageContext] = message.useMessage();
   const [name, setName] = React.useState("");
@@ -202,7 +208,7 @@ export default function Page() {
           onChange={(e) => setDescription(e.target.value)}
         />
         <div className="border border-b-0">
-        <AppAIEditor ref={AppEditorRef}/>
+          <AppAIEditor ref={AppEditorRef} />
         </div>
         <Divider />
         <div className="flex flex-col gap-8">

@@ -25,12 +25,6 @@ export default function Page() {
     company.location.includes(selectedPosition || "")
   );
 
-  // 根据城市进行筛选
-  const filteredJobs = selectedJobs.filter(
-    (job) => job.location === selectedCompany
-  );
-  console.log(filteredJobs);
-
   return (
     <div className="flex gap-4">
       <Card className="w-60 flex flex-col">

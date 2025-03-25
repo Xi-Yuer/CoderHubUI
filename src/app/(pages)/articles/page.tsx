@@ -1,12 +1,20 @@
 "use client";
 import { GetArticle, Tag } from "@/alova/globals";
-import { AppIcon } from "@/app/_components";
-import AppArticlePreview from "@/app/_components/appArticlePreview";
 import { ClientGetArticleList, ClientGetSystemTags } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Card, Drawer, FloatButton, Skeleton } from "antd";
+import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
+
+const AppArticlePreview = dynamic(
+  () => import("@/app/_components/appArticlePreview"),
+  { ssr: false } // 禁用服务器端渲染
+);
+const AppIcon = dynamic(
+  () => import("@/app/_components/appIcon"),
+  { ssr: false } // 禁用服务器端渲染
+);
 
 export default function Page() {
   const { userInfo } = useAppStore.getState();
@@ -202,10 +210,10 @@ export default function Page() {
       </div>
 
       {/* 右侧推荐栏 */}
-      <div className="hidden xl:flex w-[250px] gap-4 flex-col">
+      {/* <div className="hidden xl:flex w-[250px] gap-4 flex-col">
         <Card>Recommend</Card>
         <Card>Recommend</Card>
-      </div>
+      </div> */}
     </div>
   );
 }

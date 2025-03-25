@@ -22,6 +22,9 @@ FROM node:23-slim AS run-stage
 # 设置工作目录
 WORKDIR /app
 
+
+ENV NODE_ENV=production
+
 # 仅复制构建产物和必要文件
 COPY --from=build-stage /app/package*.json ./
 COPY --from=build-stage /app/node_modules ./node_modules

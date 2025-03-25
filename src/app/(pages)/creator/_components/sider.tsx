@@ -22,21 +22,21 @@ const items: MenuItem[] = [
     label: "写文章",
     icon: <FormOutlined />,
   },
-  {
-    key: "/creator/content",
-    label: "内容管理",
-    icon: <HighlightOutlined />,
-    children: [
-      {
-        key: "/creator/articles",
-        label: "文章管理",
-      },
-      {
-        key: "/creator/micro_post",
-        label: "沸点管理",
-      },
-    ],
-  },
+  // {
+  //   key: "/creator/content",
+  //   label: "内容管理",
+  //   icon: <HighlightOutlined />,
+  //   children: [
+  //     {
+  //       key: "/creator/articles",
+  //       label: "文章管理",
+  //     },
+  //     {
+  //       key: "/creator/micro_post",
+  //       label: "沸点管理",
+  //     },
+  //   ],
+  // },
 ];
 
 export default function Sider() {

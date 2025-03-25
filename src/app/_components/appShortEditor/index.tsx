@@ -20,7 +20,7 @@ type Props = {
   PublicSuccess: (params: CreateArticleResp) => void;
 };
 
-export function AppShortEditor({ PublicSuccess }: Props) {
+export default function AppShortEditor({ PublicSuccess }: Props) {
   const [imageList, setImageList] = useState<string[]>([]);
   const [imageListID, setImageListID] = useState<string[]>([]);
   const [text, setText] = useState("");

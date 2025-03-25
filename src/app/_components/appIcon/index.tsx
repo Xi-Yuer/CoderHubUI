@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-export const AppIcon = ({ type }: { type: string }) => {
+export default function AppIcon({ type }: { type: string }) {
   const [Icon, setIcon] = useState<React.ComponentType | null>(null);
 
   useEffect(() => {
@@ -15,4 +15,4 @@ export const AppIcon = ({ type }: { type: string }) => {
   }, [type]);
 
   return Icon ? <Icon /> : null;
-};
+}

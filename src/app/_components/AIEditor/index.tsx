@@ -18,7 +18,7 @@ interface AppAIEditorProps {
   ref: Ref<AppAIEditorRef>;
 }
 
-export function AppAIEditor({ ref }: AppAIEditorProps) {
+export default function AppAIEditor({ ref }: AppAIEditorProps) {
   const [value, setValue] = useState("");
 
   useImperativeHandle(ref, () => ({
