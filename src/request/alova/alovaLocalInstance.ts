@@ -6,7 +6,7 @@ import adapterFetch from "alova/fetch";
 
 export const alovaLocalInstance = createApis(
   createAlova({
-    baseURL: "http://localhost:80",
+    baseURL: process.env.NEXT_PUBLIC_SERVER_API_BASE_URL,
     requestAdapter: adapterFetch(),
     timeout: 10000,
     statesHook: ReactHook,
