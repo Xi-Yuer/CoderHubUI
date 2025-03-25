@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # 第二阶段：运行阶段
-FROM node:23-slim AS run-stage
+FROM node:23 AS run-stage
 
 # 设置工作目录
 WORKDIR /app
