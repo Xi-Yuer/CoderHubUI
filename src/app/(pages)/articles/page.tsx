@@ -97,9 +97,10 @@ export default function Page() {
     ClientGetSystemTags()
       .then((res) => {
         setTags(res.data?.list || []);
-        setCurrentTag(res.data?.list[0].id);
+        setCurrentTag(res.data?.list ? res.data?.list[0]?.id : null);
       })
       .finally(() => {
+        setFirstLoad(false);
         setGetTagLoading(false);
       });
   };
@@ -205,7 +206,7 @@ export default function Page() {
           </div>
         )}
         <div ref={loadingRef} className="text-center mt-4 text-gray-400">
-          {hasMore ? "Loaing" : "没有更多了"}
+          {hasMore && !loading ? "Loaing" : "没有更多了"}
         </div>
       </div>
 

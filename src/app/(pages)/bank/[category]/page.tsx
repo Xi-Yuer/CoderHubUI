@@ -1,16 +1,16 @@
 import { QuestionBank, QuestionBankCategory } from "@/alova/globals";
+import AppPageError from "@/app/_components/appPageError";
 import {
   ClientGetQuestionCategory,
   ClientGetQuestionList,
 } from "@/request/apis/server";
-import { Card, Image } from "antd";
+import { App, Card, Image } from "antd";
 import Link from "next/link";
 
 export default async function Page({ params }: any) {
   try {
     const categoryListResponse = await ClientGetQuestionCategory();
-    const categoryList: QuestionBankCategory[] =
-      categoryListResponse.data.list;
+    const categoryList: QuestionBankCategory[] = categoryListResponse.data.list;
     const firstCategory = categoryList[0];
     const { category } = await params;
     const categoryID = category === "all" ? firstCategory.id : category;
@@ -75,6 +75,6 @@ export default async function Page({ params }: any) {
       </div>
     );
   } catch (error) {
-    return <div>Error: {JSON.stringify(error)}</div>;
+    return <AppPageError />;
   }
 }
