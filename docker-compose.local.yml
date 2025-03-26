@@ -1,0 +1,162 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: coderhub
+      MYSQL_ROOT_PASSWORD: 2214380963Wx!!
+    ports:
+      - "3306:3306"
+    networks:
+      - coderhub-network
+    volumes:
+      - type: volume
+        source: mysql-data
+        target: /var/lib/mysql
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - coderhub-network
+    volumes:
+      - redis-data:/data
+
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.0
+    container_name: etcd
+    networks:
+      - coderhub-network
+    command:
+      [
+        "etcd",
+        "--name", "etcd0",
+        "--advertise-client-urls", "http://etcd:2379",   # 使用服务名称
+        "--listen-client-urls", "http://0.0.0.0:2379",   # 监听来自所有地址的连接
+        "--initial-advertise-peer-urls", "http://etcd:2380",
+        "--listen-peer-urls", "http://0.0.0.0:2380",
+        "--initial-cluster", "etcd0=http://etcd:2380"
+      ]
+    healthcheck:
+      test: ["CMD", "etcdctl", "cluster-health"]
+      interval: 30s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      service:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+    networks:
+      - coderhub-network
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+        consistency: consistent
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000" # MinIO 服务端口
+      - "9001:9001" # MinIO 控制面板端口
+    environment:
+      MINIO_ROOT_USER: "minioadmin" # 设置管理员用户名
+      MINIO_ROOT_PASSWORD: "minioadmin" # 设置管理员密码（生产环境请使用强密码）
+    volumes:
+      - minio-data:/data # 使用 Docker 卷来持久化数据
+      - ./minio/config:/root/.minio # 持久化 MinIO 配置
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - coderhub-network
+  #  Api 服务
+  api:
+    image: deploy-api:latest
+    container_name: coderhub-api
+    depends_on:
+      - etcd
+      - mysql
+      - redis
+      - service
+    networks:
+      - coderhub-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api/coderhub/health"] # 修改为实际的健康检查端点
+      interval: 10s
+      retries: 10
+      start_period: 30s
+      timeout: 10s
+    restart: always
+
+  # RPC 服务
+  service:
+    image: deploy-service:latest
+    container_name: coderhub-service
+    depends_on:
+      - mysql
+      - redis
+      - etcd
+    networks:
+      - coderhub-network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8080"] # 使用netcat检查端口是否开放
+      interval: 10s
+      retries: 10
+      start_period: 30s
+      timeout: 10s
+    restart: always
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      ETCD_HOST: etcd
+      ETCD_PORT: 2379
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+
+  web:
+    image: web:latest
+    container_name: web
+    depends_on:
+      - api
+      - service
+    networks:
+      - coderhub-network
+    environment:
+      - NEXT_PUBLIC_LOCAL_BASE_URL=http://nginx
+      - NEXT_PUBLIC_CLIENT_BASE_URL=http://nginx
+      - NEXT_PUBLIC_SERVER_API_BASE_URL=http://nginx/api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      retries: 10
+      start_period: 30s
+      timeout: 10s
+    restart: always
+
+networks:
+  coderhub-network:
+    driver: bridge # 使用默认的 Docker bridge 网络驱动
+
+volumes:
+  etcd-data:
+  mysql-data:
+  redis-data:
+  minio-data:
