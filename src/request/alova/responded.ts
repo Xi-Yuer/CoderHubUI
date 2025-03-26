@@ -9,11 +9,18 @@ export const responded = {
       setShowLoginPanel(true);
       return Promise.reject(response);
     }
-    const json = await response.json();
-    return json;
+    try {
+      const json = await response.json();
+      if (json.code !== 200) {
+        return Promise.reject(json.message);
+      }
+      return json;
+    } catch (error) {
+      return Promise.reject(error);
+    }
   },
   onError: (error: Error, method: Method) => {
-    console.log(error);
+    return Promise.reject(error);
   },
   onComplete: () => {},
 };

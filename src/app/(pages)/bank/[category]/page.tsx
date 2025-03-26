@@ -8,15 +8,30 @@ import { App, Card, Image } from "antd";
 import Link from "next/link";
 
 export default async function Page({ params }: any) {
-  try {
-    const categoryListResponse = await ClientGetQuestionCategory();
-    const categoryList: QuestionBankCategory[] = categoryListResponse.data.list;
-    const firstCategory = categoryList[0];
-    const { category } = await params;
-    const categoryID = category === "all" ? firstCategory.id : category;
-    const bankListResponse = await ClientGetQuestionList(categoryID);
-    const bankList: QuestionBank[] = bankListResponse.data.list;
+  let categoryList: QuestionBankCategory[] = [];
+  let bankList: QuestionBank[] = [];
 
+  try {
+    // 获取分类
+    const { category } = await params;
+    const categoryListResponse = await ClientGetQuestionCategory();
+    categoryList = categoryListResponse.data.list;
+
+    if (categoryList.length === 0) {
+      return <div className="p-4 text-center text-gray-500">暂无分类数据</div>;
+    }
+
+    const firstCategory = categoryList[0];
+    const categoryID = category === "all" ? firstCategory.id : category;
+
+    try {
+      // 获取题库数据
+      const bankListResponse = await ClientGetQuestionList(categoryID);
+      bankList = bankListResponse.data.list;
+    } catch (error) {
+      console.error("获取题库失败:", error);
+      bankList = [];
+    }
     return (
       <div className="px-4 sm:px-10 md:px-20 lg:px-40 py-4">
         <div
@@ -44,9 +59,11 @@ export default async function Page({ params }: any) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-          {bankList.map((item) => {
-            return (
+        {bankList?.length === 0 ? (
+          <div className="text-center text-gray-500 mt-4">暂无题库数据</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+            {bankList?.map((item) => (
               <Card key={item.id} className="w-full">
                 <Link href={`/question/${item.id}`} target="_self">
                   <div className="flex gap-2 items-center justify-between">
@@ -69,12 +86,17 @@ export default async function Page({ params }: any) {
                   </div>
                 </Link>
               </Card>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   } catch (error) {
-    return <AppPageError />;
+    console.error("获取分类失败:", error);
+    return (
+      <div className="p-4 text-center text-gray-500">
+        数据加载失败，请稍后重试。
+      </div>
+    );
   }
 }

@@ -8,12 +8,17 @@ import {
   Avatar,
   Typography,
   Image,
+  message,
 } from "antd";
 import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import "@ant-design/v5-patch-for-react-19";
 import type { FormProps } from "antd";
-import { ClientGetUserInfo, ClientLogin, ClientRegister } from "@/request/apis/web";
+import {
+  ClientGetUserInfo,
+  ClientLogin,
+  ClientRegister,
+} from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { useStore } from "zustand";
 import { md5 } from "@/utils";
@@ -28,6 +33,7 @@ type FieldType = {
 };
 
 export default function AppLoginPanel() {
+  const [messageApi, messageContext] = message.useMessage();
   const [isRegister, setIsRegister] = useState(false); // 登录/注册切换
   const { showLoginPanel, setToken, setUserInfo, userInfo, setShowLoginPanel } =
     useStore(useAppStore, (state) => state);
@@ -37,20 +43,28 @@ export default function AppLoginPanel() {
       ClientRegister({
         username: values.username,
         password: md5(values.password),
-      }).then(() => setIsRegister(false));
+      })
+        .then(() => setIsRegister(false))
+        .catch((err) => {
+          messageApi.error(err);
+        });
     } else {
       // 登录接口调用
       ClientLogin({
         username: values.username,
         password: md5(values.password),
-      }).then((res) => {
-        setToken(res.data);
-        ClientGetUserInfo().then((res) => {
-          setUserInfo(res.data);
-          setShowLoginPanel(false);
-          window.location.reload();
+      })
+        .then((res) => {
+          setToken(res.data);
+          ClientGetUserInfo().then((res) => {
+            setUserInfo(res.data);
+            setShowLoginPanel(false);
+            window.location.reload();
+          });
+        })
+        .catch((err) => {
+          messageApi.error(err);
         });
-      });
     }
   };
   const handleCancel = () => {
@@ -64,6 +78,7 @@ export default function AppLoginPanel() {
       onCancel={handleCancel}
       width={380}
     >
+      {messageContext}
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <Avatar
           size={64}

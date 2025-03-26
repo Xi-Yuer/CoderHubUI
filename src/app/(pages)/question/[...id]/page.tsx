@@ -13,6 +13,7 @@ import { difficultyMap } from "@/constant";
 import AppPageError from "@/app/_components/appPageError";
 import { Metadata } from "next";
 import { ClientGetQuestionBankDetail } from "@/request/apis/server";
+import { GetQuestionListResp, QuestionMenus } from "@/alova/globals";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -49,10 +50,15 @@ export default async function Page({ params }: Props) {
     let [, questionID] = (await params).id;
 
     // 服务端获取数据
-    const resultResponse = await ClientGetQuestionDetailList(bankID);
-    const questionList = resultResponse?.data?.list;
-    questionID = questionID || questionList[0].id;
-    const questionDetailResponse = await ClientGetQuestionDetail(questionID);
+    let resultResponse: GetQuestionListResp;
+    let questionList: QuestionMenus[] = [];
+    let questionDetailResponse;
+    try {
+      resultResponse = await ClientGetQuestionDetailList(bankID);
+      questionList = resultResponse?.data?.list;
+      questionID = questionID || questionList[0].id;
+      questionDetailResponse = await ClientGetQuestionDetail(questionID);
+    } catch (error) {}
 
     return (
       <div className="container flex flex-wrap md:flex-nowrap md:gap-4">
@@ -83,7 +89,7 @@ export default async function Page({ params }: Props) {
           <Card>
             <div className="flex gap-4 items-center">
               <h2 className="text-xl font-semibold">
-                {questionDetailResponse.data.id}：
+                {questionDetailResponse?.data?.id}：
                 {questionDetailResponse?.data?.title}
               </h2>
               <Tag
@@ -96,7 +102,7 @@ export default async function Page({ params }: Props) {
               >
                 {
                   difficultyMap[
-                    questionDetailResponse.data
+                    questionDetailResponse?.data
                       .difficult as keyof typeof difficultyMap
                   ]?.label
                 }
@@ -104,10 +110,14 @@ export default async function Page({ params }: Props) {
             </div>
           </Card>
           <Card title="推荐答案">
-            <QuestionPreview content={questionDetailResponse.data.content} />
+            <QuestionPreview
+              content={questionDetailResponse?.data?.content || ""}
+            />
           </Card>
           <Card title="相关回答" className="overflow-hidden">
-            <QuestionComments item={questionDetailResponse.data} />
+            <QuestionComments
+              item={questionDetailResponse?.data || ({} as any)}
+            />
           </Card>
         </div>
         <div className="hidden sm:hidden md:w-80 lg:w-80 lg:block md:hidden">
