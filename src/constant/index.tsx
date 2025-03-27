@@ -8,6 +8,9 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { PreviewThemes } from "md-editor-rt";
+import defaultAvatar from "../assets/default_avatar.png";
+
+export const DEFAULT_AVATAR = defaultAvatar.src;
 
 export const navigatonList = [
   {

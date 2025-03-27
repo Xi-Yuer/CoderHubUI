@@ -23,6 +23,7 @@ import {
 } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { DEFAULT_AVATAR } from "@/constant";
 
 interface Props {
   userID: string;
@@ -81,12 +82,14 @@ export default function Fans({ userID }: Props) {
               {/* 头像 */}
               <Avatar
                 size={48}
-                src={item.avatar || '/public/default-avatar.png'}
+                src={item.avatar || DEFAULT_AVATAR}
                 icon={!item.avatar && <UserOutlined />}
               />
               {/* 用户信息 */}
               <Link href={`/user/${item.id}`} target="_blank">
-                <Typography.Text strong>{item.nickname || item.username}</Typography.Text>
+                <Typography.Text strong>
+                  {item.nickname || item.username}
+                </Typography.Text>
                 <div className="text-gray-500 text-sm flex items-center space-x-2">
                   {(item.gender as any) === 1 ? (
                     <ManOutlined style={{ color: "#2db7f5" }} />

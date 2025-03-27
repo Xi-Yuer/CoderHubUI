@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { DEFAULT_AVATAR } from "@/constant";
 
 interface Props {
   userID: string;
@@ -69,7 +70,7 @@ export default function Fans({ userID }: Props) {
               {/* 头像 */}
               <Avatar
                 size={48}
-                src={item.avatar || "/public/default-avatar.png"}
+                src={item.avatar || DEFAULT_AVATAR}
                 icon={!item.avatar && <UserOutlined />}
               />
               {/* 用户信息 */}

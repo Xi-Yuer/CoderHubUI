@@ -1,4 +1,5 @@
 import { Favor } from "@/alova/globals";
+import { DEFAULT_AVATAR } from "@/constant";
 import { ClientGetFavorFoldList } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { UserOutlined } from "@ant-design/icons";
@@ -47,8 +48,7 @@ export default function Article({ id }: FavorProps) {
                 avatar={
                   <Avatar
                     src={
-                      item?.entity_value?.user_info?.avatar ||
-                      "/public/default-avatar.png"
+                      item?.entity_value?.user_info?.avatar || DEFAULT_AVATAR
                     }
                     icon={<UserOutlined />}
                   />

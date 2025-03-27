@@ -57,6 +57,7 @@ export default function QuestionDrawer({
                   : "hover:bg-gray-100"
               } text-${difficultyMap[item?.difficult as keyof typeof difficultyMap]?.color}-500`}
             >
+              <span className="mr-2">{item.id}.</span>
               {item.title}
             </Link>
           ))}

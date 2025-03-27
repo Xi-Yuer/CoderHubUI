@@ -9,9 +9,12 @@ import {
   MailOutlined,
   PhoneOutlined,
   PlusOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useAppStore } from "@/store";
+import Link from "next/link";
+import { DEFAULT_AVATAR } from "@/constant";
 
 interface Props {
   userID: string;
@@ -62,7 +65,7 @@ export default function UserPostCard({ userID }: Props) {
       <div className="flex gap-8">
         <Avatar
           size={{ xs: 64, sm: 80, md: 100, lg: 120, xl: 120, xxl: 120 }}
-          src={user.avatar || "/public/default-avatar.png"}
+          src={user.avatar || DEFAULT_AVATAR}
           icon={!user.avatar && <UserOutlined />}
         />
         <div className="flex items-center space-x-4">
@@ -96,7 +99,17 @@ export default function UserPostCard({ userID }: Props) {
         </div>
       </div>
       {/* 关注 & 私信 */}
-      {userInfo.id === userID ? null : (
+      {userInfo.id === userID ? (
+        <>
+          <div className="flex justify-end space-x-2">
+            <Link href={`/setting`} type="primary">
+              <Button type="primary" icon={<EditOutlined />}>
+                编辑资料
+              </Button>
+            </Link>
+          </div>
+        </>
+      ) : (
         <div className="flex justify-end space-x-2">
           <Button
             type={user?.is_followed ? "default" : "primary"}

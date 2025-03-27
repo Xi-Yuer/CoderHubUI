@@ -26,6 +26,7 @@ import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import AppSharedPopUp from "../appSharedPopup";
 import { useAppStore } from "@/store";
 import Link from "next/link";
+import { DEFAULT_AVATAR } from "@/constant";
 
 export default function AppShortControl({
   article,
@@ -69,7 +70,7 @@ export default function AppShortControl({
                   className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg"
                 >
                   <Avatar
-                    src={article.author.avatar || "/public/default-avatar.png"}
+                    src={article.author.avatar || DEFAULT_AVATAR}
                     alt="Avatar"
                     size={40}
                     icon={<UserOutlined />}

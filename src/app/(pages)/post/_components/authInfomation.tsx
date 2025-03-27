@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Avatar, Button, Card, message, Spin } from "antd";
 import { ManOutlined, UserOutlined, WomanOutlined } from "@ant-design/icons";
+import { DEFAULT_AVATAR } from "@/constant";
 
 interface Props {
   id: string;
@@ -47,7 +48,7 @@ export default function AuthInfomation({ id }: Props) {
         {messageContext}
         <div className="flex items-center">
           <Avatar
-            src={authorInfo?.avatar || "/public/default-avatar.png"}
+            src={authorInfo?.avatar || DEFAULT_AVATAR}
             alt="Avatar"
             size={50}
             shape="circle"

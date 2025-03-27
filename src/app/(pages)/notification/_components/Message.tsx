@@ -1,6 +1,6 @@
 "use client";
 import { Message } from "@/alova/globals";
-import { MESSAG_TYPE } from "@/constant";
+import { DEFAULT_AVATAR, MESSAG_TYPE } from "@/constant";
 import { ClientGetMessage } from "@/request/apis/web";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Badge, List } from "antd";
@@ -47,7 +47,7 @@ export default function Comments({ messageType }: Props) {
               >
                 <div className="flex space-x-4">
                   <Avatar
-                    src={item.senderInfo.avatar || "/public/default-avatar.png"}
+                    src={item.senderInfo.avatar || DEFAULT_AVATAR}
                     alt=""
                     icon={<UserOutlined />}
                     size={50}

@@ -22,7 +22,7 @@ import { Button, Popover, Image, Avatar } from "antd";
 import { useAppStore } from "@/store";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Link from "next/link";
-import { PREVIEW_THEME } from "@/constant";
+import { DEFAULT_AVATAR, PREVIEW_THEME } from "@/constant";
 
 interface AppCommentItemProps {
   comment: Comment;
@@ -77,9 +77,7 @@ export default function AppCommentItem({
       >
         <div className="z-10">
           <Avatar
-            src={
-              commentFromProps.user_info.avatar || "/public/default-avatar.png"
-            }
+            src={commentFromProps.user_info.avatar || DEFAULT_AVATAR}
             alt="Avatar"
             shape="circle"
             size={40}
