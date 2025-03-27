@@ -2,13 +2,17 @@
 import { GetPositionListRes } from "@/alova/globals";
 import { ClientGetJobInfo } from "@/request/apis/web";
 import React, { useEffect, useState } from "react";
-import { Card, List, Select } from "antd";
+import { Card, Drawer, FloatButton, List, Select } from "antd";
 import { dictionary } from "@/dictionary";
+import { MenuFoldOutlined } from "@ant-design/icons";
 
 export default function Page() {
   const [data, setData] = useState<GetPositionListRes | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
   const [selectedPosition, setSelectedPosition] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   useEffect(() => {
     ClientGetJobInfo().then((res) => {
       setData(res.data);
@@ -18,6 +22,10 @@ export default function Page() {
     });
   }, []);
 
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  });
+
   const companies = data?.list || [];
   const selectedJobs =
     companies.find((company) => company.name === selectedCompany)?.jobs || [];
@@ -25,8 +33,8 @@ export default function Page() {
     company.location.includes(selectedPosition || "")
   );
 
-  return (
-    <div className="flex gap-4">
+  const companyList = () => {
+    return (
       <Card className="w-60 flex flex-col">
         <div className="mb-4">
           <Select
@@ -58,6 +66,30 @@ export default function Page() {
           </span>
         ))}
       </Card>
+    );
+  };
+  return (
+    <div className="flex gap-4">
+      {isMobile ? (
+        <>
+          <Drawer
+            title="公司列表"
+            placement="left"
+            width={"350px"}
+            onClose={() => setIsDrawerOpen(false)}
+            open={isDrawerOpen}
+          >
+            {companyList()}
+          </Drawer>
+          <FloatButton
+            onClick={() => setIsDrawerOpen(true)}
+            type="primary"
+            icon={<MenuFoldOutlined />}
+          ></FloatButton>
+        </>
+      ) : (
+        companyList()
+      )}
       <List
         className="w-full"
         dataSource={filteredCompanies}

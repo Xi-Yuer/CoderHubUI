@@ -3,7 +3,7 @@ import React from "react";
 
 export function AppFooter() {
   return (
-    <footer className="bg-gray-900 text-white py-10 mb-20 mt-10">
+    <footer className="bg-gray-900 text-white py-10 mt-10">
       <div className="container mx-auto px-4">
         {/* 上部 - Logo 和简要介绍 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
@@ -73,17 +73,19 @@ export function AppFooter() {
         {/* 底部 - 版权信息 */}
         <div className="border-t border-gray-700 pt-6 text-center">
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} CoderHub. All rights reserved. |
+            &copy; {new Date().getFullYear()} CoderHub. All rights reserved.
+          </p>
+          <div className="text-sm text-gray-500">
             Powered by
             <Link
-              href="https://reactjs.org"
+              href="https://github.com/Xi-Yuer"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline ml-1"
             >
               Xi-Yuer
             </Link>
-          </p>
+          </div>
           {/* 备案信息 */}
           <p className="text-sm text-gray-500 mt-2">
             <Link

@@ -1,7 +1,8 @@
 "use client";
 import { CreateWorkExpReq } from "@/alova/globals";
 import { dictionary } from "@/dictionary";
-import { Modal, Input, Select, Button, Form } from "antd";
+import { Modal, Input, Select, Button, Form, Drawer } from "antd";
+import { useEffect, useState } from "react";
 
 const { TextArea } = Input;
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 
 const AddWorkExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
   const [form] = Form.useForm();
-
+  const [isMobile, setIsMobile] = useState(false);
   const handleOk = () => {
     form.validateFields().then((values) => {
       onSubmit(values);
@@ -20,14 +21,8 @@ const AddWorkExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
     });
   };
 
-  return (
-    <Modal
-      title="新增工作经验或建议"
-      open={visible}
-      onCancel={onClose}
-      footer={null}
-      className="p-4"
-    >
+  const formContent = () => {
+    return (
       <Form form={form} layout="vertical">
         <Form.Item
           name="region"
@@ -89,7 +84,37 @@ const AddWorkExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
           </Button>
         </div>
       </Form>
-    </Modal>
+    );
+  };
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  });
+
+  return isMobile ? (
+    <>
+      <Drawer
+        title="新增工作经验或建议"
+        placement="right"
+        onClose={onClose}
+        open={visible}
+        width={"100%"}
+      >
+        {formContent()}
+      </Drawer>
+    </>
+  ) : (
+    <>
+      <Modal
+        title="新增工作经验或建议"
+        open={visible}
+        onCancel={onClose}
+        footer={null}
+        className="p-4"
+      >
+        {formContent()}
+      </Modal>
+    </>
   );
 };
 

@@ -78,15 +78,27 @@ export const popoverList = [
   },
 ];
 
+const userID = () => {
+  try {
+    const cache = localStorage?.getItem("storage");
+    if (cache) {
+      const state = JSON.parse(cache);
+      return state.state?.userInfo?.id;
+    }
+    return "";
+  } catch (error) {
+    return "";
+  }
+};
 export const mobileNavigatonList = [
   {
     name: "个人中心",
-    path: "/user/profile",
+    path: `/user/${userID()}`,
     icon: <UserOutlined />,
   },
   {
     name: "消息中心",
-    path: "/notification",
+    path: `/notification/${MESSAG_TYPE.MessageComment}`,
     icon: <BellOutlined />,
   },
 ];

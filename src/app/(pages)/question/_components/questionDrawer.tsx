@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Drawer, FloatButton } from "antd";
 import Link from "next/link";
 import { MenuOutlined } from "@ant-design/icons";
 import { difficultyMap } from "@/constant";
-import { QuestionMenus } from "@/alova/globals";
+import { GetQuestionBankResqonse, QuestionMenus } from "@/alova/globals";
+import QuestionBankDetail from "./questionBankDetail";
+import { ClientGetQuestionBankDetail } from "@/request/apis/web";
 
 interface QuestionDrawerProps {
   questionList: QuestionMenus[];
@@ -19,7 +21,13 @@ export default function QuestionDrawer({
   questionID,
 }: QuestionDrawerProps) {
   const [drawerVisible, setDrawerVisible] = useState(false);
-
+  const [questionBankDetail, setQuestionBankDetail] =
+    useState<GetQuestionBankResqonse>();
+  useEffect(() => {
+    ClientGetQuestionBankDetail(bankID).then((res) => {
+      setQuestionBankDetail(res.data);
+    });
+  }, [bankID]);
   return (
     <div className="md:hidden">
       {/* 小屏幕上的按钮 */}
@@ -28,15 +36,13 @@ export default function QuestionDrawer({
         type="primary"
         icon={<MenuOutlined />}
         onClick={() => setDrawerVisible(true)}
-      >
-        题目列表
-      </FloatButton>
+      ></FloatButton>
 
       {/* 侧边栏 Drawer */}
       <Drawer
-        title="题目列表"
+        title={questionBankDetail?.name}
         placement="left"
-        width={"250px"}
+        width={"350px"}
         onClose={() => setDrawerVisible(false)}
         open={drawerVisible}
       >

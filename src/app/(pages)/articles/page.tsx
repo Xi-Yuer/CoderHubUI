@@ -206,15 +206,9 @@ export default function Page() {
           </div>
         )}
         <div ref={loadingRef} className="text-center mt-4 text-gray-400">
-          {hasMore && !loading ? "Loaing" : "没有更多了"}
+          {loading ? "Loaing" : "没有更多了"}
         </div>
       </div>
-
-      {/* 右侧推荐栏 */}
-      {/* <div className="hidden xl:flex w-[250px] gap-4 flex-col">
-        <Card>Recommend</Card>
-        <Card>Recommend</Card>
-      </div> */}
     </div>
   );
 }
