@@ -1,14 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ClientDeleteWorkExp, ClientGetCompanyExp } from "@/request/apis/web";
-import {
-  GetSchoolExpListResp,
-  SchoolExp,
-  SchoolExpList,
-  WorkExp,
-} from "@/alova/globals";
-import { Avatar, Button, Card, Pagination } from "antd";
+import { WorkExp } from "@/alova/globals";
+import { Avatar, List, Pagination, Spin } from "antd";
 import { format } from "date-fns";
-import { DeleteOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 import { useAppStore } from "@/store";
 
 interface Props {
@@ -22,10 +17,11 @@ export default function School({ filterParams }: Props) {
   const [page, setPage] = useState(1);
   const { userInfo } = useAppStore();
   const ColorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
-  useEffect(() => {
+
+  const getPageData = (val: number) => {
     setLoading(true);
     ClientGetCompanyExp({
-      page: page,
+      page: val,
       page_size: 10,
       ...filterParams,
     })
@@ -36,7 +32,11 @@ export default function School({ filterParams }: Props) {
       .finally(() => {
         setLoading(false);
       });
-  }, [page, filterParams]);
+  };
+  useEffect(() => {
+    setPage(1);
+    getPageData(1);
+  }, [filterParams]);
 
   const CommentCard = ({ data }: { data: WorkExp }) => {
     const [expanded, setExpanded] = useState(false);
@@ -47,7 +47,12 @@ export default function School({ filterParams }: Props) {
     const displayedContent = expanded
       ? data?.content
       : data?.content?.slice(0, maxLength) + (isLongContent ? "..." : "");
-    const color = useRef(ColorList[Math.floor(Math.random() * (3 + 1))]);
+    const hashCode = (str: string) =>
+      str.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const color = useMemo(
+      () => ColorList[hashCode(data.company) % ColorList.length],
+      [data.company]
+    );
 
     return (
       <div className="p-4 w-full mb-4">
@@ -55,7 +60,7 @@ export default function School({ filterParams }: Props) {
           <Avatar
             className="w-12 h-12 bg-gray-300"
             style={{
-              backgroundColor: color.current,
+              backgroundColor: color,
               verticalAlign: "middle",
             }}
           >
@@ -105,16 +110,25 @@ export default function School({ filterParams }: Props) {
   };
 
   return (
-    <div>
-      {list.map((item) => {
-        return <CommentCard key={item.id} data={item} />;
-      })}
-      <Pagination
-        current={page}
-        total={total}
-        onChange={setPage}
-        className="float-right"
-      />
-    </div>
+    <List
+      itemLayout="vertical"
+      size="small"
+      loading={loading}
+      pagination={{
+        current: page,
+        total,
+        pageSize: 10,
+        onChange: (val) => {
+          setPage(val);
+          getPageData(val);
+        },
+      }}
+      dataSource={list}
+      renderItem={(item) => (
+        <List.Item>
+          <CommentCard data={item} />
+        </List.Item>
+      )}
+    />
   );
 }

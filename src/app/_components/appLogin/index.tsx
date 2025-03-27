@@ -65,7 +65,7 @@ export function AppLogin() {
         ].map(({ label, value }, index) => (
           <Link
             key={index}
-            href="/"
+            href={`/user/${appStore.userInfo.id}`}
             className="flex flex-col gap-2 text-sm items-center flex-1 text-gray-950"
           >
             <span className="font-bold">{label}</span>
