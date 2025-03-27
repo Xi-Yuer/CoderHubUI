@@ -10,6 +10,7 @@ import {
   LoginReq,
   RegisterReq,
   UpdatePasswordReq,
+  UpdateUserInfoReq,
 } from "@/alova/globals";
 import { alovaServerInstance } from "../alova/alovaServerInstance";
 
@@ -464,4 +465,26 @@ export async function ClientGetCreatorInfo() {
 // 获取职位信息
 export async function ClientGetJobInfo() {
   return alovaServerInstance.position_public.ListPosition();
+}
+
+// 修改用户头像
+export async function ClientUpdateUserAvatar(avatar: string) {
+  return alovaServerInstance.user_auth.UpdateUserAvatar({
+    data: {
+      avatar,
+    },
+  });
+}
+
+// 修改用户资料
+export async function ClientUpdateUserInfo(
+  id: string,
+  data: UpdateUserInfoReq
+) {
+  return alovaServerInstance.user_auth.UpdateUserInfo({
+    pathParams: {
+      id,
+    },
+    data: data,
+  });
 }

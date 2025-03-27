@@ -12,6 +12,7 @@ type AppStore = {
   setToken: (token: string) => void;
   clearToken: () => void;
   setUserInfo: (userInfo: UserInfo) => void;
+  updateUserInfo: (userInfo: any) => void;
   setEmotions: (emotions: Emoji[]) => void;
   reset: () => void;
   setShowLoginPanel: (showLoginPanel: boolean) => void;
@@ -34,6 +35,14 @@ export const useAppStore = create<AppStore>()(
         }),
       setUserInfo: (userInfo: UserInfo) => {
         set(() => ({ userInfo }));
+      },
+      updateUserInfo: (userInfo: UserInfo) => {
+        set((state) => ({
+          userInfo: {
+            ...state.userInfo,
+            ...userInfo,
+          },
+        }));
       },
       setEmotions: (emotions: Emoji[]) => {
         set(() => ({ emotions }));
