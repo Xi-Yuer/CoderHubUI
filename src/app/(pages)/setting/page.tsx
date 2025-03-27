@@ -18,6 +18,7 @@ import {
 } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { DEFAULT_AVATAR } from "@/constant";
+import { ReloadOutlined } from "@ant-design/icons";
 
 export default function Page() {
   const [messageApi, messageContext] = message.useMessage();
@@ -74,7 +75,6 @@ export default function Page() {
   };
 
   const onFinish = (values: any) => {
-    console.log(values);
     ClientUpdateUserInfo(userInfo.id, values).then((res) => {
       updateUserInfo(res.data);
     });
@@ -159,7 +159,12 @@ export default function Page() {
                 <Input type="number" />
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit" className="w-full">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="w-full"
+                  icon={<ReloadOutlined />}
+                >
                   更新资料
                 </Button>
               </Form.Item>

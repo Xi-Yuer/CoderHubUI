@@ -10,16 +10,20 @@ export default function Page() {
   const [data, setData] = useState<GetPositionListRes | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
   const [selectedPosition, setSelectedPosition] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    ClientGetJobInfo().then((res) => {
-      setData(res.data);
-      if (res.data.list.length > 0) {
-        setSelectedCompany(res.data.list[0].name);
-      }
-    });
+    setLoading(true);
+    ClientGetJobInfo()
+      .then((res) => {
+        setData(res.data);
+        if (res.data.list.length > 0) {
+          setSelectedCompany(res.data.list[0].name);
+        }
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -95,6 +99,7 @@ export default function Page() {
       <List
         className="w-full"
         dataSource={filteredCompanies}
+        loading={loading}
         renderItem={(job: any) => (
           <Card
             key={job.name}

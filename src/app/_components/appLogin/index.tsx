@@ -17,27 +17,29 @@ export function AppLogin() {
 
   const menuContent = (
     <div className="w-full sm:w-60 p-2">
-      <div className="flex gap-2 items-center">
-        <Avatar
-          size={50}
-          src={appStore.userInfo.avatar || DEFAULT_AVATAR}
-          icon={<UserOutlined />}
-        />
-        <div className="flex flex-col flex-1">
-          <Text className="text-lg truncate">
-            {appStore.userInfo.nickname ||
-              appStore.userInfo.username ||
-              "未命名用户"}
-          </Text>
-          <Text type="secondary" className="text-sm truncate">
-            {appStore.userInfo.email || appStore.userInfo.phone || "未绑定邮箱"}
-          </Text>
-        </div>
-        <Link href={`/user/${appStore.userInfo.id}`} className="text-gray-950">
+      <Link href={`/user/${appStore.userInfo.id}`} className="text-gray-950">
+        <div className="flex gap-2 items-center">
+          <Avatar
+            size={50}
+            src={appStore.userInfo.avatar || DEFAULT_AVATAR}
+            icon={<UserOutlined />}
+          />
+          <div className="flex flex-col flex-1">
+            <Text className="text-lg truncate">
+              {appStore.userInfo.nickname ||
+                appStore.userInfo.username ||
+                "未命名用户"}
+            </Text>
+            <Text type="secondary" className="text-sm truncate">
+              {appStore.userInfo.email ||
+                appStore.userInfo.phone ||
+                "未绑定邮箱"}
+            </Text>
+          </div>
           <RightOutlined />
-        </Link>
-      </div>
-      <div className="flex items-center mt-4">
+        </div>
+      </Link>
+      <div className="flex mt-4">
         {[
           {
             label: "关注",
