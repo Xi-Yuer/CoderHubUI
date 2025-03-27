@@ -1,5 +1,6 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
+import { DEFAULT_AVATAR } from "@/constant";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Divider, Image, message, Spin } from "antd";
@@ -51,7 +52,7 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
           className="flex gap-4 text-slate-800"
         >
           <Image
-            src={userInfo?.avatar || "/default-avatar.png"}
+            src={userInfo?.avatar || DEFAULT_AVATAR}
             alt=""
             className="rounded-full"
             width={40}

@@ -11,7 +11,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Operation from "@/app/(pages)/post/_components/operation";
 import Link from "next/link";
-import { PREVIEW_THEME } from "@/constant";
+import { DEFAULT_AVATAR, PREVIEW_THEME } from "@/constant";
 
 export default function AppArticlePreviewDetail({
   item,
@@ -65,7 +65,7 @@ export default function AppArticlePreviewDetail({
                 className="w-10 h-10 rounded-full flex items-center justify-center text-white text-lg"
               >
                 <Image
-                  src={articleFromProps.author.avatar || "/default-avatar.png"}
+                  src={articleFromProps.author.avatar || DEFAULT_AVATAR}
                   alt="Avatar"
                   preview={false}
                   className="rounded-full"

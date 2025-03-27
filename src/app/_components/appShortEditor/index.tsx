@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import Emotion from "../emotion";
 import { useStore } from "zustand";
 import { useAppStore } from "@/store";
-import { SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
+import { DEFAULT_AVATAR, SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
 import AiEditor from "@/app/_components/AIEditor/init";
 
 type Props = {
@@ -79,7 +79,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
           return (
             <Image
               key={index}
-              src={item || "/default-avatar.png"}
+              src={item || DEFAULT_AVATAR}
               width={100}
               height={100}
               alt=""

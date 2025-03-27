@@ -12,6 +12,7 @@ export const responded = {
     try {
       const json = await response.json();
       if (json.code !== 200) {
+        alert(json.message);
         return Promise.reject(json.message);
       }
       return json;

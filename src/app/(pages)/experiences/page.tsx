@@ -24,13 +24,15 @@ export default function Page() {
   return (
     <div className="container flex flex-wrap gap-4">
       {contextHolder}
-      <Card className="w-full sm:w-80" title="条件筛选">
-        {current === "school" ? (
-          <SchoolFilter setSchoolParams={setSchoolParams} />
-        ) : (
-          <WorkFilter setWorkParams={setWorkParams} />
-        )}
-      </Card>
+      <div className="lg:sticky lg:top-[75px] h-fit lg:w-80 w-full">
+        <Card className="lg:w-80 w-full" title="条件筛选">
+          {current === "school" ? (
+            <SchoolFilter setSchoolParams={setSchoolParams} />
+          ) : (
+            <WorkFilter setWorkParams={setWorkParams} />
+          )}
+        </Card>
+      </div>
       <Card
         title="经验列表"
         className="flex-1 w-full"

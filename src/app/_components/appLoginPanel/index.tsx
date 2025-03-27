@@ -22,6 +22,7 @@ import {
 import { useAppStore } from "@/store";
 import { useStore } from "zustand";
 import { md5 } from "@/utils";
+import { DEFAULT_AVATAR } from "@/constant";
 
 const { Title, Text } = Typography;
 
@@ -85,7 +86,7 @@ export default function AppLoginPanel() {
             icon={
               userInfo.avatar ? (
                 <Image
-                  src={userInfo.avatar || "/default-avatar.png"}
+                  src={userInfo.avatar || DEFAULT_AVATAR}
                   alt="avatar"
                   width={64}
                   height={64}

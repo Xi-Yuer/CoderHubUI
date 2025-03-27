@@ -68,7 +68,7 @@ export default async function Page({ params }: Props) {
           bankID={bankID}
           questionID={questionID}
         />
-        <div className="hidden w-56 lg:w-80 md:flex md:flex-col gap-4">
+        <div className="hidden w-56 lg:w-80 md:flex md:flex-col gap-4 lg:sticky lg:top-[75px] h-full">
           <Card title="题库列表">
             {questionList?.map((item) => (
               <Link

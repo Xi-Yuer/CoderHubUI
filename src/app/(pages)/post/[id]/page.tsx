@@ -49,7 +49,9 @@ export default async function Page({ params }: PostProps) {
         {response.data ? (
           <>
             {/* 左侧操作栏（固定宽度） */}
-            <OperationPC id={id} />
+            <div className="sticky top-[75px] h-full">
+              <OperationPC id={id} />
+            </div>
 
             {/* 中间内容区域（自适应，确保不会溢出） */}
             <div className="flex-1 min-w-0 flex flex-col pb-10 pt-6 px-6 bg-white">
@@ -57,7 +59,7 @@ export default async function Page({ params }: PostProps) {
             </div>
 
             {/* 右侧信息栏（固定宽度，xl 及以上显示） */}
-            <div className="hidden xl:flex w-[300px] gap-4 flex-col">
+            <div className="hidden xl:flex w-[300px] gap-4 flex-col sticky top-[70px] h-full">
               <AuthInfomation id={response?.data?.author?.id} />
               <Category />
             </div>

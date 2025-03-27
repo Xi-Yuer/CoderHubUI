@@ -6,6 +6,7 @@ import { useAppStore } from "@/store";
 import { useStore } from "zustand";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { DEFAULT_AVATAR } from "@/constant";
 
 const { Text } = Typography;
 
@@ -19,20 +20,8 @@ export function AppLogin() {
       <div className="flex gap-2 items-center">
         <Avatar
           size={50}
-          icon={
-            appStore.userInfo.avatar ? (
-              <Image
-                src={appStore.userInfo.avatar || "/default-avatar.png"}
-                alt="avatar"
-                width={50}
-                height={50}
-                preview={false}
-                style={{ objectFit: "cover" }}
-              />
-            ) : (
-              <UserOutlined />
-            )
-          }
+          src={appStore.userInfo.avatar || DEFAULT_AVATAR}
+          icon={<UserOutlined />}
         />
         <div className="flex flex-col flex-1">
           <Text className="text-lg truncate">
@@ -91,9 +80,9 @@ export function AppLogin() {
     <Avatar
       size={40}
       icon={
-        appStore.userInfo.avatar ? (
+        appStore.userInfo.id ? (
           <Image
-            src={appStore.userInfo.avatar}
+            src={appStore.userInfo.avatar || DEFAULT_AVATAR}
             alt="avatar"
             width={40}
             height={40}

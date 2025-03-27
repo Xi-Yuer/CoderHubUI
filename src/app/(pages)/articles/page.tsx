@@ -110,7 +110,7 @@ export default function Page() {
   useEffect(getList, [page, userInfo.id, currentTag]);
 
   const SideBar = () => (
-    <div className="lg:flex w-[200px] h-full gap-4 flex-col">
+    <div className="lg:flex w-[200px] h-full gap-4 flex-col sticky top-[74px]">
       <Card className="flex flex-col flex-1 w-full items-center justify-center gap-10 !border-none">
         {!isMobile && getTagLoading && (
           <>

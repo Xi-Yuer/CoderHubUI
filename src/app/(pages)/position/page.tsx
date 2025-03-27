@@ -35,37 +35,39 @@ export default function Page() {
 
   const companyList = () => {
     return (
-      <Card className="w-60 flex flex-col">
-        <div className="mb-4">
-          <Select
-            placeholder="请选择城市"
-            showSearch
-            allowClear
-            className="w-full"
-            value={selectedPosition}
-            onChange={(value) => {
-              setSelectedPosition(value);
-            }}
-          >
-            {dictionary.city.map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
-              </Select.Option>
-            ))}
-          </Select>
-        </div>
-        {companies.map((company) => (
-          <span
-            className={`block text-slate-900 p-2 cursor-pointer hover:bg-gray-50 ${selectedCompany === company.name ? "bg-gray-100" : ""}`}
-            key={company.name}
-            onClick={() => {
-              setSelectedCompany(company.name);
-            }}
-          >
-            {company.name}
-          </span>
-        ))}
-      </Card>
+      <div className="h-full sticky top-[75px]">
+        <Card className="w-60 flex flex-col">
+          <div className="mb-4">
+            <Select
+              placeholder="请选择城市"
+              showSearch
+              allowClear
+              className="w-full"
+              value={selectedPosition}
+              onChange={(value) => {
+                setSelectedPosition(value);
+              }}
+            >
+              {dictionary.city.map((item) => (
+                <Select.Option key={item} value={item}>
+                  {item}
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
+          {companies.map((company) => (
+            <span
+              className={`block text-slate-900 p-2 cursor-pointer hover:bg-gray-50 ${selectedCompany === company.name ? "bg-gray-100" : ""}`}
+              key={company.name}
+              onClick={() => {
+                setSelectedCompany(company.name);
+              }}
+            >
+              {company.name}
+            </span>
+          ))}
+        </Card>
+      </div>
     );
   };
   return (

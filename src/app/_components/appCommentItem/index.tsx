@@ -108,7 +108,9 @@ export default function AppCommentItem({
             target="_blank"
             className="text-gray-500 text-sm"
           >
-            回复 @{commentFromProps.reply_to_user_info.nickname}
+            回复 @
+            {commentFromProps.reply_to_user_info.username ||
+              commentFromProps.reply_to_user_info.nickname}
           </Link>
         )}
         {/* 评论内容 */}
