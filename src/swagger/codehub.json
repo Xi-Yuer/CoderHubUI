@@ -2610,9 +2610,6 @@
         ],
         "tags": [
           "user_public"
-        ],
-        "consumes": [
-          "multipart/form-data"
         ]
       }
     },
@@ -7061,9 +7058,8 @@
           "description": " 提示信息"
         },
         "data": {
-          "type": "boolean",
-          "format": "boolean",
-          "description": " 是否更新成功"
+          "$ref": "#/definitions/UserInfo",
+          "description": " 用户信息"
         }
       },
       "title": "UpdateUserInfoResp",

@@ -18,6 +18,7 @@ import {
   ClientGetUserInfo,
   ClientLogin,
   ClientRegister,
+  ClientSendResetPasswordLink,
 } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { useStore } from "zustand";
@@ -33,12 +34,17 @@ type FieldType = {
   remember: boolean;
 };
 
+type ResetPasswordType = {
+  email: string;
+};
+
 export default function AppLoginPanel() {
   const [messageApi, messageContext] = message.useMessage();
   const [isRegister, setIsRegister] = useState(false); // 登录/注册切换
   const { showLoginPanel, setToken, setUserInfo, userInfo, setShowLoginPanel } =
     useStore(useAppStore, (state) => state);
   const [isMobile, setIsMobile] = useState(false);
+  const [resetPassword, setResetPassword] = useState(false);
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     if (isRegister) {
       // 注册接口调用
@@ -152,15 +158,22 @@ export default function AppLoginPanel() {
           )}
 
           {!isRegister && (
-            <Form.Item<FieldType>
-              name="remember"
-              valuePropName="checked"
-              style={{ marginBottom: "10px" }}
-            >
-              <Checkbox>记住我</Checkbox>
-            </Form.Item>
+            <div className="flex justify-between items-center">
+              <Form.Item<FieldType>
+                name="remember"
+                valuePropName="checked"
+                style={{ marginBottom: "10px" }}
+              >
+                <Checkbox>记住我</Checkbox>
+              </Form.Item>
+              <span
+                className="cursor-pointer hover:text-blue-500"
+                onClick={() => setResetPassword(true)}
+              >
+                忘记密码
+              </span>
+            </div>
           )}
-
           <Button
             type="primary"
             htmlType="submit"
@@ -211,6 +224,87 @@ export default function AppLoginPanel() {
       </>
     );
   };
+
+  const resetPasswordContent = () => {
+    const onResetPassword = (values: ResetPasswordType) => {
+      ClientSendResetPasswordLink(values).then((res) => {
+        messageApi.success("重置密码链接已发送到您的邮箱，请检查您的邮箱。");
+      });
+    };
+
+    return (
+      <>
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <Avatar
+            size={64}
+            icon={
+              userInfo.avatar ? (
+                <Image
+                  src={userInfo.avatar || DEFAULT_AVATAR}
+                  alt="avatar"
+                  width={64}
+                  height={64}
+                  preview={false}
+                ></Image>
+              ) : (
+                <UserOutlined />
+              )
+            }
+          />
+          <Title level={4} style={{ margin: "10px 0" }}>
+            重置密码
+          </Title>
+          <Text style={{ color: "#888" }}>
+            请输入您的注册邮箱，我们将发送一封包含重置密码链接的邮件到您的邮箱。
+          </Text>
+        </div>
+        <Form
+          name="resetPassword"
+          layout="vertical"
+          onFinish={onResetPassword}
+          style={{ margin: "0 auto", maxWidth: 300 }}
+        >
+          <Form.Item<ResetPasswordType>
+            name="email"
+            rules={[
+              { required: true, message: "请输入邮箱地址！" },
+              { type: "email", message: "请输入正确的邮箱地址！" },
+            ]}
+          >
+            <Input placeholder="邮箱地址" style={{ borderRadius: "4px" }} />
+          </Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            style={{
+              backgroundColor: "#000",
+              borderColor: "#000",
+              borderRadius: "4px",
+              color: "#fff",
+              fontWeight: "bold",
+            }}
+          >
+            重置密码
+          </Button>
+          <div style={{ marginTop: "20px", textAlign: "center" }}>
+            <Text style={{ fontSize: "12px", color: "#888" }}>
+              <span
+                onClick={() => setResetPassword(false)}
+                style={{
+                  color: "#000",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+              >
+                返回登录
+              </span>
+            </Text>
+          </div>
+        </Form>
+      </>
+    );
+  };
   return isMobile ? (
     <>
       <Drawer
@@ -235,7 +329,7 @@ export default function AppLoginPanel() {
         width={380}
       >
         {messageContext}
-        {loginContent()}
+        {resetPassword ? resetPasswordContent() : loginContent()}
       </Modal>
     </>
   );

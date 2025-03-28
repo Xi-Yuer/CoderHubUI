@@ -2612,10 +2612,11 @@ export type UpdateUserInfoResp = {
    */
   message?: string;
   /**
-   * 是否更新成功
+   * UserInfo
+   * ---
    * [required]
    */
-  data: boolean;
+  data: UserInfo;
 };
 export type UpdateUserInfoReq = {
   /**
@@ -7893,9 +7894,58 @@ declare global {
        *   code?: number
        *   // 提示信息
        *   message?: string
-       *   // 是否更新成功
+       *   // [title] UserInfo
        *   // [required]
-       *   data: boolean
+       *   data: {
+       *     // 用户ID
+       *     // [required]
+       *     id: string
+       *     // 用户名
+       *     // [required]
+       *     username: string
+       *     // 昵称
+       *     // [required]
+       *     nickname: string
+       *     // 邮箱
+       *     // [required]
+       *     email: string
+       *     // 手机号
+       *     // [required]
+       *     phone: string
+       *     // 头像
+       *     // [required]
+       *     avatar: string
+       *     // 性别 0:未知 1:男 2:女
+       *     // [required]
+       *     gender: '0' | '1'
+       *     // 年龄
+       *     // [required]
+       *     age: number
+       *     // 状态 true:正常 false:禁用
+       *     // [required]
+       *     status: boolean
+       *     // 角色 0:普通用户 1:管理员
+       *     // [required]
+       *     is_admin: boolean
+       *     // 创建时间
+       *     // [required]
+       *     create_at: number
+       *     // 更新时间
+       *     // [required]
+       *     update_at: number
+       *     // 关注数量
+       *     // [required]
+       *     follow_count: number
+       *     // 粉丝数量
+       *     // [required]
+       *     fans_count: number
+       *     // 是否已关注
+       *     // [required]
+       *     is_followed: boolean
+       *     // 文章数量
+       *     // [required]
+       *     article_count: number
+       *   }
        * }
        * ```
        */

@@ -9,6 +9,7 @@ import {
   GetSchoolExpListResp,
   LoginReq,
   RegisterReq,
+  ResetPasswordByLinkReq,
   UpdatePasswordReq,
   UpdateUserInfoReq,
 } from "@/alova/globals";
@@ -486,5 +487,19 @@ export async function ClientUpdateUserInfo(
       id,
     },
     data: data,
+  });
+}
+
+// 发送重置密码链接到邮箱
+export async function ClientSendResetPasswordLink(data: { email: string }) {
+  return alovaServerInstance.user_public.SendResetPasswordLink({
+    data: data,
+  });
+}
+
+// 重置密码
+export async function ClientResetPassword(data: ResetPasswordByLinkReq) {
+  return alovaServerInstance.user_public.ResetPasswordByLink({
+    data,
   });
 }
