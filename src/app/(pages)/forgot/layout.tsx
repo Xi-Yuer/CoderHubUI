@@ -2,6 +2,7 @@ import React from "react";
 
 import type { Metadata } from "next";
 import Image from "next/image";
+import { LOGO } from "@/constant";
 
 export const metadata: Metadata = {
   title: "Coderhub-程序员的技术社区",
@@ -21,7 +22,13 @@ export default function layout({ children }: Props) {
       <header className="h-20 bg-white shadow-sm text-nowrap absolute left-0 right-0 top-0 z-20">
         <div className="flex justify-between items-center h-full px-10">
           <div className="flex items-center gap-2">
-            <Image src="/favicon.ico" alt="logo" width={30} height={30} />
+            <Image
+              src={LOGO}
+              alt="logo"
+              width={30}
+              height={30}
+              style={{ width: "30px", height: "30px" }}
+            />
             <h2 className="text-2xl font-semibold">CoderHub 安全中心</h2>
           </div>
         </div>

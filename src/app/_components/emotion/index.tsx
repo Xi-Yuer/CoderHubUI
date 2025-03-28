@@ -35,6 +35,7 @@ export default function Emotion({ onClick }: Props) {
             width={200}
             height={200}
             className="w-12 h-12 m-1"
+            style={{ width: "200px", height: "200px" }}
           />
           <p className="text-xs text-gray-500">{item.description}</p>
         </div>

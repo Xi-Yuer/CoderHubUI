@@ -9,8 +9,10 @@ import {
 } from "@ant-design/icons";
 import { PreviewThemes } from "md-editor-rt";
 import defaultAvatar from "../assets/default_avatar.png";
+import svgLogo from '@/assets/favicon.svg'
 
 export const DEFAULT_AVATAR = defaultAvatar.src;
+export const LOGO = svgLogo.src;
 
 export const navigatonList = [
   {

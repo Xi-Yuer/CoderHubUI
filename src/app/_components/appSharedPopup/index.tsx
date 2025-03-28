@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, QRCode, message } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
+import { LOGO } from "@/constant";
 
 export default function AppSharedPopUp({ id }: { id: string }) {
   const LocalHostURL = process.env.NEXT_PUBLIC_LOCAL_BASE_URL;
@@ -41,7 +42,7 @@ export default function AppSharedPopUp({ id }: { id: string }) {
           errorLevel="H"
           size={qrSize}
           value={`${LocalHostURL}/post/${id}`}
-          icon="/favicon.ico"
+          icon={LOGO}
           className="border-0"
         />
       </div>
@@ -52,7 +53,9 @@ export default function AppSharedPopUp({ id }: { id: string }) {
       >
         <div className="flex items-center justify-center space-x-2 mt-2">
           <CopyOutlined />
-          <span className="text-slate-600 hover:text-slate-800 text-sm h-auto active:bg-gray-100 cursor-pointer">复制链接</span>
+          <span className="text-slate-600 hover:text-slate-800 text-sm h-auto active:bg-gray-100 cursor-pointer">
+            复制链接
+          </span>
         </div>
       </span>
     </div>

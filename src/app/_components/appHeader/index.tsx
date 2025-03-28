@@ -1,5 +1,10 @@
 "use client";
-import { mobileNavigatonList, navigatonList, popoverList } from "@/constant";
+import {
+  LOGO,
+  mobileNavigatonList,
+  navigatonList,
+  popoverList,
+} from "@/constant";
 import {
   BellOutlined,
   EditOutlined,
@@ -38,7 +43,13 @@ export function AppHeader() {
       <div className="container mx-auto flex justify-between items-center px-4 h-full">
         {/* Logo 部分 */}
         <div className="flex items-center gap-4">
-          <Image src="/favicon.ico" alt="logo" width={30} height={30}></Image>
+          <Image
+            src={LOGO}
+            alt="logo"
+            width={30}
+            height={30}
+            style={{ width: "30px", height: "30px" }}
+          ></Image>
           <Link href="/" className="text-2xl font-bold text-gray-800">
             CoderHub
           </Link>

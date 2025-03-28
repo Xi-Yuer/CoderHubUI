@@ -2,7 +2,6 @@
 import { UserInfo } from "@/alova/globals";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { Avatar, Button, Card, message, Spin } from "antd";
 import { ManOutlined, UserOutlined, WomanOutlined } from "@ant-design/icons";
 import { DEFAULT_AVATAR } from "@/constant";

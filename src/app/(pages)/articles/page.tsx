@@ -209,6 +209,11 @@ export default function Page() {
           {loading ? "Loaing" : "没有更多了"}
         </div>
       </div>
+      {/* 右侧推荐栏 */}
+      <div className="hidden xl:flex w-[200px] gap-4 flex-col">
+        <Card>Recommend</Card>
+        <Card>Recommend</Card>
+      </div>
     </div>
   );
 }
