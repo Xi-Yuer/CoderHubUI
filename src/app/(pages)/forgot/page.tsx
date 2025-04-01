@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Input, Button, message, Form } from "antd";
 import { useSearchParams } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -44,74 +44,76 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-96 bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-xl font-bold text-center mb-4">重置密码</h2>
-        <Form
-          initialValues={{ email: email || "" }}
-          layout="horizontal"
-          onFinish={handleReset}
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 16 }}
-        >
-          <Form.Item<FiledType>
-            name="email"
-            label="邮箱"
-            rules={[{ required: true, message: "请输入邮箱" }]}
+    <Suspense>
+      <div className="flex flex-col items-center min-h-96 bg-gray-100 p-4">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <h2 className="text-xl font-bold text-center mb-4">重置密码</h2>
+          <Form
+            initialValues={{ email: email || "" }}
+            layout="horizontal"
+            onFinish={handleReset}
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 16 }}
           >
-            <Input
-              placeholder="输入邮箱"
-              value={email || ""}
-              readOnly
-              disabled
-            />
-          </Form.Item>
+            <Form.Item<FiledType>
+              name="email"
+              label="邮箱"
+              rules={[{ required: true, message: "请输入邮箱" }]}
+            >
+              <Input
+                placeholder="输入邮箱"
+                value={email || ""}
+                readOnly
+                disabled
+              />
+            </Form.Item>
 
-          <Form.Item<FiledType>
-            label="新密码"
-            name="password"
-            rules={[{ required: true, message: "请输入新密码" }]}
-          >
-            <Input.Password
-              placeholder="输入新密码"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Item>
+            <Form.Item<FiledType>
+              label="新密码"
+              name="password"
+              rules={[{ required: true, message: "请输入新密码" }]}
+            >
+              <Input.Password
+                placeholder="输入新密码"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Item>
 
-          <Form.Item<FiledType>
-            label="确认新密码"
-            name="confirmPassword"
-            rules={[
-              { required: true, message: "请输入确认新密码" },
-              {
-                validator(_, value) {
-                  if (value === password) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error("两次输入的密码不一致"));
+            <Form.Item<FiledType>
+              label="确认新密码"
+              name="confirmPassword"
+              rules={[
+                { required: true, message: "请输入确认新密码" },
+                {
+                  validator(_, value) {
+                    if (value === password) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error("两次输入的密码不一致"));
+                  },
                 },
-              },
-            ]}
-          >
-            <Input.Password
-              placeholder="确认新密码"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </Form.Item>
+              ]}
+            >
+              <Input.Password
+                placeholder="确认新密码"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </Form.Item>
 
-          <Button
-            htmlType="submit"
-            type="primary"
-            loading={loading}
-            block
-            icon={loading ? <LoadingOutlined /> : null}
-          >
-            重置密码
-          </Button>
-        </Form>
+            <Button
+              htmlType="submit"
+              type="primary"
+              loading={loading}
+              block
+              icon={loading ? <LoadingOutlined /> : null}
+            >
+              重置密码
+            </Button>
+          </Form>
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 }
