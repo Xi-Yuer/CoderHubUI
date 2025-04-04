@@ -69,9 +69,8 @@ function ChatMessageItem({
     >
       <div className="max-w-lg break-words break-all overflow-hidden">
         <div
-          className={`rounded border px-4 py-2 ${
-            isSelf ? "bg-slate-600" : "bg-gray-300"
-          }`}
+          className={`rounded border px-4 py-2 ${isSelf ? "bg-slate-600" : "bg-gray-300"
+            }`}
         >
           {renderContent()}
         </div>
@@ -152,12 +151,9 @@ export default function ChatComponent() {
   };
 
   return (
-    <div
-      className="flex border min-h-[400px] rounded-lg overflow-hidden shadow-md bg-white w-full"
-      style={{ height: "calc(100vh - 100px)" }}
-    >
+    <div className="flex flex-col md:flex-row border min-h-[400px] rounded-lg overflow-hidden shadow-md bg-white w-full" style={{ height: "calc(100vh - 100px)" }}>
       {/* 会话列表 */}
-      <div className="w-80 border-r bg-gray-50 p-4">
+      <div className="w-full md:w-80 border-b md:border-r bg-gray-50 p-4">
         <Input.Search
           placeholder="搜索联系人"
           value={searchSessionName}
@@ -178,48 +174,40 @@ export default function ChatComponent() {
           renderItem={(item) => (
             <div
               key={item.id}
-              className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${
-                currentSession?.id === item.id ? "bg-gray-200" : ""
-              }`}
+              className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${currentSession?.id === item.id ? "bg-gray-200" : ""}`}
               onClick={() => setCurrentSession(item)}
             >
               <Badge count={item.unreadMessageCount} className="flex-1">
                 <div className="text-base font-medium">{item.sessionName}</div>
-                <div className="text-sm text-gray-500">
-                  {item.lastMessageContent}
-                </div>
+                <div className="text-sm text-gray-500">{item.lastMessageContent}</div>
               </Badge>
             </div>
           )}
-        ></List>
+        />
       </div>
 
       {/* 聊天窗口 */}
-      <div
-        className="flex-1 flex flex-col min-w-0 min-h-[400px] relative"
-        style={{ height: "calc(100vh - 100px)" }}
-      >
+      <div className="flex-1 flex flex-col min-w-0 min-h-[400px] relative">
         {currentSession ? (
           <>
+            {/* 当前会话标题 */}
             <div className="h-16 border-b flex items-center px-4 bg-white shadow-sm">
               <h2 className="text-xl">{currentSession.sessionName}</h2>
             </div>
-            <div
-              className="flex-1 overflow-y-auto p-4  pb-14"
-              style={{ maxHeight: "calc(100vh - 200px)" }}
-            >
-              <VirtualList
-                data={messageList}
-                itemKey="message_id"
-                height={window.innerHeight - 300}
-              >
-                {(msg: PrivateMessage) => {
+
+            {/* 消息列表 */}
+            <div className="flex-1 overflow-y-auto p-4">
+              <List
+                dataSource={messageList}
+                renderItem={(msg: PrivateMessage) => {
                   const isSelf = msg.sender_id === userInfo.id;
                   return <ChatMessageItem msg={msg} isSelf={isSelf} />;
                 }}
-              </VirtualList>
+              />
             </div>
-            <div className="border-t w-full p-3 bg-white shadow-inner absolute bottom-0 left-0 right-0">
+
+            {/* 发送消息的打字框 */}
+            <div className="border-t w-full p-3 bg-white shadow-inner">
               <AIEditor
                 placeholder="按回车发送消息，Shift+Enter换行"
                 value={value}
@@ -230,10 +218,8 @@ export default function ChatComponent() {
                 toolbarKeys={simpleToolbarKeys}
                 style={{ height: 200 }}
                 onKeyDown={(e) => {
-                  // 监听回车键
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
-                    // 处理回车键事件
                     if (value) {
                       const message: PrivateMessage = {
                         session_id: currentSession.id,
