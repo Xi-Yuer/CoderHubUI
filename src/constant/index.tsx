@@ -9,7 +9,8 @@ import {
 } from "@ant-design/icons";
 import { PreviewThemes } from "md-editor-rt";
 import defaultAvatar from "../assets/default_avatar.png";
-import svgLogo from '@/assets/favicon.svg'
+import svgLogo from "@/assets/favicon.svg";
+import PrivateMessage from "@/app/(pages)/notification/_components/PrivateMessage";
 
 export const DEFAULT_AVATAR = defaultAvatar.src;
 export const LOGO = svgLogo.src;
@@ -74,6 +75,12 @@ export const popoverList = [
     path: "/notification/follow",
     key: "follow",
     page: <Message messageType={MESSAG_TYPE.MessageFollow} />,
+  },
+  {
+    name: "私信",
+    path: "/notification/message",
+    key: "message",
+    page: <PrivateMessage />,
   },
   {
     name: "系统通知",

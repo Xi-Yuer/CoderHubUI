@@ -74,6 +74,9 @@ export default {
   'school_exp_auth.CreateSchoolExp': ['POST', '/api/school_exp/create'],
   'school_exp_public.ListSchoolExp': ['GET', '/api/school_exp/list'],
   'school_exp_auth.DeleteSchoolExp': ['DELETE', '/api/school_exp/{id}'],
+  'session_auth.CreateSession': ['POST', '/api/session/create'],
+  'session_auth.DeleteSession': ['DELETE', '/api/session/delete/{id}'],
+  'session_auth.ListSession': ['GET', '/api/session/list'],
   'tag_auth.CreateTag': ['POST', '/api/tag/create'],
   'tag_public.GetAllTagList': ['GET', '/api/tag/list'],
   'tag_public.GetSystemTagList': ['GET', '/api/tag/system/list'],
@@ -91,5 +94,6 @@ export default {
   'user_auth.UpdateUserAvatar': ['PUT', '/api/user/update_avatar'],
   'work_exp_auth.CreateWorkExp': ['POST', '/api/work_exp/create'],
   'work_exp_public.ListWorkExp': ['GET', '/api/work_exp/list'],
-  'work_exp_auth.DeleteWorkExp': ['DELETE', '/api/work_exp/{id}']
+  'work_exp_auth.DeleteWorkExp': ['DELETE', '/api/work_exp/{id}'],
+  'ws_auth.CreateWebSocketConnection': ['GET', '/api/ws/']
 };

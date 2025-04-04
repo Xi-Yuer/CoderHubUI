@@ -503,3 +503,16 @@ export async function ClientResetPassword(data: ResetPasswordByLinkReq) {
     data,
   });
 }
+
+// 获取用户会话信息
+export interface GetUserSessionReq {
+  sessionName?: string;
+  userID: string;
+  page: number;
+  page_size: number;
+}
+export async function ClientGetUserSession(params: GetUserSessionReq) {
+  return alovaServerInstance.session_auth.ListSession({
+    params,
+  });
+}

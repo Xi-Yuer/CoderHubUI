@@ -2208,6 +2208,129 @@
         ]
       }
     },
+    "/api/session/create": {
+      "post": {
+        "summary": "创建一个会话",
+        "operationId": "CreateSession",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateSessionResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSessionReq"
+            }
+          }
+        ],
+        "tags": [
+          "session_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/session/delete/{id}": {
+      "delete": {
+        "summary": "删除会话",
+        "operationId": "DeleteSession",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteSessionResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteSessionReq"
+            }
+          }
+        ],
+        "tags": [
+          "session_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/session/list": {
+      "get": {
+        "summary": "获取会话列表",
+        "operationId": "ListSession",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetSessionListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "sessionName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "session_auth"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/tag/create": {
       "post": {
         "summary": "创建分类标签",
@@ -2579,9 +2702,6 @@
         ],
         "tags": [
           "user_public"
-        ],
-        "consumes": [
-          "multipart/form-data"
         ]
       }
     },
@@ -2818,6 +2938,21 @@
           {
             "apiKey": []
           }
+        ]
+      }
+    },
+    "/api/ws/": {
+      "get": {
+        "summary": "创建WebSocket连接",
+        "operationId": "CreateWebSocketConnection",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "tags": [
+          "ws_auth"
         ]
       }
     }
@@ -3760,6 +3895,39 @@
         "data"
       ]
     },
+    "CreateSessionReq": {
+      "type": "object",
+      "properties": {
+        "peerID": {
+          "type": "string"
+        }
+      },
+      "title": "CreateSessionReq",
+      "required": [
+        "peerID"
+      ]
+    },
+    "CreateSessionResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/Session"
+        }
+      },
+      "title": "CreateSessionResp",
+      "required": [
+        "data"
+      ]
+    },
     "CreateTagReq": {
       "type": "object",
       "properties": {
@@ -4248,6 +4416,32 @@
         }
       },
       "title": "DeleteSchoolExpResp",
+      "required": [
+        "data"
+      ]
+    },
+    "DeleteSessionReq": {
+      "type": "object",
+      "title": "DeleteSessionReq"
+    },
+    "DeleteSessionResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "DeleteSessionResp",
       "required": [
         "data"
       ]
@@ -5606,6 +5800,52 @@
         "data"
       ]
     },
+    "GetSessionListReq": {
+      "type": "object",
+      "properties": {
+        "sessionName": {
+          "type": "string"
+        },
+        "userID": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetSessionListReq",
+      "required": [
+        "userID",
+        "page",
+        "page_size"
+      ]
+    },
+    "GetSessionListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/SessionList"
+        }
+      },
+      "title": "GetSessionListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetTagListReq": {
       "type": "object",
       "properties": {
@@ -6217,6 +6457,62 @@
         "data"
       ]
     },
+    "PrivateMessage": {
+      "type": "object",
+      "properties": {
+        "messageId": {
+          "type": "string"
+        },
+        "sessionId": {
+          "type": "string"
+        },
+        "senderId": {
+          "type": "string"
+        },
+        "receiverId": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isRecalled": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "PrivateMessage",
+      "required": [
+        "messageId",
+        "sessionId",
+        "senderId",
+        "receiverId",
+        "content",
+        "contentType",
+        "status",
+        "timestamp",
+        "isRecalled",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
     "Question": {
       "type": "object",
       "properties": {
@@ -6616,6 +6912,63 @@
       "title": "SendResetPasswordLinkResp",
       "required": [
         "data"
+      ]
+    },
+    "Session": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "sessionName": {
+          "type": "string"
+        },
+        "userID": {
+          "type": "string"
+        },
+        "peerID": {
+          "type": "string"
+        },
+        "lastMessageID": {
+          "type": "string"
+        },
+        "lastMessageContent": {
+          "type": "string"
+        },
+        "unreadMessageCount": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Session",
+      "required": [
+        "id",
+        "sessionName",
+        "userID",
+        "peerID",
+        "lastMessageID",
+        "lastMessageContent",
+        "unreadMessageCount"
+      ]
+    },
+    "SessionList": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Session"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SessionList",
+      "required": [
+        "list",
+        "total"
       ]
     },
     "Tag": {
@@ -7214,6 +7567,10 @@
         "list"
       ]
     },
+    "WebSocketResponse": {
+      "type": "object",
+      "title": "WebSocketResponse"
+    },
     "WorkExp": {
       "type": "object",
       "properties": {
@@ -7278,6 +7635,22 @@
       "required": [
         "total",
         "list"
+      ]
+    },
+    "WsRequest": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        }
+      },
+      "title": "WsRequest",
+      "required": [
+        "type",
+        "data"
       ]
     }
   },

@@ -2287,6 +2287,99 @@ export type DeleteSchoolExpResp = {
   data: boolean;
 };
 export type DeleteSchoolExpReq = object;
+export type Session = {
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  sessionName: string;
+  /**
+   * [required]
+   */
+  userID: string;
+  /**
+   * [required]
+   */
+  peerID: string;
+  /**
+   * [required]
+   */
+  lastMessageID: string;
+  /**
+   * [required]
+   */
+  lastMessageContent: string;
+  /**
+   * [required]
+   */
+  unreadMessageCount: number;
+};
+export type CreateSessionResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * Session
+   * ---
+   * [required]
+   */
+  data: Session;
+};
+export type CreateSessionReq = {
+  /**
+   * [required]
+   */
+  peerID: string;
+};
+export type DeleteSessionResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: boolean;
+};
+export type DeleteSessionReq = object;
+export type SessionList = {
+  /**
+   * [required]
+   */
+  list: Session[];
+  /**
+   * [required]
+   */
+  total: number;
+};
+export type GetSessionListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * SessionList
+   * ---
+   * [required]
+   */
+  data: SessionList;
+};
 export type CreateTagResp = {
   /**
    * 状态码
@@ -7438,6 +7531,191 @@ declare global {
         config: Config
       ): Alova2Method<GetSchoolExpListResp, 'school_exp_public.ListSchoolExp', Config>;
     };
+    session_auth: {
+      /**
+       * ---
+       *
+       * [POST] 创建一个会话
+       *
+       * **path:** /api/session/create
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // [required]
+       *   peerID: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] Session
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     id: string
+       *     // [required]
+       *     sessionName: string
+       *     // [required]
+       *     userID: string
+       *     // [required]
+       *     peerID: string
+       *     // [required]
+       *     lastMessageID: string
+       *     // [required]
+       *     lastMessageContent: string
+       *     // [required]
+       *     unreadMessageCount: number
+       *   }
+       * }
+       * ```
+       */
+      CreateSession<
+        Config extends Alova2MethodConfig<CreateSessionResp> & {
+          data: CreateSessionReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<CreateSessionResp, 'session_auth.CreateSession', Config>;
+      /**
+       * ---
+       *
+       * [DELETE] 删除会话
+       *
+       * **path:** /api/session/delete/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: boolean
+       * }
+       * ```
+       */
+      DeleteSession<
+        Config extends Alova2MethodConfig<DeleteSessionResp> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+          data: DeleteSessionReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<DeleteSessionResp, 'session_auth.DeleteSession', Config>;
+      /**
+       * ---
+       *
+       * [GET] 获取会话列表
+       *
+       * **path:** /api/session/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   sessionName?: string
+       *   // [required]
+       *   userID: string
+       *   // [required]
+       *   page: number
+       *   // [required]
+       *   page_size: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] SessionList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     list: Array<{
+       *       // [required]
+       *       id: string
+       *       // [required]
+       *       sessionName: string
+       *       // [required]
+       *       userID: string
+       *       // [required]
+       *       peerID: string
+       *       // [required]
+       *       lastMessageID: string
+       *       // [required]
+       *       lastMessageContent: string
+       *       // [required]
+       *       unreadMessageCount: number
+       *     }>
+       *     // [required]
+       *     total: number
+       *   }
+       * }
+       * ```
+       */
+      ListSession<
+        Config extends Alova2MethodConfig<GetSessionListResp> & {
+          params: {
+            sessionName?: string;
+            /**
+             * [required]
+             */
+            userID: string;
+            /**
+             * [required]
+             */
+            page: number;
+            /**
+             * [required]
+             */
+            page_size: number;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetSessionListResp, 'session_auth.ListSession', Config>;
+    };
     tag_auth: {
       /**
        * ---
@@ -8561,6 +8839,25 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetWorkExpListResp, 'work_exp_public.ListWorkExp', Config>;
+    };
+    ws_auth: {
+      /**
+       * ---
+       *
+       * [GET] 创建WebSocket连接
+       *
+       * **path:** /api/ws/
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = unknown
+       * ```
+       */
+      CreateWebSocketConnection<Config extends Alova2MethodConfig<unknown>>(
+        config?: Config
+      ): Alova2Method<unknown, 'ws_auth.CreateWebSocketConnection', Config>;
     };
   }
 
