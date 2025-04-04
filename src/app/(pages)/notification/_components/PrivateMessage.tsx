@@ -204,11 +204,14 @@ export default function ChatComponent() {
             <div className="h-16 border-b flex items-center px-4 bg-white shadow-sm">
               <h2 className="text-xl">{currentSession.sessionName}</h2>
             </div>
-            <div className="flex-1 overflow-y-auto p-4">
+            <div
+              className="flex-1 overflow-y-auto p-4  pb-14"
+              style={{ maxHeight: "calc(100vh - 200px)" }}
+            >
               <VirtualList
                 data={messageList}
-                height={window.innerHeight - 300}
                 itemKey="message_id"
+                height={window.innerHeight - 300}
               >
                 {(msg: PrivateMessage) => {
                   const isSelf = msg.sender_id === userInfo.id;
