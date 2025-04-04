@@ -1,13 +1,13 @@
 "use client";
 import { Session } from "@/alova/globals";
-import { simpleToolbarKeys } from "@/app/_components/AIEditor/toolbarKeys";
 import { ClientGetUserSession } from "@/request/apis/web";
 import { useAppStore } from "@/store";
-import { Badge, Button, Empty, Image, Input, List, Spin } from "antd";
+import { Badge, Button, Image, Input, List, Spin } from "antd";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useWebSocket } from "ahooks";
-import VirtualList from "rc-virtual-list";
+import { Drawer } from 'antd';
+import { MenuOutlined } from "@ant-design/icons";
 
 const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
   ssr: false,
@@ -35,7 +35,6 @@ function ChatMessageItem({
   msg: PrivateMessage;
   isSelf: boolean;
 }) {
-  const timestamp = new Date(Number(msg.timestamp) * 1000).toLocaleString();
 
   const renderContent = () => {
     switch (msg.content_type) {
@@ -79,19 +78,18 @@ function ChatMessageItem({
   );
 }
 
+
+
 export default function ChatComponent() {
   const { token, userInfo } = useAppStore.getState();
   const [value, setValue] = useState("");
-  // 当前聊天窗口消息列表
   const [messageList, setMessageList] = useState<PrivateMessage[]>([]);
-  // 会话列表
   const [userSessionList, setUserSessionList] = useState<Session[]>([]);
-  // 当前聊天窗口会话
   const [currentSession, setCurrentSession] = useState<Session | null>(null);
-  // 会话总数
   const [sessionTotal, setSessionTotal] = useState(0);
   const [searchSessionName, setSearchSessionName] = useState("");
   const [page, setPage] = useState(1);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false); // 新增状态来控制抽屉的显示与隐藏
 
   const { sendMessage, latestMessage } = useWebSocket(
     token ? `ws://localhost/api/ws?token=${token}` : "",
@@ -152,8 +150,52 @@ export default function ChatComponent() {
 
   return (
     <div className="flex flex-col md:flex-row border min-h-[400px] rounded-lg overflow-hidden shadow-md bg-white w-full" style={{ height: "calc(100vh - 100px)" }}>
-      {/* 会话列表 */}
-      <div className="w-full md:w-80 border-b md:border-r bg-gray-50 p-4">
+      {/* 会话列表，PC 端正常显示，移动端使用抽屉 */}
+      <div className="hidden md:block w-80 border-r bg-gray-50 p-4">
+        <Input.Search
+          allowClear
+          placeholder="搜索联系人"
+          value={searchSessionName}
+          onChange={(e) => setSearchSessionName(e.target.value)}
+          onSearch={getUserSession}
+          className="mb-4"
+        />
+        <List
+          pagination={{
+            current: page,
+            total: sessionTotal,
+            pageSize: 10,
+            onChange: setPage,
+          }}
+          style={{ height: "calc(100vh - 200px)", overflow: "auto" }}
+          dataSource={userSessionList}
+          locale={{ emptyText: "暂无联系人" }}
+          renderItem={(item) => (
+            <div
+              key={item.id}
+              className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${currentSession?.id === item.id ? "bg-gray-200" : ""}`}
+              onClick={() => {
+                setCurrentSession(item);
+              }}
+            >
+              <Badge count={item.unreadMessageCount} className="flex-1">
+                <div className="text-base font-medium">{item.sessionName}</div>
+                <div className="text-sm text-gray-500">{item.lastMessageContent}</div>
+              </Badge>
+            </div>
+          )}
+        />
+      </div>
+      {/* 移动端使用抽屉展示会话列表 */}
+      <Drawer
+        title="会话列表"
+        placement="left"
+        closable={true}
+        onClose={() => setIsDrawerOpen(false)}
+        open={isDrawerOpen}
+        width={300}
+        className="md:hidden"
+      >
         <Input.Search
           placeholder="搜索联系人"
           value={searchSessionName}
@@ -175,7 +217,10 @@ export default function ChatComponent() {
             <div
               key={item.id}
               className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${currentSession?.id === item.id ? "bg-gray-200" : ""}`}
-              onClick={() => setCurrentSession(item)}
+              onClick={() => {
+                setCurrentSession(item);
+                setIsDrawerOpen(false); // 选择会话后关闭抽屉
+              }}
             >
               <Badge count={item.unreadMessageCount} className="flex-1">
                 <div className="text-base font-medium">{item.sessionName}</div>
@@ -184,15 +229,20 @@ export default function ChatComponent() {
             </div>
           )}
         />
-      </div>
+      </Drawer>
 
       {/* 聊天窗口 */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-[400px] relative">
-        {currentSession ? (
-          <>
-            {/* 当前会话标题 */}
+      {
+        currentSession ? (
+          <div className="flex-1 flex flex-col min-w-0 min-h-[400px] relative">
+            {/* 新增按钮用于在移动端打开会话列表抽屉 */}
             <div className="h-16 border-b flex items-center px-4 bg-white shadow-sm">
-              <h2 className="text-xl">{currentSession.sessionName}</h2>
+              <div className="md:hidden">
+                {!currentSession && (
+                  <Button onClick={() => setIsDrawerOpen(true)} icon={<MenuOutlined />} style={{ marginRight: 16 }} />
+                )}
+              </div>
+              <h2 className="text-xl">{currentSession?.sessionName}</h2>
             </div>
 
             {/* 消息列表 */}
@@ -207,7 +257,7 @@ export default function ChatComponent() {
             </div>
 
             {/* 发送消息的打字框 */}
-            <div className="border-t w-full p-3 bg-white shadow-inner">
+            <div className="border-t w-full bg-white">
               <AIEditor
                 placeholder="按回车发送消息，Shift+Enter换行"
                 value={value}
@@ -215,12 +265,12 @@ export default function ChatComponent() {
                 allowUploadImage={false}
                 textSelectionBubbleMenu={false}
                 onChange={setValue}
-                toolbarKeys={simpleToolbarKeys}
+                toolbarKeys={[]}
                 style={{ height: 200 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
-                    if (value) {
+                    if (value && currentSession) {
                       const message: PrivateMessage = {
                         session_id: currentSession.id,
                         receiver_id: currentSession.peerID,
@@ -250,13 +300,12 @@ export default function ChatComponent() {
                 }}
               />
             </div>
-          </>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full text-gray-500">
-            <Empty description="暂未选中会话" />
           </div>
-        )}
-      </div>
+        ) : (
+          <div className="text-xl flex-1 flex justify-center items-center text-slate-600">请选择会话</div>
+        )
+      }
+
     </div>
   );
 }
