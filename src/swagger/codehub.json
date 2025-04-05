@@ -1585,6 +1585,59 @@
         ]
       }
     },
+    "/api/message/chat/list": {
+      "get": {
+        "summary": "获取聊天消息列表",
+        "operationId": "ListChatMessage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetPrivateChatMessageListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "sender_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "receiver_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "message_auth"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/message/delete/{id}": {
       "delete": {
         "summary": "删除消息",
@@ -2323,6 +2376,38 @@
         ],
         "consumes": [
           "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/session/update": {
+      "post": {
+        "summary": "更新会话消息",
+        "operationId": "UpdateMessage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateChatSessionResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateChatSessionReq"
+            }
+          }
+        ],
+        "tags": [
+          "session_auth"
         ],
         "security": [
           {
@@ -3263,6 +3348,26 @@
       "title": "CancelLikeAcademicNavigatorResp",
       "required": [
         "data"
+      ]
+    },
+    "ChatMessageList": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrivateMessage"
+          }
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ChatMessageList",
+      "required": [
+        "list",
+        "total"
       ]
     },
     "ChatWithAIReq": {
@@ -5055,6 +5160,53 @@
         "data"
       ]
     },
+    "GetChatMessageListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sender_id": {
+          "type": "string"
+        },
+        "receiver_id": {
+          "type": "string"
+        }
+      },
+      "title": "GetChatMessageListReq",
+      "required": [
+        "page",
+        "page_size",
+        "sender_id",
+        "receiver_id"
+      ]
+    },
+    "GetChatMessageListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/GetMessageListResp"
+        }
+      },
+      "title": "GetChatMessageListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetCommentRepliesReq": {
       "type": "object",
       "properties": {
@@ -5530,6 +5682,27 @@
         }
       },
       "title": "GetPositionListResp",
+      "required": [
+        "data"
+      ]
+    },
+    "GetPrivateChatMessageListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/ChatMessageList"
+        }
+      },
+      "title": "GetPrivateChatMessageListResp",
       "required": [
         "data"
       ]
@@ -6460,22 +6633,22 @@
     "PrivateMessage": {
       "type": "object",
       "properties": {
-        "messageId": {
+        "message_id": {
           "type": "string"
         },
-        "sessionId": {
+        "session_id": {
           "type": "string"
         },
-        "senderId": {
+        "sender_id": {
           "type": "string"
         },
-        "receiverId": {
+        "receiver_id": {
           "type": "string"
         },
         "content": {
           "type": "string"
         },
-        "contentType": {
+        "content_type": {
           "type": "string"
         },
         "status": {
@@ -6485,32 +6658,32 @@
           "type": "integer",
           "format": "int64"
         },
-        "isRecalled": {
+        "is_recalled": {
           "type": "boolean",
           "format": "boolean"
         },
-        "createdAt": {
+        "created_at": {
           "type": "integer",
           "format": "int64"
         },
-        "updatedAt": {
+        "updated_at": {
           "type": "integer",
           "format": "int64"
         }
       },
       "title": "PrivateMessage",
       "required": [
-        "messageId",
-        "sessionId",
-        "senderId",
-        "receiverId",
+        "message_id",
+        "session_id",
+        "sender_id",
+        "receiver_id",
         "content",
-        "contentType",
+        "content_type",
         "status",
         "timestamp",
-        "isRecalled",
-        "createdAt",
-        "updatedAt"
+        "is_recalled",
+        "created_at",
+        "updated_at"
       ]
     },
     "Question": {
@@ -7158,6 +7331,42 @@
         }
       },
       "title": "UpdateArticleResp",
+      "required": [
+        "data"
+      ]
+    },
+    "UpdateChatSessionReq": {
+      "type": "object",
+      "properties": {
+        "sessionId": {
+          "type": "string"
+        },
+        "sessionName": {
+          "type": "string"
+        }
+      },
+      "title": "UpdateChatSessionReq",
+      "required": [
+        "sessionId"
+      ]
+    },
+    "UpdateChatSessionResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/Session"
+        }
+      },
+      "title": "UpdateChatSessionResp",
       "required": [
         "data"
       ]

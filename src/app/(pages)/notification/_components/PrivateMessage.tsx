@@ -1,12 +1,16 @@
 "use client";
 import { Session } from "@/alova/globals";
-import { ClientGetUserSession } from "@/request/apis/web";
+import {
+  ClientGetSessionMessage,
+  ClientGetUserSession,
+  ClientUpdateSession,
+} from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { Badge, Button, Image, Input, List, Spin } from "antd";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWebSocket } from "ahooks";
-import { Drawer } from 'antd';
+import { Drawer } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 
 const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
@@ -22,8 +26,8 @@ export interface PrivateMessage {
   content: string;
   content_type: string;
   status: string;
-  timestamp: string;
-  is_rcalled: string;
+  timestamp: number;
+  is_rcalled: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -35,7 +39,6 @@ function ChatMessageItem({
   msg: PrivateMessage;
   isSelf: boolean;
 }) {
-
   const renderContent = () => {
     switch (msg.content_type) {
       case "text":
@@ -68,8 +71,9 @@ function ChatMessageItem({
     >
       <div className="max-w-lg break-words break-all overflow-hidden">
         <div
-          className={`rounded border px-4 py-2 ${isSelf ? "bg-slate-600" : "bg-gray-300"
-            }`}
+          className={`rounded border px-4 py-2 ${
+            isSelf ? "bg-slate-600" : "bg-gray-300"
+          }`}
         >
           {renderContent()}
         </div>
@@ -77,8 +81,6 @@ function ChatMessageItem({
     </div>
   );
 }
-
-
 
 export default function ChatComponent() {
   const { token, userInfo } = useAppStore.getState();
@@ -90,6 +92,8 @@ export default function ChatComponent() {
   const [searchSessionName, setSearchSessionName] = useState("");
   const [page, setPage] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false); // 新增状态来控制抽屉的显示与隐藏
+  const [messageHistoryPage, setMessageHistoryPage] = useState(1);
+  const messageListRef = useRef<HTMLDivElement>(null); // 新增 ref 用于获取消息列表的 DOM 元素
 
   const { sendMessage, latestMessage } = useWebSocket(
     token ? `ws://localhost/api/ws?token=${token}` : "",
@@ -104,12 +108,12 @@ export default function ChatComponent() {
     if (!latestMessage?.data) return;
     try {
       const message: PrivateMessage = JSON.parse(latestMessage.data);
-      if (message.session_id === currentSession?.id) {
+      if (message.sender_id === currentSession?.peerID) {
         setMessageList((prev) => [...prev, message]);
       } else {
         let updatedSession: Session | undefined;
         userSessionList.forEach((session) => {
-          if (session.id === message.session_id) {
+          if (session.peerID === message.sender_id) {
             updatedSession = {
               ...session,
               unreadMessageCount: session.unreadMessageCount + 1,
@@ -132,9 +136,31 @@ export default function ChatComponent() {
 
   useEffect(() => {
     if (currentSession) {
+      // 切换会话时，重置消息列表和页码
       setMessageList([]);
+      setMessageHistoryPage(1);
+      fetchSessionMessages(1);
     }
   }, [currentSession]);
+
+  const fetchSessionMessages = async (page: number) => {
+    try {
+      const res = await ClientGetSessionMessage({
+        receiver_id: currentSession?.peerID || "",
+        sender_id: userInfo.id,
+        page,
+        page_size: 10,
+      });
+      const newMessages = (res.data?.list as unknown as PrivateMessage[]) || [];
+      if (page === 1) {
+        setMessageList(newMessages);
+      } else {
+        setMessageList((prev) => [...newMessages, ...prev]);
+      }
+    } catch (error) {
+      console.error("获取历史消息失败:", error);
+    }
+  };
 
   const getUserSession = () => {
     ClientGetUserSession({
@@ -148,8 +174,38 @@ export default function ChatComponent() {
     });
   };
 
+  const loadMoreHistoryMessages = () => {
+    if (currentSession) {
+      setMessageHistoryPage((prev) => prev + 1);
+      fetchSessionMessages(messageHistoryPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const element = messageListRef.current;
+      if (element && element.scrollTop === 0) {
+        loadMoreHistoryMessages();
+      }
+    };
+
+    const messageListElement = messageListRef.current;
+    if (messageListElement) {
+      messageListElement.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (messageListElement) {
+        messageListElement.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [currentSession, messageHistoryPage]);
+
   return (
-    <div className="flex flex-col md:flex-row border min-h-[400px] rounded-lg overflow-hidden shadow-md bg-white w-full" style={{ height: "calc(100vh - 100px)" }}>
+    <div
+      className="flex flex-col md:flex-row border min-h-[400px] rounded-lg overflow-hidden shadow-md bg-white w-full"
+      style={{ height: "calc(100vh - 100px)" }}
+    >
       {/* 会话列表，PC 端正常显示，移动端使用抽屉 */}
       <div className="hidden md:block w-80 border-r bg-gray-50 p-4">
         <Input.Search
@@ -176,11 +232,26 @@ export default function ChatComponent() {
               className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${currentSession?.id === item.id ? "bg-gray-200" : ""}`}
               onClick={() => {
                 setCurrentSession(item);
+                ClientUpdateSession({
+                  sessionId: item.id,
+                }).then((res) => {
+                  if (res.code === 0) {
+                    setUserSessionList((prev) =>
+                      prev.map((session) =>
+                        session.id === item.id
+                          ? { ...session, unreadMessageCount: 0 }
+                          : session
+                      )
+                    );
+                  }
+                });
               }}
             >
               <Badge count={item.unreadMessageCount} className="flex-1">
                 <div className="text-base font-medium">{item.sessionName}</div>
-                <div className="text-sm text-gray-500">{item.lastMessageContent}</div>
+                <div className="text-sm text-gray-500">
+                  {item.lastMessageContent}
+                </div>
               </Badge>
             </div>
           )}
@@ -224,7 +295,9 @@ export default function ChatComponent() {
             >
               <Badge count={item.unreadMessageCount} className="flex-1">
                 <div className="text-base font-medium">{item.sessionName}</div>
-                <div className="text-sm text-gray-500">{item.lastMessageContent}</div>
+                <div className="text-sm text-gray-500">
+                  {item.lastMessageContent}
+                </div>
               </Badge>
             </div>
           )}
@@ -232,80 +305,81 @@ export default function ChatComponent() {
       </Drawer>
 
       {/* 聊天窗口 */}
-      {
-        currentSession ? (
-          <div className="flex-1 flex flex-col min-w-0 min-h-[400px] relative">
-            {/* 新增按钮用于在移动端打开会话列表抽屉 */}
-            <div className="h-16 border-b flex items-center px-4 bg-white shadow-sm">
-              <div className="md:hidden">
-                {!currentSession && (
-                  <Button onClick={() => setIsDrawerOpen(true)} icon={<MenuOutlined />} style={{ marginRight: 16 }} />
-                )}
-              </div>
-              <h2 className="text-xl">{currentSession?.sessionName}</h2>
+      {currentSession ? (
+        <div className="flex-1 flex flex-col min-w-0 min-h-[400px] relative">
+          {/* 新增按钮用于在移动端打开会话列表抽屉 */}
+          <div className="h-16 border-b flex items-center px-4 bg-white shadow-sm">
+            <div className="md:hidden">
+              {!currentSession && (
+                <Button
+                  onClick={() => setIsDrawerOpen(true)}
+                  icon={<MenuOutlined />}
+                  style={{ marginRight: 16 }}
+                />
+              )}
             </div>
-
-            {/* 消息列表 */}
-            <div className="flex-1 overflow-y-auto p-4">
-              <List
-                dataSource={messageList}
-                renderItem={(msg: PrivateMessage) => {
-                  const isSelf = msg.sender_id === userInfo.id;
-                  return <ChatMessageItem msg={msg} isSelf={isSelf} />;
-                }}
-              />
-            </div>
-
-            {/* 发送消息的打字框 */}
-            <div className="border-t w-full bg-white">
-              <AIEditor
-                placeholder="按回车发送消息，Shift+Enter换行"
-                value={value}
-                editable={!!token}
-                allowUploadImage={false}
-                textSelectionBubbleMenu={false}
-                onChange={setValue}
-                toolbarKeys={[]}
-                style={{ height: 200 }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    if (value && currentSession) {
-                      const message: PrivateMessage = {
-                        session_id: currentSession.id,
-                        receiver_id: currentSession.peerID,
-                        content: value,
-                        content_type: "text",
-                        message_id: "",
-                        sender_id: "",
-                        status: "",
-                        timestamp: "",
-                        is_rcalled: "",
-                        created_at: "",
-                        updated_at: "",
-                      };
-                      sendMessage?.(JSON.stringify(message));
-                      setValue("");
-                      setMessageList((prev) => [
-                        ...prev,
-                        {
-                          ...message,
-                          message_id: Math.random().toString(36).substring(7),
-                          sender_id: userInfo.id,
-                          created_at: new Date().toISOString(),
-                        },
-                      ]);
-                    }
-                  }
-                }}
-              />
-            </div>
+            <h2 className="text-xl">{currentSession?.sessionName}</h2>
           </div>
-        ) : (
-          <div className="text-xl flex-1 flex justify-center items-center text-slate-600">请选择会话</div>
-        )
-      }
 
+          {/* 消息列表 */}
+          <div
+            className="flex-1 overflow-y-auto p-4"
+            ref={messageListRef} // 绑定 ref 到消息列表的 DOM 元素
+          >
+            <List
+              locale={{ emptyText: "" }}
+              dataSource={messageList}
+              renderItem={(msg: PrivateMessage) => {
+                const isSelf = msg.sender_id === userInfo.id;
+                return <ChatMessageItem msg={msg} isSelf={isSelf} />;
+              }}
+            />
+          </div>
+
+          {/* 发送消息的打字框 */}
+          <div className="border-t w-full bg-white">
+            <AIEditor
+              placeholder="按回车发送消息，Shift+Enter换行"
+              value={value}
+              editable={!!token}
+              allowUploadImage={false}
+              textSelectionBubbleMenu={false}
+              onChange={setValue}
+              toolbarKeys={[]}
+              style={{ height: 200 }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  if (value && currentSession) {
+                    const message: PrivateMessage = {
+                      session_id: currentSession.id,
+                      receiver_id: currentSession.peerID,
+                      content: value,
+                      content_type: "text",
+                      is_rcalled: "",
+                    } as unknown as PrivateMessage;
+                    sendMessage?.(JSON.stringify(message));
+                    setValue("");
+                    setMessageList((prev) => [
+                      ...prev,
+                      {
+                        ...message,
+                        message_id: Math.random().toString(36).substring(7),
+                        sender_id: userInfo.id,
+                        created_at: new Date().toISOString(),
+                      },
+                    ]);
+                  }
+                }
+              }}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="text-xl flex-1 flex justify-center items-center text-slate-600">
+          请选择会话
+        </div>
+      )}
     </div>
   );
 }

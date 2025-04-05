@@ -1,10 +1,11 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
-import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
+import { ClientCreateSession, ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import React, { useEffect, useState } from "react";
 import { Avatar, Button, Card, message, Spin } from "antd";
 import { ManOutlined, UserOutlined, WomanOutlined } from "@ant-design/icons";
 import { DEFAULT_AVATAR } from "@/constant";
+import { useRouter } from "next/navigation";
 
 interface Props {
   id: string;
@@ -13,6 +14,7 @@ interface Props {
 export default function AuthInfomation({ id }: Props) {
   const [authorInfo, setAuthorInfo] = useState<UserInfo | null>(null);
   const [messageApi, messageContext] = message.useMessage();
+  const router = useRouter()
 
   useEffect(() => {
     ClientGetUserInfoById(id).then((res) => {
@@ -83,6 +85,12 @@ export default function AuthInfomation({ id }: Props) {
           <Button
             type="primary"
             className="flex-1 border border-gray-300 py-1 rounded-lg"
+            onClick={() => {
+              if (!authorInfo?.id) return;
+              ClientCreateSession({ peerID: authorInfo.id }).then((res) => {
+                router.push("/notification/message")
+              })
+            }}
           >
             私信
           </Button>

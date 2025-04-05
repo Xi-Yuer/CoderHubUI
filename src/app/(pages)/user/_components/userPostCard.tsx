@@ -1,6 +1,6 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
-import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
+import { ClientCreateSession, ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import { Card, Avatar, Button, Typography, message, Spin } from "antd";
 import {
   UserOutlined,
@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useAppStore } from "@/store";
 import Link from "next/link";
 import { DEFAULT_AVATAR } from "@/constant";
+import { useRouter } from "next/navigation";
 
 interface Props {
   userID: string;
@@ -24,6 +25,7 @@ export default function UserPostCard({ userID }: Props) {
   const { userInfo } = useAppStore();
   const [user, setUser] = useState<UserInfo | null>(null);
   const [messageApi, messageContext] = message.useMessage();
+  const router = useRouter();
 
   const FollowUser = () => {
     ClientFollowUser(userID).then((res) => {
@@ -118,7 +120,12 @@ export default function UserPostCard({ userID }: Props) {
           >
             {user?.is_followed ? "已关注" : "关注"}
           </Button>
-          <Button type="primary">私信</Button>
+          <Button type="primary" onClick={() => {
+            if (!user?.id) return;
+            ClientCreateSession({ peerID: user.id }).then((res) => {
+              router.push("/notification/message")
+            })
+          }}>私信</Button>
         </div>
       )}
     </Card>

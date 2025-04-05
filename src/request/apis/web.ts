@@ -3,6 +3,7 @@ import {
   CreateCommentReq,
   CreateFavorReq,
   CreateSchoolExpReq,
+  CreateSessionReq,
   CreateTagReq,
   CreateWorkExpReq,
   DeleteFavorReq,
@@ -10,6 +11,7 @@ import {
   LoginReq,
   RegisterReq,
   ResetPasswordByLinkReq,
+  UpdateChatSessionReq,
   UpdatePasswordReq,
   UpdateUserInfoReq,
 } from "@/alova/globals";
@@ -514,5 +516,31 @@ export interface GetUserSessionReq {
 export async function ClientGetUserSession(params: GetUserSessionReq) {
   return alovaServerInstance.session_auth.ListSession({
     params,
+  });
+}
+
+// 创建会话
+export async function ClientCreateSession(data: CreateSessionReq) {
+  return alovaServerInstance.session_auth.CreateSession({
+    data,
+  });
+}
+
+// 获取会话聊天消息
+export async function ClientGetSessionMessage(params: {
+  sender_id: string;
+  receiver_id: string;
+  page: number;
+  page_size: number;
+}) {
+  return alovaServerInstance.message_auth.ListChatMessage({
+    params,
+  });
+}
+
+// 修改会话信息
+export async function ClientUpdateSession(data: UpdateChatSessionReq) {
+  return alovaServerInstance.session_auth.UpdateMessage({
+    data,
   });
 }

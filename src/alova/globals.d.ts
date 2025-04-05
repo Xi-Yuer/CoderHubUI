@@ -1615,6 +1615,78 @@ export type UploadResponse = {
    */
   data: ImageInfo;
 };
+export type PrivateMessage = {
+  /**
+   * [required]
+   */
+  message_id: string;
+  /**
+   * [required]
+   */
+  session_id: string;
+  /**
+   * [required]
+   */
+  sender_id: string;
+  /**
+   * [required]
+   */
+  receiver_id: string;
+  /**
+   * [required]
+   */
+  content: string;
+  /**
+   * [required]
+   */
+  content_type: string;
+  /**
+   * [required]
+   */
+  status: string;
+  /**
+   * [required]
+   */
+  timestamp: number;
+  /**
+   * [required]
+   */
+  is_recalled: boolean;
+  /**
+   * [required]
+   */
+  created_at: number;
+  /**
+   * [required]
+   */
+  updated_at: number;
+};
+export type ChatMessageList = {
+  /**
+   * [required]
+   */
+  list: PrivateMessage[];
+  /**
+   * [required]
+   */
+  total: number;
+};
+export type GetPrivateChatMessageListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * ChatMessageList
+   * ---
+   * [required]
+   */
+  data: ChatMessageList;
+};
 export type DeleteMessageResp = {
   /**
    * 状态码
@@ -2379,6 +2451,29 @@ export type GetSessionListResp = {
    * [required]
    */
   data: SessionList;
+};
+export type UpdateChatSessionResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * Session
+   * ---
+   * [required]
+   */
+  data: Session;
+};
+export type UpdateChatSessionReq = {
+  /**
+   * [required]
+   */
+  sessionId: string;
+  sessionName?: string;
 };
 export type CreateTagResp = {
   /**
@@ -6308,6 +6403,96 @@ declare global {
       /**
        * ---
        *
+       * [GET] 获取聊天消息列表
+       *
+       * **path:** /api/message/chat/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // [required]
+       *   page: number
+       *   // [required]
+       *   page_size: number
+       *   // [required]
+       *   sender_id: string
+       *   // [required]
+       *   receiver_id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] ChatMessageList
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     list: Array<{
+       *       // [required]
+       *       message_id: string
+       *       // [required]
+       *       session_id: string
+       *       // [required]
+       *       sender_id: string
+       *       // [required]
+       *       receiver_id: string
+       *       // [required]
+       *       content: string
+       *       // [required]
+       *       content_type: string
+       *       // [required]
+       *       status: string
+       *       // [required]
+       *       timestamp: number
+       *       // [required]
+       *       is_recalled: boolean
+       *       // [required]
+       *       created_at: number
+       *       // [required]
+       *       updated_at: number
+       *     }>
+       *     // [required]
+       *     total: number
+       *   }
+       * }
+       * ```
+       */
+      ListChatMessage<
+        Config extends Alova2MethodConfig<GetPrivateChatMessageListResp> & {
+          params: {
+            /**
+             * [required]
+             */
+            page: number;
+            /**
+             * [required]
+             */
+            page_size: number;
+            /**
+             * [required]
+             */
+            sender_id: string;
+            /**
+             * [required]
+             */
+            receiver_id: string;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetPrivateChatMessageListResp, 'message_auth.ListChatMessage', Config>;
+      /**
+       * ---
+       *
        * [DELETE] 删除消息
        *
        * **path:** /api/message/delete/{id}
@@ -7715,6 +7900,61 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetSessionListResp, 'session_auth.ListSession', Config>;
+      /**
+       * ---
+       *
+       * [POST] 更新会话消息
+       *
+       * **path:** /api/session/update
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // [required]
+       *   sessionId: string
+       *   sessionName?: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] Session
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     id: string
+       *     // [required]
+       *     sessionName: string
+       *     // [required]
+       *     userID: string
+       *     // [required]
+       *     peerID: string
+       *     // [required]
+       *     lastMessageID: string
+       *     // [required]
+       *     lastMessageContent: string
+       *     // [required]
+       *     unreadMessageCount: number
+       *   }
+       * }
+       * ```
+       */
+      UpdateMessage<
+        Config extends Alova2MethodConfig<UpdateChatSessionResp> & {
+          data: UpdateChatSessionReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<UpdateChatSessionResp, 'session_auth.UpdateMessage', Config>;
     };
     tag_auth: {
       /**
