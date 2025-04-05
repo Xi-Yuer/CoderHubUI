@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, QRCode, message } from "antd";
+import { QRCode, message } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 import { LOGO } from "@/constant";
 
@@ -10,6 +10,7 @@ export default function AppSharedPopUp({ id }: { id: string }) {
 
   useEffect(() => {
     const handleResize = () => {
+      if (typeof window === "undefined" && !document) return;
       // 根据屏幕宽度调整二维码尺寸
       const newSize = window.innerWidth < 768 ? 100 : 120;
       setQrSize(newSize);
@@ -17,7 +18,6 @@ export default function AppSharedPopUp({ id }: { id: string }) {
 
     // 初始设置
     handleResize();
-
     // 添加窗口大小变化监听
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
