@@ -291,6 +291,20 @@ export default function ChatComponent() {
               onClick={() => {
                 setCurrentSession(item);
                 setIsDrawerOpen(false); // 选择会话后关闭抽屉
+                // 标记当前会话已选择，以便后续再次打开抽屉时能正常切换
+                ClientUpdateSession({
+                  sessionId: item.id,
+                }).then((res) => {
+                  if (res.code === 0) {
+                    setUserSessionList((prev) =>
+                      prev.map((session) =>
+                        session.id === item.id
+                          ? { ...session, unreadMessageCount: 0 }
+                          : session
+                      )
+                    );
+                  }
+                });
               }}
             >
               <Badge count={item.unreadMessageCount} className="flex-1">
@@ -305,43 +319,42 @@ export default function ChatComponent() {
       </Drawer>
 
       {/* 聊天窗口 */}
-      {currentSession ? (
-        <div className="flex-1 flex flex-col min-w-0 min-h-[400px] relative">
-          {/* 新增按钮用于在移动端打开会话列表抽屉 */}
-          <div className="h-16 border-b flex items-center px-4 bg-white shadow-sm">
-            <div className="md:hidden">
-              {!currentSession && (
-                <Button
-                  onClick={() => setIsDrawerOpen(true)}
-                  icon={<MenuOutlined />}
-                  style={{ marginRight: 16 }}
-                />
-              )}
-            </div>
-            <h2 className="text-xl">{currentSession?.sessionName}</h2>
-          </div>
-
-          {/* 消息列表 */}
-          <div
-            className="flex-1 overflow-y-auto p-4"
-            ref={messageListRef} // 绑定 ref 到消息列表的 DOM 元素
-          >
-            <List
-              locale={{ emptyText: "" }}
-              dataSource={messageList}
-              renderItem={(msg: PrivateMessage) => {
-                const isSelf = msg.sender_id === userInfo.id;
-                return <ChatMessageItem msg={msg} isSelf={isSelf} />;
-              }}
+      <div className="flex-1 flex flex-col min-w-0 min-h-[400px] relative">
+        {/* 新增按钮用于在移动端打开会话列表抽屉 */}
+        <div className="h-16 border-b flex items-center px-4 bg-white shadow-sm">
+          <div className="md:hidden">
+            {/* 无论是否有当前会话，都可以点击按钮打开抽屉 */}
+            <Button
+              onClick={() => setIsDrawerOpen(true)}
+              icon={<MenuOutlined />}
+              style={{ marginRight: 16 }}
             />
           </div>
+          <h2 className="text-xl">{currentSession?.sessionName}</h2>
+        </div>
 
-          {/* 发送消息的打字框 */}
+        {/* 消息列表 */}
+        <div
+          className="flex-1 overflow-y-auto p-4"
+          ref={messageListRef} // 绑定 ref 到消息列表的 DOM 元素
+        >
+          <List
+            locale={{ emptyText: "" }}
+            dataSource={messageList}
+            renderItem={(msg: PrivateMessage) => {
+              const isSelf = msg.sender_id === userInfo.id;
+              return <ChatMessageItem msg={msg} isSelf={isSelf} />;
+            }}
+          />
+        </div>
+
+        {/* 发送消息的打字框 */}
+        {currentSession && (
           <div className="border-t w-full bg-white">
             <AIEditor
               placeholder="按回车发送消息，Shift+Enter换行"
               value={value}
-              editable={!!token}
+              editable={!!token && !!currentSession}
               allowUploadImage={false}
               textSelectionBubbleMenu={false}
               onChange={setValue}
@@ -374,12 +387,8 @@ export default function ChatComponent() {
               }}
             />
           </div>
-        </div>
-      ) : (
-        <div className="text-xl flex-1 flex justify-center items-center text-slate-600">
-          请选择会话
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
