@@ -1613,6 +1613,12 @@
             "format": "int64"
           },
           {
+            "name": "session_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "sender_id",
             "in": "query",
             "required": true,
@@ -5171,6 +5177,9 @@
           "type": "integer",
           "format": "int64"
         },
+        "session_id": {
+          "type": "string"
+        },
         "sender_id": {
           "type": "string"
         },
@@ -5182,6 +5191,7 @@
       "required": [
         "page",
         "page_size",
+        "session_id",
         "sender_id",
         "receiver_id"
       ]
@@ -7341,13 +7351,21 @@
         "sessionId": {
           "type": "string"
         },
+        "senderId": {
+          "type": "string"
+        },
+        "peerId": {
+          "type": "string"
+        },
         "sessionName": {
           "type": "string"
         }
       },
       "title": "UpdateChatSessionReq",
       "required": [
-        "sessionId"
+        "sessionId",
+        "senderId",
+        "peerId"
       ]
     },
     "UpdateChatSessionResp": {

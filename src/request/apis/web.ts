@@ -528,6 +528,7 @@ export async function ClientCreateSession(data: CreateSessionReq) {
 
 // 获取会话聊天消息
 export async function ClientGetSessionMessage(params: {
+  session_id: string;
   sender_id: string;
   receiver_id: string;
   page: number;

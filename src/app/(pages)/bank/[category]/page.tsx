@@ -1,10 +1,9 @@
 import { QuestionBank, QuestionBankCategory } from "@/alova/globals";
-import AppPageError from "@/app/_components/appPageError";
 import {
   ClientGetQuestionCategory,
   ClientGetQuestionList,
 } from "@/request/apis/server";
-import { App, Card, Image } from "antd";
+import { Card, Image } from "antd";
 import Link from "next/link";
 
 export default async function Page({ params }: any) {

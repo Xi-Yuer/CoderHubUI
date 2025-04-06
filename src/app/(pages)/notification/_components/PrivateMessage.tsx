@@ -144,8 +144,10 @@ export default function ChatComponent() {
   }, [currentSession]);
 
   const fetchSessionMessages = async (page: number) => {
+    if (!currentSession) return;
     try {
       const res = await ClientGetSessionMessage({
+        session_id: currentSession?.id || "",
         receiver_id: currentSession?.peerID || "",
         sender_id: userInfo.id,
         page,
@@ -232,19 +234,7 @@ export default function ChatComponent() {
               className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${currentSession?.id === item.id ? "bg-gray-200" : ""}`}
               onClick={() => {
                 setCurrentSession(item);
-                ClientUpdateSession({
-                  sessionId: item.id,
-                }).then((res) => {
-                  if (res.code === 0) {
-                    setUserSessionList((prev) =>
-                      prev.map((session) =>
-                        session.id === item.id
-                          ? { ...session, unreadMessageCount: 0 }
-                          : session
-                      )
-                    );
-                  }
-                });
+                getUserSession();
               }}
             >
               <Badge count={item.unreadMessageCount} className="flex-1">
@@ -291,20 +281,7 @@ export default function ChatComponent() {
               onClick={() => {
                 setCurrentSession(item);
                 setIsDrawerOpen(false); // 选择会话后关闭抽屉
-                // 标记当前会话已选择，以便后续再次打开抽屉时能正常切换
-                ClientUpdateSession({
-                  sessionId: item.id,
-                }).then((res) => {
-                  if (res.code === 0) {
-                    setUserSessionList((prev) =>
-                      prev.map((session) =>
-                        session.id === item.id
-                          ? { ...session, unreadMessageCount: 0 }
-                          : session
-                      )
-                    );
-                  }
-                });
+                getUserSession();
               }}
             >
               <Badge count={item.unreadMessageCount} className="flex-1">

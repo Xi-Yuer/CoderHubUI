@@ -2473,6 +2473,14 @@ export type UpdateChatSessionReq = {
    * [required]
    */
   sessionId: string;
+  /**
+   * [required]
+   */
+  senderId: string;
+  /**
+   * [required]
+   */
+  peerId: string;
   sessionName?: string;
 };
 export type CreateTagResp = {
@@ -6417,6 +6425,8 @@ declare global {
        *   // [required]
        *   page_size: number
        *   // [required]
+       *   session_id: string
+       *   // [required]
        *   sender_id: string
        *   // [required]
        *   receiver_id: string
@@ -6477,6 +6487,10 @@ declare global {
              * [required]
              */
             page_size: number;
+            /**
+             * [required]
+             */
+            session_id: string;
             /**
              * [required]
              */
@@ -7914,6 +7928,10 @@ declare global {
        * type RequestBody = {
        *   // [required]
        *   sessionId: string
+       *   // [required]
+       *   senderId: string
+       *   // [required]
+       *   peerId: string
        *   sessionName?: string
        * }
        * ```
