@@ -1,8 +1,7 @@
 "use client";
 import { GetArticle } from "@/alova/globals";
 import AppShortPreview from "@/app/_components/appShortPreview";
-import { SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
-import { ClientGetArticleList } from "@/request/apis/web";
+import { ClientGetArticleList, ClientGetSystemTags } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { Card, Skeleton } from "antd";
 import React, {
@@ -27,6 +26,7 @@ export default function MicroPostList({ ref }: Props) {
   const [loading, setLoading] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
+  const [categoryId, setCategoryId] = useState("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -57,13 +57,7 @@ export default function MicroPostList({ ref }: Props) {
     const { userInfo } = useAppStore.getState();
     if (!hasMore) return;
     setLoading(true);
-    ClientGetArticleList(
-      "micro_post",
-      SHORT_ARTICLE_CATEGORY_ID,
-      page,
-      10,
-      userInfo.id
-    )
+    ClientGetArticleList("micro_post", categoryId, page, 10, userInfo.id)
       .send(reFreshed)
       .then((res) => {
         if (!res?.data) {

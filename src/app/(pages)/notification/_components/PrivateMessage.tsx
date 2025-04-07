@@ -389,7 +389,6 @@ export default function ChatComponent() {
               }`}
               onClick={() => {
                 setCurrentSession(item);
-                setIsDrawerOpen(false);
                 getUserSession();
               }}
             >

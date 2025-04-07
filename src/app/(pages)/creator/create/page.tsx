@@ -1,6 +1,7 @@
 "use client";
 import type { Tag as TagOptionType } from "@/alova/globals";
 import { EditorRefCallBack } from "@/app/_components";
+import { LONG_ARTICLE_TYPE } from "@/constant";
 import {
   ClientCreateArticle,
   ClientUploadImage,
@@ -55,7 +56,7 @@ export default function Page() {
   const loadTags = async (pageNum: number) => {
     if (!hasMore || loading) return;
     setLoading(true);
-    const res = await ClientGetAllTags(pageNum, 10);
+    const res = await ClientGetAllTags(LONG_ARTICLE_TYPE, pageNum, 10);
     if (res.data) {
       const newTags = res.data?.list.map((tag) => ({
         label: tag.name,
@@ -163,6 +164,7 @@ export default function Page() {
     e.preventDefault();
     if (!name || tagOptions.includes(name)) return;
     ClientCreateTag({
+      type: LONG_ARTICLE_TYPE,
       name,
       description,
       is_system_provider: false,

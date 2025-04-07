@@ -2522,6 +2522,11 @@ export type CreateTagReq = {
    * [required]
    */
   icon: string;
+  /**
+   * 标签类型
+   * [required]
+   */
+  type: string;
 };
 export type Tag = {
   /**
@@ -2539,6 +2544,11 @@ export type Tag = {
    * [required]
    */
   description: string;
+  /**
+   * 标签类型
+   * [required]
+   */
+  type: string;
   /**
    * 是否为系统标签
    * [required]
@@ -3819,8 +3829,7 @@ declare global {
        *   // 用户 ID
        *   user_id?: string
        *   // 分类 ID
-       *   // [required]
-       *   category_id: string
+       *   category_id?: string
        * }
        * ```
        *
@@ -3974,9 +3983,8 @@ declare global {
             user_id?: string;
             /**
              * 分类 ID
-             * [required]
              */
-            category_id: string;
+            category_id?: string;
           };
         }
       >(
@@ -8009,6 +8017,9 @@ declare global {
        *   // 标签图标
        *   // [required]
        *   icon: string
+       *   // 标签类型
+       *   // [required]
+       *   type: string
        * }
        * ```
        *
@@ -8104,6 +8115,9 @@ declare global {
        *   // 每页数量
        *   // [required]
        *   page_size: number
+       *   // 标签类型
+       *   // [required]
+       *   type: string
        * }
        * ```
        *
@@ -8132,6 +8146,9 @@ declare global {
        *       // 标签描述
        *       // [required]
        *       description: string
+       *       // 标签类型
+       *       // [required]
+       *       type: string
        *       // 是否为系统标签
        *       // [required]
        *       is_system_provider: boolean
@@ -8165,6 +8182,11 @@ declare global {
              * [required]
              */
             page_size: number;
+            /**
+             * 标签类型
+             * [required]
+             */
+            type: string;
           };
         }
       >(
@@ -8202,6 +8224,9 @@ declare global {
        *       // 标签描述
        *       // [required]
        *       description: string
+       *       // 标签类型
+       *       // [required]
+       *       type: string
        *       // 是否为系统标签
        *       // [required]
        *       is_system_provider: boolean

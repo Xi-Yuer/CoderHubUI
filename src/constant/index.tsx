@@ -17,7 +17,7 @@ export const LOGO = svgLogo.src;
 
 export const navigatonList = [
   {
-    name: "沸点",
+    name: "圈子",
     path: "/shorts",
     icon: <CoffeeOutlined />,
   },
@@ -126,3 +126,5 @@ export const SHORT_ARTICLE_CATEGORY_ID = "1";
 export const FAVORITE_ARTICLE = "article";
 export const FAVORITE_QUESTION = "question";
 export const PREVIEW_THEME: PreviewThemes = "smart-blue";
+export const LONG_ARTICLE_TYPE = "article";
+export const SHORT_ARTICLE_TYPE = "micro_post";

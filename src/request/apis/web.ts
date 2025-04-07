@@ -7,7 +7,6 @@ import {
   CreateTagReq,
   CreateWorkExpReq,
   DeleteFavorReq,
-  GetSchoolExpListResp,
   LoginReq,
   RegisterReq,
   ResetPasswordByLinkReq,
@@ -278,9 +277,14 @@ export async function ClientGetSystemTags() {
 }
 
 // 获取全部标签
-export async function ClientGetAllTags(page: number, page_size: number) {
+export async function ClientGetAllTags(
+  type: string,
+  page: number,
+  page_size: number
+) {
   return alovaServerInstance.tag_public.GetAllTagList({
     params: {
+      type,
       page,
       page_size,
     },
