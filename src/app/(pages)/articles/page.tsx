@@ -1,5 +1,6 @@
 "use client";
 import { GetArticle, Tag } from "@/alova/globals";
+import { LONG_ARTICLE_TYPE } from "@/constant";
 import { ClientGetArticleList, ClientGetSystemTags } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { MenuOutlined } from "@ant-design/icons";
@@ -75,7 +76,7 @@ export default function Page() {
     if (!currentTag) return;
     if (!hasMore) return;
     setLoading(true);
-    ClientGetArticleList("article", currentTag, page, 10, userInfo.id)
+    ClientGetArticleList("article", page, 10, currentTag, userInfo.id)
       .then((res) => {
         if (!res?.data) {
           setHasMore(false);
@@ -94,7 +95,7 @@ export default function Page() {
 
   const getSideTags = () => {
     setGetTagLoading(true);
-    ClientGetSystemTags()
+    ClientGetSystemTags(LONG_ARTICLE_TYPE)
       .then((res) => {
         setTags(res.data?.list || []);
         setCurrentTag(res.data?.list ? res.data?.list[0]?.id : null);

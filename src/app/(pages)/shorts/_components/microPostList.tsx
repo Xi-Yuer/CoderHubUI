@@ -1,7 +1,8 @@
 "use client";
 import { GetArticle } from "@/alova/globals";
 import AppShortPreview from "@/app/_components/appShortPreview";
-import { ClientGetArticleList, ClientGetSystemTags } from "@/request/apis/web";
+import { SHORT_ARTICLE_TYPE } from "@/constant";
+import { ClientGetArticleList } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { Card, Skeleton } from "antd";
 import React, {
@@ -18,15 +19,15 @@ export type RefCallBack = {
 
 type Props = {
   ref: Ref<RefCallBack>;
+  categoryId?: string;
 };
-export default function MicroPostList({ ref }: Props) {
+export default function MicroPostList({ ref, categoryId }: Props) {
   const [page, setPage] = useState(1);
   const [list, setList] = useState<GetArticle[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
-  const [categoryId, setCategoryId] = useState("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,9 +56,8 @@ export default function MicroPostList({ ref }: Props) {
 
   const getList = (reFreshed = false) => {
     const { userInfo } = useAppStore.getState();
-    if (!hasMore) return;
     setLoading(true);
-    ClientGetArticleList("micro_post", categoryId, page, 10, userInfo.id)
+    ClientGetArticleList(SHORT_ARTICLE_TYPE, page, 10, categoryId, userInfo.id)
       .send(reFreshed)
       .then((res) => {
         if (!res?.data) {
@@ -92,36 +92,46 @@ export default function MicroPostList({ ref }: Props) {
     []
   );
 
-  useEffect(getList, [page]);
+  useEffect(getList, [page, categoryId]);
+
+  useEffect(() => {
+    setList([]);
+    setHasMore(true);
+    setPage(1);
+  }, [categoryId]);
+
   return (
-    <Card className="px-2 py-6">
-      {list?.map((item) => {
-        return (
-          <div key={item?.article?.id}>
-            <AppShortPreview item={item} />
+    <div className="flex">
+      {/* 右侧微动态列表区域 */}
+      <Card className="px-2 py-6 flex-1">
+        {list?.map((item) => {
+          return (
+            <div key={item?.article?.id}>
+              <AppShortPreview item={item} />
+            </div>
+          );
+        })}
+        {loading && firstLoad && (
+          <div className="flex flex-col gap-10">
+            {Array(3)
+              .fill(0)
+              .map((_, index) => {
+                return (
+                  <div
+                    className="flex justify-between items-center gap-4 mt-2"
+                    key={index}
+                  >
+                    <Skeleton active />
+                    <Skeleton.Image active />
+                  </div>
+                );
+              })}
           </div>
-        );
-      })}
-      {loading && firstLoad && (
-        <div className="flex flex-col gap-10">
-          {Array(3)
-            .fill(0)
-            .map((_, index) => {
-              return (
-                <div
-                  className="flex justify-between items-center gap-4 mt-2"
-                  key={index}
-                >
-                  <Skeleton active />
-                  <Skeleton.Image active />
-                </div>
-              );
-            })}
+        )}
+        <div ref={loadingRef} className="text-center mt-4 text-gray-400">
+          {hasMore ? "Loading" : "没有更多了"}
         </div>
-      )}
-      <div ref={loadingRef} className="text-center mt-4 text-gray-400">
-        {hasMore ? "Loaing" : "没有更多了"}
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 }

@@ -70,7 +70,7 @@ export default function Page() {
   };
 
   const loadCategory = () => {
-    ClientGetSystemTags().then((res) => {
+    ClientGetSystemTags(LONG_ARTICLE_TYPE).then((res) => {
       setCategoryOptions(res.data?.list || []);
     });
   };

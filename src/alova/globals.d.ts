@@ -8201,6 +8201,17 @@ declare global {
        *
        * ---
        *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // 标签类型
+       *   // [required]
+       *   type: string
+       * }
+       * ```
+       *
+       * ---
+       *
        * **Response**
        * ```ts
        * type Response = {
@@ -8247,8 +8258,18 @@ declare global {
        * }
        * ```
        */
-      GetSystemTagList<Config extends Alova2MethodConfig<GetTagListResp>>(
-        config?: Config
+      GetSystemTagList<
+        Config extends Alova2MethodConfig<GetTagListResp> & {
+          params: {
+            /**
+             * 标签类型
+             * [required]
+             */
+            type: string;
+          };
+        }
+      >(
+        config: Config
       ): Alova2Method<GetTagListResp, 'tag_public.GetSystemTagList', Config>;
     };
     user_auth: {

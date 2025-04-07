@@ -2512,8 +2512,20 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "type",
+            "description": " 标签类型",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "tags": [
           "tag_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ]
       }
     },
@@ -6038,6 +6050,19 @@
       "title": "GetSessionListResp",
       "required": [
         "data"
+      ]
+    },
+    "GetSystemTagReq": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": " 标签类型"
+        }
+      },
+      "title": "GetSystemTagReq",
+      "required": [
+        "type"
       ]
     },
     "GetTagListReq": {

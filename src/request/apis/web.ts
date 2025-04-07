@@ -93,9 +93,9 @@ export function ClientFollowUser(follow_id: string) {
 // 获取文章列表
 export function ClientGetArticleList(
   type: "article" | "micro_post",
-  category_id: string,
   page: number,
   page_size: number,
+  category_id?: string,
   user_id?: string
 ) {
   return alovaServerInstance.articles_public.GetArticles({
@@ -272,8 +272,12 @@ export async function ClientRemoveContentFromFavor(params: DeleteFavorReq) {
 }
 
 // 获取系统标签
-export async function ClientGetSystemTags() {
-  return alovaServerInstance.tag_public.GetSystemTagList();
+export async function ClientGetSystemTags(type: string) {
+  return alovaServerInstance.tag_public.GetSystemTagList({
+    params: {
+      type,
+    },
+  });
 }
 
 // 获取全部标签
