@@ -7,13 +7,23 @@ import {
   ClientDeleteSession,
 } from "@/request/apis/web";
 import { useAppStore } from "@/store";
-import { Badge, Button, Image, Input, List, Spin } from "antd";
+import {
+  Badge,
+  Button,
+  Image,
+  Input,
+  List,
+  MenuProps,
+  Modal,
+  Spin,
+  Drawer,
+} from "antd";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useWebSocket } from "ahooks";
-import { Drawer } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
+import { Dropdown } from "antd";
 
 const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
   ssr: false,
@@ -90,12 +100,15 @@ export default function ChatComponent() {
   const [messageList, setMessageList] = useState<PrivateMessage[]>([]);
   const [userSessionList, setUserSessionList] = useState<Session[]>([]);
   const [currentSession, setCurrentSession] = useState<Session | null>(null);
+  const [showEditSessionName, setShowEditSessionName] = useState(false);
+  const [sessionName, setSessionName] = useState("");
   const [sessionTotal, setSessionTotal] = useState(0);
   const [searchSessionName, setSearchSessionName] = useState("");
   const [page, setPage] = useState(1);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false); // 新增状态来控制抽屉的显示与隐藏
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [messageHistoryPage, setMessageHistoryPage] = useState(1);
-  const messageListRef = useRef<HTMLDivElement>(null); // 新增 ref 用于获取消息列表的 DOM 元素
+  const messageListRef = useRef<HTMLDivElement>(null);
+  const [modal, contextHolder] = Modal.useModal();
 
   const { sendMessage, latestMessage } = useWebSocket(
     token ? `ws://localhost/api/ws?token=${token}` : "",
@@ -140,7 +153,6 @@ export default function ChatComponent() {
 
   useEffect(() => {
     if (currentSession) {
-      // 切换会话时，重置消息列表和页码
       setMessageList([]);
       setMessageHistoryPage(1);
       fetchSessionMessages(1);
@@ -187,6 +199,34 @@ export default function ChatComponent() {
     }
   };
 
+  const handleEditSessionName = async (session: Session, newName: string) => {
+    try {
+      await ClientUpdateSession({
+        sessionId: session.id,
+        senderId: session.userID,
+        peerId: session.peerID,
+        sessionName: newName,
+      });
+      setShowEditSessionName(false);
+      getUserSession();
+    } catch (error) {
+      console.error("修改会话名称失败:", error);
+    }
+  };
+
+  const handleDeleteSession = async (session: Session) => {
+    try {
+      await ClientDeleteSession(session.id);
+      setUserSessionList((prev) => prev.filter((s) => s.id !== session.id));
+      if (currentSession?.id === session.id) {
+        setCurrentSession(null);
+        setMessageList([]);
+      }
+    } catch (error) {
+      console.error("删除会话失败:", error);
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const element = messageListRef.current;
@@ -207,11 +247,62 @@ export default function ChatComponent() {
     };
   }, [currentSession, messageHistoryPage]);
 
+  const renderSessionActions = (session: Session) => {
+    return (
+      <Dropdown
+        menu={{
+          items: [
+            {
+              key: "edit",
+              label: (
+                <Button
+                  type="text"
+                  onClick={() => {
+                    setSessionName(session.sessionName);
+                    setShowEditSessionName(true);
+                  }}
+                >
+                  备注
+                </Button>
+              ),
+            },
+            {
+              key: "delete",
+              label: (
+                <Button
+                  type="text"
+                  onClick={() => {
+                    modal.confirm({
+                      type: "warning",
+                      icon: null,
+                      title: "删除会话",
+                      content: "确定要删除该会话吗？",
+                      okText: "删除",
+                      onOk: () => handleDeleteSession(session),
+                    });
+                  }}
+                >
+                  删除
+                </Button>
+              ),
+            },
+          ] as MenuProps["items"],
+        }}
+        trigger={["click"]}
+      >
+        <Button type="text" onClick={(e) => e.preventDefault()}>
+          <span className="text-gray-500 cursor-pointer mb-2">...</span>
+        </Button>
+      </Dropdown>
+    );
+  };
+
   return (
     <div
       className="flex flex-col md:flex-row border min-h-[400px] rounded-lg overflow-hidden shadow-md bg-white w-full"
       style={{ height: "calc(100vh - 100px)" }}
     >
+      {contextHolder}
       {/* 会话列表，PC 端正常显示，移动端使用抽屉 */}
       <div className="hidden md:block w-80 border-r bg-gray-50 p-4">
         <Input.Search
@@ -235,7 +326,9 @@ export default function ChatComponent() {
           renderItem={(item) => (
             <div
               key={item.id}
-              className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${currentSession?.id === item.id ? "bg-gray-200" : ""}`}
+              className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${
+                currentSession?.id === item.id ? "bg-gray-200" : ""
+              }`}
               onClick={() => {
                 setCurrentSession(item);
                 getUserSession();
@@ -251,8 +344,9 @@ export default function ChatComponent() {
                       {item.lastMessageContent}
                     </div>
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm h-full text-gray-500 flex items-center justify-center">
                     {format(item.createdAt * 1000, "HH:mm")}
+                    {renderSessionActions(item)}
                   </div>
                 </div>
               </Badge>
@@ -290,10 +384,12 @@ export default function ChatComponent() {
           renderItem={(item) => (
             <div
               key={item.id}
-              className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${currentSession?.id === item.id ? "bg-gray-200" : ""}`}
+              className={`p-4 w-full cursor-pointer hover:bg-gray-100 flex ${
+                currentSession?.id === item.id ? "bg-gray-200" : ""
+              }`}
               onClick={() => {
                 setCurrentSession(item);
-                setIsDrawerOpen(false); // 选择会话后关闭抽屉
+                setIsDrawerOpen(false);
                 getUserSession();
               }}
             >
@@ -307,8 +403,9 @@ export default function ChatComponent() {
                       {item.lastMessageContent}
                     </div>
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm h-full text-gray-500  flex items-center justify-center">
                     {format(item.createdAt * 1000, "HH:mm")}
+                    {renderSessionActions(item)}
                   </div>
                 </div>
               </Badge>
@@ -316,7 +413,6 @@ export default function ChatComponent() {
           )}
         />
       </Drawer>
-
       {/* 聊天窗口 */}
       <div className="flex-1 flex flex-col min-w-0 min-h-[400px] relative">
         {/* 新增按钮用于在移动端打开会话列表抽屉 */}
@@ -333,10 +429,7 @@ export default function ChatComponent() {
         </div>
 
         {/* 消息列表 */}
-        <div
-          className="flex-1 overflow-y-auto p-4"
-          ref={messageListRef} // 绑定 ref 到消息列表的 DOM 元素
-        >
+        <div className="flex-1 overflow-y-auto p-4" ref={messageListRef}>
           <List
             locale={{ emptyText: "" }}
             dataSource={messageList}
@@ -368,8 +461,14 @@ export default function ChatComponent() {
                       receiver_id: currentSession.peerID,
                       content: value,
                       content_type: "text",
-                      is_rcalled: "",
-                    } as unknown as PrivateMessage;
+                      is_rcalled: false,
+                      message_id: "",
+                      sender_id: userInfo.id,
+                      status: "",
+                      timestamp: Date.now(),
+                      created_at: new Date().toISOString(),
+                      updated_at: new Date().toISOString(),
+                    };
                     sendMessage?.(JSON.stringify(message));
                     setValue("");
                     setMessageList((prev) => [
@@ -377,8 +476,6 @@ export default function ChatComponent() {
                       {
                         ...message,
                         message_id: Math.random().toString(36).substring(7),
-                        sender_id: userInfo.id,
-                        created_at: new Date().toISOString(),
                       },
                     ]);
                     setUserSessionList((prev: Session[]) => {
@@ -397,6 +494,25 @@ export default function ChatComponent() {
           </div>
         )}
       </div>
+      {/* 弹出框 */}
+      <Modal
+        title="备注"
+        open={showEditSessionName}
+        onOk={() => {
+          handleEditSessionName(currentSession!, sessionName);
+          setSessionName("");
+        }}
+        onCancel={() => {
+          setSessionName("");
+          setShowEditSessionName(false);
+        }}
+      >
+        <Input
+          placeholder="请输入备注"
+          value={sessionName}
+          onChange={(e) => setSessionName(e.target.value)}
+        />
+      </Modal>
     </div>
   );
 }
