@@ -19,7 +19,6 @@ const AppShortEditor = dynamic(
 export default function Page() {
   const MicroPostRef = useRef<RefCallBack>(null);
   const [categoryId, setCategoryId] = useState("");
-  // 假设这是圈子分类数据，实际使用时应从接口获取
   const [categoryOptions, setCategoryOptions] = useState<Tag[]>([]);
   // 处理圈子选择事件
   const handleCategoryChange = (id: string) => {

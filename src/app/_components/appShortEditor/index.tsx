@@ -1,19 +1,25 @@
 "use client";
 import "md-editor-rt/lib/style.css";
-import { CreateArticleResp, Emoji } from "@/alova/globals";
-import { ClientCreateArticle, ClientUploadImage } from "@/request/apis/web";
+import { CreateArticleResp, Emoji, Tag } from "@/alova/globals";
+import {
+  ClientCreateArticle,
+  ClientGetSystemTags,
+  ClientUploadImage,
+} from "@/request/apis/web";
 import { getBase64, RenderEmotion } from "@/utils";
 import {
+  CrownOutlined,
   PictureOutlined,
+  RightOutlined,
   SendOutlined,
   SmileOutlined,
 } from "@ant-design/icons";
 import { Button, Upload, UploadProps, Image, Popover } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Emotion from "../emotion";
 import { useStore } from "zustand";
 import { useAppStore } from "@/store";
-import { DEFAULT_AVATAR, SHORT_ARTICLE_CATEGORY_ID } from "@/constant";
+import { DEFAULT_AVATAR, SHORT_ARTICLE_TYPE } from "@/constant";
 import AiEditor from "@/app/_components/AIEditor/init";
 
 type Props = {
@@ -24,6 +30,9 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
   const [imageList, setImageList] = useState<string[]>([]);
   const [imageListID, setImageListID] = useState<string[]>([]);
   const [text, setText] = useState("");
+  const [categoryOptions, setCategoryOptions] = useState<Tag[]>([]);
+  const [categoryId, setCategoryId] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const appStore = useStore(useAppStore, (state) => state);
   const publicMicroPost = () => {
     if (!text) return;
@@ -32,7 +41,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
       type: "micro_post",
       status: "published",
       imageIds: imageListID,
-      categoryId: SHORT_ARTICLE_CATEGORY_ID,
+      categoryId: categoryId,
     }).then((res) => {
       setText("");
       setImageList([]);
@@ -40,6 +49,23 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
       PublicSuccess(res);
     });
   };
+
+  // 处理圈子选择事件
+  const handleCategoryChange = (item: Tag) => {
+    setCategoryId(item.id);
+    setCategoryName(item.name);
+  };
+
+  useEffect(() => {
+    ClientGetSystemTags(SHORT_ARTICLE_TYPE)
+      .then((res) => {
+        if (!res?.data) return;
+        setCategoryOptions(res.data.list);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const props: UploadProps = {
     name: "file",
@@ -89,6 +115,35 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
       </div>
       <div className="flex justify-between items-center mt-2">
         <div className="left flex gap-6 text-md text-gray-500">
+          <Popover
+            placement="bottom"
+            content={
+              <div className="flex flex-col gap-2">
+                {categoryOptions.map((item) => {
+                  return (
+                    <div
+                      key={item.id}
+                      className={`p-2 cursor-pointer ${
+                        categoryId === item.id ? "bg-gray-200" : ""
+                      }`}
+                      onClick={() => handleCategoryChange(item)}
+                    >
+                      {item.name}
+                    </div>
+                  );
+                })}
+              </div>
+            }
+          >
+            <div className="flex items-center gap-1 cursor-pointer bg-black rounded-xl px-3 text-white text-[12px]">
+              <span>
+                <CrownOutlined />
+              </span>
+              <span>
+                # {categoryName ? categoryName : "选择圈子"} <RightOutlined />
+              </span>
+            </div>
+          </Popover>
           <Popover
             placement="bottom"
             content={
