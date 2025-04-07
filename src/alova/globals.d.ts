@@ -2388,6 +2388,10 @@ export type Session = {
    * [required]
    */
   unreadMessageCount: number;
+  /**
+   * [required]
+   */
+  createdAt: number;
 };
 export type CreateSessionResp = {
   /**
@@ -7774,6 +7778,8 @@ declare global {
        *     lastMessageContent: string
        *     // [required]
        *     unreadMessageCount: number
+       *     // [required]
+       *     createdAt: number
        *   }
        * }
        * ```
@@ -7886,6 +7892,8 @@ declare global {
        *       lastMessageContent: string
        *       // [required]
        *       unreadMessageCount: number
+       *       // [required]
+       *       createdAt: number
        *     }>
        *     // [required]
        *     total: number
@@ -7962,6 +7970,8 @@ declare global {
        *     lastMessageContent: string
        *     // [required]
        *     unreadMessageCount: number
+       *     // [required]
+       *     createdAt: number
        *   }
        * }
        * ```

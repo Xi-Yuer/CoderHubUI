@@ -7121,6 +7121,10 @@
         "unreadMessageCount": {
           "type": "integer",
           "format": "int64"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
         }
       },
       "title": "Session",
@@ -7131,7 +7135,8 @@
         "peerID",
         "lastMessageID",
         "lastMessageContent",
-        "unreadMessageCount"
+        "unreadMessageCount",
+        "createdAt"
       ]
     },
     "SessionList": {

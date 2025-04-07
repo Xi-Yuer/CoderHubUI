@@ -4,6 +4,7 @@ import {
   ClientGetSessionMessage,
   ClientGetUserSession,
   ClientUpdateSession,
+  ClientDeleteSession,
 } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { Badge, Button, Image, Input, List, Spin } from "antd";
@@ -12,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { useWebSocket } from "ahooks";
 import { Drawer } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
+import { format } from "date-fns";
 
 const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
   ssr: false,
@@ -117,6 +119,8 @@ export default function ChatComponent() {
             updatedSession = {
               ...session,
               unreadMessageCount: session.unreadMessageCount + 1,
+              lastMessageContent: message.content,
+              lastMessageID: message.message_id,
             };
           }
         });
@@ -238,9 +242,18 @@ export default function ChatComponent() {
               }}
             >
               <Badge count={item.unreadMessageCount} className="flex-1">
-                <div className="text-base font-medium">{item.sessionName}</div>
-                <div className="text-sm text-gray-500">
-                  {item.lastMessageContent}
+                <div className="flex justify-between items-center">
+                  <div className="flex-1">
+                    <div className="text-base font-medium">
+                      {item.sessionName}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {item.lastMessageContent}
+                    </div>
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {format(item.createdAt * 1000, "HH:mm")}
+                  </div>
                 </div>
               </Badge>
             </div>
@@ -285,9 +298,18 @@ export default function ChatComponent() {
               }}
             >
               <Badge count={item.unreadMessageCount} className="flex-1">
-                <div className="text-base font-medium">{item.sessionName}</div>
-                <div className="text-sm text-gray-500">
-                  {item.lastMessageContent}
+                <div className="flex justify-between">
+                  <div className="flex-1">
+                    <div className="text-base font-medium">
+                      {item.sessionName}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {item.lastMessageContent}
+                    </div>
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {format(item.createdAt * 1000, "HH:mm")}
+                  </div>
                 </div>
               </Badge>
             </div>
@@ -359,6 +381,15 @@ export default function ChatComponent() {
                         created_at: new Date().toISOString(),
                       },
                     ]);
+                    setUserSessionList((prev: Session[]) => {
+                      const index = prev.findIndex(
+                        (session) => session.id === currentSession.id
+                      );
+                      if (index !== -1) {
+                        prev[index].lastMessageContent = message.content;
+                      }
+                      return [...prev];
+                    });
                   }
                 }
               }}

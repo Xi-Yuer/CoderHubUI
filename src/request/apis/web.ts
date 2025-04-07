@@ -545,3 +545,13 @@ export async function ClientUpdateSession(data: UpdateChatSessionReq) {
     data,
   });
 }
+
+// 删除会话
+export async function ClientDeleteSession(session_id: string) {
+  return alovaServerInstance.session_auth.DeleteSession({
+    pathParams: {
+      id: session_id,
+    },
+    data: {},
+  });
+}
