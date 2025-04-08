@@ -113,6 +113,34 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
           );
         })}
       </div>
+      <Popover
+        placement="bottom"
+        content={
+          <div className="flex flex-col gap-2 overflow-auto max-h-80">
+            {categoryOptions.map((item) => {
+              return (
+                <div
+                  key={item.id}
+                  className={`p-2 cursor-pointer ${
+                    categoryId === item.id ? "bg-gray-200" : ""
+                  }`}
+                  onClick={() => handleCategoryChange(item)}
+                >
+                  {item.name}
+                </div>
+              );
+            })}
+          </div>
+        }
+      >
+        <div className="md:hidden w-[120px] mt-4 flex items-center gap-1 cursor-pointer bg-black rounded-xl px-3 text-white text-[12px]">
+          <span>
+            <CrownOutlined />
+          </span>
+          <span># {categoryName ? categoryName : "选择圈子"}</span>
+          <RightOutlined />
+        </div>
+      </Popover>
       <div className="flex justify-between items-center mt-2">
         <div className="left flex gap-6 text-md text-gray-500">
           <Popover
@@ -135,7 +163,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
               </div>
             }
           >
-            <div className="flex items-center gap-1 cursor-pointer bg-black rounded-xl px-3 text-white text-[12px]">
+            <div className="hidden md:flex items-center gap-1 cursor-pointer bg-black rounded-xl px-3 text-white text-[12px]">
               <span>
                 <CrownOutlined />
               </span>
@@ -184,6 +212,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
           </Button>
         </div>
       </div>
+
       {!appStore.token && (
         <div className="absolute top-10 bottom-0 left-0 right-0 w-full h-full z-10 p-2 cursor-not-allowed text-slate-500">
           点击

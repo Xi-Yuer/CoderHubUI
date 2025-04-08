@@ -76,11 +76,9 @@ export function AppHeader() {
           <Link
             href={"https://github.com/Xi-Yuer/CoderHubUI"}
             target="_blank"
-            className={classNames(
-              "flex items-center gap-2 text-gray-600 text-base hover:text-black hover:font-bold transition duration-200 ease-in-out"
-            )}
+            className="text-gray-600 text-sm hover:text-black hover:font-bold text-nowrap w-20"
           >
-            <GithubOutlined />
+            <GithubOutlined className="mr-2" />
             GitHub
           </Link>
         </nav>
@@ -149,11 +147,9 @@ export function AppHeader() {
           <Link
             href={"https://github.com/Xi-Yuer/CoderHubUI"}
             target="_blank"
-            className={classNames(
-              "flex items-center gap-2 text-gray-600 text-base hover:text-black hover:font-bold transition duration-200 ease-in-out"
-            )}
+            className="text-gray-600 text-sm hover:text-black hover:font-bold text-nowrap w-20"
           >
-            <GithubOutlined />
+            <GithubOutlined className="mr-2" />
             GitHub
           </Link>
         </nav>
