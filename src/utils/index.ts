@@ -54,3 +54,10 @@ export const formatTime = (time: number | string) => {
     return "Invalid time";
   }
 };
+
+export function matchPath(actualPath: string, patternPath: string) {
+  const actualPathParts = actualPath.split("/");
+  const patternPathParts = patternPath.split("/");
+  if (actualPathParts[1] !== patternPathParts[1]) return false;
+  return true;
+}

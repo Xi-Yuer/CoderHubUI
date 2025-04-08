@@ -20,7 +20,7 @@ export const alovaServerInstance = createApis(
       method.config.headers["request-user-id"] = userInfo.id;
     },
     responded: responded,
-    cacheFor: process.env.NODE_ENV === "development" ? null : {},
+    cacheFor: process.env.NODE_ENV === "development" ? null : {}, // 开发环境不缓存
   }),
   $$userConfigMap
 );

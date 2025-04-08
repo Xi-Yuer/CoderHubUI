@@ -3,8 +3,7 @@ import { GetArticle, Tag } from "@/alova/globals";
 import { LONG_ARTICLE_TYPE } from "@/constant";
 import { ClientGetArticleList, ClientGetSystemTags } from "@/request/apis/web";
 import { useAppStore } from "@/store";
-import { MenuOutlined } from "@ant-design/icons";
-import { Button, Card, Drawer, FloatButton, Skeleton } from "antd";
+import { Button, Card, Skeleton, Tabs } from "antd";
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -164,21 +163,24 @@ export default function Page() {
       {/* 左侧推荐栏 */}
       {isMobile ? (
         <>
-          <FloatButton
-            type="primary"
-            icon={<MenuOutlined />}
-            onClick={() => setDrawerVisible(true)}
-          ></FloatButton>
-          <Drawer
-            title="文章"
-            placement="left"
-            closable
-            onClose={() => setDrawerVisible(false)}
-            open={drawerVisible}
-            width={"250px"}
-          >
-            <SideBar />
-          </Drawer>
+          {/* 左侧分类选择区域，在移动端展示到顶部 */}
+          <div className="lg:hidden w-full flex gap-4 flex-col bg-white px-4">
+            <Tabs
+              onChange={(key) => {
+                if (currentTag !== key) {
+                  setHasMore(true);
+                }
+                setPage(1);
+                setList([]);
+                setCurrentTag(key);
+              }}
+              activeKey={currentTag as string}
+              items={tags?.map((option) => ({
+                key: option.id,
+                label: option.name,
+              }))}
+            ></Tabs>
+          </div>
         </>
       ) : (
         <SideBar />

@@ -1,12 +1,10 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { Drawer, FloatButton } from "antd";
 import Link from "next/link";
 import { MenuOutlined } from "@ant-design/icons";
 import { difficultyMap } from "@/constant";
 import { GetQuestionBankResqonse, QuestionMenus } from "@/alova/globals";
-import QuestionBankDetail from "./questionBankDetail";
 import { ClientGetQuestionBankDetail } from "@/request/apis/web";
 
 interface QuestionDrawerProps {

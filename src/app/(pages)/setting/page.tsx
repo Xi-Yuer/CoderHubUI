@@ -84,7 +84,7 @@ export default function Page() {
     <div className="container flex flex-col lg:flex-row gap-4 lg:gap-8">
       {messageContext}
       {/* 侧边菜单栏 */}
-      <Card className="w-full lg:w-80">
+      <Card className="w-full lg:w-80 hidden lg:block">
         <Menu
           defaultSelectedKeys={["1"]}
           items={[

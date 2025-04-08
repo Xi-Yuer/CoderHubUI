@@ -2,9 +2,9 @@
 import { GetPositionListRes } from "@/alova/globals";
 import { ClientGetJobInfo } from "@/request/apis/web";
 import React, { useEffect, useState } from "react";
-import { Card, Drawer, FloatButton, List, Select } from "antd";
+import { Card, List, Select } from "antd";
 import { dictionary } from "@/dictionary";
-import { MenuFoldOutlined } from "@ant-design/icons";
+import { Tabs } from "antd"; // 引入 Tabs 组件
 
 export default function Page() {
   const [data, setData] = useState<GetPositionListRes | null>(null);
@@ -12,7 +12,6 @@ export default function Page() {
   const [selectedPosition, setSelectedPosition] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -39,63 +38,82 @@ export default function Page() {
 
   const companyList = () => {
     return (
-      <div className="h-full sticky top-[75px]">
-        <Card className="w-60 flex flex-col">
-          <div className="mb-4">
-            <Select
-              placeholder="请选择城市"
-              showSearch
-              allowClear
-              className="w-full"
-              value={selectedPosition}
-              onChange={(value) => {
-                setSelectedPosition(value);
-              }}
-            >
-              {dictionary.city.map((item) => (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              ))}
-            </Select>
+      <>
+         
+        <>
+          {/* 移动端 */}
+          <div className="sticky top-0 bg-white z-10 p-4 md:hidden -mt-10">
+            <div className="mb-4">
+              <Select
+                placeholder="请选择城市"
+                showSearch
+                allowClear
+                className="w-full"
+                value={selectedPosition}
+                onChange={(value) => {
+                  setSelectedPosition(value);
+                }}
+              >
+                {dictionary.city.map((item) => (
+                  <Select.Option key={item} value={item}>
+                    {item}
+                  </Select.Option>
+                ))}
+              </Select>
+            </div>
+            <Tabs
+              onChange={(key) => setSelectedCompany(key)}
+              activeKey={selectedCompany as string}
+              items={companies.map((company) => ({
+                label: company.name,
+                key: company.name,
+              }))}
+            ></Tabs>
           </div>
-          {companies.map((company) => (
-            <span
-              className={`block text-slate-900 p-2 cursor-pointer hover:bg-gray-50 ${selectedCompany === company.name ? "bg-gray-100" : ""}`}
-              key={company.name}
-              onClick={() => {
-                setSelectedCompany(company.name);
-              }}
-            >
-              {company.name}
-            </span>
-          ))}
-        </Card>
-      </div>
+        </>
+        <>
+          {/* 桌面端 */}
+          <div className="h-full sticky top-[70px] hidden md:block">
+            <Card className="w-60 flex flex-col">
+              <div className="mb-4">
+                <Select
+                  placeholder="请选择城市"
+                  showSearch
+                  allowClear
+                  className="w-full"
+                  value={selectedPosition}
+                  onChange={(value) => {
+                    setSelectedPosition(value);
+                  }}
+                >
+                  {dictionary.city.map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </div>
+              {companies.map((company) => (
+                <span
+                  className={`block text-slate-900 p-2 cursor-pointer hover:bg-gray-50 ${selectedCompany === company.name ? "bg-gray-100" : ""}`}
+                  key={company.name}
+                  onClick={() => {
+                    setSelectedCompany(company.name);
+                  }}
+                >
+                  {company.name}
+                </span>
+              ))}
+            </Card>
+          </div>
+        </>
+      </>
     );
   };
+
   return (
-    <div className="flex gap-4">
-      {isMobile ? (
-        <>
-          <Drawer
-            title="公司列表"
-            placement="left"
-            width={"350px"}
-            onClose={() => setIsDrawerOpen(false)}
-            open={isDrawerOpen}
-          >
-            {companyList()}
-          </Drawer>
-          <FloatButton
-            onClick={() => setIsDrawerOpen(true)}
-            type="primary"
-            icon={<MenuFoldOutlined />}
-          ></FloatButton>
-        </>
-      ) : (
-        companyList()
-      )}
+    <div className="flex flex-col md:flex-row gap-3">
+      {companyList()}
       <List
         className="w-full"
         dataSource={filteredCompanies}

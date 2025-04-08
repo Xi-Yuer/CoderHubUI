@@ -21,6 +21,7 @@ import { AppLogin } from "../appLogin";
 import "./index.css";
 import { ClientGetMessageCount } from "@/request/apis/web";
 import { useAppStore } from "@/store";
+import { matchPath } from "@/utils";
 
 export function AppHeader() {
   const pathname = usePathname();
@@ -64,7 +65,7 @@ export function AppHeader() {
               className={classNames(
                 "text-gray-600 text-sm hover:text-black hover:font-bold",
                 {
-                  "text-gray-950 font-bold": pathname === nav.path,
+                  "text-gray-950 font-bold": matchPath(pathname, nav.path),
                 }
               )}
             >
@@ -127,7 +128,7 @@ export function AppHeader() {
               className={classNames(
                 "text-gray-600 text-sm hover:text-black hover:font-bold text-nowrap",
                 {
-                  "text-gray-950 font-bold": pathname === nav.path,
+                  "text-gray-950 font-bold": matchPath(pathname, nav.path),
                 }
               )}
             >
@@ -179,7 +180,7 @@ export function AppHeader() {
               className={classNames(
                 "flex items-center gap-2 text-gray-600 text-base hover:text-black hover:font-bold transition duration-200 ease-in-out",
                 {
-                  "text-gray-950 font-bold": pathname === nav.path,
+                  "text-gray-950 font-bold": matchPath(pathname, nav.path),
                 }
               )}
             >

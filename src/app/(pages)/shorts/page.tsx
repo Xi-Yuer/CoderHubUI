@@ -1,11 +1,12 @@
 "use client";
-import { Card } from "antd";
+import { Button, Card } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { RefCallBack } from "./_components/microPostList";
 import { ClientGetSystemTags } from "@/request/apis/web";
 import dynamic from "next/dynamic";
 import { Tag } from "@/alova/globals";
 import { SHORT_ARTICLE_TYPE } from "@/constant";
+import { Tabs } from "antd"; // 引入 Tabs 组件
 
 const MicroPostList = dynamic(
   () => import("./_components/microPostList"),
@@ -13,6 +14,11 @@ const MicroPostList = dynamic(
 );
 const AppShortEditor = dynamic(
   () => import("@/app/_components/appShortEditor"),
+  { ssr: false } // 禁用服务器端渲染
+);
+
+const AppIcon = dynamic(
+  () => import("@/app/_components/appIcon"),
   { ssr: false } // 禁用服务器端渲染
 );
 
@@ -45,22 +51,42 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-4 justify-between">
+    <div className="flex flex-col lg:flex-row flex-wrap gap-4 justify-between">
+      {/* 左侧分类选择区域，在移动端展示到顶部 */}
+      <div className="lg:hidden w-full flex gap-4 flex-col bg-white px-4">
+        <Tabs
+          onChange={(key) => handleCategoryChange(key as string)}
+          activeKey={categoryId}
+          items={categoryOptions?.map((option) => ({
+            key: option.id,
+            label: option.name,
+          }))}
+        ></Tabs>
+      </div>
+      {/* 桌面端分类选择区域 */}
       <div className="hidden lg:flex w-[200px] h-full gap-4 flex-col">
         <Card>
           <div className="w-full">
-            <div className="mb-4 font-semibold text-gray-700">
-              {categoryOptions?.map((option) => (
-                <div
-                  key={option.id}
-                  className={`p-2 cursor-pointer ${
-                    categoryId === option.id ? "bg-gray-200" : ""
-                  }`}
-                  onClick={() => handleCategoryChange(option.id)}
-                >
-                  {option.name}
-                </div>
-              ))}
+            <div className="mb-4">
+              {categoryOptions?.map((item) => {
+                return (
+                  <div key={item.id}>
+                    <Button
+                      type="text"
+                      className={`
+                        flex-1 text-base justify-start cursor-pointer text-slate-600 w-40 !py-4 my-2
+                        ${categoryId === item.id ? "!bg-slate-100" : ""}
+                        `}
+                      onClick={() => handleCategoryChange(item.id)}
+                    >
+                      <span className="text-start w-full flex gap-2">
+                        <AppIcon type={item.icon} />
+                        {item.name}
+                      </span>
+                    </Button>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </Card>

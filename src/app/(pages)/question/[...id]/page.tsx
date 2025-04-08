@@ -2,7 +2,7 @@ import {
   ClientGetQuestionDetail,
   ClientGetQuestionDetailList,
 } from "@/request/apis/server";
-import { Card, Tag } from "antd";
+import { Button, Card, Tag } from "antd";
 import Link from "next/link";
 import React from "react";
 import QuestionPreview from "../_components/questionPreview";
@@ -59,6 +59,19 @@ export default async function Page({ params }: Props) {
       questionID = questionID || questionList[0].id;
       questionDetailResponse = await ClientGetQuestionDetail(questionID);
     } catch (error) {}
+
+    // 获取当前题目的索引
+    const currentIndex = questionList.findIndex(
+      (item) => item.id === questionID
+    );
+
+    // 上一题和下一题的 ID
+    const prevQuestionID =
+      currentIndex > 0 ? questionList[currentIndex - 1].id : null;
+    const nextQuestionID =
+      currentIndex < questionList.length - 1
+        ? questionList[currentIndex + 1].id
+        : null;
 
     return (
       <div className="container flex flex-wrap md:flex-nowrap md:gap-4">
@@ -123,6 +136,21 @@ export default async function Page({ params }: Props) {
         </div>
         <div className="hidden sm:hidden md:w-80 lg:w-80 lg:block md:hidden">
           <QuestionBankDetail id={bankID} />
+        </div>
+        <div className="fixed bottom-10 left-1/2 right-1/2 -translate-x-[50%] w-80 z-50">
+          {/* 上一题和下一题按钮 */}
+          <div className="justify-center items-center flex gap-4">
+            {prevQuestionID && (
+              <Link href={`/question/${bankID}/${prevQuestionID}`}>
+                <Button type="primary">上一题</Button>
+              </Link>
+            )}
+            {nextQuestionID && (
+              <Link href={`/question/${bankID}/${nextQuestionID}`}>
+                <Button type="primary">下一题</Button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     );

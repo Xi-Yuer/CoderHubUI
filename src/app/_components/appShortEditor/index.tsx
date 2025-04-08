@@ -87,7 +87,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
   };
   return (
     <div className="relative">
-      <div className="border comment">
+      <div className="border border-b-0 comment">
         <AiEditor
           placeholder="输入正文内容，分享新鲜事"
           value={text}
@@ -118,7 +118,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
           <Popover
             placement="bottom"
             content={
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 overflow-auto max-h-80">
                 {categoryOptions.map((item) => {
                   return (
                     <div
