@@ -21,18 +21,18 @@ export function AppFooter() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/about"
+                  href="https://github.com/Xi-Yuer/CoderHubUI"
                   className="text-gray-400 hover:text-white text-sm"
                 >
-                  关于我们
+                  <span className="hover:text-white">关于我们</span>
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href="https://github.com/Xi-Yuer/CoderHubUI"
                   className="text-gray-400 hover:text-white text-sm"
                 >
-                  联系我们
+                  <span className="hover:text-white">联系我们</span>
                 </Link>
               </li>
               <li>
@@ -40,7 +40,7 @@ export function AppFooter() {
                   href="/privacy"
                   className="text-gray-400 hover:text-white text-sm"
                 >
-                  隐私政策
+                  <span className="hover:text-white">隐私政策</span>
                 </Link>
               </li>
               <li>
@@ -48,7 +48,7 @@ export function AppFooter() {
                   href="/terms"
                   className="text-gray-400 hover:text-white text-sm"
                 >
-                  服务条款
+                  <span className="hover:text-white">服务条款</span>
                 </Link>
               </li>
             </ul>
@@ -64,7 +64,7 @@ export function AppFooter() {
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-blue-500"
               >
-                GitHub
+                <span className="hover:text-white">GitHub</span>
               </Link>
             </div>
           </div>
@@ -83,7 +83,7 @@ export function AppFooter() {
               rel="noopener noreferrer"
               className="text-blue-500 hover:underline ml-1"
             >
-              Xi-Yuer
+              <span className="hover:text-white">Xi-Yuer</span>
             </Link>
           </div>
           {/* 备案信息 */}
@@ -94,7 +94,7 @@ export function AppFooter() {
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-blue-500"
             >
-              京ICP备2021000001号
+              <span className="hover:text-white">京ICP备2021000001号</span>
             </Link>
           </p>
         </div>

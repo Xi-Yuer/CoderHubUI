@@ -8,6 +8,7 @@ import {
 import {
   BellOutlined,
   EditOutlined,
+  GithubOutlined,
   MenuOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
@@ -72,6 +73,16 @@ export function AppHeader() {
               {nav.name}
             </Link>
           ))}
+          <Link
+            href={"https://github.com/Xi-Yuer/CoderHubUI"}
+            target="_blank"
+            className={classNames(
+              "flex items-center gap-2 text-gray-600 text-base hover:text-black hover:font-bold transition duration-200 ease-in-out"
+            )}
+          >
+            <GithubOutlined />
+            GitHub
+          </Link>
         </nav>
 
         {/* 搜索框 + 功能按钮 */}
@@ -135,6 +146,16 @@ export function AppHeader() {
               {nav.name}
             </Link>
           ))}
+          <Link
+            href={"https://github.com/Xi-Yuer/CoderHubUI"}
+            target="_blank"
+            className={classNames(
+              "flex items-center gap-2 text-gray-600 text-base hover:text-black hover:font-bold transition duration-200 ease-in-out"
+            )}
+          >
+            <GithubOutlined />
+            GitHub
+          </Link>
         </nav>
         {/* 左侧渐变遮罩 */}
         <div className="absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-white pointer-events-none" />

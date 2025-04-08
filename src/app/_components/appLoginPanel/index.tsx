@@ -24,6 +24,7 @@ import { useAppStore } from "@/store";
 import { useStore } from "zustand";
 import { md5 } from "@/utils";
 import { DEFAULT_AVATAR } from "@/constant";
+import Link from "next/link";
 
 const { Title, Text } = Typography;
 
@@ -212,13 +213,21 @@ export default function AppLoginPanel() {
             }}
           >
             {isRegister ? "注册即表示您同意我们的 " : "登录即表示您同意我们的 "}
-            <a href="#" style={{ color: "#000", textDecoration: "underline" }}>
+            <Link
+              target="_blank"
+              href="/agreement"
+              style={{ color: "#000", textDecoration: "underline" }}
+            >
               用户协议
-            </a>{" "}
+            </Link>{" "}
             和{" "}
-            <a href="#" style={{ color: "#000", textDecoration: "underline" }}>
+            <Link
+              target="_blank"
+              href="/privacy"
+              style={{ color: "#000", textDecoration: "underline" }}
+            >
               隐私政策
-            </a>
+            </Link>
           </Text>
         </div>
       </>
