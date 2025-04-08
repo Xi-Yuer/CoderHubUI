@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import zhCN from "antd/locale/zh_CN";
+import localFont from "next/font/local";
 import { ConfigProvider } from "antd";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { AppFooter, AppHeader } from "./_components";
 import AppLoginPanel from "./_components/appLoginPanel";
 import { LOGO } from "@/constant";
+
+const SanFranciscoFont = localFont({
+  variable: "--font-sans",
+  src: "../assets/font/SanFranciscoDisplay-Semibold-8.otf",
+});
 
 export const metadata: Metadata = {
   title: "Coderhub-程序员的技术社区",
@@ -35,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={SanFranciscoFont.className}>
       <body>
         <ConfigProvider
           locale={zhCN}
