@@ -1,10 +1,14 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
-import { ClientCreateSession, ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
+import {
+  ClientCreateSession,
+  ClientFollowUser,
+  ClientGetUserInfoById,
+} from "@/request/apis/web";
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, Card, message, Spin } from "antd";
+import { Avatar, Button, Card, message, Spin, Image } from "antd";
 import { ManOutlined, UserOutlined, WomanOutlined } from "@ant-design/icons";
-import { DEFAULT_AVATAR } from "@/constant";
+import { DEFAULT_AVATAR, getLevel } from "@/constant";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -14,7 +18,7 @@ interface Props {
 export default function AuthInfomation({ id }: Props) {
   const [authorInfo, setAuthorInfo] = useState<UserInfo | null>(null);
   const [messageApi, messageContext] = message.useMessage();
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     ClientGetUserInfoById(id).then((res) => {
@@ -56,8 +60,16 @@ export default function AuthInfomation({ id }: Props) {
             icon={<UserOutlined />}
           />
           <div className="ml-3">
-            <h2 className="text-lg font-semibold">
+            <h2 className="text-lg font-semibold flex items-center">
               {authorInfo?.nickname || authorInfo?.username}
+              <Image
+                width={25}
+                height={25}
+                preview={false}
+                src={getLevel(authorInfo?.level)?.svg?.src}
+                alt={getLevel(authorInfo?.level)?.name}
+                className="ml-1"
+              ></Image>
             </h2>
             <p className="text-sm text-gray-500">{authorInfo?.email}</p>
           </div>
@@ -88,8 +100,8 @@ export default function AuthInfomation({ id }: Props) {
             onClick={() => {
               if (!authorInfo?.id) return;
               ClientCreateSession({ peerID: authorInfo.id }).then((res) => {
-                router.push("/notification/message")
-              })
+                router.push("/notification/message");
+              });
             }}
           >
             私信

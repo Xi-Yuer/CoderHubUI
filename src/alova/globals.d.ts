@@ -450,6 +450,11 @@ export type UserInfo = {
    */
   avatar: string;
   /**
+   * 等级
+   * [required]
+   */
+  level: number;
+  /**
    * 性别 0:未知 1:男 2:女
    * [required]
    */
@@ -3699,6 +3704,9 @@ declare global {
        *       // 头像
        *       // [required]
        *       avatar: string
+       *       // 等级
+       *       // [required]
+       *       level: number
        *       // 性别 0:未知 1:男 2:女
        *       // [required]
        *       gender: '0' | '1'
@@ -3924,6 +3932,9 @@ declare global {
        *       // 头像
        *       // [required]
        *       avatar: string
+       *       // 等级
+       *       // [required]
+       *       level: number
        *       // 性别 0:未知 1:男 2:女
        *       // [required]
        *       gender: '0' | '1'
@@ -4120,6 +4131,9 @@ declare global {
        *         // 头像
        *         // [required]
        *         avatar: string
+       *         // 等级
+       *         // [required]
+       *         level: number
        *         // 性别 0:未知 1:男 2:女
        *         // [required]
        *         gender: '0' | '1'
@@ -4306,6 +4320,9 @@ declare global {
        *         // 头像
        *         // [required]
        *         avatar: string
+       *         // 等级
+       *         // [required]
+       *         level: number
        *         // 性别 0:未知 1:男 2:女
        *         // [required]
        *         gender: '0' | '1'
@@ -4517,6 +4534,9 @@ declare global {
        *       // 头像
        *       // [required]
        *       avatar: string
+       *       // 等级
+       *       // [required]
+       *       level: number
        *       // 性别 0:未知 1:男 2:女
        *       // [required]
        *       gender: '0' | '1'
@@ -4705,6 +4725,9 @@ declare global {
        *         // 头像
        *         // [required]
        *         avatar: string
+       *         // 等级
+       *         // [required]
+       *         level: number
        *         // 性别 0:未知 1:男 2:女
        *         // [required]
        *         gender: '0' | '1'
@@ -4940,6 +4963,9 @@ declare global {
        *       // 头像
        *       // [required]
        *       avatar: string
+       *       // 等级
+       *       // [required]
+       *       level: number
        *       // 性别 0:未知 1:男 2:女
        *       // [required]
        *       gender: '0' | '1'
@@ -5651,6 +5677,9 @@ declare global {
        *           // 头像
        *           // [required]
        *           avatar: string
+       *           // 等级
+       *           // [required]
+       *           level: number
        *           // 性别 0:未知 1:男 2:女
        *           // [required]
        *           gender: '0' | '1'
@@ -5869,6 +5898,9 @@ declare global {
        *       // 头像
        *       // [required]
        *       avatar: string
+       *       // 等级
+       *       // [required]
+       *       level: number
        *       // 性别 0:未知 1:男 2:女
        *       // [required]
        *       gender: '0' | '1'
@@ -5987,6 +6019,9 @@ declare global {
        *       // 头像
        *       // [required]
        *       avatar: string
+       *       // 等级
+       *       // [required]
+       *       level: number
        *       // 性别 0:未知 1:男 2:女
        *       // [required]
        *       gender: '0' | '1'
@@ -6637,6 +6672,9 @@ declare global {
        *         // 头像
        *         // [required]
        *         avatar: string
+       *         // 等级
+       *         // [required]
+       *         level: number
        *         // 性别 0:未知 1:男 2:女
        *         // [required]
        *         gender: '0' | '1'
@@ -7213,6 +7251,9 @@ declare global {
        *       // 头像
        *       // [required]
        *       avatar: string
+       *       // 等级
+       *       // [required]
+       *       level: number
        *       // 性别 0:未知 1:男 2:女
        *       // [required]
        *       gender: '0' | '1'
@@ -7381,6 +7422,9 @@ declare global {
        *         // 头像
        *         // [required]
        *         avatar: string
+       *         // 等级
+       *         // [required]
+       *         level: number
        *         // 性别 0:未知 1:男 2:女
        *         // [required]
        *         gender: '0' | '1'
@@ -8405,6 +8449,9 @@ declare global {
        *     // 头像
        *     // [required]
        *     avatar: string
+       *     // 等级
+       *     // [required]
+       *     level: number
        *     // 性别 0:未知 1:男 2:女
        *     // [required]
        *     gender: '0' | '1'
@@ -8507,6 +8554,9 @@ declare global {
        *     // 头像
        *     // [required]
        *     avatar: string
+       *     // 等级
+       *     // [required]
+       *     level: number
        *     // 性别 0:未知 1:男 2:女
        *     // [required]
        *     gender: '0' | '1'
@@ -8643,6 +8693,9 @@ declare global {
        *     // 头像
        *     // [required]
        *     avatar: string
+       *     // 等级
+       *     // [required]
+       *     level: number
        *     // 性别 0:未知 1:男 2:女
        *     // [required]
        *     gender: '0' | '1'
@@ -8746,6 +8799,9 @@ declare global {
        *       // 头像
        *       // [required]
        *       avatar: string
+       *       // 等级
+       *       // [required]
+       *       level: number
        *       // 性别 0:未知 1:男 2:女
        *       // [required]
        *       gender: '0' | '1'

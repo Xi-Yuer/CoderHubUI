@@ -1,6 +1,6 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
-import { DEFAULT_AVATAR } from "@/constant";
+import { DEFAULT_AVATAR, getLevel } from "@/constant";
 import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Divider, Image, message, Spin } from "antd";
@@ -59,8 +59,16 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
             preview={false}
           />
           <div>
-            <div className="font-semibold">
+            <div className="font-semibold flex items-center">
               {userInfo?.nickname || userInfo?.username}
+              <Image
+                width={25}
+                height={25}
+                preview={false}
+                src={getLevel(userInfo?.level)?.svg?.src}
+                alt={getLevel(userInfo?.level)?.name}
+                className="ml-1"
+              ></Image>
             </div>
             <div className="text-slate-500">{userInfo?.email}</div>
           </div>

@@ -11,7 +11,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Operation from "@/app/(pages)/post/_components/operation";
 import Link from "next/link";
-import { DEFAULT_AVATAR, PREVIEW_THEME } from "@/constant";
+import { DEFAULT_AVATAR, getLevel, PREVIEW_THEME } from "@/constant";
 
 export default function AppArticlePreviewDetail({
   item,
@@ -32,10 +32,18 @@ export default function AppArticlePreviewDetail({
             <Link
               href={`/user/${articleFromProps.author.id}`}
               target="_blank"
-              className="text-slate-700 cursor-pointer hover:text-slate-950"
+              className="text-slate-700 cursor-pointer hover:text-slate-950 flex items-center"
             >
               {articleFromProps.author.nickname ||
                 articleFromProps.author.username}
+              <Image
+                width={25}
+                height={25}
+                preview={false}
+                src={getLevel(articleFromProps.author.level).svg.src}
+                alt={getLevel(articleFromProps.author.level).name}
+                className="ml-1"
+              ></Image>
             </Link>
             <span className="text-gray-400">
               {formatTime(articleFromProps.article.createdAt)}
@@ -75,10 +83,18 @@ export default function AppArticlePreviewDetail({
             <div>
               <Link
                 href={`/user/${articleFromProps.author.id}`}
-                className="font-bold text-gray-800"
+                className="font-bold text-gray-800 flex items-center"
               >
                 {articleFromProps.author.nickname ||
                   articleFromProps.author.username}
+                <Image
+                  width={25}
+                  height={25}
+                  preview={false}
+                  src={getLevel(articleFromProps.author.level).svg.src}
+                  alt={getLevel(articleFromProps.author.level).name}
+                  className="ml-1"
+                ></Image>
               </Link>
               <p className="text-sm text-gray-500">
                 {formatTime(articleFromProps.article.updatedAt)}

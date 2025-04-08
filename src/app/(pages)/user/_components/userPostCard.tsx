@@ -1,7 +1,11 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
-import { ClientCreateSession, ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
-import { Card, Avatar, Button, Typography, message, Spin } from "antd";
+import {
+  ClientCreateSession,
+  ClientFollowUser,
+  ClientGetUserInfoById,
+} from "@/request/apis/web";
+import { Card, Avatar, Button, Typography, message, Spin, Image } from "antd";
 import {
   UserOutlined,
   ManOutlined,
@@ -14,7 +18,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useAppStore } from "@/store";
 import Link from "next/link";
-import { DEFAULT_AVATAR } from "@/constant";
+import { DEFAULT_AVATAR, getLevel } from "@/constant";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -55,7 +59,7 @@ export default function UserPostCard({ userID }: Props) {
   if (!user) {
     return (
       <Card className="text-center text-gray-500">
-        <Spin></Spin>
+        <Spin spinning></Spin>
       </Card>
     );
   }
@@ -73,8 +77,16 @@ export default function UserPostCard({ userID }: Props) {
         <div className="flex items-center space-x-4">
           {/* 用户信息 */}
           <div className="flex-1 flex flex-col gap-2">
-            <Typography.Title level={3} className="m-0">
+            <Typography.Title level={3} className="m-0 flex items-center">
               {user.nickname || user.username}
+              <Image
+                width={35}
+                height={35}
+                preview={false}
+                src={getLevel(user.level).svg.src}
+                alt={getLevel(user.level).name}
+                className="ml-1"
+              ></Image>
             </Typography.Title>
             {/* 关注/粉丝信息 */}
             <Typography.Text type="secondary">
@@ -120,12 +132,17 @@ export default function UserPostCard({ userID }: Props) {
           >
             {user?.is_followed ? "已关注" : "关注"}
           </Button>
-          <Button type="primary" onClick={() => {
-            if (!user?.id) return;
-            ClientCreateSession({ peerID: user.id }).then((res) => {
-              router.push("/notification/message")
-            })
-          }}>私信</Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              if (!user?.id) return;
+              ClientCreateSession({ peerID: user.id }).then((res) => {
+                router.push("/notification/message");
+              });
+            }}
+          >
+            私信
+          </Button>
         </div>
       )}
     </Card>

@@ -11,6 +11,11 @@ import { PreviewThemes } from "md-editor-rt";
 import defaultAvatar from "../assets/default_avatar.png";
 import svgLogo from "@/assets/favicon.svg";
 import PrivateMessage from "@/app/(pages)/notification/_components/PrivateMessage";
+import Level0Svg from "@/assets/level/level0.svg";
+import Level1Svg from "@/assets/level/level1.svg";
+import Level2Svg from "@/assets/level/level2.svg";
+import Level3Svg from "@/assets/level/level3.svg";
+import Level4Svg from "@/assets/level/level4.svg";
 
 export const DEFAULT_AVATAR = defaultAvatar.src;
 export const LOGO = svgLogo.src;
@@ -128,3 +133,51 @@ export const FAVORITE_QUESTION = "question";
 export const PREVIEW_THEME: PreviewThemes = "smart-blue";
 export const LONG_ARTICLE_TYPE = "article";
 export const SHORT_ARTICLE_TYPE = "micro_post";
+
+export const getLevel = (level?: number) => {
+  if (!level) {
+    return USER_LEVEL.LEVEL0;
+  }
+  // 返回获取
+  if (level < 400) {
+    return USER_LEVEL.LEVEL0;
+  }
+  if (level < 500) {
+    return USER_LEVEL.LEVEL1;
+  }
+  if (level < 600) {
+    return USER_LEVEL.LEVEL2;
+  }
+  if (level < 700) {
+    return USER_LEVEL.LEVEL3;
+  }
+  return USER_LEVEL.LEVEL4;
+};
+
+export const USER_LEVEL = {
+  LEVEL0: {
+    level: 300,
+    name: "青铜",
+    svg: Level0Svg,
+  },
+  LEVEL1: {
+    level: 600,
+    name: "白银",
+    svg: Level1Svg,
+  },
+  LEVEL2: {
+    level: 900,
+    name: "黄金",
+    svg: Level2Svg,
+  },
+  LEVEL3: {
+    level: 1200,
+    name: "钻石",
+    svg: Level3Svg,
+  },
+  LEVEL4: {
+    level: 1500,
+    name: "大师",
+    svg: Level4Svg,
+  },
+};

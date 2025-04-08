@@ -7747,6 +7747,11 @@
           "type": "string",
           "description": " 头像"
         },
+        "level": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 等级"
+        },
         "gender": {
           "type": "integer",
           "format": "int32",
@@ -7811,6 +7816,7 @@
         "email",
         "phone",
         "avatar",
+        "level",
         "gender",
         "age",
         "status",

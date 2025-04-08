@@ -26,7 +26,7 @@ import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import AppSharedPopUp from "../appSharedPopup";
 import { useAppStore } from "@/store";
 import Link from "next/link";
-import { DEFAULT_AVATAR } from "@/constant";
+import { DEFAULT_AVATAR, getLevel, USER_LEVEL } from "@/constant";
 
 export default function AppShortControl({
   article,
@@ -79,9 +79,17 @@ export default function AppShortControl({
                 </Link>
               </Popover>
               <div>
-                <p className="font-bold text-gray-800">
+                <div className="font-bold text-gray-800 flex items-center">
                   {article.author.nickname || article.author.username}
-                </p>
+                  <Image
+                    width={25}
+                    height={25}
+                    preview={false}
+                    src={getLevel(article.author.level).svg.src}
+                    alt={getLevel(article.author.level).name}
+                    className="ml-1"
+                  ></Image>
+                </div>
                 <p className="text-sm text-gray-500">
                   {formatTime(article.article.updatedAt)}
                 </p>

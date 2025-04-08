@@ -22,7 +22,7 @@ import { Button, Popover, Image, Avatar } from "antd";
 import { useAppStore } from "@/store";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Link from "next/link";
-import { DEFAULT_AVATAR, PREVIEW_THEME } from "@/constant";
+import { DEFAULT_AVATAR, getLevel, PREVIEW_THEME } from "@/constant";
 
 interface AppCommentItemProps {
   comment: Comment;
@@ -100,6 +100,14 @@ export default function AppCommentItem({
             commentFromProps.entity_author_id && (
             <span className="text-white bg-black px-1 text-xs">作者</span>
           )}
+          <Image
+            width={25}
+            height={25}
+            preview={false}
+            src={getLevel(commentFromProps.user_info.level).svg.src}
+            alt={getLevel(commentFromProps.user_info.level).name}
+            className="ml-1"
+          ></Image>
         </Link>
         {/* 回复对象 */}
         {commentFromProps.reply_to_user_info && (
