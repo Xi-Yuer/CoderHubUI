@@ -2422,6 +2422,79 @@
         ]
       }
     },
+    "/api/signin/create": {
+      "post": {
+        "summary": "创建一个签到",
+        "operationId": "CreateSignIn",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateSignResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSignReq"
+            }
+          }
+        ],
+        "tags": [
+          "signin_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/signin/list": {
+      "get": {
+        "summary": "获取签到列表",
+        "operationId": "ListSignIn",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetUserSignResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "signin_auth"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/api/tag/create": {
       "post": {
         "summary": "创建分类标签",
@@ -4054,6 +4127,34 @@
         }
       },
       "title": "CreateSessionResp",
+      "required": [
+        "data"
+      ]
+    },
+    "CreateSignReq": {
+      "type": "object",
+      "title": "CreateSignReq"
+    },
+    "CreateSignResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserSign"
+          }
+        }
+      },
+      "title": "CreateSignResp",
       "required": [
         "data"
       ]
@@ -6204,6 +6305,48 @@
         "data"
       ]
     },
+    "GetUserSignReq": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetUserSignReq",
+      "required": [
+        "year",
+        "month"
+      ]
+    },
+    "GetUserSignResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserSign"
+          }
+        }
+      },
+      "title": "GetUserSignResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetWorkExpListReq": {
       "type": "object",
       "properties": {
@@ -7849,6 +7992,19 @@
       "required": [
         "total",
         "list"
+      ]
+    },
+    "UserSign": {
+      "type": "object",
+      "properties": {
+        "bool": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      },
+      "title": "UserSign",
+      "required": [
+        "bool"
       ]
     },
     "WebSocketResponse": {

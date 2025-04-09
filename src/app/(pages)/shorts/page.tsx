@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { Tag } from "@/alova/globals";
 import { SHORT_ARTICLE_TYPE } from "@/constant";
 import { Tabs } from "antd"; // 引入 Tabs 组件
+import Signin from "./_components/signin";
 
 const MicroPostList = dynamic(
   () => import("./_components/microPostList"),
@@ -64,7 +65,7 @@ export default function Page() {
         ></Tabs>
       </div>
       {/* 桌面端分类选择区域 */}
-      <div className="hidden lg:flex w-[200px] h-full gap-4 flex-col">
+      <div className="hidden lg:flex w-[200px] h-full gap-4 flex-col sticky top-[74px]">
         <Card>
           <div className="w-full">
             <div className="mb-4">
@@ -101,8 +102,10 @@ export default function Page() {
         <MicroPostList ref={MicroPostRef} categoryId={categoryId} />
       </div>
       {/* 右侧推荐栏 */}
-      <div className="hidden xl:flex w-[250px] gap-4 flex-col">
-        <Card>Recommend</Card>
+      <div className="hidden xl:flex w-[250px] gap-4 flex-col h-full sticky top-[74px]">
+        <Card>
+          <Signin />
+        </Card>
         <Card>Recommend</Card>
       </div>
     </div>

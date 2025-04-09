@@ -10,6 +10,7 @@ import { Avatar, Button, Card, message, Spin, Image } from "antd";
 import { ManOutlined, UserOutlined, WomanOutlined } from "@ant-design/icons";
 import { DEFAULT_AVATAR, getLevel } from "@/constant";
 import { useRouter } from "next/navigation";
+import AdminSvg from "@/assets/admin.svg";
 
 interface Props {
   id: string;
@@ -62,6 +63,16 @@ export default function AuthInfomation({ id }: Props) {
           <div className="ml-3">
             <h2 className="text-lg font-semibold flex items-center">
               {authorInfo?.nickname || authorInfo?.username}
+              {authorInfo?.is_admin && (
+                <Image
+                  width={20}
+                  height={20}
+                  preview={false}
+                  src={AdminSvg.src}
+                  alt="管理员"
+                  className="mx-1"
+                ></Image>
+              )}
               <Image
                 width={25}
                 height={25}

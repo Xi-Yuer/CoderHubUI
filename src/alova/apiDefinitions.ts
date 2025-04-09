@@ -79,6 +79,8 @@ export default {
   'session_auth.DeleteSession': ['DELETE', '/api/session/delete/{id}'],
   'session_auth.ListSession': ['GET', '/api/session/list'],
   'session_auth.UpdateMessage': ['POST', '/api/session/update'],
+  'signin_auth.CreateSignIn': ['POST', '/api/signin/create'],
+  'signin_auth.ListSignIn': ['GET', '/api/signin/list'],
   'tag_auth.CreateTag': ['POST', '/api/tag/create'],
   'tag_public.GetAllTagList': ['GET', '/api/tag/list'],
   'tag_public.GetSystemTagList': ['GET', '/api/tag/system/list'],

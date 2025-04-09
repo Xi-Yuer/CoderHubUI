@@ -6,6 +6,7 @@ import { useAppStore } from "@/store";
 import { Button, Card, Skeleton, Tabs } from "antd";
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
+import Signin from "../shorts/_components/signin";
 
 const AppArticlePreview = dynamic(
   () => import("@/app/_components/appArticlePreview"),
@@ -213,8 +214,10 @@ export default function Page() {
         </div>
       </div>
       {/* 右侧推荐栏 */}
-      <div className="hidden xl:flex w-[200px] gap-4 flex-col">
-        <Card>Recommend</Card>
+      <div className="hidden xl:flex w-[250px] gap-4 flex-col h-full sticky top-[74px]">
+        <Card>
+          <Signin />
+        </Card>
         <Card>Recommend</Card>
       </div>
     </div>

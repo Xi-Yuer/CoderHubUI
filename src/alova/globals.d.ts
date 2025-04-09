@@ -2492,6 +2492,41 @@ export type UpdateChatSessionReq = {
   peerId: string;
   sessionName?: string;
 };
+export type UserSign = {
+  /**
+   * [required]
+   */
+  bool: boolean;
+};
+export type CreateSignResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: UserSign[];
+};
+export type CreateSignReq = object;
+export type GetUserSignResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: UserSign[];
+};
 export type CreateTagResp = {
   /**
    * 状态码
@@ -8035,6 +8070,98 @@ declare global {
       >(
         config: Config
       ): Alova2Method<UpdateChatSessionResp, 'session_auth.UpdateMessage', Config>;
+    };
+    signin_auth: {
+      /**
+       * ---
+       *
+       * [POST] 创建一个签到
+       *
+       * **path:** /api/signin/create
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: Array<{
+       *     // [required]
+       *     bool: boolean
+       *   }>
+       * }
+       * ```
+       */
+      CreateSignIn<
+        Config extends Alova2MethodConfig<CreateSignResp> & {
+          data: CreateSignReq;
+        }
+      >(
+        config: Config
+      ): Alova2Method<CreateSignResp, 'signin_auth.CreateSignIn', Config>;
+      /**
+       * ---
+       *
+       * [GET] 获取签到列表
+       *
+       * **path:** /api/signin/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // [required]
+       *   year: number
+       *   // [required]
+       *   month: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: Array<{
+       *     // [required]
+       *     bool: boolean
+       *   }>
+       * }
+       * ```
+       */
+      ListSignIn<
+        Config extends Alova2MethodConfig<GetUserSignResp> & {
+          params: {
+            /**
+             * [required]
+             */
+            year: number;
+            /**
+             * [required]
+             */
+            month: number;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetUserSignResp, 'signin_auth.ListSignIn', Config>;
     };
     tag_auth: {
       /**

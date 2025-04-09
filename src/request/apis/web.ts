@@ -563,3 +563,23 @@ export async function ClientDeleteSession(session_id: string) {
     data: {},
   });
 }
+
+// 签到
+export async function ClientSignIn() {
+  return alovaServerInstance.signin_auth.CreateSignIn({
+    data: {},
+  });
+}
+
+// 获取签到记录
+export async function ClientGetSignInRecord(
+  year: number,
+  month: number
+) {
+  return alovaServerInstance.signin_auth.ListSignIn({
+    params: {
+      year,
+      month,
+    },
+  });
+}

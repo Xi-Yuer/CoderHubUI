@@ -22,6 +22,7 @@ import { Button, Popover, Image, Avatar } from "antd";
 import { useAppStore } from "@/store";
 import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Link from "next/link";
+import AdminSvg from "@/assets/admin.svg";
 import { DEFAULT_AVATAR, getLevel, PREVIEW_THEME } from "@/constant";
 
 interface AppCommentItemProps {
@@ -100,14 +101,24 @@ export default function AppCommentItem({
             commentFromProps.entity_author_id && (
             <span className="text-white bg-black px-1 text-xs">作者</span>
           )}
-          <Image
-            width={25}
-            height={25}
-            preview={false}
-            src={getLevel(commentFromProps.user_info.level).svg.src}
-            alt={getLevel(commentFromProps.user_info.level).name}
-            className="ml-1"
-          ></Image>
+          <div className="flex justify-center items-center">
+            {commentFromProps.user_info.is_admin && (
+              <Image
+                width={20}
+                height={20}
+                preview={false}
+                src={AdminSvg.src}
+                alt="管理员"
+              ></Image>
+            )}
+            <Image
+              width={25}
+              height={25}
+              preview={false}
+              src={getLevel(commentFromProps.user_info.level).svg.src}
+              alt={getLevel(commentFromProps.user_info.level).name}
+            ></Image>
+          </div>
         </Link>
         {/* 回复对象 */}
         {commentFromProps.reply_to_user_info && (

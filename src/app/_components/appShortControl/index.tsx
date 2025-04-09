@@ -1,20 +1,19 @@
 "use client";
-import { Emoji, GetArticle } from "@/alova/globals";
+import { GetArticle } from "@/alova/globals";
 import {
   AlertOutlined,
   CommentOutlined,
   EllipsisOutlined,
   LikeFilled,
   LikeOutlined,
-  PictureOutlined,
   RestOutlined,
   ShareAltOutlined,
-  SmileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Image, Popover } from "antd";
 import React, { useEffect } from "react";
 import { AppCommentEditor } from "../appCommentEditor";
+import AdminSvg from "@/assets/admin.svg";
 import {
   ClientDeleteArticle,
   ClientLikeEntity,
@@ -81,6 +80,16 @@ export default function AppShortControl({
               <div>
                 <div className="font-bold text-gray-800 flex items-center">
                   {article.author.nickname || article.author.username}
+                  {article.author.is_admin && (
+                    <Image
+                      width={20}
+                      height={20}
+                      preview={false}
+                      src={AdminSvg.src}
+                      alt="管理员"
+                      className="mx-1"
+                    ></Image>
+                  )}
                   <Image
                     width={25}
                     height={25}

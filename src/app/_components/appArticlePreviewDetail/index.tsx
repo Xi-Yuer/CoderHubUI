@@ -12,6 +12,7 @@ import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Operation from "@/app/(pages)/post/_components/operation";
 import Link from "next/link";
 import { DEFAULT_AVATAR, getLevel, PREVIEW_THEME } from "@/constant";
+import AdminSvg from "@/assets/admin.svg";
 
 export default function AppArticlePreviewDetail({
   item,
@@ -36,6 +37,16 @@ export default function AppArticlePreviewDetail({
             >
               {articleFromProps.author.nickname ||
                 articleFromProps.author.username}
+              {articleFromProps.author.is_admin && (
+                <Image
+                  width={20}
+                  height={20}
+                  preview={false}
+                  src={AdminSvg.src}
+                  alt="管理员"
+                  className="mx-1"
+                ></Image>
+              )}
               <Image
                 width={25}
                 height={25}
@@ -87,6 +98,16 @@ export default function AppArticlePreviewDetail({
               >
                 {articleFromProps.author.nickname ||
                   articleFromProps.author.username}
+                {articleFromProps.author.is_admin && (
+                  <Image
+                    width={20}
+                    height={20}
+                    preview={false}
+                    src={AdminSvg.src}
+                    alt="管理员"
+                    className="mx-1"
+                  ></Image>
+                )}
                 <Image
                   width={25}
                   height={25}

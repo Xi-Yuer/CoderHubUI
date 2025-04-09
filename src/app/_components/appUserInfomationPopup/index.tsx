@@ -5,6 +5,7 @@ import { ClientFollowUser, ClientGetUserInfoById } from "@/request/apis/web";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Divider, Image, message, Spin } from "antd";
 import Link from "next/link";
+import AdminSvg from "@/assets/admin.svg";
 import React, { useEffect, useState } from "react";
 
 export default function AppUserInfoMationPopUP({ id }: { id: string }) {
@@ -61,6 +62,16 @@ export default function AppUserInfoMationPopUP({ id }: { id: string }) {
           <div>
             <div className="font-semibold flex items-center">
               {userInfo?.nickname || userInfo?.username}
+              {userInfo?.is_admin && (
+                <Image
+                  width={20}
+                  height={20}
+                  preview={false}
+                  src={AdminSvg.src}
+                  alt="管理员"
+                  className="mx-1"
+                ></Image>
+              )}
               <Image
                 width={25}
                 height={25}
