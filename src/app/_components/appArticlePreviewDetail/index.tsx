@@ -129,13 +129,14 @@ export default function AppArticlePreviewDetail({
         id="preview-only"
         previewTheme={PREVIEW_THEME}
       />
-      <div className="grid grid-cols-2 gap-2 mt-2 px-6">
+      <div className="flex flex-wrap gap-2 mt-2 px-4">
         {item?.article?.imageUrls?.map((url, index) => (
           <div className="flex flex-wrap" key={index}>
             <Image
               src={url}
               alt=""
               className="rounded-md cursor-pointer object-cover"
+              style={{ width: "150px", height: "150px",borderRadius:"5px"}}
             />
           </div>
         ))}

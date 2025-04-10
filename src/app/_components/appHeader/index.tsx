@@ -13,9 +13,8 @@ import {
   MenuOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, Drawer, Input, Modal, Popover } from "antd";
+import { Badge, Button, Drawer, Input, Modal, Popover, Image } from "antd";
 import classNames from "classnames";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";

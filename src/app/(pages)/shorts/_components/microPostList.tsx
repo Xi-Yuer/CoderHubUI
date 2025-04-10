@@ -70,9 +70,13 @@ export default function MicroPostList({ ref, categoryId }: Props) {
           setHasMore(false);
           return;
         }
-        setList((pre) => {
-          return [...pre, ...res.data];
-        });
+        if (page === 1 || reFreshed) {
+          setList(res.data);
+        } else {
+          setList((pre) => {
+            return [...pre, ...res.data];
+          });
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -81,12 +85,7 @@ export default function MicroPostList({ ref, categoryId }: Props) {
   };
 
   // 导出函数，使得其他页面可以刷新列表
-  const refreshList = () => {
-    setList([]);
-    setPage(1);
-    // 强制刷新页面数据
-    getList(true);
-  };
+  const refreshList = () => getList(true);
 
   useImperativeHandle(
     ref,
