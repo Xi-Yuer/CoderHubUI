@@ -57,7 +57,13 @@ export default function MicroPostList({ ref, categoryId }: Props) {
   const getList = (reFreshed = false) => {
     const { userInfo } = useAppStore.getState();
     setLoading(true);
-    ClientGetArticleList(SHORT_ARTICLE_TYPE, page, 10, categoryId, userInfo.id)
+    ClientGetArticleList(
+      SHORT_ARTICLE_TYPE,
+      reFreshed ? 1 : page,
+      10,
+      categoryId,
+      userInfo.id
+    )
       .send(reFreshed)
       .then((res) => {
         if (!res?.data) {

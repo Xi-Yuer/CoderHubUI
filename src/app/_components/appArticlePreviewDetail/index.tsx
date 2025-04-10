@@ -132,7 +132,11 @@ export default function AppArticlePreviewDetail({
       <div className="grid grid-cols-2 gap-2 mt-2 px-6">
         {item?.article?.imageUrls?.map((url, index) => (
           <div className="flex flex-wrap" key={index}>
-            <Image src={url} alt="" className="w-20" width={120} />
+            <Image
+              src={url}
+              alt=""
+              className="rounded-md cursor-pointer object-cover"
+            />
           </div>
         ))}
       </div>

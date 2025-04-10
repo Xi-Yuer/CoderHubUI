@@ -100,7 +100,10 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
           className="relative"
         />
       </div>
-      <div className="image_list flex gap-2 mt-2">
+      <div
+        className="image_list flex gap-2 mt-2 rounded-md overflow-hidden"
+        style={{ borderRadius: "5px", overflow: "hidden" }}
+      >
         {imageList.map((item, index) => {
           return (
             <Image
@@ -109,6 +112,8 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
               width={100}
               height={100}
               alt=""
+              className="rounded-md cursor-pointer object-cover"
+              style={{ borderRadius: "5px", overflow: "hidden" }}
             />
           );
         })}

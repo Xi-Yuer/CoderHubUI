@@ -6,7 +6,6 @@ import {
   LikeFilled,
 } from "@ant-design/icons";
 import { Image } from "antd";
-import { MdPreview } from "md-editor-rt";
 import Link from "next/link";
 import React from "react";
 

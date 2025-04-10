@@ -11,10 +11,17 @@ export default function AppShortPreview({ item }: { item: GetArticle }) {
     <div>
       <AppShartControl article={item}>
         <MdPreview value={item.article.content} previewTheme={PREVIEW_THEME} />
-        <div className="grid grid-cols-2 gap-2 mt-2 px-6">
+        <div className="flex flex-wrap gap-2 mt-2 px-6 rounded-md cursor-pointer object-cover">
           {item?.article?.imageUrls?.map((url, index) => (
-            <div className="flex flex-wrap" key={index}>
-              <Image src={url} alt="" width={120} height={120} />
+            <div className="cursor-pointer object-cover" key={index}>
+              <Image
+                src={url}
+                alt=""
+                width={120}
+                height={120}
+                className="object-cover"
+                style={{ borderRadius: "3px", overflow: "hidden" }}
+              />
             </div>
           ))}
         </div>
