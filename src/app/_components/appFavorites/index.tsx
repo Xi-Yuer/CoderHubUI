@@ -5,12 +5,13 @@ import { useAppStore } from "@/store";
 import { LockOutlined, UnlockOutlined } from "@ant-design/icons";
 import { Pagination } from "antd";
 import React, { useEffect, useImperativeHandle, useState } from "react";
+import { useStore } from "zustand";
 
 export type AppFavoriteRefCallBack = {
   getSelectedFolder: () => string | null;
 };
 export default function AppFavorite({ ref }: any) {
-  const { userInfo } = useAppStore();
+  const { userInfo } = useStore(useAppStore, (state) => state);
   const [favorList, setFavorList] = useState<FavorFoldList>();
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);

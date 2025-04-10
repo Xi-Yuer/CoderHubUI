@@ -11,6 +11,7 @@ import {
   EditOutlined,
   GithubOutlined,
   MenuOutlined,
+  PoweroffOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { Badge, Button, Drawer, Input, Modal, Popover, Image } from "antd";
@@ -20,6 +21,8 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { AppLogin } from "../appLogin";
 import "./index.css";
+import { useStore } from "zustand";
+import { useRouter } from "next/navigation";
 import { ClientGetMessageCount } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { matchPath } from "@/utils";
@@ -29,8 +32,10 @@ export function AppHeader() {
   const pathname = usePathname();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
-  const { userInfo, token } = useAppStore();
+  const { userInfo, token } = useStore(useAppStore, (state) => state);
   const [modal, contextHolder] = Modal.useModal();
+  const router = useRouter();
+  const appStore = useStore(useAppStore, (state) => state);
 
   useEffect(() => {
     if (!token) return;
@@ -229,6 +234,16 @@ export function AppHeader() {
           >
             <CarryOutOutlined />
             <span>每日签到</span>
+          </div>
+          <div
+            className="flex items-center gap-2 cursor-pointer text-gray-600 text-base hover:text-black hover:font-bold transition duration-200 ease-in-out"
+            onClick={() => {
+              appStore.reset();
+              router.push("/"); // 返回首页
+            }}
+          >
+            <PoweroffOutlined />
+            <span>退出登录</span>
           </div>
         </nav>
       </Drawer>

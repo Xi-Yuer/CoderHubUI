@@ -54,6 +54,10 @@ const Signin: React.FC = () => {
   const renderCalendar = () => {
     const daysInMonth = getDaysInMonth(year, month); // 获取当前月的天数
     const firstDay = new Date(year, month, 1).getDay(); // 获取当前月第一天是星期几
+    const dayIsBeforeCurrentDate = (day: number) => {
+      const date = new Date(year, month, day);
+      return date < new Date();
+    };
 
     const calendarDays = [];
     for (let i = 0; i < firstDay; i++) {
@@ -145,6 +149,7 @@ const Signin: React.FC = () => {
                   className={`
                     w-1 h-1 rounded-full absolute -top-1.5 -right-1.5 m-1
                     ${signedIn ? "bg-green-500" : "bg-gray-300"}
+                    ${dayIsBeforeCurrentDate(day) ? "" : "bg-white"}
                     ${isToday && !todaySignedIn ? "bg-orange-500" : ""}
                   `}
                 ></div>

@@ -6,13 +6,14 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Card, List, Spin } from "antd";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useStore } from "zustand";
 
 interface FavorProps {
   id: string;
 }
 
 export default function Article({ id }: FavorProps) {
-  const { userInfo } = useAppStore();
+  const { userInfo } = useStore(useAppStore, (state) => state);
   const [list, setList] = useState<Favor[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);

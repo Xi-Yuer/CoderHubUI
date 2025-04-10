@@ -7,6 +7,7 @@ import { Button, Card, Skeleton, Tabs } from "antd";
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
 import Signin from "@/app/_components/signin/signin";
+import { useStore } from "zustand";
 
 const AppArticlePreview = dynamic(
   () => import("@/app/_components/appArticlePreview"),
@@ -18,7 +19,7 @@ const AppIcon = dynamic(
 );
 
 export default function Page() {
-  const { userInfo } = useAppStore.getState();
+  const { userInfo } = useStore(useAppStore, (state) => state);
   const [page, setPage] = useState(1);
   const [list, setList] = useState<GetArticle[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);

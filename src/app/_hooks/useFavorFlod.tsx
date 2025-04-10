@@ -18,6 +18,7 @@ import AppFavorite, {
   AppFavoriteRefCallBack,
 } from "../_components/appFavorites";
 import { useAppStore } from "@/store";
+import { useStore } from "zustand";
 
 export const useFavorFlod = (
   id: string,
@@ -28,7 +29,10 @@ export const useFavorFlod = (
   const [modal, contextHolder] = Modal.useModal();
   const [messageApi, messageContext] = message.useMessage();
   const AppFavoriteRef = React.useRef<AppFavoriteRefCallBack>(null);
-  const { token, reset, setShowLoginPanel } = useAppStore();
+  const { reset, token, setShowLoginPanel } = useStore(
+    useAppStore,
+    (state) => state
+  );
 
   const createFavorFoldConfig: ModalFuncProps = {
     title: "创建收藏夹",

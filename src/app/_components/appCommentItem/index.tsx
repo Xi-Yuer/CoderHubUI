@@ -24,6 +24,7 @@ import AppUserInfoMationPopUP from "../appUserInfomationPopup";
 import Link from "next/link";
 import AdminSvg from "@/assets/admin.svg";
 import { DEFAULT_AVATAR, getLevel, PREVIEW_THEME } from "@/constant";
+import { useStore } from "zustand";
 
 interface AppCommentItemProps {
   comment: Comment;
@@ -39,7 +40,7 @@ export default function AppCommentItem({
   const [showReplies, setShowReplies] = useState(false);
   const [pageNo, setPageNo] = useState(1);
   const [commentFromProps, setCommentFromProps] = useState(comment);
-  const { userInfo } = useAppStore();
+  const { userInfo } = useStore(useAppStore, (state) => state);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 

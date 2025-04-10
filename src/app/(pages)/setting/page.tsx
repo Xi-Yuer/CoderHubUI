@@ -19,10 +19,12 @@ import {
 import { useAppStore } from "@/store";
 import { DEFAULT_AVATAR } from "@/constant";
 import { ReloadOutlined } from "@ant-design/icons";
+import { useStore } from "zustand";
 
 export default function Page() {
   const [messageApi, messageContext] = message.useMessage();
-  const { userInfo, updateUserInfo } = useAppStore();
+  const { updateUserInfo } = useAppStore();
+  const { userInfo } = useStore(useAppStore, (state) => state);
   const [avatar, setAvatar] = useState<string>();
   const [form] = Form.useForm();
 

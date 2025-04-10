@@ -5,6 +5,7 @@ import { Avatar, List, Pagination, Spin } from "antd";
 import { format } from "date-fns";
 import { useAppStore } from "@/store";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useStore } from "zustand";
 
 interface Props {
   filterParams: any;
@@ -15,7 +16,7 @@ export default function School({ filterParams }: Props) {
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const { userInfo } = useAppStore();
+  const { userInfo } = useStore(useAppStore, (state) => state);
   const ColorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
 
   const getPageData = (val: number) => {

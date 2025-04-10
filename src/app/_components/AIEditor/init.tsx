@@ -7,6 +7,7 @@ import { HTMLAttributes, forwardRef, useEffect, useRef } from "react";
 import { AIMenus } from "./menus";
 import { models } from "./models";
 import { images } from "./image";
+import { useStore } from "zustand";
 
 type AIEditorProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
   placeholder?: string;
@@ -37,7 +38,7 @@ export default forwardRef<HTMLDivElement, AIEditorProps>(function AIEditor(
 ) {
   const divRef = useRef<HTMLDivElement>(null);
   const aiEditorRef = useRef<AiEditor | null>(null);
-  const { token } = useAppStore();
+  const { token } = useStore(useAppStore, (state) => state);
 
   useEffect(() => {
     if (!divRef.current) return;

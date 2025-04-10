@@ -26,6 +26,7 @@ import AppSharedPopUp from "../appSharedPopup";
 import { useAppStore } from "@/store";
 import Link from "next/link";
 import { DEFAULT_AVATAR, getLevel, USER_LEVEL } from "@/constant";
+import { useStore } from "zustand";
 
 export default function AppShortControl({
   article,
@@ -42,7 +43,7 @@ export default function AppShortControl({
   const appCommentListRef = React.useRef<appendCommentRefCallBack>(null);
   const [articleFromProps, setArticleFromProps] = React.useState(article);
   const [isDeleted, setIsDeleted] = React.useState(false);
-  const { userInfo } = useAppStore();
+  const { userInfo } = useStore(useAppStore, (state) => state);
 
   useEffect(() => {
     setArticleFromProps(article);

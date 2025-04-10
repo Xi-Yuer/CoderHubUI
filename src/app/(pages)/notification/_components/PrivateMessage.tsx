@@ -24,6 +24,7 @@ import { useWebSocket } from "ahooks";
 import { MenuOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
 import { Dropdown } from "antd";
+import { useStore } from "zustand";
 
 const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
   ssr: false,
@@ -95,7 +96,7 @@ function ChatMessageItem({
 }
 
 export default function ChatComponent() {
-  const { token, userInfo } = useAppStore.getState();
+  const { userInfo, token } = useStore(useAppStore, (state) => state);
   const [value, setValue] = useState("");
   const [messageList, setMessageList] = useState<PrivateMessage[]>([]);
   const [userSessionList, setUserSessionList] = useState<Session[]>([]);

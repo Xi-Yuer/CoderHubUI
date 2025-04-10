@@ -4,10 +4,9 @@ import { ClientGetUserSession } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { Badge, Card, Empty, Input, List } from "antd";
 import { useEffect, useState } from "react";
+import { useStore } from "zustand";
 
 export default function ChatComponent() {
-  const { token } = useAppStore.getState();
-  const [value, setValue] = useState("");
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [messageList, setMessageList] = useState<string[]>([]);
   const [useSessionList, setUseSessionList] = useState<Session[]>([]);
@@ -15,7 +14,7 @@ export default function ChatComponent() {
   const [sessionTotal, setSessionTotal] = useState(0);
   const [searchSessionName, setSearchSessionName] = useState("");
   const [page, setPage] = useState(1);
-  const { userInfo } = useAppStore.getState();
+  const { userInfo, token } = useStore(useAppStore, (state) => state);
   // 建立 WebSocket 连接
   const connectWebSocket = () => {
     if (!token) return;

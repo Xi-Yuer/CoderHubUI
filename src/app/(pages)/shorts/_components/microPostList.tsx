@@ -12,6 +12,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useStore } from "zustand";
 
 export type RefCallBack = {
   refreshList: () => void;
@@ -28,6 +29,7 @@ export default function MicroPostList({ ref, categoryId }: Props) {
   const [loading, setLoading] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
+  const { userInfo } = useStore(useAppStore, (state) => state);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,7 +57,6 @@ export default function MicroPostList({ ref, categoryId }: Props) {
   }, [loadingRef.current]);
 
   const getList = (reFreshed = false) => {
-    const { userInfo } = useAppStore.getState();
     setLoading(true);
     ClientGetArticleList(
       SHORT_ARTICLE_TYPE,

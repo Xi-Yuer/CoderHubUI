@@ -20,13 +20,14 @@ import { useAppStore } from "@/store";
 import Link from "next/link";
 import { DEFAULT_AVATAR, getLevel } from "@/constant";
 import { useRouter } from "next/navigation";
+import { useStore } from "zustand";
 
 interface Props {
   userID: string;
 }
 
 export default function UserPostCard({ userID }: Props) {
-  const { userInfo } = useAppStore();
+  const { userInfo } = useStore(useAppStore, (state) => state);
   const [user, setUser] = useState<UserInfo | null>(null);
   const [messageApi, messageContext] = message.useMessage();
   const router = useRouter();
