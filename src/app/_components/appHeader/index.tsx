@@ -7,12 +7,13 @@ import {
 } from "@/constant";
 import {
   BellOutlined,
+  CarryOutOutlined,
   EditOutlined,
   GithubOutlined,
   MenuOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, Drawer, Input, Popover } from "antd";
+import { Badge, Button, Drawer, Input, Modal, Popover } from "antd";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,12 +24,14 @@ import "./index.css";
 import { ClientGetMessageCount } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { matchPath } from "@/utils";
+import Signin from "../signin/signin";
 
 export function AppHeader() {
   const pathname = usePathname();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
   const { userInfo, token } = useAppStore();
+  const [modal, contextHolder] = Modal.useModal();
 
   useEffect(() => {
     if (!token) return;
@@ -42,6 +45,7 @@ export function AppHeader() {
 
   return (
     <header className="w-full py-3 pb-0 md:pb-3 bg-white shadow-sm text-nowrap sticky top-0 z-10">
+      {contextHolder}
       <div className="container mx-auto flex justify-between items-center px-4 h-full">
         {/* Logo 部分 */}
         <div className="flex items-center gap-4">
@@ -205,6 +209,28 @@ export function AppHeader() {
               {nav.name}
             </Link>
           ))}
+          <div
+            className="flex items-center gap-2 cursor-pointer text-gray-600 text-base hover:text-black hover:font-bold transition duration-200 ease-in-out"
+            onClick={() => {
+              modal.info({
+                title: null,
+                icon: null,
+                footer: null,
+                centered: true,
+                maskClosable: true,
+                width: 260,
+                height: 260,
+                content: (
+                  <div className="flex justify-center items-center">
+                    <Signin />
+                  </div>
+                ),
+              });
+            }}
+          >
+            <CarryOutOutlined />
+            <span>每日签到</span>
+          </div>
         </nav>
       </Drawer>
     </header>

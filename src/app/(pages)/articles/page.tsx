@@ -6,7 +6,7 @@ import { useAppStore } from "@/store";
 import { Button, Card, Skeleton, Tabs } from "antd";
 import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
-import Signin from "../shorts/_components/signin";
+import Signin from "@/app/_components/signin/signin";
 
 const AppArticlePreview = dynamic(
   () => import("@/app/_components/appArticlePreview"),

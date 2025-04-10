@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { Tag } from "@/alova/globals";
 import { SHORT_ARTICLE_TYPE } from "@/constant";
 import { Tabs } from "antd"; // 引入 Tabs 组件
-import Signin from "./_components/signin";
+import Signin from "@/app/_components/signin/signin";
 
 const MicroPostList = dynamic(
   () => import("./_components/microPostList"),

@@ -1,6 +1,7 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { ClientSignIn, ClientGetSignInRecord } from "@/request/apis/web";
-import { message } from "antd";
+import { Button, message } from "antd";
 import { UserSign } from "@/alova/globals";
 import { CarryOutOutlined } from "@ant-design/icons";
 
@@ -10,6 +11,7 @@ const Signin: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [signInRecords, setSignInRecords] = useState<UserSign[]>([]);
   const [todaySignedIn, setTodaySignedIn] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -28,9 +30,7 @@ const Signin: React.FC = () => {
       } else {
         setTodaySignedIn(false);
       }
-    } catch (err) {
-      message.error("获取签到记录失败");
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
@@ -40,10 +40,10 @@ const Signin: React.FC = () => {
   const handleSignIn = async () => {
     try {
       await ClientSignIn();
-      message.success("签到成功");
+      messageApi.success("签到成功");
       fetchRecords();
     } catch (err) {
-      message.error("签到失败");
+      messageApi.error("签到失败");
     }
   };
 
@@ -52,8 +52,8 @@ const Signin: React.FC = () => {
   };
 
   const renderCalendar = () => {
-    const daysInMonth = getDaysInMonth(year, month);
-    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = getDaysInMonth(year, month); // 获取当前月的天数
+    const firstDay = new Date(year, month, 1).getDay(); // 获取当前月第一天是星期几
 
     const calendarDays = [];
     for (let i = 0; i < firstDay; i++) {
@@ -65,9 +65,20 @@ const Signin: React.FC = () => {
 
     return (
       <div>
-        <div className="flex gap-2 text-md font-semibold mb-4">
-          <CarryOutOutlined />
-          <span>每日签到</span>
+        {contextHolder}
+        <div className="flex gap-2 text-md justify-between items-center font-semibold mb-4">
+          <div className="flex items-center justify-center gap-1">
+            <CarryOutOutlined />
+            <span>每日签到</span>
+          </div>
+          <Button
+            icon={<CarryOutOutlined />}
+            type="primary"
+            onClick={todaySignedIn ? undefined : handleSignIn}
+            className="w-28"
+          >
+            {todaySignedIn ? "已签到" : "签到"}
+          </Button>
         </div>
         {/* 月份切换栏 */}
         <div className="flex justify-between items-center mb-6 text-[12px]">
@@ -120,7 +131,13 @@ const Signin: React.FC = () => {
                   w-6 h-6
                   relative
                 `}
-                title={signedIn ? "已签到" : "未签到"}
+                title={
+                  signedIn
+                    ? "已签到"
+                    : isToday && !todaySignedIn
+                      ? "代签到"
+                      : "未签到"
+                }
                 onClick={isToday && !todaySignedIn ? handleSignIn : undefined}
               >
                 {day}
@@ -128,6 +145,7 @@ const Signin: React.FC = () => {
                   className={`
                     w-1 h-1 rounded-full absolute -top-1.5 -right-1.5 m-1
                     ${signedIn ? "bg-green-500" : "bg-gray-300"}
+                    ${isToday && !todaySignedIn ? "bg-orange-500" : ""}
                   `}
                 ></div>
               </div>
