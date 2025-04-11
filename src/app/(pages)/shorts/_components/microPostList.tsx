@@ -67,15 +67,15 @@ export default function MicroPostList({ ref, categoryId }: Props) {
     )
       .send(reFreshed)
       .then((res) => {
-        if (!res?.data) {
+        if (!res?.data.list) {
           setHasMore(false);
           return;
         }
         if (page === 1 || reFreshed) {
-          setList(res.data);
+          setList(res?.data?.list || []);
         } else {
           setList((pre) => {
-            return [...pre, ...res.data];
+            return [...pre, ...(res?.data?.list || [])];
           });
         }
       })

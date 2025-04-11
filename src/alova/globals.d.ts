@@ -581,6 +581,16 @@ export type GetArticleExtraResp = {
    */
   data: ArticleExtra;
 };
+export type GetArticleResponse = {
+  /**
+   * [required]
+   */
+  list: GetArticle[];
+  /**
+   * [required]
+   */
+  total: number;
+};
 export type GetArticlesResp = {
   /**
    * 状态码
@@ -591,10 +601,11 @@ export type GetArticlesResp = {
    */
   message?: string;
   /**
-   * 文章列表
+   * GetArticleResponse
+   * ---
    * [required]
    */
-  data: GetArticle[];
+  data: GetArticleResponse;
 };
 export type UpdateLikeCountResp = {
   /**
@@ -622,16 +633,6 @@ export type UpdateLikeCountReq = {
    * [required]
    */
   trigger: boolean;
-};
-export type GetArticleResponse = {
-  /**
-   * [required]
-   */
-  list: GetArticle[];
-  /**
-   * [required]
-   */
-  total: number;
 };
 export type GetArticlesByUserResp = {
   /**
@@ -3885,123 +3886,128 @@ declare global {
        *   code?: number
        *   // 提示信息
        *   message?: string
-       *   // 文章列表
+       *   // [title] GetArticleResponse
        *   // [required]
-       *   data: Array<{
-       *     // [title] Article
+       *   data: {
        *     // [required]
-       *     article: {
-       *       // 主键 ID
+       *     list: Array<{
+       *       // [title] Article
        *       // [required]
-       *       id: string
-       *       // 内容类型：长文或短文
+       *       article: {
+       *         // 主键 ID
+       *         // [required]
+       *         id: string
+       *         // 内容类型：长文或短文
+       *         // [required]
+       *         type: string
+       *         // 标题
+       *         // [required]
+       *         title: string
+       *         // 内容
+       *         // [required]
+       *         content: string
+       *         // 摘要
+       *         // [required]
+       *         summary: string
+       *         // 图片 URL 列表
+       *         // [required]
+       *         imageUrls: string[]
+       *         // 封面图片 URL
+       *         // [required]
+       *         coverImage: string
+       *         // 作者 ID
+       *         // [required]
+       *         authorId: string
+       *         // 标签列表
+       *         // [required]
+       *         tags: string[]
+       *         // 分类 ID
+       *         // [required]
+       *         categoryId: string
+       *         // 阅读次数
+       *         // [required]
+       *         viewCount: number
+       *         // 点赞次数
+       *         // [required]
+       *         likeCount: number
+       *         // 是否已点赞
+       *         // [required]
+       *         isLiked: boolean
+       *         // 是否已收藏
+       *         // [required]
+       *         isFavorited: boolean
+       *         // 评论数
+       *         // [required]
+       *         commentCount: number
+       *         // 文章状态
+       *         // [required]
+       *         status: string
+       *         // 创建时间
+       *         // [required]
+       *         createdAt: number
+       *         // 更新时间
+       *         // [required]
+       *         updatedAt: number
+       *       }
+       *       // [title] UserInfo
        *       // [required]
-       *       type: string
-       *       // 标题
-       *       // [required]
-       *       title: string
-       *       // 内容
-       *       // [required]
-       *       content: string
-       *       // 摘要
-       *       // [required]
-       *       summary: string
-       *       // 图片 URL 列表
-       *       // [required]
-       *       imageUrls: string[]
-       *       // 封面图片 URL
-       *       // [required]
-       *       coverImage: string
-       *       // 作者 ID
-       *       // [required]
-       *       authorId: string
-       *       // 标签列表
-       *       // [required]
-       *       tags: string[]
-       *       // 分类 ID
-       *       // [required]
-       *       categoryId: string
-       *       // 阅读次数
-       *       // [required]
-       *       viewCount: number
-       *       // 点赞次数
-       *       // [required]
-       *       likeCount: number
-       *       // 是否已点赞
-       *       // [required]
-       *       isLiked: boolean
-       *       // 是否已收藏
-       *       // [required]
-       *       isFavorited: boolean
-       *       // 评论数
-       *       // [required]
-       *       commentCount: number
-       *       // 文章状态
-       *       // [required]
-       *       status: string
-       *       // 创建时间
-       *       // [required]
-       *       createdAt: number
-       *       // 更新时间
-       *       // [required]
-       *       updatedAt: number
-       *     }
-       *     // [title] UserInfo
+       *       author: {
+       *         // 用户ID
+       *         // [required]
+       *         id: string
+       *         // 用户名
+       *         // [required]
+       *         username: string
+       *         // 昵称
+       *         // [required]
+       *         nickname: string
+       *         // 邮箱
+       *         // [required]
+       *         email: string
+       *         // 手机号
+       *         // [required]
+       *         phone: string
+       *         // 头像
+       *         // [required]
+       *         avatar: string
+       *         // 等级
+       *         // [required]
+       *         level: number
+       *         // 性别 0:未知 1:男 2:女
+       *         // [required]
+       *         gender: '0' | '1'
+       *         // 年龄
+       *         // [required]
+       *         age: number
+       *         // 状态 true:正常 false:禁用
+       *         // [required]
+       *         status: boolean
+       *         // 角色 0:普通用户 1:管理员
+       *         // [required]
+       *         is_admin: boolean
+       *         // 创建时间
+       *         // [required]
+       *         create_at: number
+       *         // 更新时间
+       *         // [required]
+       *         update_at: number
+       *         // 关注数量
+       *         // [required]
+       *         follow_count: number
+       *         // 粉丝数量
+       *         // [required]
+       *         fans_count: number
+       *         // 是否已关注
+       *         // [required]
+       *         is_followed: boolean
+       *         // 文章数量
+       *         // [required]
+       *         article_count: number
+       *       }
+       *     }>
        *     // [required]
-       *     author: {
-       *       // 用户ID
-       *       // [required]
-       *       id: string
-       *       // 用户名
-       *       // [required]
-       *       username: string
-       *       // 昵称
-       *       // [required]
-       *       nickname: string
-       *       // 邮箱
-       *       // [required]
-       *       email: string
-       *       // 手机号
-       *       // [required]
-       *       phone: string
-       *       // 头像
-       *       // [required]
-       *       avatar: string
-       *       // 等级
-       *       // [required]
-       *       level: number
-       *       // 性别 0:未知 1:男 2:女
-       *       // [required]
-       *       gender: '0' | '1'
-       *       // 年龄
-       *       // [required]
-       *       age: number
-       *       // 状态 true:正常 false:禁用
-       *       // [required]
-       *       status: boolean
-       *       // 角色 0:普通用户 1:管理员
-       *       // [required]
-       *       is_admin: boolean
-       *       // 创建时间
-       *       // [required]
-       *       create_at: number
-       *       // 更新时间
-       *       // [required]
-       *       update_at: number
-       *       // 关注数量
-       *       // [required]
-       *       follow_count: number
-       *       // 粉丝数量
-       *       // [required]
-       *       fans_count: number
-       *       // 是否已关注
-       *       // [required]
-       *       is_followed: boolean
-       *       // 文章数量
-       *       // [required]
-       *       article_count: number
-       *     }
-       *   }>
+       *     total: number
+       *   }
        * }
        * ```
        */
@@ -4036,6 +4042,189 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetArticlesResp, 'articles_public.GetArticles', Config>;
+      /**
+       * ---
+       *
+       * [GET] 搜索文章
+       *
+       * **path:** /api/articles/search
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // 关键词
+       *   // [required]
+       *   keyword: string
+       *   // [required]
+       *   page: number
+       *   // [required]
+       *   page_size: number
+       *   // [required]
+       *   type: 'article' | 'micro_post'
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] GetArticleResponse
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     list: Array<{
+       *       // [title] Article
+       *       // [required]
+       *       article: {
+       *         // 主键 ID
+       *         // [required]
+       *         id: string
+       *         // 内容类型：长文或短文
+       *         // [required]
+       *         type: string
+       *         // 标题
+       *         // [required]
+       *         title: string
+       *         // 内容
+       *         // [required]
+       *         content: string
+       *         // 摘要
+       *         // [required]
+       *         summary: string
+       *         // 图片 URL 列表
+       *         // [required]
+       *         imageUrls: string[]
+       *         // 封面图片 URL
+       *         // [required]
+       *         coverImage: string
+       *         // 作者 ID
+       *         // [required]
+       *         authorId: string
+       *         // 标签列表
+       *         // [required]
+       *         tags: string[]
+       *         // 分类 ID
+       *         // [required]
+       *         categoryId: string
+       *         // 阅读次数
+       *         // [required]
+       *         viewCount: number
+       *         // 点赞次数
+       *         // [required]
+       *         likeCount: number
+       *         // 是否已点赞
+       *         // [required]
+       *         isLiked: boolean
+       *         // 是否已收藏
+       *         // [required]
+       *         isFavorited: boolean
+       *         // 评论数
+       *         // [required]
+       *         commentCount: number
+       *         // 文章状态
+       *         // [required]
+       *         status: string
+       *         // 创建时间
+       *         // [required]
+       *         createdAt: number
+       *         // 更新时间
+       *         // [required]
+       *         updatedAt: number
+       *       }
+       *       // [title] UserInfo
+       *       // [required]
+       *       author: {
+       *         // 用户ID
+       *         // [required]
+       *         id: string
+       *         // 用户名
+       *         // [required]
+       *         username: string
+       *         // 昵称
+       *         // [required]
+       *         nickname: string
+       *         // 邮箱
+       *         // [required]
+       *         email: string
+       *         // 手机号
+       *         // [required]
+       *         phone: string
+       *         // 头像
+       *         // [required]
+       *         avatar: string
+       *         // 等级
+       *         // [required]
+       *         level: number
+       *         // 性别 0:未知 1:男 2:女
+       *         // [required]
+       *         gender: '0' | '1'
+       *         // 年龄
+       *         // [required]
+       *         age: number
+       *         // 状态 true:正常 false:禁用
+       *         // [required]
+       *         status: boolean
+       *         // 角色 0:普通用户 1:管理员
+       *         // [required]
+       *         is_admin: boolean
+       *         // 创建时间
+       *         // [required]
+       *         create_at: number
+       *         // 更新时间
+       *         // [required]
+       *         update_at: number
+       *         // 关注数量
+       *         // [required]
+       *         follow_count: number
+       *         // 粉丝数量
+       *         // [required]
+       *         fans_count: number
+       *         // 是否已关注
+       *         // [required]
+       *         is_followed: boolean
+       *         // 文章数量
+       *         // [required]
+       *         article_count: number
+       *       }
+       *     }>
+       *     // [required]
+       *     total: number
+       *   }
+       * }
+       * ```
+       */
+      SearchArticles<
+        Config extends Alova2MethodConfig<GetArticlesResp> & {
+          params: {
+            /**
+             * 关键词
+             * [required]
+             */
+            keyword: string;
+            /**
+             * [required]
+             */
+            page: number;
+            /**
+             * [required]
+             */
+            page_size: number;
+            /**
+             * [required]
+             */
+            type: 'article' | 'micro_post';
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetArticlesResp, 'articles_public.SearchArticles', Config>;
       /**
        * ---
        *

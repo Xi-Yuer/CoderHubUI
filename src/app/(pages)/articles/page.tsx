@@ -84,7 +84,7 @@ export default function Page() {
           return;
         } else {
           setList((pre) => {
-            return [...pre, ...res.data];
+            return [...pre, ...res.data.list];
           });
         }
       })

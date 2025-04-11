@@ -12,7 +12,6 @@ import {
   GithubOutlined,
   MenuOutlined,
   PoweroffOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
 import { Badge, Button, Drawer, Input, Modal, Popover, Image } from "antd";
 import classNames from "classnames";
@@ -33,6 +32,7 @@ export function AppHeader() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
   const { userInfo, token } = useStore(useAppStore, (state) => state);
+  const [searchValue, setSearchValue] = useState("");
   const [modal, contextHolder] = Modal.useModal();
   const router = useRouter();
   const appStore = useStore(useAppStore, (state) => state);
@@ -93,11 +93,19 @@ export function AppHeader() {
 
         {/* 搜索框 + 功能按钮 */}
         <div className="hidden md:flex items-center gap-10">
-          <Input
+          <Input.Search
             placeholder="全站搜索"
-            suffix={<SearchOutlined />}
             className="w-96"
             autoComplete="off"
+            value={searchValue}
+            onChange={(e) => {
+              setSearchValue(e.target.value);
+            }}
+            onSearch={() => {
+              if (searchValue) {
+                router.push(`/search?keywords=${searchValue}&type=micro_post`);
+              }
+            }}
           />
           <Link href="/creator">
             <Button type="primary" icon={<EditOutlined />}>
@@ -175,12 +183,20 @@ export function AppHeader() {
         width="250px" // 设置抽屉宽度，增加空间感
       >
         <div className="mt-6">
-          <Input
+          <Input.Search
             placeholder="全站搜索"
-            suffix={<SearchOutlined />}
             className="w-full rounded-lg shadow-md border-gray-300"
             style={{ marginBottom: "20px" }} // 提高输入框与按钮间距
             autoComplete="off"
+            value={searchValue}
+            onChange={(e) => {
+              setSearchValue(e.target.value);
+            }}
+            onSearch={() => {
+              if (searchValue) {
+                router.push(`/search?keywords=${searchValue}&type=micro_post`);
+              }
+            }}
           />
           <div>
             <Link href="/creator">

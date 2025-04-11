@@ -572,14 +572,28 @@ export async function ClientSignIn() {
 }
 
 // 获取签到记录
-export async function ClientGetSignInRecord(
-  year: number,
-  month: number
-) {
+export async function ClientGetSignInRecord(year: number, month: number) {
   return alovaServerInstance.signin_auth.ListSignIn({
     params: {
       year,
       month,
+    },
+  });
+}
+
+// 搜索
+export async function ClientSearch(
+  type: "article" | "micro_post",
+  keyword: string,
+  page: number,
+  page_size: number
+) {
+  return alovaServerInstance.articles_public.SearchArticles({
+    params: {
+      type,
+      keyword,
+      page,
+      page_size,
     },
   });
 }

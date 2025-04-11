@@ -432,6 +432,66 @@
         ]
       }
     },
+    "/api/articles/search": {
+      "get": {
+        "summary": "搜索文章",
+        "operationId": "SearchArticles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetArticlesResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "request-user-id",
+            "description": " 请求用户 ID",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "keyword",
+            "description": " 关键词",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "article",
+              "micro_post"
+            ]
+          }
+        ],
+        "tags": [
+          "articles_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
     "/api/articles/update_like_count": {
       "post": {
         "summary": "更新文章点赞数",
@@ -5278,10 +5338,7 @@
           "description": " 提示信息"
         },
         "data": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/GetArticle"
-          },
+          "$ref": "#/definitions/GetArticleResponse",
           "description": " 文章列表"
         }
       },
@@ -7243,6 +7300,37 @@
       "required": [
         "total",
         "list"
+      ]
+    },
+    "SearchArticlesReq": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": " 关键词"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "article",
+            "micro_post"
+          ]
+        }
+      },
+      "title": "SearchArticlesReq",
+      "required": [
+        "keyword",
+        "page",
+        "page_size",
+        "type"
       ]
     },
     "SendResetPasswordLinkReq": {

@@ -26,6 +26,7 @@ export default {
   'articles_public.GetArticle': ['GET', '/api/articles/detail/{id}'],
   'articles_public.GetArticleExtra': ['GET', '/api/articles/extra/{id}'],
   'articles_public.GetArticles': ['GET', '/api/articles/list'],
+  'articles_public.SearchArticles': ['GET', '/api/articles/search'],
   'articles_auth.UpdateLikeCount': ['POST', '/api/articles/update_like_count'],
   'articles_public.GetArticlesByUser': ['GET', '/api/articles/user/{user_id}'],
   'articles_auth.DeleteArticle': ['DELETE', '/api/articles/{id}'],
