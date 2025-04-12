@@ -8,6 +8,8 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useRef, useState } from "react";
 import Signin from "@/app/_components/signin/signin";
 import { useStore } from "zustand";
+import Acknowledgement from "@/app/_components/acknowledgement";
+import { MoneyCollectOutlined } from "@ant-design/icons";
 
 const AppArticlePreview = dynamic(
   () => import("@/app/_components/appArticlePreview"),
@@ -229,7 +231,9 @@ export default function Page() {
         <Card>
           <Signin />
         </Card>
-        <Card>Recommend</Card>
+        <Card title="广告位招租">
+          <Acknowledgement />
+        </Card>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { Tag } from "@/alova/globals";
 import { SHORT_ARTICLE_TYPE } from "@/constant";
 import { Tabs } from "antd"; // 引入 Tabs 组件
 import Signin from "@/app/_components/signin/signin";
+import Acknowledgement from "@/app/_components/acknowledgement";
 
 const MicroPostList = dynamic(
   () => import("./_components/microPostList"),
@@ -106,7 +107,9 @@ export default function Page() {
         <Card>
           <Signin />
         </Card>
-        <Card>Recommend</Card>
+        <Card title="广告位招租">
+          <Acknowledgement />
+        </Card>
       </div>
     </div>
   );
