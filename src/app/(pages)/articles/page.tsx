@@ -77,14 +77,16 @@ export default function Page() {
     if (!currentTag) return;
     if (!hasMore) return;
     setLoading(true);
-    ClientGetArticleList("article", page, 10, currentTag, userInfo.id)
+    // 当选择全部分类时，不传入 category_id
+    const categoryId = currentTag === "all" ? undefined : currentTag;
+    ClientGetArticleList("article", page, 10, categoryId, userInfo.id)
       .then((res) => {
         if (!res?.data) {
           setHasMore(false);
           return;
         } else {
           setList((pre) => {
-            return [...pre, ...res?.data?.list || []];
+            return [...pre, ...(res?.data?.list || [])];
           });
         }
       })
@@ -98,8 +100,16 @@ export default function Page() {
     setGetTagLoading(true);
     ClientGetSystemTags(LONG_ARTICLE_TYPE)
       .then((res) => {
-        setTags(res.data?.list || []);
-        setCurrentTag(res.data?.list ? res.data?.list[0]?.id : null);
+        const originalTags = res.data?.list || [];
+        // 添加全部分类
+        const allCategory = {
+          id: "all",
+          name: "全部",
+          icon: "", // 可根据实际情况设置图标
+        };
+        const newTags = [allCategory, ...originalTags] as Tag[];
+        setTags(newTags);
+        setCurrentTag(newTags[0]?.id);
       })
       .finally(() => {
         setFirstLoad(false);

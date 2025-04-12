@@ -22,7 +22,7 @@ export default function Emotion({ onClick }: Props) {
     onClick(emoji);
   };
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="flex flex-wrap w-56 gap-2">
       {appStore.emotions?.map((item) => (
         <div
           key={item.id}
@@ -32,10 +32,9 @@ export default function Emotion({ onClick }: Props) {
             onClick={() => handleClick(item)}
             src={item.url}
             alt={item.description}
-            width={200}
-            height={200}
-            className="w-12 h-12 m-1"
-            style={{ width: "200px", height: "200px" }}
+            width={30}
+            height={30}
+            className="m-1"
           />
           <p className="text-xs text-gray-500">{item.description}</p>
         </div>

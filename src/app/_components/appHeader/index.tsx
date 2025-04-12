@@ -59,8 +59,9 @@ export function AppHeader() {
             width={30}
             height={30}
             style={{ width: "30px", height: "30px" }}
+            preview={false}
           ></Image>
-          <Link href="/" className="text-2xl font-bold text-gray-800">
+          <Link href="/" className="text-2xl font-black text-gray-800">
             CoderHub
           </Link>
         </div>
