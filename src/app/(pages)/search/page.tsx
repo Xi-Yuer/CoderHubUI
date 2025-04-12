@@ -3,90 +3,144 @@ import { GetArticle } from "@/alova/globals";
 import AppArticlePreview from "@/app/_components/appArticlePreview";
 import AppShortPreview from "@/app/_components/appShortPreview";
 import { ClientSearch } from "@/request/apis/web";
-import { Card, Input, Tabs } from "antd";
+import { Card, Input, Tabs, Spin } from "antd";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+
+type ContentType = "article" | "micro_post";
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const [keywords, setSearchKeywords] = useState<string>();
-  const [type, setType] = useState<"article" | "micro_post">();
+  const [keywords, setKeywords] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>("");
+  const [type, setType] = useState<ContentType>("article");
   const [articleList, setArticleList] = useState<GetArticle[]>([]);
   const [microPostList, setMicroPostList] = useState<GetArticle[]>([]);
   const [articlePage, setArticlePage] = useState<number>(1);
   const [microPostPage, setMicroPostPage] = useState<number>(1);
-  const [inputValue, setInputValue] = useState<string>("");
-  const [hasMore, setHasMore] = useState(true);
-  const loadingRef = useRef(null); // 目标 DOM 元素
+  const [hasMoreArticle, setHasMoreArticle] = useState<boolean>(true);
+  const [hasMoreMicroPost, setHasMoreMicroPost] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const loadingRef = useRef<HTMLDivElement>(null);
+  const isFetchingRef = useRef<boolean>(false); // 防止重复请求
 
+  // 初始化：从 URL 获取参数
   useEffect(() => {
-    setSearchKeywords(searchParams.get("keywords") as string);
-    setType(searchParams.get("type") as "article" | "micro_post");
+    const kw = searchParams.get("keywords");
+    const tp = searchParams.get("type") as ContentType;
+    if (kw) {
+      setKeywords(kw);
+      setInputValue(kw);
+    }
+    if (tp === "article" || tp === "micro_post") {
+      setType(tp);
+    }
   }, [searchParams]);
 
-  const getArticleList = async () => {
-    if (!keywords || type !== "article") return;
-    const res = await ClientSearch("article", keywords, articlePage, 10);
-    if (!res?.data.list) {
-      setHasMore(false);
-      return;
-    }
-    if (res?.data) {
-      setArticleList(res?.data?.list || []);
-      setArticlePage(res?.data?.total || 0);
+  const resetState = () => {
+    setArticleList([]);
+    setMicroPostList([]);
+    setArticlePage(1);
+    setMicroPostPage(1);
+    setHasMoreArticle(true);
+    setHasMoreMicroPost(true);
+  };
+
+  const fetchData = async (
+    isArticle: boolean,
+    page: number,
+    isNewSearch = false
+  ) => {
+    if (isFetchingRef.current || !keywords) return;
+
+    isFetchingRef.current = true;
+    setLoading(true);
+
+    try {
+      const res = await ClientSearch(
+        isArticle ? "article" : "micro_post",
+        keywords,
+        page,
+        10
+      );
+
+      const list = res?.data?.list || [];
+
+      if (list.length === 0) {
+        if (isArticle) {
+          setHasMoreArticle(false);
+        } else {
+          setHasMoreMicroPost(false);
+        }
+        return;
+      }
+
+      if (isArticle) {
+        setArticleList((prev) => (isNewSearch ? list : [...prev, ...list]));
+        setArticlePage((prev) => (isNewSearch ? 2 : prev + 1));
+      } else {
+        setMicroPostList((prev) => (isNewSearch ? list : [...prev, ...list]));
+        setMicroPostPage((prev) => (isNewSearch ? 2 : prev + 1));
+      }
+    } catch (error) {
+      console.error("搜索失败:", error);
+    } finally {
+      setLoading(false);
+      isFetchingRef.current = false;
     }
   };
 
-  const getMicroPostList = async () => {
-    if (!keywords || type !== "micro_post") return;
-    const res = await ClientSearch("micro_post", keywords, microPostPage, 10);
-    if (!res?.data.list) {
-      setHasMore(false);
-      return;
-    }
-    if (res?.data) {
-      setMicroPostList(res?.data?.list || []);
-      setArticlePage(res?.data?.total || 0);
-    }
-  };
-
+  // keywords 或 type 变化时重新搜索
   useEffect(() => {
-    if (type === "article") {
-      getArticleList();
-    } else if (type === "micro_post") {
-      getMicroPostList();
-    }
-  }, [keywords, type, articlePage, microPostPage]);
+    if (!keywords) return;
 
+    resetState();
+
+    if (type === "article") {
+      fetchData(true, 1, true);
+    } else {
+      fetchData(false, 1, true);
+    }
+  }, [keywords, type]);
+
+  // 滚动触发加载更多
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          // 触发加载更多
-          if (type === "article") {
-            setArticlePage((prev) => prev + 1);
-          }
-          if (type === "micro_post") {
-            setMicroPostPage((prev) => prev + 1);
+        if (entry.isIntersecting && !loading && !isFetchingRef.current) {
+          if (type === "article" && hasMoreArticle) {
+            fetchData(true, articlePage);
+          } else if (type === "micro_post" && hasMoreMicroPost) {
+            fetchData(false, microPostPage);
           }
         }
       },
-      {
-        threshold: 0.1, // 元素至少 10% 可见时触发
-      }
+      { threshold: 0.1 }
     );
 
     const target = loadingRef.current;
-    if (target) {
-      observer.observe(target); // 开始观察
-    }
-
+    if (target) observer.observe(target);
     return () => {
-      if (target) {
-        observer.unobserve(target); // 停止观察
-      }
+      if (target) observer.unobserve(target);
     };
-  }, [loadingRef.current]);
+  }, [
+    loading,
+    type,
+    articlePage,
+    microPostPage,
+    hasMoreArticle,
+    hasMoreMicroPost,
+  ]);
+
+  const onSearch = (value: string) => {
+    setKeywords(value.trim());
+  };
+
+  const onClearSearch = () => {
+    setInputValue("");
+    setKeywords("");
+    resetState();
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -96,39 +150,15 @@ export default function Page() {
           allowClear
           size="large"
           value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-          }}
-          onClear={() => {
-            setInputValue("");
-            setSearchKeywords("");
-            setArticlePage(1);
-          }}
-          onSearch={() => {
-            setSearchKeywords(inputValue);
-            setArticlePage(1);
-            setMicroPostPage(1);
-            if (type === "article") {
-              getArticleList();
-            } else if (type === "micro_post") {
-              getMicroPostList();
-            }
-          }}
+          onChange={(e) => setInputValue(e.target.value)}
+          onSearch={onSearch}
+          onClear={onClearSearch}
         />
       </Card>
       <Card>
         <Tabs
-          defaultActiveKey="micro_post"
-          onChange={(key) => {
-            setType(key as "article" | "micro_post");
-            setArticlePage(1);
-            setMicroPostPage(1);
-            if (key === "article") {
-              getArticleList();
-            } else if (key === "micro_post") {
-              getMicroPostList();
-            }
-          }}
+          activeKey={type}
+          onChange={(key) => setType(key as ContentType)}
           items={[
             {
               key: "micro_post",
@@ -136,7 +166,7 @@ export default function Page() {
               children: (
                 <div>
                   {microPostList.map((item) => (
-                    <div key={item?.article?.id}>
+                    <div key={item.article?.id}>
                       <AppShortPreview item={item} />
                     </div>
                   ))}
@@ -149,7 +179,7 @@ export default function Page() {
               children: (
                 <div>
                   {articleList.map((item) => (
-                    <div key={item?.article?.id}>
+                    <div key={item.article?.id}>
                       <AppArticlePreview article={item} />
                     </div>
                   ))}
@@ -159,7 +189,19 @@ export default function Page() {
           ]}
         />
         <div ref={loadingRef} className="text-center mt-4 text-gray-400">
-          {hasMore ? "Loading" : "没有更多了"}
+          {loading ? (
+            <Spin />
+          ) : type === "article" ? (
+            hasMoreArticle ? (
+              "加载更多..."
+            ) : (
+              "没有更多文章了"
+            )
+          ) : hasMoreMicroPost ? (
+            "加载更多..."
+          ) : (
+            "没有更多圈子了"
+          )}
         </div>
       </Card>
     </div>
