@@ -105,7 +105,7 @@ const Signin: React.FC = () => {
 
         {/* 星期标题 */}
         <div className="grid grid-cols-7 gap-1 text-center text-sm font-semibold text-gray-600 mb-2">
-          {daysOfWeek.map((day) => (
+          {daysOfWeek?.map((day) => (
             <div key={day} className="uppercase tracking-wide">
               {day}
             </div>
@@ -114,7 +114,7 @@ const Signin: React.FC = () => {
 
         {/* 日期格子 */}
         <div className="grid grid-cols-7 gap-1">
-          {calendarDays.map((day, idx) => {
+          {calendarDays?.map((day, idx) => {
             if (day === null)
               return <div key={idx} className="aspect-square" />;
             const isToday =

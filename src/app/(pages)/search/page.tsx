@@ -165,7 +165,7 @@ export default function Page() {
               label: "圈子",
               children: (
                 <div>
-                  {microPostList.map((item) => (
+                  {microPostList?.map((item) => (
                     <div key={item.article?.id}>
                       <AppShortPreview item={item} />
                     </div>
@@ -178,7 +178,7 @@ export default function Page() {
               label: "文章",
               children: (
                 <div>
-                  {articleList.map((item) => (
+                  {articleList?.map((item) => (
                     <div key={item.article?.id}>
                       <AppArticlePreview article={item} />
                     </div>

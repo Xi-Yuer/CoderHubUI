@@ -41,7 +41,7 @@ export default async function Page({ params }: any) {
             <span className="font-bold text-lg">面试题库</span>
           </div>
           <div className="flex-1 flex gap-2 sm:gap-4 flex-wrap">
-            {categoryList.map((item) => (
+            {categoryList?.map((item) => (
               <Link
                 href={`/bank/${item.id}`}
                 target="_self"

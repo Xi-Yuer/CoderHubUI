@@ -37,7 +37,7 @@ export default function Page() {
     ClientGetSystemTags(SHORT_ARTICLE_TYPE)
       .then((res) => {
         if (!res?.data) return;
-        const result = res.data.list;
+        const result = res?.data?.list || [];
         setCategoryOptions([
           {
             id: "",

@@ -240,7 +240,7 @@ export default function AppCommentItem({
               }}
               cancel={() => {}}
             />
-            {replies.map((item) => (
+            {replies?.map((item) => (
               <AppCommentItem key={item.id} comment={item} isTop={false} />
             ))}
             {showReplies && <Button type="primary">查看更多回复</Button>}

@@ -52,7 +52,7 @@ export default function AppCommentList({ entityID, ref }: Props) {
   return (
     <div>
       <div>
-        {list.map((item) => {
+        {list?.map((item) => {
           return (
             <div key={item.id}>
               <AppCommentItem comment={item} />

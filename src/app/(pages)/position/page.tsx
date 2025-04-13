@@ -64,7 +64,7 @@ export default function Page() {
             <Tabs
               onChange={(key) => setSelectedCompany(key)}
               activeKey={selectedCompany as string}
-              items={companies.map((company) => ({
+              items={companies?.map((company) => ({
                 label: company.name,
                 key: company.name,
               }))}
@@ -86,14 +86,14 @@ export default function Page() {
                     setSelectedPosition(value);
                   }}
                 >
-                  {dictionary.city.map((item) => (
+                  {dictionary.city?.map((item) => (
                     <Select.Option key={item} value={item}>
                       {item}
                     </Select.Option>
                   ))}
                 </Select>
               </div>
-              {companies.map((company) => (
+              {companies?.map((company) => (
                 <span
                   className={`block text-slate-900 p-2 cursor-pointer hover:bg-gray-50 ${selectedCompany === company.name ? "bg-gray-100" : ""}`}
                   key={company.name}

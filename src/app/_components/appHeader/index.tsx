@@ -68,7 +68,7 @@ export function AppHeader() {
 
         {/* 桌面端导航 */}
         <nav className="hidden md:flex items-center gap-14">
-          {navigatonList.map((nav) => (
+          {navigatonList?.map((nav) => (
             <Link
               key={nav.name}
               href={nav.path}
@@ -115,7 +115,7 @@ export function AppHeader() {
           </Link>
           <Popover
             placement="bottom"
-            content={popoverList.map((item) => (
+            content={popoverList?.map((item) => (
               <Link
                 key={item.name}
                 href={item.path}
@@ -147,7 +147,7 @@ export function AppHeader() {
       <div className="w-full px-4 border-t py-4 mt-2 bg-white flex md:hidden relative">
         {/* 使用隐藏滚动条的样式 */}
         <nav className="flex items-center gap-14 overflow-x-auto no-scrollbar scroll-smooth">
-          {navigatonList.map((nav) => (
+          {navigatonList?.map((nav) => (
             <Link
               key={nav.name}
               href={nav.path}
@@ -215,7 +215,7 @@ export function AppHeader() {
         </div>
 
         <nav className="flex flex-col gap-6">
-          {mobileNavigatonList.map((nav) => (
+          {mobileNavigatonList?.map((nav) => (
             <Link
               key={nav.name}
               href={nav.path}

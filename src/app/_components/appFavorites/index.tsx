@@ -33,7 +33,7 @@ export default function AppFavorite({ ref }: any) {
   return (
     <div>
       <div className="space-y-4">
-        {favorList?.list.map((item, index) => (
+        {favorList?.list?.map((item, index) => (
           <div
             key={item.id}
             onClick={() => {

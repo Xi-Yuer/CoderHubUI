@@ -23,7 +23,7 @@ export default function Emotion({ onClick }: Props) {
   };
   return (
     <div className="flex flex-wrap w-56 gap-2">
-      {appStore.emotions?.map((item) => (
+      {appStore?.emotions?.map((item) => (
         <div
           key={item.id}
           className="flex flex-col items-center justify-center cursor-pointer"

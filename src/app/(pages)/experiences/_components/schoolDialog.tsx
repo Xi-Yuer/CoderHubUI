@@ -30,7 +30,7 @@ const AddSchoolExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
           rules={[{ required: true, message: "请选择学校" }]}
         >
           <Select placeholder="请选择学校" showSearch allowClear>
-            {dictionary.school.map((item) => (
+            {dictionary.school?.map((item) => (
               <Select.Option key={item.tagName} value={item.tagName}>
                 {item.tagName}
               </Select.Option>
@@ -43,7 +43,7 @@ const AddSchoolExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
           rules={[{ required: true, message: "请选择专业" }]}
         >
           <Select placeholder="请选择专业" showSearch allowClear>
-            {dictionary.major.map((item) => (
+            {dictionary.major?.map((item) => (
               <Select.Option key={item.tagName} value={item.tagName}>
                 {item.tagName}
               </Select.Option>
@@ -56,7 +56,7 @@ const AddSchoolExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
           rules={[{ required: true, message: "请选择学历" }]}
         >
           <Select placeholder="请选择学历" showSearch allowClear>
-            {dictionary.education.map((item) => (
+            {dictionary.education?.map((item) => (
               <Select.Option key={item.tagName} value={item.tagName}>
                 {item.tagName}
               </Select.Option>
@@ -69,7 +69,7 @@ const AddSchoolExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
           rules={[{ required: true, message: "请工作经验" }]}
         >
           <Select placeholder="请选择工作经验" showSearch allowClear>
-            {dictionary.workExp.map((item) => (
+            {dictionary.workExp?.map((item) => (
               <Select.Option key={item.tagName} value={item.tagName}>
                 {item.tagName}
               </Select.Option>

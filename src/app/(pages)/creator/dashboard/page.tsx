@@ -21,7 +21,7 @@ export default function Page() {
   return (
     <Card title="数据概览">
       <div className="grid grid-cols-3 gap-4">
-        {stats.map((item, index) => (
+        {stats?.map((item, index) => (
           <Card key={index}>
             <div className="text-gray-500 flex items-center space-x-1">
               <span>{item.label}</span>

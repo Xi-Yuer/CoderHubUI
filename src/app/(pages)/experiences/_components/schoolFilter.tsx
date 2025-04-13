@@ -16,7 +16,7 @@ export default function SchoolFilter({ setSchoolParams }: Props) {
     <Form layout="horizontal" {...formItemLayout} onFinish={setSchoolParams}>
       <Form.Item label="学校" name="school">
         <Select placeholder="请选择学校" showSearch allowClear>
-          {dictionary.school.map((item) => (
+          {dictionary.school?.map((item) => (
             <Select.Option key={item.tagName} value={item.tagName}>
               {item.tagName}
             </Select.Option>
@@ -25,7 +25,7 @@ export default function SchoolFilter({ setSchoolParams }: Props) {
       </Form.Item>
       <Form.Item label="专业" name="major">
         <Select placeholder="请选择专业" showSearch allowClear>
-          {dictionary.major.map((item) => (
+          {dictionary.major?.map((item) => (
             <Select.Option key={item.tagName} value={item.tagName}>
               {item.tagName}
             </Select.Option>
@@ -34,7 +34,7 @@ export default function SchoolFilter({ setSchoolParams }: Props) {
       </Form.Item>
       <Form.Item label="学历" name="education">
         <Select placeholder="请选择学历" showSearch allowClear>
-          {dictionary.education.map((item) => (
+          {dictionary.education?.map((item) => (
             <Select.Option key={item.tagName} value={item.tagName}>
               {item.tagName}
             </Select.Option>
@@ -43,7 +43,7 @@ export default function SchoolFilter({ setSchoolParams }: Props) {
       </Form.Item>
       <Form.Item label="工作经验" name="workExp">
         <Select placeholder="请选择工作经验" showSearch allowClear>
-          {dictionary.workExp.map((item) => (
+          {dictionary.workExp?.map((item) => (
             <Select.Option key={item.tagName} value={item.tagName}>
               {item.tagName}
             </Select.Option>

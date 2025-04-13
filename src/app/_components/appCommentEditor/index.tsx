@@ -80,7 +80,7 @@ export function AppCommentEditor({ publicSuccess, cancel, entityID }: Props) {
             className="relative"
           ></AIEditor>
           <div className="image_list flex gap-2 mb-10 mx-2 mt-2">
-            {imageList.map((item, index) => {
+            {imageList?.map((item, index) => {
               return (
                 <Image
                   src={item}

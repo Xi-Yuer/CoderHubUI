@@ -58,7 +58,7 @@ export default function Page() {
     setLoading(true);
     const res = await ClientGetAllTags(LONG_ARTICLE_TYPE, pageNum, 10);
     if (res.data) {
-      const newTags = res.data?.list.map((tag) => ({
+      const newTags = res.data?.list?.map((tag) => ({
         label: tag.name,
         value: tag.name,
       }));
@@ -221,7 +221,7 @@ export default function Page() {
               选择分类
             </span>
             <Radio.Group defaultValue="a" buttonStyle="solid">
-              {categoryOptions.map((item) => {
+              {categoryOptions?.map((item) => {
                 return (
                   <Radio.Button
                     key={item.id}
@@ -285,7 +285,7 @@ export default function Page() {
             {imageListID.length ? (
               <>
                 <div className="flex flex-col gap-2">
-                  {imageList.map((item) => {
+                  {imageList?.map((item) => {
                     return (
                       <Image src={item} alt="" key={item} height={150}></Image>
                     );

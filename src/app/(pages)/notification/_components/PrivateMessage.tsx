@@ -128,7 +128,7 @@ export default function ChatComponent() {
         setMessageList((prev) => [...prev, message]);
       } else {
         let updatedSession: Session | undefined;
-        userSessionList.forEach((session) => {
+        userSessionList?.forEach((session) => {
           if (session.peerID === message.sender_id) {
             updatedSession = {
               ...session,
@@ -138,7 +138,7 @@ export default function ChatComponent() {
             };
           }
         });
-        const updatedUserSessionList = userSessionList.map((session) =>
+        const updatedUserSessionList = userSessionList?.map((session) =>
           session.id === updatedSession?.id ? updatedSession : session
         );
         setUserSessionList(updatedUserSessionList);

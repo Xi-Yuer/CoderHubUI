@@ -30,7 +30,7 @@ const AddWorkExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
           rules={[{ required: true, message: "请选择地区" }]}
         >
           <Select placeholder="请选择地区" showSearch allowClear>
-            {dictionary.city.map((item) => (
+            {dictionary.city?.map((item) => (
               <Select.Option key={item} value={item}>
                 {item}
               </Select.Option>
@@ -50,7 +50,7 @@ const AddWorkExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
           rules={[{ required: true, message: "请选择岗位" }]}
         >
           <Select placeholder="请选择岗位" showSearch allowClear>
-            {dictionary.jobPositions.map((item) => (
+            {dictionary.jobPositions?.map((item) => (
               <Select.Option key={item} value={item}>
                 {item}
               </Select.Option>
@@ -63,7 +63,7 @@ const AddWorkExperienceModal = ({ visible, onClose, onSubmit }: Props) => {
           rules={[{ required: true, message: "请工作经验" }]}
         >
           <Select placeholder="请选择工作经验" showSearch allowClear>
-            {dictionary.workExp.map((item) => (
+            {dictionary.workExp?.map((item) => (
               <Select.Option key={item.tagName} value={item.tagName}>
                 {item.tagName}
               </Select.Option>

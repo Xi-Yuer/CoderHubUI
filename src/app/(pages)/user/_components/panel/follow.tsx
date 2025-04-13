@@ -45,7 +45,7 @@ export default function Fans({ userID }: Props) {
         return;
       }
       setList((prevList) =>
-        prevList.map((fan) =>
+        prevList?.map((fan) =>
           fan.id === fanId ? { ...fan, is_followed: !isFollowed } : fan
         )
       );

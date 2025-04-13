@@ -16,7 +16,7 @@ export const getBase64 = (file: File): Promise<string> =>
   });
 
 export const RenderEmotion = (emotions: Emoji[], text: string) => {
-  const emotionsMap = new Map(emotions.map((item) => [item.code, item]));
+  const emotionsMap = new Map(emotions?.map((item) => [item.code, item]));
   const emojiRegex = /:::[^:]+:::/g;
   return text.replace(emojiRegex, (match) => {
     const emoji = emotionsMap.get(match);

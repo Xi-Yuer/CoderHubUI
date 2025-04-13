@@ -104,7 +104,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
         className="image_list flex gap-2 mt-2 rounded-md overflow-hidden"
         style={{ borderRadius: "5px", overflow: "hidden" }}
       >
-        {imageList.map((item, index) => {
+        {imageList?.map((item, index) => {
           return (
             <Image
               key={index}
@@ -122,7 +122,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
         placement="bottom"
         content={
           <div className="flex flex-col gap-2 overflow-auto max-h-80">
-            {categoryOptions.map((item) => {
+            {categoryOptions?.map((item) => {
               return (
                 <div
                   key={item.id}
@@ -152,7 +152,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
             placement="bottom"
             content={
               <div className="flex flex-col gap-2 overflow-auto max-h-80">
-                {categoryOptions.map((item) => {
+                {categoryOptions?.map((item) => {
                   return (
                     <div
                       key={item.id}
