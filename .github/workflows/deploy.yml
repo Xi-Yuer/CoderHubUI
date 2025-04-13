@@ -1,9 +1,10 @@
 name: Deploy to Server via Docker Compose
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Docker Image CI"]   # 必须与 build.yml 的 name 匹配
+    types:
+      - completed
 
 jobs:
   deploy:
@@ -25,7 +26,7 @@ jobs:
           set -e
           cd /app/coderhub
           docker compose down
-          docker rmi 2214380963/web
+          docker rmi 2214380963/coderhub-web:latest
           docker volume prune -f
           docker compose up -d   # 启动容器
           EOF
