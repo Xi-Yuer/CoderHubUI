@@ -5,11 +5,11 @@ import AppShortPreview from "@/app/_components/appShortPreview";
 import { ClientSearch } from "@/request/apis/web";
 import { Card, Input, Tabs, Spin } from "antd";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
 
 type ContentType = "article" | "micro_post";
 
-export default function Page() {
+const SearchPageWrapper = () => {
   const searchParams = useSearchParams();
   const [keywords, setKeywords] = useState<string>("");
   const [inputValue, setInputValue] = useState<string>("");
@@ -205,5 +205,13 @@ export default function Page() {
         </div>
       </Card>
     </div>
+  );
+};
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchPageWrapper />
+    </Suspense>
   );
 }

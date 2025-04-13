@@ -60,7 +60,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
     ClientGetSystemTags(SHORT_ARTICLE_TYPE)
       .then((res) => {
         if (!res?.data) return;
-        setCategoryOptions(res.data.list);
+        setCategoryOptions(res?.data?.list);
       })
       .catch((err) => {
         console.log(err);
