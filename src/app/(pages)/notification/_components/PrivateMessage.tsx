@@ -85,7 +85,7 @@ function ChatMessageItem({
       <div className="max-w-lg break-words break-all overflow-hidden">
         <div
           className={`rounded border px-4 py-2 ${
-            isSelf ? "bg-slate-600" : "bg-gray-300"
+            isSelf ? "bg-slate-800 text-white" : "bg-gray-300"
           }`}
         >
           {renderContent()}
@@ -446,15 +446,13 @@ export default function ChatComponent() {
         {/* 发送消息的打字框 */}
         {currentSession && (
           <div className="border-t w-full bg-white">
-            <AIEditor
+            <Input.TextArea
+              className="w-full p-4 border-none outline-none resize-none"
               placeholder="按回车发送消息，Shift+Enter换行"
               value={value}
-              editable={!!token && !!currentSession}
-              allowUploadImage={false}
-              textSelectionBubbleMenu={false}
-              onChange={setValue}
-              toolbarKeys={[]}
-              style={{ height: 200 }}
+              disabled={!token && !currentSession}
+              onChange={(e) => setValue(e.target.value)}
+              style={{ height: 200,border:"none" }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
