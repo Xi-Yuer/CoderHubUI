@@ -104,13 +104,6 @@ export default function ChatComponent() {
   const messageListRef = useRef<HTMLDivElement>(null);
   const [modal, contextHolder] = Modal.useModal();
 
-  console.log(process.env);
-  console.log("=================================");
-  console.log(
-    "NEXT_PUBLIC_APP_WEBSOCKET_URL:",
-    process.env.NEXT_PUBLIC_APP_WEBSOCKET_URL
-  );
-
   const { sendMessage, latestMessage } = useWebSocket(
     token
       ? `${process.env.NEXT_PUBLIC_APP_WEBSOCKET_URL}/api/ws?token=${token}`

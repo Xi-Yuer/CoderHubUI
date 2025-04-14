@@ -24,7 +24,15 @@ export const alovaLocalInstance = createApis(
         }
       },
     },
-    cacheFor: process.env.NODE_ENV === "development" ? null : {}, // 开发环境不缓存
+    cacheFor:
+      process.env.NODE_ENV === "development"
+        ? null
+        : {
+            GET: {
+              expire: 60 * 1000,
+              mode: "memory",
+            },
+          }, // 开发环境不缓存
   }),
   $$userConfigMap
 );
