@@ -32,7 +32,7 @@ export async function generateMetadata({
       openGraph: {
         siteName: "CoderHub",
         title: user.username,
-        url: `${process.env.NEXT_PUBLIC_LOCAL_BASE_URL}/post/${id}`,
+        url: `${process.env.NEXT_PUBLIC_SITE_DOMAIN}/post/${id}`,
         description: user.username,
         images: user.avatar ? [{ url: user.avatar }] : [],
         type: "article",

@@ -4,7 +4,7 @@ import { CopyOutlined } from "@ant-design/icons";
 import { LOGO } from "@/constant";
 
 export default function AppSharedPopUp({ id }: { id: string }) {
-  const LocalHostURL = process.env.NEXT_PUBLIC_LOCAL_BASE_URL;
+  const LocalHostURL = process.env.NEXT_PUBLIC_SITE_DOMAIN;
   const [messageApi, contextHolder] = message.useMessage();
   const [qrSize, setQrSize] = useState(120);
 
