@@ -1,7 +1,7 @@
 import { FavorFold } from "@/alova/globals";
 import { ClientGetUserFavorFold } from "@/request/apis/web";
 import { UnlockOutlined, LockOutlined } from "@ant-design/icons";
-import { List, Pagination } from "antd";
+import { List } from "antd";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 

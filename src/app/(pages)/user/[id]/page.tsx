@@ -15,7 +15,7 @@ interface PostProps {
 export async function generateMetadata({
   params,
 }: PostProps): Promise<Metadata> {
-  const { id } = await params;
+  const id = (await params).id;
   const response = await ClientGetUserInfoById(id);
   if (!response?.data) {
     return {

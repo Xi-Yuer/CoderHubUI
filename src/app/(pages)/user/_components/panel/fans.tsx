@@ -1,19 +1,7 @@
 "use client";
 import { UserInfo } from "@/alova/globals";
-import {
-  ClientGetUserFollow,
-  ClientFollowUser,
-  ClientGetUserFans,
-} from "@/request/apis/web";
-import {
-  Avatar,
-  Button,
-  Card,
-  List,
-  Pagination,
-  Typography,
-  message,
-} from "antd";
+import { ClientFollowUser, ClientGetUserFans } from "@/request/apis/web";
+import { Avatar, Button, List, Typography, message } from "antd";
 import {
   ManOutlined,
   WomanOutlined,
