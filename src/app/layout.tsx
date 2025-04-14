@@ -23,9 +23,23 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
     languages: {
+      "zh-CN": "/zh-CN",
       "en-US": "/en-US",
-      "de-DE": "/de-DE",
     },
+  },
+  icons: {
+    icon: LOGO,
+    shortcut: LOGO,
+    apple: LOGO,
+  },
+  // 针对微信分享优化
+  twitter: {
+    card: "summary_large_image",
+    title: "Coderhub-程序员的技术社区",
+    description:
+      "Coderhub 是专为程序员打造的综合技术社区，涵盖面试宝典、技术问答与讨论、编程经验分享、最新技术新闻、求职简历优化、优质技术书籍与视频推荐，以及精选开源项目。加入 Coderhub，解决编程难题，提升职业技能，与全球开发者共同成长！",
+    images: [LOGO],
+    creator: "@xiyuer",
   },
   openGraph: {
     title: "Coderhub-程序员的技术社区",

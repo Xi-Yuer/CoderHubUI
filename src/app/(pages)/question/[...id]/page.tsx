@@ -14,6 +14,7 @@ import AppPageError from "@/app/_components/appPageError";
 import { Metadata } from "next";
 import { ClientGetQuestionBankDetail } from "@/request/apis/server";
 import { GetQuestionListResp, QuestionMenus } from "@/alova/globals";
+import { LOGO } from "@/constant";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -40,6 +41,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: bank.description,
       images: bank.coverImage?.url ? [{ url: bank.coverImage.url }] : [],
       type: "article",
+    },
+    alternates: {
+      canonical: "/",
+      languages: {
+        "zh-CN": "/zh-CN",
+        "en-US": "/en-US",
+      },
+    },
+    icons: {
+      icon: LOGO,
+      shortcut: LOGO,
+      apple: LOGO,
+    },
+    // 针对微信分享优化
+    twitter: {
+      card: "summary_large_image",
+      title: "Coderhub-程序员的技术社区",
+      description:
+        "Coderhub 是专为程序员打造的综合技术社区，涵盖面试宝典、技术问答与讨论、编程经验分享、最新技术新闻、求职简历优化、优质技术书籍与视频推荐，以及精选开源项目。加入 Coderhub，解决编程难题，提升职业技能，与全球开发者共同成长！",
+      images: [LOGO],
+      creator: "@xiyuer",
     },
   };
 }
