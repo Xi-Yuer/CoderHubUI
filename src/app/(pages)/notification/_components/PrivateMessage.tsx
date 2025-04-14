@@ -15,21 +15,14 @@ import {
   List,
   MenuProps,
   Modal,
-  Spin,
   Drawer,
 } from "antd";
-import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useWebSocket } from "ahooks";
 import { MenuOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
 import { Dropdown } from "antd";
 import { useStore } from "zustand";
-
-const AIEditor = dynamic(() => import("@/app/_components/AIEditor/init"), {
-  ssr: false,
-  loading: () => <Spin style={{ margin: "0 auto" }} />,
-});
 
 export interface PrivateMessage {
   message_id: string;
@@ -452,7 +445,7 @@ export default function ChatComponent() {
               value={value}
               disabled={!token && !currentSession}
               onChange={(e) => setValue(e.target.value)}
-              style={{ height: 200,border:"none" }}
+              style={{ height: 200, border: "none" }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
