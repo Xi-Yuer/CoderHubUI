@@ -54,6 +54,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("NEXT_PUBLIC_APP_WEBSOCKET_URL:", process.env);
+  console.log(
+    "NEXT_PUBLIC_APP_WEBSOCKET_URL:",
+    process.env.NEXT_PUBLIC_APP_WEBSOCKET_URL
+  );
   return (
     <html lang="en" className={SanFranciscoFont.className}>
       <body>
