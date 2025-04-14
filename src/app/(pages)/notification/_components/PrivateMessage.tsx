@@ -161,7 +161,7 @@ export default function ChatComponent() {
   }, [currentSession]);
 
   const fetchSessionMessages = async (page: number) => {
-    if (!currentSession) return;
+    if (!currentSession || !userInfo.id) return;
     try {
       const res = await ClientGetSessionMessage({
         session_id: currentSession?.id || "",
@@ -182,6 +182,7 @@ export default function ChatComponent() {
   };
 
   const getUserSession = () => {
+    if (!userInfo.id) return;
     ClientGetUserSession({
       userID: userInfo.id,
       sessionName: searchSessionName,

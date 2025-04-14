@@ -4,7 +4,6 @@ import { CopyOutlined } from "@ant-design/icons";
 import { LOGO } from "@/constant";
 
 export default function AppSharedPopUp({ id }: { id: string }) {
-  const LocalHostURL = process.env.NEXT_PUBLIC_SITE_DOMAIN;
   const [messageApi, contextHolder] = message.useMessage();
   const [qrSize, setQrSize] = useState(120);
 
@@ -24,7 +23,7 @@ export default function AppSharedPopUp({ id }: { id: string }) {
   }, []);
 
   const handleCopyLink = () => {
-    const shareUrl = `${LocalHostURL}/post/${id}`;
+    const shareUrl = `${process.env.NEXT_PUBLIC_SITE_DOMAIN}/post/${id}`;
     navigator.clipboard.writeText(shareUrl).then(() => {
       messageApi.success({
         content: "链接已复制到剪贴板！",
@@ -41,7 +40,7 @@ export default function AppSharedPopUp({ id }: { id: string }) {
         <QRCode
           errorLevel="H"
           size={qrSize}
-          value={`${LocalHostURL}/post/${id}`}
+          value={`${process.env.NEXT_PUBLIC_SITE_DOMAIN}/post/${id}`}
           icon={LOGO}
           className="border-0"
         />
