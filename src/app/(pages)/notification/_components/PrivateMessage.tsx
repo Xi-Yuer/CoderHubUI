@@ -112,7 +112,9 @@ export default function ChatComponent() {
   const [modal, contextHolder] = Modal.useModal();
 
   const { sendMessage, latestMessage } = useWebSocket(
-    token ? `ws://localhost/api/ws?token=${token}` : "",
+    token
+      ? `${process.env.NEXT_PUBLIC_WEBSOCKET_URL}/api/ws?token=${token}`
+      : "",
     {
       reconnectLimit: 5,
       onOpen: () => console.log("WebSocket 已连接"),
