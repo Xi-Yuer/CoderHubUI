@@ -13,6 +13,19 @@ RUN npm install --legacy-peer-deps
 # 复制所有源代码
 COPY . .
 
+# 设置环境变量
+# 网站服务器地址，可以是127.0.0.1，也可以是域名，如www.example.com
+ENV NEXT_PUBLIC_LOCAL_BASE_URL=http://nginx
+# 网络请求地址，如/api
+ENV NEXT_PUBLIC_SERVER_API_BASE_URL=http://nginx/api
+ENV NEXT_PUBLIC_LOCAL_API_BASE_URL=https://xiyuer.club
+# redis地址
+ENV NEXT_PUBLIC_REDIS_HOST=http://redis:6379
+# 网站域名
+ENV NEXT_PUBLIC_SITE_DOMAIN=https://xiyuer.club
+# websocket地址
+ENV NEXT_PUBLIC_APP_WEBSOCKET_URL=wss://xiyuer.club
+
 # 构建 Next.js 项目
 RUN npm run build
 
