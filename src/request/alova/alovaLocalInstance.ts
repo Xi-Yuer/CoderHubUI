@@ -33,6 +33,7 @@ export const alovaLocalInstance = createApis(
               mode: "memory",
             },
           }, // 开发环境不缓存
+    cacheLogger: process.env.NODE_ENV === "development",
   }),
   $$userConfigMap
 );
