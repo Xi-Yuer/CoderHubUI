@@ -1,5 +1,5 @@
 export const images = (token: string, allowUploadImage = true) => ({
-  uploadUrl: "/api/image/upload",
+  uploadUrl: `${process.env.NEXT_PUBLIC_SERVER_API_BASE_URL}/api/image/upload`,
   uploadHeaders: {
     Authorization: `Bearer ${token}`,
   },

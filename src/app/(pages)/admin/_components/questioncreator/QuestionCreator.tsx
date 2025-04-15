@@ -5,9 +5,15 @@ import {
   ClientGetQuestionBankList,
   ClientGetQuestionCategory, // 假设存在获取分类列表的接口
 } from "@/request/apis/web";
-import { AppEditor, EditorRefCallBack } from "@/app/_components";
+import { EditorRefCallBack } from "@/app/_components";
 import { Form, Select, Input, Button, message } from "antd";
 import { QuestionBank, QuestionBankCategory } from "@/alova/globals";
+import dynamic from "next/dynamic";
+
+const AppAIEditor = dynamic(
+  () => import("@/app/_components/AIEditor"),
+  { ssr: false } // 禁用服务器端渲染
+);
 
 const { Option } = Select;
 
@@ -125,7 +131,9 @@ export default function QuestionCreator() {
           rules={[{ required: true }]}
           className="form-item"
         >
-          <AppEditor ref={appEditorRef} className="w-full" />
+          <div className="border">
+            <AppAIEditor ref={appEditorRef} />
+          </div>
         </Form.Item>
         <Form.Item className="mt-4">
           <Button
