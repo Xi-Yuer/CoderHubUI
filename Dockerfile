@@ -16,6 +16,7 @@ COPY . .
 # 设置环境变量
 # websocket地址
 ENV NEXT_PUBLIC_APP_WEBSOCKET_URL=wss://xiyuer.club
+# 站点域名
 ENV NEXT_PUBLIC_SITE_DOMAIN=https://xiyuer.club
 
 # 构建 Next.js 项目
