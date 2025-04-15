@@ -20,6 +20,8 @@ ENV NEXT_PUBLIC_APP_WEBSOCKET_URL=wss://xiyuer.club
 ENV NEXT_PUBLIC_SITE_DOMAIN=https://xiyuer.club
 # 本地api地址
 ENV NEXT_PUBLIC_LOCAL_API_BASE_URL=https://xiyuer.club
+# 服务器api地址
+ENV NEXT_PUBLIC_SERVER_API_BASE_URL=https://xiyuer.club
 
 # 构建 Next.js 项目
 RUN npm run build
