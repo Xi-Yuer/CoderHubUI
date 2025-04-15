@@ -11,7 +11,7 @@ import { QuestionBank, QuestionBankCategory } from "@/alova/globals";
 
 const { Option } = Select;
 
-export function QuestionCreator() {
+export default function QuestionCreator() {
   const appEditorRef = useRef<EditorRefCallBack>(null);
   const [questionBanks, setQuestionBanks] = useState<QuestionBank[]>();
   const [categories, setCategories] = useState<QuestionBankCategory[]>([]);

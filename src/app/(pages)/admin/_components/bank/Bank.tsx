@@ -16,14 +16,22 @@ import {
   UploadProps,
   Image,
   Card,
+  Spin,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { getBase64 } from "@/utils";
-import { QuestionCreator } from "../questioncreator/QuestionCreator";
+import dynamic from "next/dynamic";
+const QuestionCreator = dynamic(
+  () => import("../questioncreator/QuestionCreator"),
+  {
+    ssr: false,
+    loading: () => <Spin style={{ margin: "0 0 0 10px" }} />,
+  }
+);
 
 const { Option } = Select;
 
-export function Bank() {
+export default function Bank() {
   const [form] = Form.useForm();
   const [categories, setCategories] = useState<any[]>([]);
   const [coverImage, setCoverImage] = useState<string | null>(null);
