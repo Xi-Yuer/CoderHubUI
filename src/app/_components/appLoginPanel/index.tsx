@@ -325,7 +325,8 @@ export default function AppLoginPanel() {
         closable={true}
       >
         {messageContext}
-        {loginContent()}
+        {/* 修改这里，根据 resetPassword 状态决定渲染内容 */}
+        {resetPassword ? resetPasswordContent() : loginContent()}
       </Drawer>
     </>
   ) : (

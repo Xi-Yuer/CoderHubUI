@@ -67,7 +67,7 @@ export default function Page() {
         await ClientUpdateUserAvatar(avatarId);
         setAvatar(response.data.url);
         updateUserInfo({ avatar: response.data.url });
-        messageApi.success("头像上传成功");
+        messageApi.success("更新头像成功");
       } else {
         messageApi.error(response.message || "头像上传失败");
       }
@@ -77,8 +77,15 @@ export default function Page() {
   };
 
   const onFinish = (values: any) => {
+    // 对 age 字段进行类型转换
+    if (values.age) {
+      values.age = Number(values.age);
+    }
     ClientUpdateUserInfo(userInfo.id, values).then((res) => {
       updateUserInfo(res.data);
+      if (res.data) {
+        messageApi.success("更新成功");
+      }
     });
   };
 
@@ -141,12 +148,13 @@ export default function Page() {
               <Form.Item label="性别" name="gender">
                 <Select
                   options={[
-                    { value: 1, label: "男" },
-                    { value: 2, label: "女" },
+                    { value: 0, label: "男" },
+                    { value: 1, label: "女" },
                   ]}
                 />
               </Form.Item>
               <Form.Item
+                initialValue={0}
                 label="年龄"
                 name="age"
                 rules={[
