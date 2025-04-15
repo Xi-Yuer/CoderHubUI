@@ -2,6 +2,9 @@ import {
   CreateArticleReq,
   CreateCommentReq,
   CreateFavorReq,
+  CreateQuestionBankCategoryReq,
+  CreateQuestionBankReq,
+  CreateQuestionReq,
   CreateSchoolExpReq,
   CreateSessionReq,
   CreateTagReq,
@@ -594,6 +597,64 @@ export async function ClientSearch(
       keyword,
       page,
       page_size,
+    },
+  });
+}
+
+// 获取题库列表
+export async function ClientGetQuestionList(categoryID: string) {
+  return alovaServerInstance.questions_public.ListQuestionBanks({
+    params: {
+      page: 1,
+      page_size: 100,
+    },
+    pathParams: {
+      categoryId: categoryID,
+    },
+  });
+}
+
+// 获取题库分类
+export async function ClientGetQuestionCategory() {
+  return alovaServerInstance.question_bank_category_public.ListQuestionBankCategory();
+}
+
+// 创建题库分类
+export async function ClientCreateQuestionCategory(
+  data: CreateQuestionBankReq
+) {
+  return alovaServerInstance.questions_auth.CreateQuestionBank({
+    data,
+  });
+}
+
+// 创建题库分类
+export async function CreateQuestionBankCategory(
+  data: CreateQuestionBankCategoryReq
+) {
+  return alovaServerInstance.question_bank_category_auth.CreateQuestionBankCategory(
+    {
+      data,
+    }
+  );
+}
+
+// 创建题目
+export async function ClientCreateQuestion(data: CreateQuestionReq) {
+  return alovaServerInstance.questions_auth.CreateQuestion({
+    data,
+  });
+}
+
+// 获取题库列表
+export async function ClientGetQuestionBankList(id: string) {
+  return alovaServerInstance.questions_public.ListQuestionBanks({
+    pathParams: {
+      categoryId: id,
+    },
+    params: {
+      page: 1,
+      page_size: 100,
     },
   });
 }
