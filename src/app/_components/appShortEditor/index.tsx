@@ -138,7 +138,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
           </div>
         }
       >
-        <div className="md:hidden w-[120px] mt-4 flex items-center gap-1 cursor-pointer bg-black rounded-xl px-3 text-white text-[12px]">
+        <div className="md:hidden w-fit mt-4 flex items-center gap-1 cursor-pointer bg-black rounded-xl px-3 text-white text-[12px]">
           <span>
             <CrownOutlined />
           </span>
@@ -168,7 +168,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
               </div>
             }
           >
-            <div className="hidden md:flex items-center gap-1 cursor-pointer bg-black rounded-xl px-3 text-white text-[12px]">
+            <div className="hidden md:flex items-center w-fit text-nowrap gap-1 cursor-pointer bg-black rounded-xl px-3 text-white text-[12px]">
               <span>
                 <CrownOutlined />
               </span>

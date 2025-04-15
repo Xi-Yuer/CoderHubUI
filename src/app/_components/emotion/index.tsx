@@ -22,21 +22,20 @@ export default function Emotion({ onClick }: Props) {
     onClick(emoji);
   };
   return (
-    <div className="flex flex-wrap w-56 gap-2">
+    <div className="grid grid-cols-6 justify-center items-center w-56 gap-2">
       {appStore?.emotions?.map((item) => (
-        <div
-          key={item.id}
-          className="flex flex-col items-center justify-center cursor-pointer"
-        >
+        <div key={item.id} className="mx-1 cursor-pointer">
           <Image
             onClick={() => handleClick(item)}
             src={item.url}
             alt={item.description}
             width={30}
             height={30}
-            className="m-1"
+            preview={false}
           />
-          <p className="text-xs text-gray-500">{item.description}</p>
+          <span className="text-xs text-center text-gray-500 text-nowrap">
+            {item.description}
+          </span>
         </div>
       ))}
     </div>
