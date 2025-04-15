@@ -89,12 +89,12 @@ export function AppFooter() {
           {/* 备案信息 */}
           <p className="text-sm text-gray-500 mt-2">
             <Link
-              href="http://www.beian.miit.gov.cn/"
+              href="https://beian.mps.gov.cn/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-blue-500"
             >
-              <span className="hover:text-white">京ICP备2021000001号</span>
+              <span className="hover:text-white">蜀ICP备2022015920号-1</span>
             </Link>
           </p>
         </div>

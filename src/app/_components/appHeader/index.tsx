@@ -62,7 +62,7 @@ export function AppHeader() {
             preview={false}
           ></Image>
           <Link href="/" className="text-2xl font-black text-gray-800">
-            CoderHub Test
+            CoderHub
           </Link>
         </div>
 
