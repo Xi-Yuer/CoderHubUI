@@ -11,7 +11,7 @@ import { QuestionBank, QuestionBankCategory } from "@/alova/globals";
 
 const { Option } = Select;
 
-export default function QuestionCreator() {
+export function QuestionCreator() {
   const appEditorRef = useRef<EditorRefCallBack>(null);
   const [questionBanks, setQuestionBanks] = useState<QuestionBank[]>();
   const [categories, setCategories] = useState<QuestionBankCategory[]>([]);
@@ -64,8 +64,13 @@ export default function QuestionCreator() {
   };
 
   return (
-    <div className="mx-auto p-6 bg-white rounded-lg shadow-md">
-      <Form form={form} onFinish={handleSave} className="space-y-6">
+    <div className="mx-auto p-6">
+      <Form
+        form={form}
+        onFinish={handleSave}
+        className="space-y-6"
+        layout="vertical"
+      >
         {messageContext}
         <Form.Item
           name="category"

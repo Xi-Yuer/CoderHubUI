@@ -1,28 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Menu } from "antd";
-import QuestionCreator from "./_components/questioncreator/QuestionCreator";
-import Bank from "./_components/bank/Bank";
+import { Bank } from "./_components/bank/Bank";
 
 // 模拟菜单项和对应的内容组件
 const menuItems = [
   {
     key: "1",
     label: "题库管理",
-    content: (
-      <div className="p-6">
-        <Bank />
-      </div>
-    ),
-  },
-  {
-    key: "2",
-    label: "题目管理",
-    content: (
-      <div className="px-6">
-        <QuestionCreator />
-      </div>
-    ),
+    content: <Bank />,
   },
 ];
 
@@ -34,7 +20,7 @@ export default function Page() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-fit">
       {/* 左侧菜单 */}
       <div className="bg-gray-800 text-white w-64">
         <Menu
@@ -49,8 +35,10 @@ export default function Page() {
         />
       </div>
       {/* 右侧内容 */}
-      <div className="h-full w-full">
-        {menuItems.find((item) => item.key === selectedKey)?.content}
+      <div className="h-full w-full px-6">
+        <Suspense fallback={<div>Loading...</div>}>
+          {menuItems.find((item) => item.key === selectedKey)?.content}
+        </Suspense>
       </div>
     </div>
   );
