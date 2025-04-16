@@ -33,13 +33,11 @@ export default async function Page({ params }: any) {
     }
     return (
       <div className="px-4 sm:px-10 md:px-20 lg:px-40 py-4">
+        <h2 className="text-lg font-bold mb-4">面试题库</h2>
         <div
           className="flex flex-wrap items-center gap-4 bg-gradient-to-r from-gray-300 to-slate-800 rounded-lg p-4"
           style={{ borderRadius: "5px" }}
         >
-          <div className="px-4 sm:px-6">
-            <span className="font-bold text-lg">面试题库</span>
-          </div>
           <div className="flex-1 flex gap-2 sm:gap-4 flex-wrap">
             {categoryList?.map((item) => (
               <Link

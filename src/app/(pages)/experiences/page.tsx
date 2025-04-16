@@ -61,7 +61,7 @@ export default function Page() {
           items={[
             {
               key: "school",
-              label: `学院`,
+              label: `院校`,
               children: <School filterParams={schoolParams} />,
               icon: <ReadOutlined />,
             },
