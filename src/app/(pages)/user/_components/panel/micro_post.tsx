@@ -16,6 +16,7 @@ export default function MicroPost({ userID }: Props) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   useEffect(() => {
+    if (!userID) return;
     ClientGetUserArticles(userInfo.id, userID, "micro_post", page, 10).then(
       (res) => {
         setList(res.data?.list || []);

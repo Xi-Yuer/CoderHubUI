@@ -33,6 +33,7 @@ export default function UserPostCard({ userID }: Props) {
   const router = useRouter();
 
   const FollowUser = () => {
+    if (!userID) return;
     ClientFollowUser(userID).then((res) => {
       if (!res?.data) {
         messageApi.error(res.message);

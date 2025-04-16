@@ -24,7 +24,7 @@ export default function Emotion({ onClick }: Props) {
   return (
     <div className="grid grid-cols-6 justify-center items-center w-56 gap-2">
       {appStore?.emotions?.map((item) => (
-        <div key={item.id} className="mx-1 cursor-pointer">
+        <div key={item.id} className="mx-1 cursor-pointer flex flex-col justify-center items-center gap-2">
           <Image
             onClick={() => handleClick(item)}
             src={item.url}

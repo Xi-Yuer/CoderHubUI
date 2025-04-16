@@ -15,6 +15,7 @@ export default function Favorite({ userID }: Props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!userID) return;
     setLoading(true);
     ClientGetUserFavorFold(userID, page, 10)
       .then((res) => {

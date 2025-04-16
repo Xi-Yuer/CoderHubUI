@@ -25,6 +25,7 @@ export default function Fans({ userID }: Props) {
   const [messageApi, contextHolder] = message.useMessage();
 
   const fetchFans = () => {
+    if (!userID) return;
     setLoading(true);
     ClientGetUserFollow(userID, page, 10)
       .then((res) => {

@@ -581,6 +581,7 @@ export async function ClientGetSignInRecord(year: number, month: number) {
       year,
       month,
     },
+    cacheFor: null,
   });
 }
 
