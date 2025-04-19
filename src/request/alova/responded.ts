@@ -1,4 +1,5 @@
 import { useAppStore } from "@/store";
+import event from "@/utils/event";
 import { Method } from "alova";
 const { reset, setShowLoginPanel } = useAppStore.getState();
 
@@ -12,7 +13,7 @@ export const responded = {
     try {
       const json = await response.json();
       if (json.code !== 200) {
-        alert(json.message);
+        event.emit("BAD_REQUEST", json.message);
         return Promise.reject(json.message);
       }
       return json;

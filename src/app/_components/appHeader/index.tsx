@@ -13,7 +13,16 @@ import {
   MenuOutlined,
   PoweroffOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, Drawer, Input, Modal, Popover, Image } from "antd";
+import {
+  Badge,
+  Button,
+  Drawer,
+  Input,
+  Modal,
+  Popover,
+  Image,
+  message,
+} from "antd";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,6 +35,7 @@ import { ClientGetMessageCount } from "@/request/apis/web";
 import { useAppStore } from "@/store";
 import { matchPath } from "@/utils";
 import Signin from "../signin/signin";
+import event from "@/utils/event";
 
 export function AppHeader() {
   const pathname = usePathname();
@@ -34,6 +44,7 @@ export function AppHeader() {
   const { userInfo, token } = useStore(useAppStore, (state) => state);
   const [searchValue, setSearchValue] = useState("");
   const [modal, contextHolder] = Modal.useModal();
+  const [messageApi, messageHolder] = message.useMessage();
   const router = useRouter();
   const appStore = useStore(useAppStore, (state) => state);
 
@@ -41,6 +52,9 @@ export function AppHeader() {
     if (!token) return;
     ClientGetMessageCount().then((res) => {
       setMessageCount(res.data.total);
+    });
+    event.on("BAD_REQUEST", (msg) => {
+      messageApi.error(msg);
     });
   }, [pathname, userInfo.id]);
   const toggleDrawer = () => {
@@ -50,6 +64,7 @@ export function AppHeader() {
   return (
     <header className="w-full py-3 pb-0 md:pb-3 bg-white shadow-sm text-nowrap sticky top-0 z-10">
       {contextHolder}
+      {messageHolder}
       <div className="container mx-auto flex justify-between items-center px-4 h-full">
         {/* Logo 部分 */}
         <div className="flex items-center gap-4">
