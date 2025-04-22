@@ -160,7 +160,7 @@ export default function Bank() {
             rules={[{ required: true, message: "请选择题库分类" }]}
           >
             <Select className="w-full">
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <Option key={category.id} value={category.id}>
                   {category.name}
                 </Option>

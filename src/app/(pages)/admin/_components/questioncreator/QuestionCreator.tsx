@@ -85,7 +85,7 @@ export default function QuestionCreator() {
           className="form-item"
         >
           <Select onChange={onCategoryChange} className="w-full">
-            {categories.map((category) => (
+            {categories?.map((category) => (
               <Option key={category.id} value={category.id}>
                 {category.name}
               </Option>

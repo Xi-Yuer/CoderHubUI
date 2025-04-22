@@ -28,7 +28,7 @@ export default function AppArticlePreview({ article }: AppArticlePreviewProps) {
           {article.article.summary}
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-1 text-gray-400">
-          <div className="flex gap-4 sm:gap-6 mb-2 sm:mb-0">
+          <div className="flex gap-4 sm:gap-6 mb-2 sm:mb-0 flex-shrink-0">
             <span className="text-sm">
               {article.author.nickname || article.author.username}
             </span>
@@ -49,15 +49,20 @@ export default function AppArticlePreview({ article }: AppArticlePreviewProps) {
               {article.article.commentCount}
             </span>
           </div>
-          <div>
-            {article.article?.tags?.map((tag) => (
+          <div className="flex-1 min-w-0 flex flex-wrap justify-end">
+            {article.article?.tags?.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="inline-block bg-gray-200 px-2 text-slate-500 text-[12px] mr-2"
+                className="inline-block bg-gray-200 px-2 text-slate-500 text-[12px] mr-2 mb-1 truncate max-w-[120px]"
               >
                 {tag}
               </span>
             ))}
+            {article.article?.tags?.length > 3 && (
+              <span className="inline-block bg-gray-200 px-2 text-slate-500 text-[12px] mr-2 mb-1">
+                +{article.article.tags.length - 3}
+              </span>
+            )}
           </div>
         </div>
       </div>

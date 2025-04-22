@@ -33,7 +33,7 @@ export default function Page() {
             mode="inline"
             selectedKeys={[selectedKey]}
             onClick={handleMenuClick}
-            items={menuItems.map((item) => ({
+            items={menuItems?.map((item) => ({
               key: item.key,
               label: item.label,
             }))}
