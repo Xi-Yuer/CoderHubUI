@@ -219,7 +219,7 @@ export default function AppShortEditor({ PublicSuccess }: Props) {
       </div>
 
       {!appStore.token && (
-        <div className="absolute top-10 bottom-0 left-0 right-0 w-full h-full z-10 p-2 cursor-not-allowed text-slate-500">
+        <div className="absolute top-10 bottom-0 left-0 right-0 w-full h-full z-1 p-2 cursor-not-allowed text-slate-500">
           点击
           <Button
             type="link"
