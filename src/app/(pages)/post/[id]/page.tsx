@@ -36,6 +36,26 @@ export async function generateMetadata({
       description: article.summary,
       images: article.coverImage ? [{ url: article.coverImage }] : [],
       type: "article",
+      locale: "zh_CN",
+      alternateLocale: ["en_US"],
+      section: article.categoryId,
+      tags: article.tags,
+    },
+    // 添加 Twitter Card 支持
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.summary,
+      images: article.coverImage ? [article.coverImage] : [],
+      creator: "@" + article.authorId,
+    },
+    // 添加备用链接
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_DOMAIN}/post/${id}`,
+      languages: {
+        "zh-CN": "/zh-CN",
+        "en-US": "/en-US",
+      },
     },
   };
 }

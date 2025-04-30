@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Allow: /post/
+Allow: /articles/
+Allow: /experiences/
+Allow: /bank/all/
+Allow: /user/
+Allow: /question/
+Allow: /position/
+
+# 禁止访问的路径
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# 站点地图
+Sitemap: https://xiyuer.club/sitemap.xml
