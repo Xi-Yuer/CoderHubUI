@@ -564,6 +564,10 @@ export type ArticleExtra = {
    * [required]
    */
   favorite_count: number;
+  /**
+   * [required]
+   */
+  author_id: string;
 };
 export type GetArticleExtraResp = {
   /**
@@ -3833,6 +3837,8 @@ declare global {
        *     is_favorited: boolean
        *     // [required]
        *     favorite_count: number
+       *     // [required]
+       *     author_id: string
        *   }
        * }
        * ```

@@ -3468,6 +3468,9 @@
         "favorite_count": {
           "type": "integer",
           "format": "int32"
+        },
+        "author_id": {
+          "type": "string"
         }
       },
       "title": "ArticleExtra",
@@ -3478,7 +3481,8 @@
         "comment_count",
         "is_liked",
         "is_favorited",
-        "favorite_count"
+        "favorite_count",
+        "author_id"
       ]
     },
     "CancelLikeAcademicNavigatorReq": {

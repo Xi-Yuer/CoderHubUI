@@ -8,6 +8,7 @@ import {
   ClientGetArticleExtraInfo,
   ClientLikeEntity,
 } from "@/request/apis/web";
+import { useAppStore } from "@/store";
 import {
   DeleteOutlined,
   LikeFilled,
@@ -21,13 +22,15 @@ import { Badge, Popover } from "antd";
 import { Button } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import { useStore } from "zustand";
 
 interface Props {
   id: string;
 }
 
 export default function OperationPC({ id }: Props) {
-  const navigate = useRouter()
+  const navigate = useRouter();
+  const userInfo = useStore(useAppStore, (state) => state.userInfo);
   const [extraInfo, setExtraInfo] = React.useState<ArticleExtra>({
     id: "",
   } as ArticleExtra);
@@ -104,20 +107,22 @@ export default function OperationPC({ id }: Props) {
           icon={<WarningOutlined />}
           shape="circle"
         />
-        <Button
-          type="primary"
-          size="large"
-          icon={<DeleteOutlined />}
-          shape="circle"
-          onClick={() => {
-            ClientDeleteArticle(extraInfo.id).then((res) => {
-              if (!res) return;
-              navigate.push("/")
-            });
-          }}
-        >
-          <span className="text-xs">删除</span>
-        </Button>
+        {userInfo.id === extraInfo.author_id && (
+          <Button
+            type="primary"
+            size="large"
+            icon={<DeleteOutlined />}
+            shape="circle"
+            onClick={() => {
+              ClientDeleteArticle(extraInfo.id).then((res) => {
+                if (!res) return;
+                navigate.push("/");
+              });
+            }}
+          >
+            <span className="text-xs">删除</span>
+          </Button>
+        )}
       </div>
     </div>
   );
