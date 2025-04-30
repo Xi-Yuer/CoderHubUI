@@ -119,9 +119,7 @@ export default function OperationPC({ id }: Props) {
                 navigate.push("/");
               });
             }}
-          >
-            <span className="text-xs">删除</span>
-          </Button>
+          ></Button>
         )}
       </div>
     </div>
