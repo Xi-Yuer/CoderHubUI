@@ -4,10 +4,12 @@ import AppSharedPopUp from "@/app/_components/appSharedPopup";
 import { useFavorFlod } from "@/app/_hooks/useFavorFlod";
 import { FAVORITE_ARTICLE } from "@/constant";
 import {
+  ClientDeleteArticle,
   ClientGetArticleExtraInfo,
   ClientLikeEntity,
 } from "@/request/apis/web";
 import {
+  DeleteOutlined,
   LikeFilled,
   LikeOutlined,
   ShareAltOutlined,
@@ -17,6 +19,7 @@ import {
 } from "@ant-design/icons";
 import { Badge, Popover } from "antd";
 import { Button } from "antd";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 interface Props {
@@ -24,6 +27,7 @@ interface Props {
 }
 
 export default function OperationPC({ id }: Props) {
+  const navigate = useRouter()
   const [extraInfo, setExtraInfo] = React.useState<ArticleExtra>({
     id: "",
   } as ArticleExtra);
@@ -100,6 +104,20 @@ export default function OperationPC({ id }: Props) {
           icon={<WarningOutlined />}
           shape="circle"
         />
+        <Button
+          type="primary"
+          size="large"
+          icon={<DeleteOutlined />}
+          shape="circle"
+          onClick={() => {
+            ClientDeleteArticle(extraInfo.id).then((res) => {
+              if (!res) return;
+              navigate.push("/")
+            });
+          }}
+        >
+          <span className="text-xs">删除</span>
+        </Button>
       </div>
     </div>
   );
