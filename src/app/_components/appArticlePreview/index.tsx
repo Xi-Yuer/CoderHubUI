@@ -18,7 +18,7 @@ export default function AppArticlePreview({ article }: AppArticlePreviewProps) {
     <Link
       href={`/post/${article.article.id}`}
       target="_blank"
-      className="bg-white rounded-lg border-b py-2 px-4 flex flex-col sm:flex-row justify-between items-start cursor-pointer transition-all duration-300 hover:bg-gray-50"
+      className="bg-white rounded-lg border-b py-2 px-4 flex flex-col sm:flex-row justify-between items-center cursor-pointer transition-all duration-300 hover:bg-gray-50"
     >
       <div className="flex-1 mb-4 sm:mb-0">
         <h2 className="text-lg font-semibold text-slate-800">
@@ -67,14 +67,15 @@ export default function AppArticlePreview({ article }: AppArticlePreviewProps) {
         </div>
       </div>
       {article.article.coverImage && (
-        <div className="rounded-lg overflow-hidden w-full sm:w-[180px] hidden sm:flex justify-center items-center">
+        <div className="rounded-lg bg-white overflow-hidden w-full sm:w-[160px] hidden sm:flex justify-center items-center">
           <Image
             src={article.article.coverImage}
             alt=""
-            width="100%"
+            style={{ objectFit: "cover", borderRadius: "0.3rem" }}
+            width={160}
             height={100}
             preview={false}
-            className="w-full h-full object-cover"
+            className="w-full h-full rounded-lg"
           />
         </div>
       )}
