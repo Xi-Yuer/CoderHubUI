@@ -28,7 +28,7 @@ import { Select, Tag } from "antd";
 import type { InputRef, SelectProps } from "antd";
 import dynamic from "next/dynamic";
 import React from "react";
-import Sandpack from "../_components/sandpack";
+import Sandpack, { SandpackRefCallBack } from "../_components/sandpack";
 
 type TagRender = SelectProps["tagRender"];
 
@@ -54,6 +54,7 @@ export default function Page() {
   const [hasMore, setHasMore] = React.useState(true);
   const inputRef = React.useRef<InputRef>(null);
   const AppEditorRef = React.useRef<EditorRefCallBack>(null);
+  const SandpackRef = React.useRef<SandpackRefCallBack>(null);
 
   const loadTags = async (pageNum: number) => {
     if (!hasMore || loading) return;
@@ -326,7 +327,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <Sandpack />
+      <Sandpack ref={SandpackRef} />
     </Card>
   );
 }
