@@ -1,12 +1,7 @@
 "use client";
-
 import React, { Ref, useEffect, useImperativeHandle, useState } from "react";
-import { Modal, Radio, Input, Button, Space } from "antd";
-import {
-  SANDBOX_TEMPLATES,
-  Sandpack,
-  TemplateFiles,
-} from "@codesandbox/sandpack-react";
+import { Modal, Radio } from "antd";
+import { SANDBOX_TEMPLATES, Sandpack } from "@codesandbox/sandpack-react";
 import event from "@/utils/event";
 import { templateList } from "./template";
 
@@ -37,6 +32,7 @@ export default function SandpackModal({ ref }: Props) {
 
   const handleOk = () => {
     setIsModalOpen(false);
+    event.emit("SANDPACK_CONFIRMED");
   };
 
   const handleCancel = () => {

@@ -40,6 +40,10 @@ class AppEvent {
   }
 }
 
-const EventMessage = ["BAD_REQUEST", "SAND_PACK"] as const;
+const EventMessage = [
+  "BAD_REQUEST",
+  "SAND_PACK",
+  "SANDPACK_CONFIRMED",
+] as const;
 const event = new AppEvent();
 export default event;

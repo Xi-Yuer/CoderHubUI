@@ -5,6 +5,7 @@ import {
   CreateQuestionBankCategoryReq,
   CreateQuestionBankReq,
   CreateQuestionReq,
+  CreateSandpackProject,
   CreateSchoolExpReq,
   CreateSessionReq,
   CreateTagReq,
@@ -116,6 +117,23 @@ export function ClientGetArticleList(
 export function ClientCreateArticle(params: CreateArticleReq) {
   return alovaServerInstance.articles_auth.CreateArticle({
     data: params,
+  });
+}
+
+// 发布 sandpack
+export function ClientCreateSandpack(params: CreateSandpackProject) {
+  return alovaServerInstance.sandpack_auth.CreateSandpack({
+    data: params,
+  });
+}
+
+// 获取文章 sandpack
+export function ClientGetSandpack(author_id: string, article_id: string) {
+  return alovaServerInstance.sandpack_public.ListSandpack({
+    params: {
+      userID: author_id,
+      articleID: article_id,
+    },
   });
 }
 

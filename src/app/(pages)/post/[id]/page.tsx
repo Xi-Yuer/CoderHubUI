@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { Article } from "@/alova/globals";
 import { ServiceGetArticleDetail } from "@/request/apis/server";
 import AppPageError from "@/app/_components/appPageError";
+import SodeSandpack from "../_components/sandpack";
 interface PostProps {
   params: Promise<{
     id: string;
@@ -81,6 +82,10 @@ export default async function Page({ params }: PostProps) {
             {/* 右侧信息栏（固定宽度，xl 及以上显示） */}
             <div className="hidden xl:flex w-[300px] gap-4 flex-col sticky top-[70px] h-full">
               <AuthInfomation id={response?.data?.author?.id} />
+              <SodeSandpack
+                author={response.data.author.id}
+                articleId={response.data.article.id}
+              />
               <Category />
             </div>
           </>

@@ -1,5 +1,8 @@
 "use client";
-import type { Tag as TagOptionType } from "@/alova/globals";
+import type {
+  SandpackProjectFile,
+  Tag as TagOptionType,
+} from "@/alova/globals";
 import { EditorRefCallBack } from "@/app/_components";
 import { LONG_ARTICLE_TYPE } from "@/constant";
 import {
@@ -8,6 +11,7 @@ import {
   ClientGetAllTags,
   ClientCreateTag,
   ClientGetSystemTags,
+  ClientCreateSandpack,
 } from "@/request/apis/web";
 import { getBase64 } from "@/utils";
 import { PlusOutlined, SaveOutlined, SendOutlined } from "@ant-design/icons";
@@ -29,6 +33,7 @@ import type { InputRef, SelectProps } from "antd";
 import dynamic from "next/dynamic";
 import React from "react";
 import Sandpack, { SandpackRefCallBack } from "../_components/sandpack";
+import event from "@/utils/event";
 
 type TagRender = SelectProps["tagRender"];
 
@@ -39,13 +44,14 @@ const AppAIEditor = dynamic(
 export default function Page() {
   const [messageApi, messageContext] = message.useMessage();
   const [name, setName] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const [title, setTitle] = React.useState("11");
+  const [description, setDescription] = React.useState("11");
   const [imageListID, setImageListID] = React.useState<string[]>([]);
   const [imageList, setImageList] = React.useState<string[]>([]);
   const [categoryOptions, setCategoryOptions] = React.useState<TagOptionType[]>(
     []
   );
+  const [hasInsertSandpack, setHasInsertSandpack] = React.useState(false);
   const [category, setCategory] = React.useState("");
   const [tagList, setTagList] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
@@ -82,6 +88,12 @@ export default function Page() {
   React.useEffect(() => {
     loadTags(1);
     loadCategory();
+    event.on("SANDPACK_CONFIRMED", () => {
+      setHasInsertSandpack(true);
+    });
+    return () => {
+      event.off("SANDPACK_CONFIRMED", setHasInsertSandpack);
+    };
   }, []);
 
   const onPublish = (status: "published" | "draft") => {
@@ -112,6 +124,34 @@ export default function Page() {
       status: status,
       categoryId: category,
     }).then((res) => {
+      if (hasInsertSandpack) {
+        const files = SandpackRef.current?.getFiles() || {};
+        const template = SandpackRef.current?.getTemplate() || "vanilla";
+        const fileParams: SandpackProjectFile[] = [];
+        Object.keys(files).forEach((key) => {
+          fileParams.push({
+            fileName: key,
+            fileContent: files[key].code,
+            langauge: key.slice(
+              key.lastIndexOf(".") + 1
+            ) as SandpackProjectFile["langauge"],
+          });
+        });
+        ClientCreateSandpack({
+          name: title,
+          description: description,
+          articleID: res.data,
+          template: template,
+          files: fileParams,
+        })
+          .then(() => {
+            messageApi.success("代码沙箱创建成功");
+          })
+          .catch((err) => {
+            messageApi.error("代码沙箱创建失败：" + err.message);
+          });
+      }
+
       messageApi.info(res.message);
       setTitle("");
       setDescription("");
@@ -207,7 +247,8 @@ export default function Page() {
           }
         />
         <Input.TextArea
-          placeholder="请输入文章摘要（限100字，选填）"
+          placeholder="请输入
+          摘要（限100字，选填）"
           maxLength={100}
           autoSize={{ minRows: 3 }}
           value={description}
@@ -285,7 +326,7 @@ export default function Page() {
             />
           </div>
           <div className="flex gap-6 items-center text-md">
-            <span className="w-20 ml-2">文章封面</span>
+            <span className="w-20 ml-2">封面</span>
             {imageListID.length ? (
               <>
                 <div className="flex flex-col gap-2">

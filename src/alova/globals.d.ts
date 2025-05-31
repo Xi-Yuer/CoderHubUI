@@ -720,6 +720,61 @@ export type UpdateArticleReq = {
    */
   categoryId: string;
 };
+export type DeleteBannerReq = object;
+export type Banner = {
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  title: string;
+  /**
+   * [required]
+   */
+  imageUrl: string;
+  /**
+   * [required]
+   */
+  linkUrl: string;
+  /**
+   * [required]
+   */
+  createdAt: number;
+  /**
+   * [required]
+   */
+  updatedAt: number;
+};
+export type GetBannerListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * [required]
+   */
+  data: Banner[];
+};
+export type CreateBannerReq = {
+  /**
+   * [required]
+   */
+  title: string;
+  /**
+   * [required]
+   */
+  imageUrl: string;
+  /**
+   * [required]
+   */
+  linkUrl: string;
+};
 export type HealthResp = {
   /**
    * 状态码
@@ -2253,6 +2308,112 @@ export type GetQuestionListResp = {
    * [required]
    */
   data: QuestionList;
+};
+export type SandpackProjectFile = {
+  /**
+   * [required]
+   */
+  name: string;
+  /**
+   * [required]
+   */
+  code: string;
+  /**
+   * [required]
+   */
+  language: string;
+};
+export type CreateSandpackProject = {
+  /**
+   * [required]
+   */
+  name: string;
+  /**
+   * [required]
+   */
+  description: string;
+  /**
+   * [required]
+   */
+  template: string;
+  /**
+   * [required]
+   */
+  articleID: string;
+  /**
+   * [required]
+   */
+  files: SandpackProjectFile[];
+};
+export type CreateSandpackProjectResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * CreateSandpackProject
+   * ---
+   * [required]
+   */
+  data: CreateSandpackProject;
+};
+export type SandpackProject = {
+  /**
+   * [required]
+   */
+  id: string;
+  /**
+   * [required]
+   */
+  name: string;
+  /**
+   * [required]
+   */
+  description: string;
+  /**
+   * [required]
+   */
+  template: string;
+  /**
+   * [required]
+   */
+  userID: string;
+  /**
+   * [required]
+   */
+  articleID: string;
+  /**
+   * [required]
+   */
+  files: SandpackProjectFile[];
+  /**
+   * [required]
+   */
+  createdAt: number;
+  /**
+   * [required]
+   */
+  updatedAt: number;
+};
+export type GetSandpackProjectListResp = {
+  /**
+   * 状态码
+   */
+  code?: number;
+  /**
+   * 提示信息
+   */
+  message?: string;
+  /**
+   * SandpackProject
+   * ---
+   * [required]
+   */
+  data: SandpackProject;
 };
 export type CreateSchoolExpResp = {
   /**
@@ -4436,6 +4597,105 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetArticlesByUserResp, 'articles_public.GetArticlesByUser', Config>;
+    };
+    banner_public: {
+      /**
+       * ---
+       *
+       * [DELETE] 删除轮播图
+       *
+       * **path:** /api/banner/delete/{id}
+       *
+       * ---
+       *
+       * **Path Parameters**
+       * ```ts
+       * type PathParameters = {
+       *   // [required]
+       *   id: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = object
+       * ```
+       */
+      DeleteBanner<
+        Config extends Alova2MethodConfig<DeleteBannerReq> & {
+          pathParams: {
+            /**
+             * [required]
+             */
+            id: string;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<DeleteBannerReq, 'banner_public.DeleteBanner', Config>;
+      /**
+       * ---
+       *
+       * [GET] 获取轮播图列表
+       *
+       * **path:** /api/banner/list
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [required]
+       *   data: Array<{
+       *     // [required]
+       *     id: string
+       *     // [required]
+       *     title: string
+       *     // [required]
+       *     imageUrl: string
+       *     // [required]
+       *     linkUrl: string
+       *     // [required]
+       *     createdAt: number
+       *     // [required]
+       *     updatedAt: number
+       *   }>
+       * }
+       * ```
+       */
+      ListBanner<Config extends Alova2MethodConfig<GetBannerListResp>>(
+        config?: Config
+      ): Alova2Method<GetBannerListResp, 'banner_public.ListBanner', Config>;
+      /**
+       * ---
+       *
+       * [POST] 上传轮播图
+       *
+       * **path:** /api/banner/upload
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // [required]
+       *   title: string
+       *   // [required]
+       *   imageUrl: string
+       *   // [required]
+       *   linkUrl: string
+       * }
+       * ```
+       */
+      UploadBanner<Config extends Alova2MethodConfig<CreateBannerReq>>(
+        config?: Config
+      ): Alova2Method<CreateBannerReq, 'banner_public.UploadBanner', Config>;
     };
     coderhub: {
       /**
@@ -7832,6 +8092,158 @@ declare global {
       >(
         config: Config
       ): Alova2Method<GetQuestionListResp, 'questions_public.ListQuestions', Config>;
+    };
+    sandpack_auth: {
+      /**
+       * ---
+       *
+       * [POST] 创建一个sandpack
+       *
+       * **path:** /api/sandpack/create
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   // [required]
+       *   name: string
+       *   // [required]
+       *   description: string
+       *   // [required]
+       *   template: string
+       *   // [required]
+       *   articleID: string
+       *   // [required]
+       *   files: Array<{
+       *     // [required]
+       *     name: string
+       *     // [required]
+       *     code: string
+       *     // [required]
+       *     language: string
+       *   }>
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] CreateSandpackProject
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     name: string
+       *     // [required]
+       *     description: string
+       *     // [required]
+       *     template: string
+       *     // [required]
+       *     articleID: string
+       *     // [required]
+       *     files: Array<{
+       *       // [required]
+       *       name: string
+       *       // [required]
+       *       code: string
+       *       // [required]
+       *       language: string
+       *     }>
+       *   }
+       * }
+       * ```
+       */
+      CreateSandpack<
+        Config extends Alova2MethodConfig<CreateSandpackProjectResp> & {
+          data: CreateSandpackProject;
+        }
+      >(
+        config: Config
+      ): Alova2Method<CreateSandpackProjectResp, 'sandpack_auth.CreateSandpack', Config>;
+    };
+    sandpack_public: {
+      /**
+       * ---
+       *
+       * [GET] 获取sandpack列表
+       *
+       * **path:** /api/sandpack/list
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // [required]
+       *   userID: string
+       *   // [required]
+       *   articleID: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   // 状态码
+       *   code?: number
+       *   // 提示信息
+       *   message?: string
+       *   // [title] SandpackProject
+       *   // [required]
+       *   data: {
+       *     // [required]
+       *     id: string
+       *     // [required]
+       *     name: string
+       *     // [required]
+       *     description: string
+       *     // [required]
+       *     template: string
+       *     // [required]
+       *     userID: string
+       *     // [required]
+       *     articleID: string
+       *     // [required]
+       *     files: Array<{
+       *       // [required]
+       *       name: string
+       *       // [required]
+       *       code: string
+       *       // [required]
+       *       language: string
+       *     }>
+       *     // [required]
+       *     createdAt: number
+       *     // [required]
+       *     updatedAt: number
+       *   }
+       * }
+       * ```
+       */
+      ListSandpack<
+        Config extends Alova2MethodConfig<GetSandpackProjectListResp> & {
+          params: {
+            /**
+             * [required]
+             */
+            userID: string;
+            /**
+             * [required]
+             */
+            articleID: string;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<GetSandpackProjectListResp, 'sandpack_public.ListSandpack', Config>;
     };
     school_exp_auth: {
       /**

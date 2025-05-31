@@ -667,6 +667,65 @@
         ]
       }
     },
+    "/api/banner/delete/{id}": {
+      "delete": {
+        "summary": "删除轮播图",
+        "operationId": "DeleteBanner",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteBannerReq"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "banner_public"
+        ]
+      }
+    },
+    "/api/banner/list": {
+      "get": {
+        "summary": "获取轮播图列表",
+        "operationId": "ListBanner",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetBannerListResp"
+            }
+          }
+        },
+        "tags": [
+          "banner_public"
+        ]
+      }
+    },
+    "/api/banner/upload": {
+      "post": {
+        "summary": "上传轮播图",
+        "operationId": "UploadBanner",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateBannerReq"
+            }
+          }
+        },
+        "tags": [
+          "banner_public"
+        ]
+      }
+    },
     "/api/coderhub/health": {
       "get": {
         "summary": "健康检查",
@@ -2191,6 +2250,72 @@
         ]
       }
     },
+    "/api/sandpack/create": {
+      "post": {
+        "summary": "创建一个sandpack",
+        "operationId": "CreateSandpack",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateSandpackProjectResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSandpackProject"
+            }
+          }
+        ],
+        "tags": [
+          "sandpack_auth"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/sandpack/list": {
+      "get": {
+        "summary": "获取sandpack列表",
+        "operationId": "ListSandpack",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetSandpackProjectListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "articleID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "sandpack_public"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ]
+      }
+    },
     "/api/school_exp/create": {
       "post": {
         "summary": "创建学校经历",
@@ -3485,6 +3610,40 @@
         "author_id"
       ]
     },
+    "Banner": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        },
+        "linkUrl": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Banner",
+      "required": [
+        "id",
+        "title",
+        "imageUrl",
+        "linkUrl",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
     "CancelLikeAcademicNavigatorReq": {
       "type": "object",
       "title": "CancelLikeAcademicNavigatorReq"
@@ -3743,6 +3902,26 @@
       "title": "CreateArticleResp",
       "required": [
         "data"
+      ]
+    },
+    "CreateBannerReq": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        },
+        "linkUrl": {
+          "type": "string"
+        }
+      },
+      "title": "CreateBannerReq",
+      "required": [
+        "title",
+        "imageUrl",
+        "linkUrl"
       ]
     },
     "CreateCommentReq": {
@@ -4112,6 +4291,58 @@
         "data"
       ]
     },
+    "CreateSandpackProject": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "articleID": {
+          "type": "string"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SandpackProjectFile"
+          }
+        }
+      },
+      "title": "CreateSandpackProject",
+      "required": [
+        "name",
+        "description",
+        "template",
+        "articleID",
+        "files"
+      ]
+    },
+    "CreateSandpackProjectResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/CreateSandpackProject"
+        }
+      },
+      "title": "CreateSandpackProjectResp",
+      "required": [
+        "data"
+      ]
+    },
     "CreateSchoolExpReq": {
       "type": "object",
       "properties": {
@@ -4430,6 +4661,10 @@
       "required": [
         "data"
       ]
+    },
+    "DeleteBannerReq": {
+      "type": "object",
+      "title": "DeleteBannerReq"
     },
     "DeleteCommentReq": {
       "type": "object",
@@ -5351,6 +5586,48 @@
         "data"
       ]
     },
+    "GetBannerListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GetBannerListReq",
+      "required": [
+        "page",
+        "page_size"
+      ]
+    },
+    "GetBannerListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Banner"
+          }
+        }
+      },
+      "title": "GetBannerListResp",
+      "required": [
+        "data"
+      ]
+    },
     "GetChatMessageListReq": {
       "type": "object",
       "properties": {
@@ -6113,6 +6390,43 @@
         }
       },
       "title": "GetResponse",
+      "required": [
+        "data"
+      ]
+    },
+    "GetSandpackProjectListReq": {
+      "type": "object",
+      "properties": {
+        "userID": {
+          "type": "string"
+        },
+        "articleID": {
+          "type": "string"
+        }
+      },
+      "title": "GetSandpackProjectListReq",
+      "required": [
+        "userID",
+        "articleID"
+      ]
+    },
+    "GetSandpackProjectListResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 状态码"
+        },
+        "message": {
+          "type": "string",
+          "description": " 提示信息"
+        },
+        "data": {
+          "$ref": "#/definitions/SandpackProject"
+        }
+      },
+      "title": "GetSandpackProjectListResp",
       "required": [
         "data"
       ]
@@ -7238,6 +7552,75 @@
       "required": [
         "code",
         "message"
+      ]
+    },
+    "SandpackProject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "userID": {
+          "type": "string"
+        },
+        "articleID": {
+          "type": "string"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SandpackProjectFile"
+          }
+        },
+        "createdAt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updatedAt": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "SandpackProject",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "template",
+        "userID",
+        "articleID",
+        "files",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SandpackProjectFile": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        }
+      },
+      "title": "SandpackProjectFile",
+      "required": [
+        "name",
+        "code",
+        "language"
       ]
     },
     "SchoolExp": {
