@@ -130,11 +130,11 @@ export default function Page() {
         const fileParams: SandpackProjectFile[] = [];
         Object.keys(files).forEach((key) => {
           fileParams.push({
-            fileName: key,
-            fileContent: files[key].code,
-            langauge: key.slice(
+            name: key,
+            code: files[key].code,
+            language: key.slice(
               key.lastIndexOf(".") + 1
-            ) as SandpackProjectFile["langauge"],
+            ) as SandpackProjectFile["language"],
           });
         });
         ClientCreateSandpack({
