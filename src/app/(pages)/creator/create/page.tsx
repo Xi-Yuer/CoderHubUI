@@ -11,6 +11,7 @@ import {
 } from "@/request/apis/web";
 import { getBase64 } from "@/utils";
 import { PlusOutlined, SaveOutlined, SendOutlined } from "@ant-design/icons";
+import { RunIcon } from "@codesandbox/sandpack-react";
 import {
   Button,
   Card,
@@ -27,6 +28,7 @@ import { Select, Tag } from "antd";
 import type { InputRef, SelectProps } from "antd";
 import dynamic from "next/dynamic";
 import React from "react";
+import Sandpack from "../_components/sandpack";
 
 type TagRender = SelectProps["tagRender"];
 
@@ -324,6 +326,7 @@ export default function Page() {
           </div>
         </div>
       </div>
+      <Sandpack />
     </Card>
   );
 }

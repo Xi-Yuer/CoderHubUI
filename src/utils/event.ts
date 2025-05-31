@@ -26,8 +26,20 @@ class AppEvent {
       });
     }
   }
+  off(
+    eventName: (typeof EventMessage)[number],
+    callback: (...args: any[]) => void
+  ) {
+    const callbacks = this.eventMap.get(eventName);
+    if (callbacks) {
+      this.eventMap.set(
+        eventName,
+        callbacks.filter((cb) => cb !== callback)
+      );
+    }
+  }
 }
 
-const EventMessage = ["BAD_REQUEST"] as const;
+const EventMessage = ["BAD_REQUEST", "SAND_PACK"] as const;
 const event = new AppEvent();
 export default event;
