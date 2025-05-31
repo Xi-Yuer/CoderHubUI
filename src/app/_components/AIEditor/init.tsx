@@ -1,6 +1,6 @@
 "use client";
 import { useAppStore } from "@/store";
-import { AiEditor, AiEditorOptions } from "aieditor";
+import { AiEditor, AiEditorOptions, CustomMenu, MenuGroup } from "aieditor";
 import "aieditor/dist/style.css";
 
 import { HTMLAttributes, forwardRef, useEffect, useRef } from "react";
@@ -14,7 +14,7 @@ type AIEditorProps = Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
   defaultValue?: string;
   value?: string;
   editable?: boolean;
-  toolbarKeys?: string[];
+  toolbarKeys?: (string | CustomMenu | MenuGroup)[] | undefined;
   allowUploadImage?: boolean;
   textSelectionBubbleMenu?: boolean;
   onChange?: (val: string) => void;
