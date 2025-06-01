@@ -27,6 +27,6 @@ jobs:
           cd /app/coderhub
           docker compose down
           docker rmi 2214380963/coderhub-web:latest
-          docker volume prune -f
-          docker compose up -d   # 启动容器
+          docker compose down
+          docker compose up -d
           EOF
