@@ -18,7 +18,7 @@ export default function AppArticlePreview({ article }: AppArticlePreviewProps) {
     <Link
       href={`/post/${article.article.id}`}
       target="_blank"
-      className="bg-white rounded-lg border-b py-2 px-4 flex flex-col sm:flex-row justify-between items-center cursor-pointer transition-all duration-300 hover:bg-gray-50"
+      className="bg-white rounded-lg border-b py-2 px-4 flex flex-col sm:flex-row justify-between items-start cursor-pointer transition-all duration-300 hover:bg-gray-50"
     >
       <div className="flex-1 mb-4 sm:mb-0">
         <h2 className="text-lg font-semibold text-slate-800">
