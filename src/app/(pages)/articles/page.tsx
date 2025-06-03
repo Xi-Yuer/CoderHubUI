@@ -77,7 +77,7 @@ export default function Page() {
     ClientGetArticleList("article", page, 10, categoryId, userInfo.id)
       .then((res) => {
         const dataList = res?.data?.list || [];
-        if (!res?.data || dataList.length < 10) {
+        if (!res?.data || dataList.length === 0) {
           setHasMore(false);
           return;
         }
