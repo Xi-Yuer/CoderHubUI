@@ -21,7 +21,7 @@ const AppIcon = dynamic(
 
 export default function Page() {
   const { userInfo } = useStore(useAppStore, (state) => state);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [list, setList] = useState<GetArticle[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [currentTag, setCurrentTag] = useState<string | null>(null);
@@ -31,26 +31,6 @@ export default function Page() {
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
   const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const target = loadingRef.current;
-    if (!target) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // 触发加载更多
-          setPage((prev) => prev + 1);
-        }
-      },
-      {
-        threshold: 0.1, // 元素至少 10% 可见时触发
-      }
-    );
-
-    observer.observe(target); // 开始观察
-
-    return () => observer.disconnect(); // 停止观察
-  }, [loadingRef.current]);
 
   function changeMobile() {
     if (window.innerWidth < 768) {
@@ -113,6 +93,26 @@ export default function Page() {
   useEffect(getSideTags, []);
 
   useEffect(getList, [page, userInfo.id, currentTag]);
+
+  useEffect(() => {
+    const target = loadingRef.current;
+    if (!target) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // 触发加载更多
+          setPage((prev) => prev + 1);
+        }
+      },
+      {
+        threshold: 0.1, // 元素至少 10% 可见时触发
+      }
+    );
+
+    observer.observe(target); // 开始观察
+
+    return () => observer.disconnect(); // 停止观察
+  }, [loadingRef.current]);
 
   const SideBar = () => (
     <div className="lg:flex w-[200px] h-full gap-4 flex-col sticky top-[74px]">
