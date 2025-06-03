@@ -9,7 +9,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Signin from "@/app/_components/signin/signin";
 import { useStore } from "zustand";
 import Acknowledgement from "@/app/_components/acknowledgement";
-import { MoneyCollectOutlined } from "@ant-design/icons";
 
 const AppArticlePreview = dynamic(
   () => import("@/app/_components/appArticlePreview"),
@@ -32,9 +31,10 @@ export default function Page() {
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
   const [isMobile, setIsMobile] = useState(false);
-  const [drawerVisible, setDrawerVisible] = useState(false);
 
   useEffect(() => {
+    const target = loadingRef.current;
+    if (!target) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && currentTag) {
@@ -47,16 +47,9 @@ export default function Page() {
       }
     );
 
-    const target = loadingRef.current;
-    if (target) {
-      observer.observe(target); // 开始观察
-    }
+    observer.observe(target); // 开始观察
 
-    return () => {
-      if (target) {
-        observer.unobserve(target); // 停止观察
-      }
-    };
+    return () => observer.disconnect(); // 停止观察
   }, [loadingRef.current]);
 
   function changeMobile() {
