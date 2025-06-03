@@ -37,7 +37,7 @@ export default function Page() {
     if (!target) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && currentTag) {
+        if (entry.isIntersecting) {
           // 触发加载更多
           setPage((prev) => prev + 1);
         }
@@ -76,14 +76,12 @@ export default function Page() {
     const categoryId = currentTag === "all" ? undefined : currentTag;
     ClientGetArticleList("article", page, 10, categoryId, userInfo.id)
       .then((res) => {
-        if (!res?.data) {
+        const dataList = res?.data?.list || [];
+        if (!res?.data || dataList.length < 10) {
           setHasMore(false);
           return;
-        } else {
-          setList((pre) => {
-            return [...pre, ...(res?.data?.list || [])];
-          });
         }
+        setList((pre) => [...pre, ...dataList]);
       })
       .finally(() => {
         setLoading(false);

@@ -44,8 +44,8 @@ const AppAIEditor = dynamic(
 export default function Page() {
   const [messageApi, messageContext] = message.useMessage();
   const [name, setName] = React.useState("");
-  const [title, setTitle] = React.useState("11");
-  const [description, setDescription] = React.useState("11");
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
   const [imageListID, setImageListID] = React.useState<string[]>([]);
   const [imageList, setImageList] = React.useState<string[]>([]);
   const [categoryOptions, setCategoryOptions] = React.useState<TagOptionType[]>(
