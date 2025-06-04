@@ -30,7 +30,7 @@ export default function Page() {
   const [getTagLoading, setGetTagLoading] = useState(true);
   const [firstLoad, setFirstLoad] = useState(true);
   const loadingRef = useRef(null); // 目标 DOM 元素
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   function changeMobile() {
     if (window.innerWidth < 768) {
