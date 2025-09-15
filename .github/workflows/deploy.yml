@@ -1,6 +1,7 @@
 name: Deploy to Server via Docker Compose
 
 on:
+  workflow_dispatch: # 手动触发
   workflow_run:
     workflows: ["Docker Image CI"]   # 必须与 build.yml 的 name 匹配
     types:
