@@ -89,7 +89,7 @@ export function AppFooter() {
           {/* 备案信息 */}
           <p className="text-sm text-gray-500 mt-2">
             <Link
-              href="https://beian.mps.gov.cn/"
+              href="https://beian.miit.gov.cn"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-blue-500"
